@@ -5,7 +5,7 @@ import { kids, kidsPlaceholder, girlNavy, girlNavyPlaceholder } from '../assets/
 
 const About = () => {
   return (
-    <div className="mt-24">
+    <div className="mt-24" id="quiz">
 			<div data-aos="flip-down" className="text-center max-w-screen-lg mx-auto">
 				<h1 className="md:text-3xl text-2xl font-bold mb-4">Who are <span className="text-yellow-500">The Wiizzkids?</span></h1>
 				<p className="text-gray-500 md:text-base text-sm">We want to change the methodologies of teaching across the world using the blockchain technology while kids learn in a fun and exiting way. Each student would collect coins at the end of each challenge and which can be converted to money. The parents of each child can then use the funds to buy educational materials or book a holiday for the child.</p>

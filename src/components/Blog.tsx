@@ -5,7 +5,7 @@ import { quizNews, vrNews, crypto, study } from '../assets/blog';
 const Blog = () => {
     
   return (
-    <div>
+    <div id="blog">
         <div data-aos="zoom-in" className="mt-24 text-center">
             <h1 className="text-darken md:text-3xl text-2xl font-semibold">Wiizzkid <span className="text-yellow-500">Blog</span></h1>
             <p className="text-gray-500 my-5 lg:text-base text-sm">Stay ahead with our latest blog posts.</p>

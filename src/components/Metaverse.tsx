@@ -6,7 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Metaverse = () => {
   return (
-    <div className="md:flex mt-24 py-16 px-4 md:px-8 md:space-x-10 items-start bg-[#252641]">
+    <div id="metaverse" className="md:flex mt-24 py-16 px-4 md:px-8 md:space-x-10 items-start bg-[#252641]">
     <div data-aos="fade-down" className="md:w-7/12 relative lg:self-start self-center">
         <div className="bg-[#37b9b2] w-32 h-32 rounded-full absolute z-0 left-4 -top-12 animate-pulse"></div>
         <div className="bg-[#e0b00d] w-5 h-5 rounded-full absolute z-0 left-36 -top-12 animate-ping"></div>

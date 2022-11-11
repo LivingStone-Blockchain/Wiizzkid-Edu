@@ -63,11 +63,11 @@ const Header = () => {
                      </button>
                  </div>
                  <nav className={`lg:h-auto flex flex-col flex-grow lg:items-center pb-4 lg:pb-0 lg:flex lg:justify-end lg:flex-row origin-top duration-300 ${open ? 'h-full scale-y-1' : 'h-0 transform lg:transform-none scale-y-0'}`}>
-                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#">Home</a>
-                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#">Wiizzkid Quiz</a>
-                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#">Wiizzkid Metaverse</a>
+                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#home">Home</a>
+                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#quiz">Wiizzkid Quiz</a>
+                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#metaverse">Wiizzkid Metaverse</a>
                      <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#">Roadmap</a>
-                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#">Blog</a>
+                     <a className="px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#blog">Blog</a>
                      <button className="px-10 py-3 mt-2 md:text-base text-sm text-center bg-white text-gray-800 rounded-full lg:mt-8 lg:ml-4" onClick={() => navigate('/login')}>Login</button>
                      <button className="px-10 py-3 mt-2 md:text-base text-sm text-center text-white rounded-full lg:mt-8 lg:ml-4" style={{backgroundColor: `${colorDeep}`}}>Connect Wallet</button>
                  </nav>
