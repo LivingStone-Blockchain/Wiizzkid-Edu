@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.bg-cream {
+  background-color: #ffedef;
+}
+
+/*font*/
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.bg-yellow-500 {
+  background-color: #FF3939;
+}
+.text-yellow-500 {
+  color: #FF3939;
+}
+
+.bg-teally {
+background: #23bdee;
+}
+
+
+.shadow-btn-red {
+  box-shadow: 0px 15px 20px rgba(255, 57, 57, 0.4);
+}
+
+.shadow-btn-yellow {
+  box-shadow: 0px 15px 20px rgba(238, 187, 13, 0.4);
+}
+
+.shadow-btn-green {
+  box-shadow: 0px 15px 20px rgba(55,185,178, 0.4);
+}
+
+.shadow-btn-darken {
+  box-shadow: 0px 15px 20px rgba(37,38,65, 0.4);
+}
+
+
+.floating { 
+  animation-name: floating; 
+  animation-duration: 3s; 
+  animation-iteration-count: infinite; 
+  animation-timing-function: ease-in-out;
+} 
+@keyframes floating { 
+  0% { transform: translate(0, 0px); -webkit-transform: translate(0, 0px); -moz-transform: translate(0, 0px); -ms-transform: translate(0, 0px); -o-transform: translate(0, 0px); } 
+  50% { transform: translate(0, 8px); } 
+  100% { transform: translate(0, -0px); -webkit-transform: translate(0, -0px); -moz-transform: translate(0, -0px); -ms-transform: translate(0, -0px); -o-transform: translate(0, -0px); }  
+} 
+.floating-4 { 
+  animation-name: floating; 
+  animation-duration: 4s; 
+  animation-iteration-count: infinite; 
+  animation-timing-function: ease-in-out;
+} 
+@keyframes floating-4 { 
+  0% { transform: translate(0, 0px); } 
+  50% { transform: translate(0, 8px); } 
+  100% { transform: translate(0, -0px); }  
+}
+.text-darken {
+  color: #252641;
+}
+
+
+/*max width for lazy load component*/
+span.lazy-load-image-background,
+span.lazy-load-image-background > img {
+  width: 100%;
+}
+
+/*Movong marquee fog thickness*/
+div.marquee-container > div.overlay::before, div.overlay::after {
+  --gradient-width:80px;
+}
