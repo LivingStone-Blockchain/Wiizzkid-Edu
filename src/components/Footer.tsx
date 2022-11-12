@@ -13,7 +13,7 @@ const Footer = () => {
    return (
     <>
     <footer className="mt-24 bg-[#252641]">
-    <div className="container m-auto space-y-8 px-4 py-16 text-gray-600 md:px-8">
+    <div className="lg:container m-auto space-y-8 px-4 py-16 text-gray-600 md:px-8">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-8">
         <div className={`flex justify-center items-center border-2  h-14 w-14 rounded-lg p-1`} style={{borderColor: `${colors[value]}`}}>
           <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" />

@@ -91,7 +91,7 @@ const Hero = () => {
           
       
                      
-                      <div data-aos="fade-up" data-aos-delay="400" data-aos-once="true" className="absolute top-20 right-10 sm:right-24 sm:top-28 md:top-36 md:right-32 lg:top-32 lg:right-16 floating lg:block hidden">
+                      <div data-aos="fade-up" data-aos-delay="400" data-aos-once="true" className="absolute top-20 right-10 sm:right-24 sm:top-28 md:top-36 md:right-32 lg:top-32 lg:right-16 floating sm:block hidden">
                       <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center'>
                         <p className='bg-[#f25471] bg-opacity-80 text-white rounded-md p-1 text-2xl'><GiMonkey /></p>
                         <p className='flex flex-col'>
@@ -113,7 +113,7 @@ const Hero = () => {
                           </div>
                       </div>
       
-                      <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="flex flex-col gap-3 justify-center items-center bg-white rounded-lg h-24 sm:h-28 py-3 px-4 absolute bottom-14 -left-4 sm:left-2 sm:bottom-20 lg:bottom-24 lg:-left-4 floating lg:block hidden">
+                      <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="sm:flex hidden flex-col gap-3 justify-center items-center bg-white rounded-lg h-24 sm:h-28 py-3 px-4 absolute bottom-14 -left-4 sm:left-2 sm:bottom-20 lg:bottom-24 lg:-left-4 floating">
                           <div className='flex gap-4 justify-center items-center'>
                               <img className='bg-[#f25471] bg-opacity-80 rounded-lg h-auto w-full max-w-[30px] p-1' src={vr} alt="vr" style={{transform: "scaleX(-1)"}}/>
                               <p className='flex flex-col'>
