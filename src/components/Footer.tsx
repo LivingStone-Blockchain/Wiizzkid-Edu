@@ -11,7 +11,6 @@ const Footer = () => {
 
 
    return (
-    <>
     <footer className="mt-24 bg-[#252641]">
     <div className="lg:container m-auto space-y-8 px-4 py-16 text-gray-600 md:px-8">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-8">
@@ -135,7 +134,7 @@ const Footer = () => {
       </div>
     </div>
 </footer>
-</>
+
 
 
    

@@ -1,7 +1,9 @@
 import CountDown from './Countdown'
 import { vrBoy, vrBoyPlaceholder } from '../assets/metaverse';
+import Button from './Button';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 
 const Metaverse = () => {
@@ -34,7 +36,12 @@ const Metaverse = () => {
             <p className="space-x-5 my-5 text-white md:text-base text-sm z-1">Want to be the first to know when we launch ?</p>
             <div className="flex flex-row space-x-3 justify-start mt-3 w-full">
                 <input type="email" placeholder="Your Email" className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-gray-400 rounded-full" />
-                <button type="submit" className="flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3 rounded-full bg-[#252641] shadow-btn-darken transform transition hover:scale-110 duration-300 ease-in-out"  style={{background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)"}}>Subscribe</button>
+                <Button 
+                    children='Subscribe'
+                    type='submit'
+                    className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken '
+                    style={{background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)"}}
+                />
             </div>
         </div>
     </div>

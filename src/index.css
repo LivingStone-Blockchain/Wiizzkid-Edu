@@ -13,6 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+
 .bg-yellow-500 {
   background-color: #FF3939;
 }
@@ -75,7 +76,7 @@ span.lazy-load-image-background > img {
   width: 100%;
 }
 
-/*Movong marquee fog thickness*/
+/*Moving marquee fog thickness*/
 div.marquee-container > div.overlay::before, div.overlay::after {
   --gradient-width:80px;
 }

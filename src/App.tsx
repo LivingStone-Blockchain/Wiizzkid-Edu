@@ -1,8 +1,9 @@
 import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Register, ForgotPassword } from "./pages";
+import { Home, Login, Register, ForgotPassword, Dashboard, RegisterNotify } from "./pages";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -13,11 +14,14 @@ function App() {
 
   return (
    <div className="antialiased">
+    <Toaster />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register"  element={<Register />}/>
+      <Route path="/registration-notification" element={<RegisterNotify />} />
       <Route path="/password-recovery" element={<ForgotPassword />}/>
+      <Route path="/dashboard" element={<Dashboard />}/>
     </Routes>
    </div>
   )

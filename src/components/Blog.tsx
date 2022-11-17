@@ -15,8 +15,8 @@ const Blog = () => {
                 <img className="w-full rounded-xl mb-6" src={quizNews} />
                 <span className="bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full">Latest</span>
                 <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">Trivia Virtual Quizzes with friends</h1>
-                <p className="text-gray-500 mb-3 text-base">Wiizkid Education is creating a fun new way to to learn and earn alongside your friends virtually online, anywhere, anytime...</p>
-                <a href="" className="underline text-base">Read more</a>
+                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">Wiizkid Education is creating a fun new way to to learn and earn alongside your friends virtually online, anywhere, anytime...</p>
+                <a href="" className="underline sm:text-base text-sm">Read more</a>
             </div>
         <div className="lg:w-7/12 flex flex-col justify-between mt-12 space-y-5 lg:space-y-0 lg:mt-0">
             <div className="flex space-x-5 hover:bg-[#eee]">
@@ -28,7 +28,7 @@ const Blog = () => {
                 </div>
                 <div className="w-8/12">
                     <h1 className="text-gray-800 text-base sm:text-lg font-semibold">What is the Stone token and how do we use it?</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base">Wiizzkid Education is a token-based educational empowerment platorm set to launch it's native...</p>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Wiizzkid Education is a token-based educational empowerment platorm set to launch it's native...</p>
                 </div>
             </div>
             <div className="flex space-x-5  hover:bg-[#eee]">
@@ -40,7 +40,7 @@ const Blog = () => {
                 </div>
                 <div className="w-8/12">
                     <h1 className="text-gray-800 text-base sm:text-lg font-semibold">Virtual Reality in Education: Benefits, Tools, and Resources</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base">Virtual reality can improve education by providing students with memorable and immersive experiences that would otherwise not be possible. What's more, it can ...</p>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Virtual reality can improve education by providing students with memorable and immersive experiences that would otherwise not be possible. What's more, it can ...</p>
                 </div>
             </div>
             <div className="flex space-x-5 hover:bg-[#eee]">
@@ -52,7 +52,7 @@ const Blog = () => {
                 </div>
                 <div className="w-8/12">
                     <h1 className="text-gray-800 text-base sm:text-lg font-semibold">Elementary school high-flyers making the most of the opportunity</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base">Play our classic quizzes, anywhere, anytime & fight your way to the top of the leaderboard ...</p>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Play our classic quizzes, anywhere, anytime & fight your way to the top of the leaderboard ...</p>
                 </div>
             </div>
         </div>
