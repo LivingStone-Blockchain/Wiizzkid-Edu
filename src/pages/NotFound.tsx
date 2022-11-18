@@ -1,16 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import Button from '../components/Button';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/effect-fade";
 import { Autoplay, EffectFade } from "swiper";
-import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
-import { UserContext, UserContextType } from '../context/user.context'
 import { useNavigate } from 'react-router-dom';
-import { mailRed, mailGreen, mailBlue, girlBlue, girlGreen, girlRed } from '../assets/registerNotify';
+import { errorRed, errorBlue, errorGreen, errorOne, errorTwo, errorThree } from '../assets/notFound';
 
 
-const RegisterNotify = () => {
-    const { emailNotify } = useContext(UserContext) as UserContextType;
+const NotFound = () => {
     const navigate = useNavigate();
 
     type dataType = {
@@ -23,21 +21,21 @@ const RegisterNotify = () => {
     const data: dataType[] = [
         {
             id: 1,
-            img: girlRed,
+            img: errorOne,
             color: '#ff5d5d',
-            mailImg: mailRed,
+            mailImg: errorRed,
         },
         {
             id: 2,
-            img: girlBlue,
+            img: errorTwo,
             color: '#5b72ee',
-            mailImg: mailBlue,
+            mailImg: errorBlue,
         },
         {
             id: 3,
-            img: girlGreen,
+            img: errorThree,
             color: '#37b9b2',
-            mailImg: mailGreen,
+            mailImg: errorGreen,
         }
     ]
 
@@ -74,10 +72,24 @@ const RegisterNotify = () => {
                 </div>
                 <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                  <div className='flex flex-col justify-center items-center gap-6 w-full text-center'>
-                     <h3 className="sm:text-2xl text-xl">Thank you for signing up for a Wiizzkid account!</h3>
+                     <h3 className="sm:text-2xl text-xl text-[#252641]"><b>404 - PAGE NOT FOUND!</b></h3>
                      <img src={mailImg} alt="mail" className='flex justify-center items-center mx-auto w-full h-auto max-w-[60px]'/>
-                     <p className='sm:text-base text-sm'>Please check your email <span className='font-semibold'>({emailNotify})</span> to confirm your account.</p>
-                     <p className='sm:text-base text-sm'>If <span className='font-semibold'>{emailNotify}</span> is not your email address, please <span onClick={() => navigate('/register')} className="underline cursor-pointer" style={{color: color}}>go back</span> and enter a correct one.</p>
+                     <p className='sm:text-base text-sm'>We can't seem to find the page you're looking for.</p>
+                     <p className='sm:text-base text-sm'>Here are some helpful links instead:</p>
+                     <div className="flex flex-row space-x-3 justify-center mt-3 w-full mx-auto">
+                      <Button 
+                          children='Home'
+                          type='button'
+                          onClick={() => navigate('/')}
+                          className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641]'
+                      />              
+                      <Button 
+                          children='Log in'
+                          type='button'
+                          onClick={() => navigate('/login')}
+                          className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641]'
+                      />
+            </div>
                  </div>
              </div>
              </div>
@@ -90,4 +102,4 @@ const RegisterNotify = () => {
   )
 }
 
-export default RegisterNotify;
+export default NotFound;

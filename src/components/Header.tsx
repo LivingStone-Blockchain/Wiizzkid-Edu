@@ -62,8 +62,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
 
-    console.log(mobileDropdownOpen)
-
+   
 
     //prevent scroll when profile dropdown is clicked
     useEffect(() => {
@@ -145,7 +144,7 @@ const Header = () => {
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                   Balance: <span className="text-xl font-semibold">25</span> <span className="text-xs">ST</span>
+                                                                   Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">ST</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -229,7 +228,7 @@ const Header = () => {
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                 Balance: <span className="text-xl font-semibold">25</span> <span className="text-xs">ST</span>
+                                                                 Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">ST</span>
                                                             </a>
                                                         </div>
                                                     </div>

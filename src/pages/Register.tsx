@@ -1,15 +1,21 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { register } from '../assets/auth';
 import Form from '../components/Form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
 import { BsCheck } from 'react-icons/bs';
 
 
 const Register = () => {
-  const { registerFormik, isLoading } = useContext(UserContext) as UserContextType;
+  const navigate = useNavigate();
+  const { user, registerFormik, isLoading } = useContext(UserContext) as UserContextType;
 
-  //console.log(isLoading);
+  //restrict access to page for logged users
+  useEffect(() => {
+    if(user) {
+      navigate('/');
+    }
+  })
 
   return (
     <Form alt='register' img={register}>

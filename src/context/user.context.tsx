@@ -1,5 +1,6 @@
-import { createContext, FC, useState, useEffect } from "react";
+import React, { createContext, FC, useState, useEffect, useCallback } from "react";
 import registerService from "../services/register";
+import loginService from "../services/login";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
@@ -18,7 +19,15 @@ export interface UserContextType {
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
     emailNotify: string,
     setEmailNotify: React.Dispatch<React.SetStateAction<string>>,
+    emailLogin: string,
+    setEmailLogin: React.Dispatch<React.SetStateAction<string>>,
+    passwordLogin: string,
+    setPasswordLogin: React.Dispatch<React.SetStateAction<string>>,
+    user: string | null,
+    setUser:  React.Dispatch<React.SetStateAction<string | null>>,
     registerFormik: FormikProps<registerFormikType>,
+    handleLogin: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
+    handleLogout: () => void,
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -28,9 +37,21 @@ export const UserContext = createContext<UserContextType | null>(null);
 const UserProvider: FC<any> = ({ children }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [emailNotify, setEmailNotify] = useState<string>('');
+    const [emailLogin, setEmailLogin] = useState<string>('');
+    const [passwordLogin, setPasswordLogin] = useState<string>('');
+    const [user, setUser] = useState<string | null>(null);
     const navigate = useNavigate();
 
+
    
+    //login users automatically
+    useEffect(() => {
+        const loggedUSerJSON = window.localStorage.getItem(  'loggedWiizzikidUser');
+        if (loggedUSerJSON) {
+            const recoveredUser = JSON.parse(loggedUSerJSON);
+            setUser(recoveredUser);
+        }
+      }, []);
 
    
 //Handle signup
@@ -58,7 +79,6 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
         let password = values.confirmPassword;
          setIsLoading(true);
 
-         console.log(values)
          
         try {
             await registerService.register({
@@ -84,12 +104,66 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
     },
   })
 
+  
+
+
+  
+
+
+//Handle login
+const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  
+    setIsLoading(true);
+  
+    let email = emailLogin;
+    let password = passwordLogin;
+  
+    try {
+         const user = await loginService.login({
+            email, password,
+        });
+  
+  
+        window.localStorage.setItem(
+            'loggedWiizzikidUser', JSON.stringify(user)
+        );
+        setUser(user);
+        setEmailLogin('');
+        setPasswordLogin('');
+        navigate('/', { replace: true });
+        setIsLoading(false);
+    } catch (error) {
+        setIsLoading(false);
+        toast.error("'Login failed!", { duration: 5000, id: "login" });
+
+        setTimeout(() => {
+            toast.dismiss("login");
+        }, 5000);
+        setIsLoading(false);
+    }
+  };
+  
+
+  
+const handleLogout = useCallback(() => {
+
+    //setLoader(!loader);
+    setIsLoading(false);
+    navigate('/register');
+    window.localStorage.removeItem('loggedWiizzikidUser');
+    setEmailLogin('');
+    setPasswordLogin('');
+    setUser(null);
+}, [navigate]);
+
+
 
 
 
     return (
         <UserContext.Provider 
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify }}
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout }}
         >
             {children}
         </UserContext.Provider>
