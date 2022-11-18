@@ -143,9 +143,9 @@ const Header = () => {
                                                         <p className="text-sm text-gray-100">John@Doe.com</p>
                                                         <div className="mt-5">
                                                             <a
-                                                                className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100 cursor-pointer"
+                                                                className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                Manage your Account
+                                                                   Balance: <span className="text-xl font-semibold">25</span> <span className="text-xs">ST</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -186,7 +186,7 @@ const Header = () => {
                                     <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#home" onClick={() => {setOpen(false)}}>Home</a>
                                     <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#quiz" onClick={() => setOpen(false)}>Wiizzkid Quiz</a>
                                     <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#metaverse" onClick={() => setOpen(false)}>Wiizzkid Metaverse</a>
-                                    <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#" onClick={() => setOpen(false)}>Roadmap</a>
+                                    <Link to= '/roadmap' className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} onClick={() => setOpen(false)}>Roadmap</Link>
                                     <a className={`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`}  href="#blog" onClick={() => setOpen(false)}>Blog</a>
 
                                     <Button
@@ -227,9 +227,9 @@ const Header = () => {
                                                         <p className="text-sm text-gray-100">John@Doe.com</p>
                                                         <div className="mt-5">
                                                             <a
-                                                                className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100 cursor-pointer"
+                                                                className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                Manage your Account
+                                                                 Balance: <span className="text-xl font-semibold">25</span> <span className="text-xs">ST</span>
                                                             </a>
                                                         </div>
                                                     </div>

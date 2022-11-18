@@ -11,7 +11,6 @@ type registerFormikType = {
     email: string,
     password: string,
     confirmPassword: string,
-    acceptTerms: boolean,
 }
 
 export interface UserContextType {
@@ -31,6 +30,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [emailNotify, setEmailNotify] = useState<string>('');
     const navigate = useNavigate();
 
+   
 
    
 //Handle signup
@@ -40,7 +40,6 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
       email: '',
       password: '',
       confirmPassword: '',
-      acceptTerms: true
     },
      validationSchema: Yup.object({
         full_name: Yup.string()
@@ -52,13 +51,14 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
         confirmPassword: Yup.string()
             .required("Confirm your password")
             .oneOf([Yup.ref('password'), null], "Passwords don't match"),
-        acceptTerms: Yup.bool().default(true).oneOf([false], 'Accept privacy policy')
     }),
     onSubmit: async function (values) {
         let email = values.email;
         let full_name =  values.full_name;
         let password = values.confirmPassword;
          setIsLoading(true);
+
+         console.log(values)
          
         try {
             await registerService.register({
@@ -74,7 +74,7 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
             navigate('/registration-notification');
             setIsLoading(false);
         } catch (error) {
-            toast.error("'Account already exists!", { duration: 5000, id: "register" });
+            toast.error("'User error exists!", { duration: 5000, id: "register" });
 
             setTimeout(() => {
                 toast.dismiss("register");
@@ -83,6 +83,8 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
         }
     },
   })
+
+
 
 
     return (
