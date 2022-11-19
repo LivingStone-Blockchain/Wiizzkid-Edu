@@ -93,9 +93,9 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
             setEmailNotify(email);
             navigate('/registration-notification');
             setIsLoading(false);
-        } catch (error) {
-            toast.error("'User error exists!", { duration: 5000, id: "register" });
-
+        } catch (error: any) {
+            toast.error(`${error.response.data.errors.email[0]}!`, { duration: 5000, id: "register" });
+           
             setTimeout(() => {
                 toast.dismiss("register");
             }, 5000);

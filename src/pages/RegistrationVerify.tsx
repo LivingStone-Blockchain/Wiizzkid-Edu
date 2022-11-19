@@ -36,7 +36,7 @@ const RegistrationVerify = () => {
     setDelay(false)
   }, 3000);
 
-
+console.log(validUrl);
 
 
 

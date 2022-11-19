@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/effect-fade";
 import { Autoplay, EffectFade } from "swiper";
-import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
 import { UserContext, UserContextType } from '../context/user.context'
 import { useNavigate } from 'react-router-dom';
 import { mailRed, mailGreen, mailBlue, girlBlue, girlGreen, girlRed } from '../assets/registerNotify';
+
 
 
 const RegisterNotify = () => {
