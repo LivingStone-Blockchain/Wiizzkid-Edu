@@ -1,10 +1,14 @@
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useNavigate } from 'react-router-dom';
 import { kids, kidsPlaceholder, girlNavy, girlNavyPlaceholder } from '../assets/about'
 import Button from './Button';
 
+
 const About = () => {
+	const navigate = useNavigate();
+
   return (
     <div className="mt-24" id="quiz">
 			<div data-aos="flip-down" className="text-center max-w-screen-lg mx-auto">
@@ -42,6 +46,7 @@ const About = () => {
 						<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
 							<h1 className="uppercase text-white font-bold text-center text-sm lg:text-xl mb-3">SKILLS BUILDING</h1>
 							<Button 
+								onClick={() => navigate('/quiz-home')}
 								children="Start a quiz today"
 								className='text-white text-xs lg:text-sm px-6 py-3 w-full font-medium focus:outline-none bg-[#37b9b2]'
 							/>

@@ -1,6 +1,7 @@
 import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home, Login, Register, ForgotPassword, Dashboard, Roadmap, RegisterNotify, RegistrationVerify, NotFound } from "./pages";
+import QuizIndex from "./gameContainers/quiz/pages/QuizIndex";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Toaster } from 'react-hot-toast';
@@ -24,6 +25,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/roadmap" element={<Roadmap />} />
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
+      <Route path="/quiz-home" element={<QuizIndex />} />
       <Route path="*" element={<NotFound />}/>
     </Routes>
    </div>
