@@ -7,3 +7,4 @@ export { default as Dashboard } from './Dashboard';
 export { default as Roadmap } from './Roadmap';
 export { default as RegistrationVerify } from './RegistrationVerify';
 export { default as NotFound } from './NotFound'
+export { default as RegisterNotify } from './RegisterNotify';

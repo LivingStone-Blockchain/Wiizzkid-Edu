@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Register, ForgotPassword, Dashboard, Roadmap, RegistrationVerify, NotFound } from "./pages";
+import { Home, Login, Register, ForgotPassword, Dashboard, Roadmap, RegistrationVerify, NotFound, RegisterNotify  } from "./pages";
 import QuizIndex from "./gameContainers/quiz/pages/QuizIndex";
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import AOS from 'aos';
@@ -22,7 +22,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register"  element={<Register />}/>
-      {/*<Route path="/registration-notification" element={<RegisterNotify />} />*/}
+      <Route path="/registration-notification" element={<RegisterNotify />} />
       <Route path="/password-recovery" element={<ForgotPassword />}/>
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/roadmap" element={<Roadmap />} />
