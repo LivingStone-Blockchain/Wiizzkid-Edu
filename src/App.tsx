@@ -26,7 +26,7 @@ function App() {
       <Route path="/password-recovery" element={<ForgotPassword />}/>
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/roadmap" element={<Roadmap />} />
-      <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
+      <Route path="/user/email-verified" element={<RegistrationVerify />} />
       {/*<Route path="/quiz-home" element={<QuizIndex />} />*/}
       <Route path="/quiz" element={<QuizPlay />} />
       <Route path="/quiz-home" element={<QuizApp />}/>
