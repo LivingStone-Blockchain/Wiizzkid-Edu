@@ -41,7 +41,7 @@ const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiff
           
                     <Button
                       className="mx-auto mt-8"
-                      onClick={() => {toast.dismiss(); setStart(false); setTriviaFetch(false); navigate('/')}}
+                      onClick={() => {toast.dismiss(); setStart(false); setTriviaFetch(false); navigate('/quiz-home')}}
                     >
                       Back home
                     </Button>

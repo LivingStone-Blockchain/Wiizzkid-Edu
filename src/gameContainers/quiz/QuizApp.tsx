@@ -9,7 +9,7 @@ import QuizIndex from "./pages/QuizIndex";
 import TimesTableIndex from "./pages/TimesTableIndex";
 
 
-function App() {
+function QuizApp() {
   const { showSplashScreen, setShowSplashScreen } = useContext(GameContext) as GameContextType;
  
 
@@ -27,9 +27,7 @@ function App() {
       <Toaster />
 
       <Routes>
-        {/*<Route path="/" element={<Homepage />} />
-        <Route path="/timestable" element={<TimesTableIndex />} />*/}
-        <Route path="/quiz" element={<QuizPlay />} />
+        {/*<Route path="/quiz" element={<QuizPlay />} />*/}
         <Route  path="/" element={<QuizIndex />}/>
        
       </Routes>
@@ -37,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default QuizApp;

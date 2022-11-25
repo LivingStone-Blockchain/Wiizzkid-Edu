@@ -3,7 +3,7 @@ export { default as Login } from './Login';
 export { default as Register } from './Register';
 export { default as ForgotPassword } from './ForgotPassword';
 export { default as Dashboard } from './Dashboard';
-export { default as RegisterNotify } from './RegisterNotify';
+//export { default as RegisterNotify } from './RegisterNotify';
 export { default as Roadmap } from './Roadmap';
 export { default as RegistrationVerify } from './RegistrationVerify';
 export { default as NotFound } from './NotFound'
