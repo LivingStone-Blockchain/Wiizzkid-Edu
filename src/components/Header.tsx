@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/effect-fade";
@@ -10,6 +10,7 @@ import { FaGamepad, FaTimes } from 'react-icons/fa';
 import { GiMonkey } from 'react-icons/gi'
 import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet } from 'react-icons/md';
 import Button from './Button'
+import { UserContext, UserContextType } from '../context/user.context';
 
 
 type headerDataType = {
@@ -61,6 +62,7 @@ const Header = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
+    const { user, handleLogout } = useContext(UserContext) as UserContextType;
 
    
 
@@ -116,7 +118,8 @@ const Header = () => {
                                 </div>
                                 <nav className={`lg:h-auto flex flex-col flex-grow lg:items-center pb-4 lg:pb-0 lg:flex lg:justify-end lg:flex-row origin-top duration-300 ${open ? 'h-full scale-y-1' : 'h-0 transform lg:transform-none scale-y-0'}`}>
                                     {/*mobile profile*/}
-                                    <div className="relative lg:pl-8 mt-10 mb-5 lg:mt-8 md:text-base text-sm block lg:hidden">
+                                    {user && user?.tokens && (
+                                        <div className="relative lg:pl-8 mt-10 mb-5 lg:mt-8 md:text-base text-sm block lg:hidden">
                                         <button className="flex gap-1 justify-center items-center relative z-10 rounded-full bg-white p-2 focus:outline-none border border-gray-300" onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}>
                                             <img
                                                 loading="lazy"
@@ -139,7 +142,7 @@ const Header = () => {
                                                         <FaTimes className='text-white absolute right-4 top-4 cursor-pointer' onClick={() => setMobileDropdownOpen(false)}/>
                                                         {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
                                                         <p className="pt-2 text-lg font-semibold text-gray-50">John Doe</p>
-                                                        <p className="text-sm text-gray-100">John@Doe.com</p>
+                                                        <p className="text-sm text-gray-100">{user?.email}</p>
                                                         <div className="mt-5">
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
@@ -174,13 +177,15 @@ const Header = () => {
                                                     <div>
                                                         <button className="w-full px-4 py-3 pb-4 hover:bg-gray-100 flex gap-4">
                                                             <MdOutlineLogout className="text-gray-500 h-4 w-4" />
-                                                            <p className="text-sm font-medium text-gray-500 leading-none"> Logout</p>
+                                                            <p className="text-sm font-medium text-gray-500 leading-none" onClick={handleLogout}> Logout</p>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
+                                    )}
+                                    
                                     
                                     <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#home" onClick={() => {setOpen(false)}}>Home</a>
                                     <a className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} href="#quiz" onClick={() => setOpen(false)}>Wiizzkid Quiz</a>
@@ -188,11 +193,13 @@ const Header = () => {
                                     <Link to= '/roadmap' className= {`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`} onClick={() => setOpen(false)}>Roadmap</Link>
                                     <a className={`${mobileDropdownOpen && 'blur-2xl'} px-4 py-2 mt-2 md:text-base text-sm bg-transparent rounded-lg lg:mt-8 lg:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline`}  href="#blog" onClick={() => setOpen(false)}>Blog</a>
 
-                                    <Button
+                                    {!user && (
+                                        <Button
                                         className={`${mobileDropdownOpen && 'blur-2xl'} px-10 py-3 mt-2 md:text-base text-sm text-center bg-white text-gray-800 lg:mt-8 lg:ml-4`}
                                         children="Login"
                                         onClick={() => { navigate('/login'); setOpen(false) }}
                                     />
+                                    )}
 
                                     <Button
                                         className={`${mobileDropdownOpen && 'blur-2xl'} px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
@@ -201,7 +208,9 @@ const Header = () => {
                                     />
 
                                     {/*large screen profile*/}
-                                    <div className="relative lg:pl-8 mt-2 lg:mt-8 md:text-base text-sm hidden lg:block">
+                                    
+                                    {user && user?.tokens && (
+                                        <div className="relative lg:pl-8 mt-2 lg:mt-8 md:text-base text-sm hidden lg:block">
                                         <button className="flex gap-1 justify-center items-center relative z-10 rounded-full bg-white p-2 focus:outline-none border border-gray-300" onClick={() => setDropdownOpen(!dropdownOpen)}>
                                             <img
                                                 loading="lazy"
@@ -223,7 +232,7 @@ const Header = () => {
                                                     <div className="text-center p-6 bg-[#252641] border-b">
                                                         {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
                                                         <p className="pt-2 text-lg font-semibold text-gray-50">John Doe</p>
-                                                        <p className="text-sm text-gray-100">John@Doe.com</p>
+                                                        <p className="text-sm text-gray-100">{user?.email}</p>
                                                         <div className="mt-5">
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
@@ -261,14 +270,14 @@ const Header = () => {
                                                     <div>
                                                         <button className="w-full px-4 py-2 pb-4 hover:bg-gray-50 flex gap-4">
                                                             <MdOutlineLogout className="text-gray-500 h-4 w-4" />
-                                                            <p className="text-sm font-medium text-gray-500 leading-none"> Logout</p>
+                                                            <p className="text-sm font-medium text-gray-500 leading-none" onClick={handleLogout}> Logout</p>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-
+                                    )}
 
                                 </nav>
                             </div>

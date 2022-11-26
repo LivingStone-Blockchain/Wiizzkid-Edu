@@ -4,18 +4,34 @@ import Form from '../components/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
 import { BsCheck } from 'react-icons/bs';
+import Preloader from '../components/Preloader';
 
 
 const Register = () => {
   const navigate = useNavigate();
-  const { user, registerFormik, isLoading } = useContext(UserContext) as UserContextType;
+  const { user, registerFormik, isLoading, setIsLoading } = useContext(UserContext) as UserContextType;
 
   //restrict access to page for logged users
   useEffect(() => {
     if(user) {
       navigate('/');
     }
-  })
+  }, [user])
+
+//kill loader after 2sec
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+  }, 2000)
+  }, [isLoading])
+
+  
+
+  if (isLoading) {
+    return (
+      <Preloader />
+    )
+  }
 
   return (
     <Form alt='register' img={register}>

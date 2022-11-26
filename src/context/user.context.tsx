@@ -14,6 +14,14 @@ type registerFormikType = {
     confirmPassword: string,
 }
 
+type userType = {
+    email: string,
+    tokens: {
+        access: string,
+        refresh: string,
+    }
+}
+
 export interface UserContextType {
     isLoading: boolean,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -23,8 +31,8 @@ export interface UserContextType {
     setEmailLogin: React.Dispatch<React.SetStateAction<string>>,
     passwordLogin: string,
     setPasswordLogin: React.Dispatch<React.SetStateAction<string>>,
-    user: string | null,
-    setUser:  React.Dispatch<React.SetStateAction<string | null>>,
+    user: userType | null,
+    setUser:  React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
     handleLogin: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
     handleLogout: () => void,
@@ -39,7 +47,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [emailNotify, setEmailNotify] = useState<string>('');
     const [emailLogin, setEmailLogin] = useState<string>('');
     const [passwordLogin, setPasswordLogin] = useState<string>('');
-    const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
 
 
@@ -107,7 +115,7 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
   
 
 
-  
+  console.log(user);
 
 
 //Handle login
@@ -135,7 +143,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         setIsLoading(false);
     } catch (error) {
         setIsLoading(false);
-        toast.error("'Login failed!", { duration: 5000, id: "login" });
+        toast.error("Login failed!", { duration: 5000, id: "login" });
 
         setTimeout(() => {
             toast.dismiss("login");
@@ -148,8 +156,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
   
 const handleLogout = useCallback(() => {
 
-    //setLoader(!loader);
-    setIsLoading(false);
+    setIsLoading(true);
     navigate('/register');
     window.localStorage.removeItem('loggedWiizzikidUser');
     setEmailLogin('');
