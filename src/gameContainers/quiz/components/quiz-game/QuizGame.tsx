@@ -218,7 +218,7 @@ function ActionButton({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${className} px-6 py-2 flex items-center border border-2 border-orange-600 rounded shadow text-center text-sm font-bold text-orange-600 hover:from-yellow-600 hover:to-orange-700 transition`}
+      className={`${className} px-6 py-2 flex items-center border-2 border-orange-600 rounded shadow text-center text-sm font-bold text-orange-600 hover:from-yellow-600 hover:to-orange-700 transition`}
     >
       {children}
     </button>

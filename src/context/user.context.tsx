@@ -49,6 +49,8 @@ const UserProvider: FC<any> = ({ children }) => {
     const [passwordLogin, setPasswordLogin] = useState<string>('');
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
+    
+    console.log(isLoading);
 
 
    

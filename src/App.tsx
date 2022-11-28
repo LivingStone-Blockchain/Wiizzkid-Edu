@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Register, ForgotPassword, Dashboard, RegisterNotification, Roadmap, RegistrationVerify, NotFound } from "./pages";
-import QuizIndex from "./gameContainers/quiz/pages/QuizIndex";
+import { Home, Login, Register, ForgotPassword, Dashboard, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing } from "./pages";
+import { Header, Footer, BackToTop, Preloader } from './components/index'
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -9,15 +9,22 @@ import { Toaster } from 'react-hot-toast';
 import QuizApp from "./gameContainers/quiz/QuizApp";
 
 
+
+
 function App() {
+
   useEffect(() => {
     AOS.init();
   }, []);
 
 
+
+
   return (
    <div className="antialiased">
     <Toaster />
+    <Preloader  homeLoader={true} />
+   <Header />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
@@ -25,13 +32,15 @@ function App() {
       <Route path="/registration-notification" element={<RegisterNotification />} />
       <Route path="/password-recovery" element={<ForgotPassword />}/>
       <Route path="/dashboard" element={<Dashboard />}/>
+      <Route path="/pricing" element={<Pricing />} />
       <Route path="/roadmap" element={<Roadmap />} />
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
-      {/*<Route path="/quiz-home" element={<QuizIndex />} />*/}
       <Route path="/quiz" element={<QuizPlay />} />
-      <Route path="/quiz-home" element={<QuizApp />}/>
+      <Route path="/quiz-home/*" element={<QuizApp />}/>
       <Route path="*" element={<NotFound />}/>
     </Routes>
+    <Footer />
+    <BackToTop />
    </div>
   )
 }

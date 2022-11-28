@@ -6,14 +6,16 @@ import { UserContext, UserContextType } from '../context/user.context'
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, handleLogin, isLoading } = useContext(UserContext) as UserContextType;
+  const { user, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, handleLogin, isLoading, setIsLoading } = useContext(UserContext) as UserContextType;
+
+
 
   //restrict access to page for logged users
   useEffect(() => {
     if (user) {
       navigate('/');
     }
-  })
+  }, [user])
 
   return (
     <Form alt='login' img={login}>
