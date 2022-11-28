@@ -81,9 +81,11 @@ const Header = () => {
 
 
     //only render on homepage
+   useEffect(() => {
     if (location.pathname !== "/") {
-        return null;
+        return;
     }
+   }, [location.pathname])
 
 
     return (
