@@ -3,15 +3,21 @@ import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import SplashScreen from "./components/SplashScreen";
 import { GameContext, GameContextType } from "../../context/game.context";
-import Homepage from "./pages/Homepage";
-import QuizPlay from "./pages/QuizPlay";
 import QuizIndex from "./pages/QuizIndex";
-import TimesTableIndex from "./pages/TimesTableIndex";
+
 
 
 function QuizApp() {
   const { showSplashScreen, setShowSplashScreen } = useContext(GameContext) as GameContextType;
- 
+  
+    //set Video
+    useEffect(() => {
+      setTimeout(() => {
+        setShowSplashScreen(false);
+      }, 7000);
+    }, []);
+
+
 
   if (showSplashScreen) {
     return (
@@ -25,11 +31,8 @@ function QuizApp() {
   return (
     <React.Fragment>
       <Toaster />
-
       <Routes>
-        {/*<Route path="/quiz" element={<QuizPlay />} />*/}
-        <Route  path="/" element={<QuizIndex />}/>
-       
+        <Route  path="/" element={<QuizIndex />}/> 
       </Routes>
     </React.Fragment>
   );

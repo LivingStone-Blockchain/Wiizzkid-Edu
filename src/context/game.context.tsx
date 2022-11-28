@@ -4,6 +4,9 @@ import axios from 'axios';
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios";
 import useSound from 'use-sound';
 import categoryStrings from '../gameContainers/quiz/components/functions/categoryStringConveter';
+import { useLocation } from 'react-router-dom';
+
+
 
 type questionsData = {
   category: number,
@@ -97,8 +100,8 @@ const GameProvider: FC<any> = ({ children }) => {
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.5 });
   const [category, setCategory] = useState<string>("");
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
-  
-console.log(quizData);
+  const location = useLocation();
+
 
   //reset initial category value based game mode changes
   useEffect(() => {
@@ -134,18 +137,13 @@ console.log(quizData);
   }, [triviaFetch])
 
 
+ 
   
-  //set Video
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSplashScreen(false);
-    }, 7000);
-  }, []);
+//might use useEffect
+//fade into oblivion on game start
+//!//showSplashScreen && location.pathname.includes('quiz') && play();
+//location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
 
-
-
-  //turn off music on game start
- // start ? sound.fade(0.5, 0, 9000) : play();
 
 
 //function create game form 1
