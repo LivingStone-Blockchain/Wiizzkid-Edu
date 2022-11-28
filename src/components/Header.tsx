@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/effect-fade";
 import { Autoplay, EffectFade } from "swiper";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { girl, vr, pcboy, vrgirl, logo, ninja } from "../assets/header/index";
 import { AiFillCalculator } from 'react-icons/ai';
 import { FaGamepad, FaTimes } from 'react-icons/fa';
@@ -62,6 +62,7 @@ const data:headerDataType[] = [
 
 const Header = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [open, setOpen] = useState<boolean>(false);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
@@ -80,6 +81,14 @@ const Header = () => {
         body!.style.overflowX = "hidden";
        }
     }, [mobileDropdownOpen])
+
+
+    //only render on homepage
+   useEffect(() => {
+    if (location.pathname !== "/") {
+        return;
+    }
+   }, [location.pathname])
 
 
     return (
@@ -242,7 +251,7 @@ const Header = () => {
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                 Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">ST</span>
+                                                                 Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">STN</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -260,13 +269,13 @@ const Header = () => {
                                                                 </div>
                                                         
                                                         </Link>
-                                                        <Link to="/account/donations" className="px-4 py-2 hover:bg-gray-50 flex">
+                                                        <Link to="/pricing" className="px-4 py-2 hover:bg-gray-50 flex">
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineAccountBalanceWallet />
 
                                                                 </div>
                                                                 <div className="pl-3">
-                                                                    <p className="text-sm font-medium text-gray-800 leading-none">Buy Stone</p>
+                                                                    <p className="text-sm font-medium text-gray-800 leading-none" >Buy Stone</p>
                                                                     <p className="text-xs text-gray-500">Credit your wallet to play</p>
                                                                 </div>
                                                         </Link>
@@ -290,7 +299,8 @@ const Header = () => {
                     </div>
 
                     {/*hero section */}
-                    <div id="home" className={`${mobileDropdownOpen && 'md:blur-0 blur-2xl'} max-w-screen-xl px-8 mx-auto flex flex-col lg:flex-row items-start z-10 relative overflow-hidden pt-[30px] md:pt-[90px] lg:pt-[120px]`} onClick={() => setDropdownOpen(false)}>
+                    <>
+                        <div id="home" className={`${mobileDropdownOpen && 'md:blur-0 blur-2xl'} max-w-screen-xl px-8 mx-auto flex flex-col lg:flex-row items-start z-10 relative overflow-hidden pt-[30px] md:pt-[90px] lg:pt-[120px]`} onClick={() => setDropdownOpen(false)}>
                         <div className="flex flex-col w-full lg:w-6/12 justify-center lg:pt-24 items-start text-center lg:text-left mb-5 md:mb-0">
                             <h1 data-aos="fade-right" data-aos-once="true" className="my-4 text-4xl md:text-5xl font-bold leading-tight text-darken">We are the <span style={{ color: `${colorDeep}` }}>{tagline}</span></h1>
                             <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal md:text-2xl text-xl mb-8">{text}</p>
@@ -298,6 +308,7 @@ const Header = () => {
                                 <Button 
                                     children="Buy Stone Token"
                                     className='lg:mx-0 text-white text-xl font-bold py-4 px-9 focus:outline-none '
+                                    onClick={() => navigate('/pricing')}
                                     style={window.innerWidth > 767 ? { backgroundColor: `${colorDeep}`, boxShadow: `${shadow}` } : { backgroundColor: `${colorDeep}`, boxShadow: `${mobileShadow}` }}
                                 />
                             </div>
@@ -363,6 +374,7 @@ const Header = () => {
                         <div className="bg-white w-full h-20 -mt-px"></div>
                     </div>
 
+                    </> 
 
                 </SwiperSlide>
             ))}

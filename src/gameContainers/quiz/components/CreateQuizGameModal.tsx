@@ -13,10 +13,9 @@ import FormGroup from "./forms/FormGroup";
 import Input from "./forms/Input";
 import Label from "./forms/Label";
 import Select from "./forms/Select";
-import Overlay from "./Overlay";
 import { useNavigate } from 'react-router-dom';
 import { GameContext, GameContextType } from "../../../context/game.context";
-
+import { UserContext, UserContextType } from '../../../context/user.context';
 
 
 interface CreateQuizGameModalType {
@@ -32,6 +31,20 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const textRef = useRef<HTMLParagraphElement>(null);
   const [gameCreated, setGameCreated] = useState<boolean>(false);
   const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen } = useContext(GameContext) as GameContextType;
+  const { user } = useContext(UserContext) as UserContextType;
+
+
+  //prevent unlogged user
+  useEffect(() => {
+    if (!user && gameMode !== 'london') {
+      toast.dismiss('unlogged');
+      toast.error('login and buy Stone to continue', { duration: 3000, id: 'unlogged' });
+      setTimeout(() => {
+        toast.dismiss('unlogged');
+        setGameMode('london');
+      }, 3000);
+    }
+  },[gameMode, user]);
 
 
   const handleCopyClick = async () => {
@@ -72,6 +85,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       ? setTriviaFetch(true)
       : setTriviaFetch(false);
   }
+
+  console.log(gameCreated, gameDetails);
 
   if (gameCreated && gameDetails) {
     return (
@@ -144,8 +159,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                <option value="beijing">Beijing Mode</option>
-                <option value="shanghai">Shanghai Mode</option>
+                <option value="beijing" className={`${!user ? 'text-gray-500' : ''}`}>Beijing Mode</option>
+                <option value="shanghai" className={`${!user ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
               </Select>
             </FormGroup>
 
@@ -206,17 +221,21 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
                 <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                {user && (
+                  <>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </>
+                )}
               </Select>
             </FormGroup>
 
