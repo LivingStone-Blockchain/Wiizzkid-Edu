@@ -11,6 +11,9 @@ import { GiMonkey } from 'react-icons/gi'
 import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet } from 'react-icons/md';
 import Button from './Button'
 import { UserContext, UserContextType } from '../context/user.context';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { useConnect } from 'wagmi';
+// import { InjectedConnector } from '@wagmi/core';
 
 
 type headerDataType = {
@@ -208,11 +211,13 @@ const Header = () => {
                                     />
                                     )}
 
-                                    <Button
+                                    <ConnectButton chainStatus="none"/>
+
+                                    {/* <Button
                                         className={`${mobileDropdownOpen && 'blur-2xl'} px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
                                         children="Connect Wallet"
                                         style={{ backgroundColor: `${colorDeep}` }}
-                                    />
+                                    /> */}
 
                                     {/*large screen profile*/}
                                     
