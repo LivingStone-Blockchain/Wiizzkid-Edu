@@ -1,21 +1,35 @@
 import React, { useContext, useEffect } from 'react'
 import { login } from '../assets/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import Form from '../components/Form';
+import { Link } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
+import { Form , Preloader, LoadingToRedirect } from '../components/index';
+
 
 const Login = () => {
-  const navigate = useNavigate();
   const { user, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, handleLogin, isLoading, setIsLoading } = useContext(UserContext) as UserContextType;
 
+//kill loader after 2sec
+useEffect(() => {
+  setTimeout(() => {
+    setIsLoading(false);
+}, 2000)
+}, [isLoading])
 
+
+
+if (isLoading) {
+  return (
+    <Preloader />
+  )
+}
 
   //restrict access to page for logged users
-  useEffect(() => {
     if (user) {
-      navigate('/');
+      return (
+        <><LoadingToRedirect /></>
+      )
     }
-  }, [user])
+
 
   return (
     <Form alt='login' img={login}>

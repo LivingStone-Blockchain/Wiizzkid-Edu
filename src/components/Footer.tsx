@@ -13,11 +13,9 @@ const Footer = () => {
 
 
   //render based on location
-  useEffect(() => {
-   if (location.pathname != "/" || "/pricing") {
-    return;
-}
-}, [location.pathname])
+    if (location.pathname !== "/" && location.pathname !== "/pricing") {
+      return null;
+  }
 
 
 

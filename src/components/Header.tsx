@@ -80,14 +80,12 @@ const Header = () => {
     }, [mobileDropdownOpen])
 
 
-    //only render on homepage
-   useEffect(() => {
+    //render only on homepage
     if (location.pathname !== "/") {
-        return;
+        return null;
     }
-   }, [location.pathname])
 
-
+   
     return (
         <Swiper
             spaceBetween={30}
@@ -150,18 +148,18 @@ const Header = () => {
                                                     <div className="text-center p-6 bg-[#252641] border-b relative">
                                                         <FaTimes className='text-white absolute right-4 top-4 cursor-pointer' onClick={() => setMobileDropdownOpen(false)}/>
                                                         {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
-                                                        <p className="pt-2 text-lg font-semibold text-gray-50">John Doe</p>
+                                                        <p className="pt-2 text-lg font-semibold text-gray-50">{user?.full_name}</p>
                                                         <p className="text-sm text-gray-100">{user?.email}</p>
                                                         <div className="mt-5">
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                   Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">ST</span>
+                                                                   Balance: <span className="text-xl font-semibold">{`${user?.stone_token}.00`}</span> <span className="text-xs">STN</span>
                                                             </a>
                                                         </div>
                                                     </div>
                                                     <div className="border-b">
-                                                        <Link to="/dashboard" className="px-4 py-3 hover:bg-gray-100 flex">
+                                                        <Link to="/dashboard" className="px-4 py-3 hover:bg-gray-100 flex" onClick={() => {setMobileDropdownOpen(false); setOpen(false) }}>
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineSpaceDashboard className="w-4 h-4" />
                                                                 </div>
@@ -172,7 +170,7 @@ const Header = () => {
                                                                     <p className="text-xs text-gray-500">View your campaigns</p>
                                                                 </div>
                                                         </Link>
-                                                        <Link to="/account/donations" className="px-4 py-3 hover:bg-gray-100 flex">     
+                                                        <Link to="/pricing" className="px-4 py-3 hover:bg-gray-100 flex"  onClick={() => {setMobileDropdownOpen(false); setOpen(false) }}>     
                                                                <div className="text-gray-800">
                                                                     <MdOutlineAccountBalanceWallet />
                                                                 </div>
@@ -184,7 +182,7 @@ const Header = () => {
                                                     </div>
 
                                                     <div>
-                                                        <button className="w-full px-4 py-3 pb-4 hover:bg-gray-100 flex gap-4">
+                                                        <button className="w-full px-4 py-3 pb-4 hover:bg-gray-100 flex gap-4" onClick={() => {setMobileDropdownOpen(false); setOpen(false) }}>
                                                             <MdOutlineLogout className="text-gray-500 h-4 w-4" />
                                                             <p className="text-sm font-medium text-gray-500 leading-none" onClick={handleLogout}> Logout</p>
                                                         </button>
@@ -240,18 +238,18 @@ const Header = () => {
                                                 <div className="bg-white rounded-xl overflow-hidden shadow-xl z-50">
                                                     <div className="text-center p-6 bg-[#252641] border-b">
                                                         {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
-                                                        <p className="pt-2 text-lg font-semibold text-gray-50">John Doe</p>
+                                                        <p className="pt-2 text-lg font-semibold text-gray-50">{user?.full_name}</p>
                                                         <p className="text-sm text-gray-100">{user?.email}</p>
                                                         <div className="mt-5">
                                                             <a
                                                                 className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                             >
-                                                                 Balance: <span className="text-xl font-semibold">25.00</span> <span className="text-xs">STN</span>
+                                                                 Balance: <span className="text-xl font-semibold">{`${user?.stone_token}.00`}</span> <span className="text-xs">STN</span>
                                                             </a>
                                                         </div>
                                                     </div>
                                                     <div className="border-b">
-                                                        <Link to="/dashboard" className="px-4 py-2 hover:bg-gray-50 flex">
+                                                        <Link to="/dashboard" className="px-4 py-2 hover:bg-gray-50 flex" onClick={() => setDropdownOpen(false)}>
                                                         
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineSpaceDashboard className="w-4 h-4" />
@@ -264,7 +262,7 @@ const Header = () => {
                                                                 </div>
                                                         
                                                         </Link>
-                                                        <Link to="/pricing" className="px-4 py-2 hover:bg-gray-50 flex">
+                                                        <Link to="/pricing" className="px-4 py-2 hover:bg-gray-50 flex" onClick={() => setDropdownOpen(false)}>
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineAccountBalanceWallet />
 
@@ -277,7 +275,7 @@ const Header = () => {
                                                     </div>
 
                                                     <div>
-                                                        <button className="w-full px-4 py-2 pb-4 hover:bg-gray-50 flex gap-4">
+                                                        <button className="w-full px-4 py-2 pb-4 hover:bg-gray-50 flex gap-4" onClick={() => setDropdownOpen(false)}>
                                                             <MdOutlineLogout className="text-gray-500 h-4 w-4" />
                                                             <p className="text-sm font-medium text-gray-500 leading-none" onClick={handleLogout}> Logout</p>
                                                         </button>

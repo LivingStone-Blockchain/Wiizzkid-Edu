@@ -6,40 +6,50 @@ import { Autoplay, EffectFade } from "swiper";
 import { UserContext, UserContextType } from '../context/user.context'
 import { useNavigate } from 'react-router-dom';
 import { mailRed, mailGreen, mailBlue, girlBlue, girlGreen, girlRed } from '../assets/registerNotify';
+import { LoadingToRedirect } from '../components/index';
+import logo from './../assets/header/wiizzkid-logo.png';
 
+
+type dataType = {
+    id: number,
+    img: string,
+    color: string,
+    mailImg: string
+}
+
+const data: dataType[] = [
+    {
+        id: 1,
+        img: girlRed,
+        color: '#ff5d5d',
+        mailImg: mailRed,
+    },
+    {
+        id: 2,
+        img: girlBlue,
+        color: '#5b72ee',
+        mailImg: mailBlue,
+    },
+    {
+        id: 3,
+        img: girlGreen,
+        color: '#37b9b2',
+        mailImg: mailGreen,
+    }
+]
 
 
 const RegisterNotification = () => {
-    const { emailNotify } = useContext(UserContext) as UserContextType;
+    const { emailNotify, user } = useContext(UserContext) as UserContextType;
     const navigate = useNavigate();
 
-    type dataType = {
-        id: number,
-        img: string,
-        color: string,
-        mailImg: string
-    }
-
-    const data: dataType[] = [
-        {
-            id: 1,
-            img: girlRed,
-            color: '#ff5d5d',
-            mailImg: mailRed,
-        },
-        {
-            id: 2,
-            img: girlBlue,
-            color: '#5b72ee',
-            mailImg: mailBlue,
-        },
-        {
-            id: 3,
-            img: girlGreen,
-            color: '#37b9b2',
-            mailImg: mailGreen,
-        }
-    ]
+    
+  //restrict access to page for logged users
+  if (user) {
+    return (
+      <><LoadingToRedirect /></>
+    )
+  }
 
     return (
         <div data-aos="fade-up" data-aos-once="true" data-aos-delay="500" className="flex items-center min-h-screen p-6 bg-gray-50">
@@ -61,6 +71,9 @@ const RegisterNotification = () => {
                     {data.map(({ id, img, color, mailImg }) => (
 
                         <SwiperSlide key={id}>
+                             <div className={`relative  top-5 left-5 flex justify-center items-center border-2  h-12 w-12 rounded-lg p-1`} style={{borderColor: `${color}`}}>
+                        <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" />
+                    </div>
 
                             <div className="flex flex-col overflow-y-auto md:flex-row">
                                 <div className="md:h-auto md:w-1/2">

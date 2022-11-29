@@ -19,7 +19,9 @@ type userType = {
     tokens: {
         access: string,
         refresh: string,
-    }
+    },
+    full_name: string,
+    stone_token: number,
 }
 
 export interface UserContextType {
@@ -50,13 +52,13 @@ const UserProvider: FC<any> = ({ children }) => {
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
     
-    console.log(isLoading);
+   
 
 
    
     //login users automatically
     useEffect(() => {
-        const loggedUSerJSON = window.localStorage.getItem(  'loggedWiizzikidUser');
+        const loggedUSerJSON = window.localStorage.getItem('loggedWiizzikidUser');
         if (loggedUSerJSON) {
             const recoveredUser = JSON.parse(loggedUSerJSON);
             setUser(recoveredUser);
@@ -117,7 +119,6 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
   
 
 
-  console.log(user);
 
 
 //Handle login
@@ -141,7 +142,8 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         setUser(user);
         setEmailLogin('');
         setPasswordLogin('');
-        navigate('/', { replace: true });
+        //navigate('/', { replace: true });
+        navigate(-1);
         setIsLoading(false);
     } catch (error) {
         setIsLoading(false);
@@ -159,7 +161,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 const handleLogout = useCallback(() => {
 
     setIsLoading(true);
-    navigate('/register');
+    navigate('/login');
     window.localStorage.removeItem('loggedWiizzikidUser');
     setEmailLogin('');
     setPasswordLogin('');

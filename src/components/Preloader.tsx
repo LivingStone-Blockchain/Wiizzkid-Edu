@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from 'react'
 import loaderGif from './../assets/preloader/loader.gif';
 
+
 type PreloaderProp = {
   homeLoader?: boolean
 }

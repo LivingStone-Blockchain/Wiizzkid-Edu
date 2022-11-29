@@ -1,13 +1,15 @@
-import React from 'react'
-import { logo, ninja } from '../assets/header';
+import React, { useContext } from 'react'
+import { ninja } from '../assets/header';
 import { Link } from 'react-router-dom';
-
+import { UserContext, UserContextType } from '../context/user.context';
 
 
 const Dashboard = () => {
+  const { user, handleLogout } = useContext(UserContext) as UserContextType;
+
   return (
     
-    <body className="bg-gray-100">
+    <div className="bg-gray-100">
   <aside
     className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
   >
@@ -18,8 +20,8 @@ const Dashboard = () => {
           alt="user"
           className="m-auto h-10 w-10 rounded-full object-cover lg:h-20 lg:w-20"
         />
-        <h5 className="mt-4 hidden text-xl font-semibold text-gray-600 lg:block">John Doe</h5>
-        <span className="hidden text-gray-400 lg:block">Admin</span>
+        <h5 className="mt-4 hidden text-xl font-semibold text-gray-600 lg:block">{user?.full_name}</h5>
+        <span className="hidden text-gray-400 lg:block">User</span>
       </div>
 
       <ul className="mt-8 space-y-2 tracking-wide">
@@ -59,9 +61,9 @@ const Dashboard = () => {
             >
               <path
                 className="fill-current text-gray-300 group-hover:text-cyan-300"
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
               <path
                 className="fill-current text-gray-600 group-hover:text-cyan-600"
@@ -84,9 +86,9 @@ const Dashboard = () => {
             >
               <path
                 className="fill-current text-gray-600 group-hover:text-cyan-600"
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
               <path
                 className="fill-current text-gray-300 group-hover:text-cyan-300"
@@ -136,9 +138,9 @@ const Dashboard = () => {
               />
               <path
                 className="fill-current text-gray-600 group-hover:text-cyan-600"
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
             <span className="group-hover:text-gray-700">Buy Stone</span>
@@ -148,7 +150,7 @@ const Dashboard = () => {
     </div>
 
     <div className="-mx-6 flex items-center justify-between border-t px-6 pt-4">
-      <button className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
+      <button className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600" onClick={handleLogout}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -157,9 +159,9 @@ const Dashboard = () => {
           stroke="currentColor"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
           />
         </svg>
@@ -180,9 +182,9 @@ const Dashboard = () => {
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
@@ -240,9 +242,9 @@ const Dashboard = () => {
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
               />
             </svg>
@@ -274,7 +276,7 @@ const Dashboard = () => {
       </div>
     </div>
   </div>
-</body>
+</div>
 
   )
 }

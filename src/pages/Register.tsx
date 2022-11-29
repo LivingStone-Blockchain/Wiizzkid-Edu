@@ -1,22 +1,21 @@
 import React, { useContext, useEffect } from 'react'
 import { register } from '../assets/auth';
-import Form from '../components/Form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
 import { BsCheck } from 'react-icons/bs';
-import Preloader from '../components/Preloader';
+import { Form , Preloader, LoadingToRedirect } from '../components/index';
 
 
 const Register = () => {
-  const navigate = useNavigate();
   const { user, registerFormik, isLoading, setIsLoading } = useContext(UserContext) as UserContextType;
 
+ 
   //restrict access to page for logged users
-  useEffect(() => {
-    if(user) {
-      navigate('/');
-    }
-  }, [user])
+  if (user) {
+    return (
+      <><LoadingToRedirect /></>
+    )
+  }
 
 //kill loader after 2sec
   useEffect(() => {

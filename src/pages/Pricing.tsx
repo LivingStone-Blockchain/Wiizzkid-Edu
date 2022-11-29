@@ -1,17 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FiCheck } from 'react-icons/fi';
 import Button from '../components/Button';
+import { Banner } from './../components/index';
+import { useNavigate } from 'react-router-dom';
+import { UserContext, UserContextType } from '../context/user.context';
+
 
 const Pricing = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext) as UserContextType;
+
+  const handleDashboardRouting = () => {
+    if (!user) {
+      return navigate('/login');
+    }
+
+    navigate('/dashboard')
+  }
+
+
   return (
-    
-    <div className="xl:container m-auto px-6 py-20 md:px-12 lg:px-20">
-  <div className="m-auto text-center lg:w-7/12">
-    <h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">Pricing <span className="text-yellow-500">Table.</span></h1>
-	<p className="leading-relaxed text-gray-500 lg:text-base text-sm">A Wiizzkid subscription gives you access to our quizzes and games</p>
-  </div>
-  <div className="mt-12 grid items-center gap-6 md:grid-cols-2 lg:flex lg:space-x-8">
-    <div className="group relative md:col-span-1 lg:w-[32%]">
+    <>
+    <Banner 
+      title='Pricing'
+    />
+    <div className="xl:container m-auto px-6 md:py-20 py-14 md:px-12 lg:px-20">
+      <div className="m-auto text-center lg:w-7/12">
+      <h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">Pricing <span className="text-yellow-500">Table.</span></h1>
+	    <p className="leading-relaxed text-gray-500 lg:text-base text-sm">A Wiizzkid subscription gives you access to our quizzes and games</p>
+      </div>
+      <div className="mt-12 grid items-center gap-6 md:grid-cols-2 lg:flex lg:space-x-8">
+      <div className="group relative md:col-span-1 lg:w-[32%]">
       <div
         aria-hidden="true"
         className="absolute top-0 h-full w-full rounded-xl border border-gray-200  bg-white  shadow-2xl shadow-gray-600/10  transition duration-500 group-hover:scale-105 lg:group-hover:scale-110"
@@ -44,6 +63,7 @@ const Pricing = () => {
           </li>
         </ul>
         <Button 
+            onClick={handleDashboardRouting}
             children='Start plan'
             className='relative flex h-11 w-full items-center justify-center px-6 py-6 before:absolute before:inset-0 text-white bg-[#252641] transition duration-300 hover:scale-105 active:duration-75 active:scale-95'
         />
@@ -93,6 +113,7 @@ const Pricing = () => {
           </li>
         </ul>
         <Button 
+             onClick={handleDashboardRouting}
             children='Start plan'
             className='relative flex h-11 w-full items-center  justify-center px-6 py-6 before:absolute before:inset-0 text-white bg-[#252641] transition duration-300 hover:scale-105 active:duration-75 active:scale-95'
         />
@@ -137,8 +158,9 @@ const Pricing = () => {
       </div>
     </div>
   </div>
+  
 </div>
-
+</>
   )
 }
 

@@ -6,7 +6,7 @@ import "swiper/css/effect-fade";
 import { Autoplay, EffectFade } from "swiper";
 import { useNavigate } from 'react-router-dom';
 import { errorRed, errorBlue, errorGreen, errorOne, errorTwo, errorThree } from '../assets/notFound';
-
+import logo from './../assets/header/wiizzkid-logo.png';
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -59,8 +59,10 @@ const NotFound = () => {
             {data.map(({ id, img, color, mailImg }) => (
                      
                 <SwiperSlide key={id}>
-              
-                     <div className="flex flex-col overflow-y-auto md:flex-row">
+                     <div className={`relative  top-5 left-5 flex justify-center items-center border-2  h-12 w-12 rounded-lg p-1`} style={{borderColor: `${color}`}}>
+                        <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" />
+                    </div>
+                <div className="flex flex-col overflow-y-auto md:flex-row">
                 <div className="md:h-auto md:w-1/2">
                      <img
                         aria-hidden="true"
