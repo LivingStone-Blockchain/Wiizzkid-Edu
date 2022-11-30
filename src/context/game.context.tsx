@@ -1,10 +1,11 @@
-import { createContext, FC, useState, useRef, useEffect } from "react";
+import { createContext, FC, useState, useRef, useEffect, useContext } from "react";
 import service from "../gameContainers/quiz/services/services";
 import axios from 'axios';
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios";
 import useSound from 'use-sound';
 import categoryStrings from '../gameContainers/quiz/components/functions/categoryStringConveter';
 import { useLocation } from 'react-router-dom';
+import { UserContext, UserContextType } from './user.context';
 
 
 
@@ -20,16 +21,29 @@ type questionsData = {
 }
 
 //expected object key types from backend
+//some keys made optional for unlogged users payload
 type returnedDataType = {
-  id: string,
-  invite_code: string,
-  correctAnswer: string,
+  id?: string,
+  invite_code?: string,
+  correctAnswer?: string,
   difficulty: string,
   total_questions: number,
   total_players: number,
   game_mode: string,
   game_duration: number,
   category: number,
+}
+
+
+type userType = {
+  email: string,
+  tokens: {
+      access: string,
+      refresh: string,
+  },
+  full_name: string,
+  stone_token: number,
+  id: number,
 }
 
 
@@ -68,6 +82,7 @@ export interface GameContextType {
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>,
   start: boolean,
   setStart: React.Dispatch<React.SetStateAction<boolean>>,
+  user: userType | null,
 }
 
 
@@ -101,6 +116,8 @@ const GameProvider: FC<any> = ({ children }) => {
   const [category, setCategory] = useState<string>("");
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
   const location = useLocation();
+  //get user details from user context
+  const { user } = useContext(UserContext) as UserContextType;
 
 
   //reset initial category value based game mode changes
@@ -154,23 +171,29 @@ const GameProvider: FC<any> = ({ children }) => {
 
   //function create game form 2
   const handleInstructionScreen = async () => {
+
     const payload = {
       difficulty,
       total_questions: totalAllowedQuestions,
       total_players: Number(totalAllowedPlayers), 
       game_mode: gameMode,
       game_duration: gameDuration,
-      category: Number(category)
+      category: Number(category),
+      creator: user?.id,
     }
     
+    //persist only logged user data to backend
     try {
-      await service.createGame(payload).then((res) => {
-        setGameDetails(res);
-      });
+      user 
+      ? await service.createGame(payload).then((res) => {
+        setGameDetails(res); 
+      })
+      : setGameDetails(payload);
     } catch (error) {
       console.log(error);
     }
   }
+
 
 
 
@@ -197,7 +220,7 @@ const GameProvider: FC<any> = ({ children }) => {
 
   return (
     <GameContext.Provider
-      value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails}}
+      value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user}}
     >
       {children}
     </GameContext.Provider>

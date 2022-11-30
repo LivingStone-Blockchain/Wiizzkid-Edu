@@ -22,6 +22,7 @@ type userType = {
     },
     full_name: string,
     stone_token: number,
+    id: number,
 }
 
 export interface UserContextType {
@@ -117,8 +118,6 @@ const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormik
   })
 
   
-
-
 
 
 //Handle login

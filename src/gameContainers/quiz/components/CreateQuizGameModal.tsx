@@ -15,7 +15,6 @@ import Label from "./forms/Label";
 import Select from "./forms/Select";
 import { useNavigate } from 'react-router-dom';
 import { GameContext, GameContextType } from "../../../context/game.context";
-import { UserContext, UserContextType } from '../../../context/user.context';
 
 
 interface CreateQuizGameModalType {
@@ -30,15 +29,15 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
   const [gameCreated, setGameCreated] = useState<boolean>(false);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen } = useContext(GameContext) as GameContextType;
-  const { user } = useContext(UserContext) as UserContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user } = useContext(GameContext) as GameContextType;
+ 
 
 
   //prevent unlogged user from accessing premium
   useEffect(() => {
-    if (!user && gameMode !== 'london') {
+    if (!user?.stone_token && gameMode !== 'london') {
       toast.dismiss('unlogged');
-      toast.error('login and buy Stone to continue', { duration: 3000, id: 'unlogged' });
+      toast.error(`Buy Stone to play ${gameMode} mode!`, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
         toast.dismiss('unlogged');
         setGameMode('london');
@@ -47,6 +46,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   },[gameMode, user]);
 
 
+  //copy paste function
   const handleCopyClick = async () => {
     //exec command for older browsers
     ("clipboard" in navigator)
@@ -70,8 +70,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
     setTimeout(() => {
       toast.dismiss("loading");
+       setGameCreated(true);
       toast.success("Quiz game created successfully!");
-      setGameCreated(true);
     }, 4000);
   };
 
@@ -85,8 +85,9 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       ? setTriviaFetch(true)
       : setTriviaFetch(false);
   }
+  
+  console.log(gameCreated);
 
-  console.log(gameCreated, gameDetails);
 
   if (gameCreated && gameDetails) {
     return (
@@ -98,7 +99,9 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             Quiz Game Created!
           </h1>
       
-          <p className="mt-8">
+      {gameMode !== 'london' && (
+        <>
+        <p className="mt-8">
             <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
               {gameDetails?.invite_code}
             </span>
@@ -110,6 +113,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
           <p className="mt-4">
             Copy and share your quiz code or link to your friends!
           </p>
+        </>
+      )}
 
           <Button
             onClick={handleStartGame}
@@ -122,8 +127,10 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     );
   }
 
+  console.log(gameCreated);
+
   return (
-    <section className="pb-4 w-full">
+    <section className={`pb-4 w-full ${gameCreated ? 'hidden' : 'block'}`} style={{display: gameCreated ? 'none' : 'block'}}>
       <div className="mb-7 flex items-center justify-between">
         {screen === 2 ? (
           <Button type="button" onClick={() => setScreen(1)} btnDefault>
@@ -159,8 +166,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                <option value="beijing" className={`${!user ? 'text-gray-500' : ''}`}>Beijing Mode</option>
-                <option value="shanghai" className={`${!user ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                <option value="beijing" className={`${!user?.stone_token ? 'text-gray-500' : ''}`}>Beijing Mode</option>
+                <option value="shanghai" className={`${!user?.stone_token ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
               </Select>
             </FormGroup>
 
@@ -221,7 +228,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
                 <option value="1">1</option>
-                {user && (
+                {user?.stone_token && (
                   <>
                     <option value="2">2</option>
                     <option value="3">3</option>
