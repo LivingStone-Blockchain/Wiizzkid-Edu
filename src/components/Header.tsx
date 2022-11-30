@@ -9,11 +9,10 @@ import { AiFillCalculator } from 'react-icons/ai';
 import { FaGamepad, FaTimes } from 'react-icons/fa';
 import { GiMonkey } from 'react-icons/gi'
 import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet } from 'react-icons/md';
-import Button from './Button'
+import Button from './Button';
+import { ConnectWalletBtn } from './index';
 import { UserContext, UserContextType } from '../context/user.context';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-// import { useConnect } from 'wagmi';
-// import { InjectedConnector } from '@wagmi/core';
+
 
 
 type headerDataType = {
@@ -211,13 +210,31 @@ const Header = () => {
                                     />
                                     )}
 
-                                    <ConnectButton chainStatus="none"/>
+                                    {/*connect wallet*/}
+                                    <ConnectWalletBtn 
+                                        colorDeep={colorDeep}
+                                        mobileDropdownOpen={mobileDropdownOpen}      
+                                    />
 
-                                    {/* <Button
+                                    {/*<span className='mt-3 lg:mt-8  lg:ml-4 rounded-full bg-[#252641] p-1'>
+                                    <ConnectButton 
+                                        chainStatus="none"
+                                        label="Connect wallet"
+                                        showBalance={false}
+                                        accountStatus={{
+                                            smallScreen: 'avatar',
+                                            largeScreen: 'full',
+                                          }}
+                                       
+                                    />
+                                    </span>
+
+                                    <Button
                                         className={`${mobileDropdownOpen && 'blur-2xl'} px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
                                         children="Connect Wallet"
                                         style={{ backgroundColor: `${colorDeep}` }}
-                                    /> */}
+                                        />*/}
+
 
                                     {/*large screen profile*/}
                                     

@@ -80,3 +80,4 @@ span.lazy-load-image-background > img {
 div.marquee-container > div.overlay::before, div.overlay::after {
   --gradient-width:80px;
 }
+

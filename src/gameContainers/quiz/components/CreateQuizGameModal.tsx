@@ -34,7 +34,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const { user } = useContext(UserContext) as UserContextType;
 
 
-  //prevent unlogged user
+  //prevent unlogged user from accessing premium
   useEffect(() => {
     if (!user && gameMode !== 'london') {
       toast.dismiss('unlogged');
