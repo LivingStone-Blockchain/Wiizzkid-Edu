@@ -156,10 +156,10 @@ const GameProvider: FC<any> = ({ children }) => {
 
  
   
-//might use useEffect
+
 //fade into oblivion on game start
-//!//showSplashScreen && location.pathname.includes('quiz') && play();
-//location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
+!showSplashScreen && location.pathname.includes('quiz') && play();
+location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
 
 
 

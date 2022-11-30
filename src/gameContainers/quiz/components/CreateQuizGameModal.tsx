@@ -99,7 +99,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             Quiz Game Created!
           </h1>
       
-      {gameMode !== 'london' && (
+      {gameMode !== 'london' ? (
         <>
         <p className="mt-8">
             <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
@@ -114,11 +114,22 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             Copy and share your quiz code or link to your friends!
           </p>
         </>
+      ) : (
+        <>
+           <p className="mt-8">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
+              Free Mode
+            </span>
+          </p>
+           <p className="mt-8">
+            Game codes/links can be generated and shared in premium modes!
+          </p>
+        </>
       )}
 
           <Button
             onClick={handleStartGame}
-            className="mx-auto mt-8"
+            className={`mx-auto mt-14`}
           >
             Play Quiz
           </Button>
@@ -130,7 +141,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   console.log(gameCreated);
 
   return (
-    <section className={`pb-4 w-full ${gameCreated ? 'hidden' : 'block'}`} style={{display: gameCreated ? 'none' : 'block'}}>
+    <section className="pb-4 w-full">
       <div className="mb-7 flex items-center justify-between">
         {screen === 2 ? (
           <Button type="button" onClick={() => setScreen(1)} btnDefault>
