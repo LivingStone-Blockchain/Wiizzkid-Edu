@@ -47,7 +47,7 @@ type userType = {
 }
 
 
-export interface GameContextType {
+export interface QuizContextType {
   submitTimeRef: any,
   timeOfStart: any;
   startGame: (date: any) => void,
@@ -94,10 +94,10 @@ enum GameModes {
   shanghai = "shanghai"
 }
 
-export const GameContext = createContext<GameContextType | null>(null);
+export const QuizContext = createContext<QuizContextType | null>(null);
 
 
-const GameProvider: FC<any> = ({ children }) => {
+const QuizProvider: FC<any> = ({ children }) => {
   const submitTimeRef = useRef<HTMLSpanElement>(null);
   const [selectedOption, setSelectedOption] = useState<string | number>("");
   const [timeOfStart, setTimeOfStart] = useState<any>();
@@ -155,7 +155,7 @@ const GameProvider: FC<any> = ({ children }) => {
 
 
  
-  
+ 
 
 //fade into oblivion on game start
 !showSplashScreen && location.pathname.includes('quiz') && play();
@@ -184,7 +184,7 @@ location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
     
     //persist only logged user data to backend
     try {
-      user 
+      user?.stone_token
       ? await service.createGame(payload).then((res) => {
         setGameDetails(res); 
       })
@@ -219,12 +219,12 @@ location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
 
 
   return (
-    <GameContext.Provider
+    <QuizContext.Provider
       value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user}}
     >
       {children}
-    </GameContext.Provider>
+    </QuizContext.Provider>
   );
 };
 
-export default GameProvider;
+export default QuizProvider;

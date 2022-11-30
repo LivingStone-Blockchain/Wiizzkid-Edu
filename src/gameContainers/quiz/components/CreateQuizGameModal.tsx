@@ -14,7 +14,7 @@ import Input from "./forms/Input";
 import Label from "./forms/Label";
 import Select from "./forms/Select";
 import { useNavigate } from 'react-router-dom';
-import { GameContext, GameContextType } from "../../../context/game.context";
+import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 
 interface CreateQuizGameModalType {
@@ -29,7 +29,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
   const [gameCreated, setGameCreated] = useState<boolean>(false);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user } = useContext(GameContext) as GameContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user } = useContext(QuizContext) as QuizContextType;
  
 
 
@@ -86,7 +86,6 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       : setTriviaFetch(false);
   }
   
-  console.log(gameCreated);
 
 
   if (gameCreated && gameDetails) {

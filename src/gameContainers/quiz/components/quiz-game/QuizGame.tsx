@@ -11,7 +11,7 @@ import quizCompletedToast from "../toasts/quizCompleteToast";
 import quizEndGameToast from "../toasts/quitGameToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
-import { GameContext, GameContextType } from "../../../../context/game.context";
+import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 import CountDownTimer from "../CountDownTimer";
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ interface QuizGameTypes {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, score, setStart, timeOfStart, category, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, gameMode, triviaFetch, setTriviaFetch, gameDetails } = useContext(GameContext) as GameContextType;
+  const { quizData, score, setStart, timeOfStart, category, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, gameMode, triviaFetch, setTriviaFetch, gameDetails } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();  

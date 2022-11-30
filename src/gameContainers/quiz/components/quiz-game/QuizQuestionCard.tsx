@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import SingleQuestion from "./SingleQuestion";
 import toast from "react-hot-toast";
-import { GameContext, GameContextType } from "../../../../context/game.context";
+import {QuizContext,QuizContextType } from "../../../../context/quiz.context";
 
 
 interface QuizQuestionCardProps {
@@ -16,7 +16,7 @@ interface QuizQuestionCardProps {
 }
 
 const QuizQuestionCard: FC<QuizQuestionCardProps> = (question) => {
-  const { selectedOption, setSelectedOption } = useContext(GameContext) as GameContextType;
+  const { selectedOption, setSelectedOption } = useContext(QuizContext) as QuizContextType;
 
 
 

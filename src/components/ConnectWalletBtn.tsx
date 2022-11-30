@@ -49,14 +49,14 @@ const ConnectWalletBtn: FC<ConnectWalletBtnProps> = ({colorDeep, mobileDropdownO
                  <Button
                       onClick={openConnectModal}
                       type="button"
-                      className={`${mobileDropdownOpen && 'blur-2xl'} px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
+                      className={`${mobileDropdownOpen && 'blur-2xl'} w-full px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
                       children="Connect Wallet"
                       style={{ backgroundColor: `${colorDeep}` }}
                  />
               );
             }
 
-            if (chain.unsupported) {
+            if (!chain.unsupported) {
               return (
                 <button onClick={openChainModal} type="button" className=' px-10 py-3 mt-3 md:text-base text-sm text-center lg:mt-8 lg:ml-4 flex gap-1 justify-center items-center relative z-10 rounded-full bg-white p-2 focus:outline-none border border-gray-300'>
                   Wrong network

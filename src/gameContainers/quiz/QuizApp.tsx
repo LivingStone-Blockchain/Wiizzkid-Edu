@@ -2,13 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import SplashScreen from "./components/SplashScreen";
-import { GameContext, GameContextType } from "../../context/game.context";
+import {QuizContext, QuizContextType } from "../../context/quiz.context";
 import QuizIndex from "./pages/QuizIndex";
 
 
 
 function QuizApp() {
-  const { showSplashScreen, setShowSplashScreen } = useContext(GameContext) as GameContextType;
+  const { showSplashScreen, setShowSplashScreen } = useContext(QuizContext) as QuizContextType;
   
     //set Video
     useEffect(() => {

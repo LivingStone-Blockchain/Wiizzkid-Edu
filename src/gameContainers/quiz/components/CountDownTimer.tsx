@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import Countdown from "react-countdown";
-import { GameContext, GameContextType } from "../../../context/game.context";
+import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 
 interface CountDownTimerTypes {
@@ -16,7 +16,7 @@ interface RendererTypes {
 }
 
 const CountDownTimer: FC<CountDownTimerTypes> = ({ date, handleSubmit }) => {
-  const { submitTimeRef } = useContext(GameContext) as GameContextType;
+  const { submitTimeRef } = useContext(QuizContext) as QuizContextType;
 
   const renderer = ({ hours, minutes, seconds, completed }: RendererTypes) => {
     return (

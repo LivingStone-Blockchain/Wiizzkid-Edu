@@ -11,11 +11,11 @@ import toast from "react-hot-toast";
 import CreateQuizGameModal from "../components/CreateQuizGameModal";
 import Overlay from "../components/Overlay";
 import Button from "../components/button/Button";
-import { GameContext, GameContextType } from "../../../context/game.context";
+import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 export default function QuizIndex() {
   const navigate = useNavigate();
-  const { setScreen, setScore} = useContext(GameContext) as GameContextType;
+  const { setScreen, setScore} = useContext(QuizContext) as QuizContextType;
   const [quizGameCode, setQuizGameCode] = useState<string>("");
   const [showCreateGameModal, setShowCreateGameModal] =
     useState<boolean>(false);

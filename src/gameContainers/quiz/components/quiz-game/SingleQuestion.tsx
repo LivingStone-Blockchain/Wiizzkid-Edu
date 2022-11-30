@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import { FaRegCircle, FaRegDotCircle } from "react-icons/fa";
-import { GameContext, GameContextType } from "../../../../context/game.context";
+import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 
 interface SingleQuestionProps {
   questionId: string;
@@ -15,7 +15,7 @@ const SingleQuestion: FC<SingleQuestionProps> = ({
   selectedOption,
   handleSelectOption,
 }) => {
-  const { addAnswer } = useContext(GameContext) as GameContextType;
+  const { addAnswer } = useContext(QuizContext) as QuizContextType;
 
   const handleSelect = () => {
     handleSelectOption(title);

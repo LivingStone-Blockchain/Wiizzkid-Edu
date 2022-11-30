@@ -5,10 +5,10 @@ import { educationImg } from "../assets/images";
 import categoryStrings from "../components/functions/categoryStringConveter";
 import Overlay from "../components/Overlay";
 import QuizGame from "../components/quiz-game/QuizGame";
-import { GameContext, GameContextType } from "../../../context/game.context";
+import {QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 export default function QuizPlay() {
-  const { startGame, start, setStart, category, difficulty, totalAllowedQuestions, gameMode, gameDuration } = useContext(GameContext) as GameContextType;
+  const { startGame, start, setStart, category, difficulty, totalAllowedQuestions, gameMode, gameDuration } = useContext(QuizContext) as QuizContextType;
 
 
   const [username, setUsername] = useState<string>("");
