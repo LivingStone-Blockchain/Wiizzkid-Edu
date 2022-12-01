@@ -1,6 +1,6 @@
 import React from 'react';
-import { Banner, GameModes } from '../components';
-import { london, shanghai, beijing, classroom} from '../assets/about';
+import { Banner, GameModes, Contact } from '../components';
+import { classroom} from '../assets/about';
 
 
 const About = () => {
@@ -25,6 +25,7 @@ const About = () => {
 			</div>
 		</div>
       <GameModes />
+	  <Contact />
       </div>
     </>
   )

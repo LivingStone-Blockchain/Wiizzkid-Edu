@@ -17,3 +17,4 @@ export { default as Banner } from './Banner';
 export {default as UserRoute } from './routes/UserRoute';
 export { default as LoadingToRedirect } from './routes/LoadingToRedirect';
 export { default as Hero } from './Hero';
+export { default as Contact } from './Contact';
