@@ -8,3 +8,4 @@ export { default as Roadmap } from './Roadmap';
 export { default as RegistrationVerify } from './RegistrationVerify';
 export { default as NotFound } from './NotFound'
 export { default as Pricing } from './Pricing';
+export { default as About } from './About';

@@ -1,4 +1,4 @@
-export { default as About } from './About';
+export { default as Modes } from './Modes';
 export { default as BackToTop } from './BackToTop';
 export { default as Blog } from './Blog';
 export { default as Brand } from './Brand';
@@ -16,3 +16,4 @@ export { default as Preloader } from './Preloader';
 export { default as Banner } from './Banner';
 export {default as UserRoute } from './routes/UserRoute';
 export { default as LoadingToRedirect } from './routes/LoadingToRedirect';
+export { default as Hero } from './Hero';

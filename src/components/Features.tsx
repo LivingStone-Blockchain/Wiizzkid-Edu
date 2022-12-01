@@ -1,5 +1,6 @@
 import React from 'react'
-import { duo, single, multi } from '../assets/mode'
+import { duo, single, multi } from '../assets/mode';
+import { Link } from 'react-router-dom';
 
 const Features = () => {
   return (
@@ -9,7 +10,7 @@ const Features = () => {
 			<h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">All-In-One <span className="text-yellow-500">Learning Space.</span></h1>
 			<p className="leading-relaxed text-gray-500 lg:text-base text-sm">The possibilities are beyond your imagination. Explore the library.</p>
 		</div>
-    <div
+    <div data-aos="fade-up" data-aos-delay="100" 
       className="mt-16 grid divide-x divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
     >
       <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 hover:bg-[#ffedef]">
@@ -29,7 +30,7 @@ const Features = () => {
               Single player
             </h5>
             <p className="text-gray-500 md:text-base text-sm">
-            Learning becomes a lot easier when you have fun practicing and sharpening your skills.
+              Learning becomes a lot easier when you have fun practicing and sharpening your skills.
             </p>
           </div>
         </div>
@@ -103,12 +104,12 @@ const Features = () => {
               Take a deeper dive into the Wiizzkid universe and learn more about the platform.
             </p>
           </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-text-darken">
+          <Link to="/about" className="flex items-center justify-between group-hover:text-text-darken">
             <span className="sm:text-sm text-xs ">Read more</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
               <path fillRule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clipRule="evenodd" />
             </svg>                
-          </a>
+          </Link>
         </div>
       </div>
     </div>

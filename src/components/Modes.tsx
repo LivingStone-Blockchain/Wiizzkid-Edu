@@ -2,11 +2,11 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useNavigate } from 'react-router-dom';
-import { kids, kidsPlaceholder, girlNavy, girlNavyPlaceholder } from '../assets/about'
+import { kids, kidsPlaceholder, girlNavy, girlNavyPlaceholder } from '../assets/modes'
 import Button from './Button';
 
 
-const About = () => {
+const Modes = () => {
 	const navigate = useNavigate();
 
   return (
@@ -58,4 +58,4 @@ const About = () => {
   )
 }
 
-export default About
+export default Modes

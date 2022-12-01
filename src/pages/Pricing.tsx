@@ -30,7 +30,7 @@ const Pricing = () => {
 	    <p className="leading-relaxed text-gray-500 lg:text-base text-sm">A Wiizzkid subscription gives you access to our quizzes and games</p>
       </div>
       <div className="mt-12 grid items-center gap-6 md:grid-cols-2 lg:flex lg:space-x-8">
-      <div className="group relative md:col-span-1 lg:w-[32%]">
+      <div  data-aos="fade-up" className="group relative md:col-span-1 lg:w-[32%]">
       <div
         aria-hidden="true"
         className="absolute top-0 h-full w-full rounded-xl border border-gray-200  bg-white  shadow-2xl shadow-gray-600/10  transition duration-500 group-hover:scale-105 lg:group-hover:scale-110"
@@ -70,7 +70,7 @@ const Pricing = () => {
       </div>
     </div>
 
-    <div className="group relative row-start-1 md:col-span-2 lg:w-[36%]">
+    <div  data-aos="fade-up" data-aos-delay='150' className="group relative row-start-1 md:col-span-2 lg:w-[36%]">
       <div
         aria-hidden="true"
         className="absolute top-0 h-full w-full rounded-xl border border-gray-200  bg-white  shadow-2xl shadow-gray-600/10  transition duration-500 group-hover:scale-105 lg:group-hover:scale-110"
@@ -120,7 +120,7 @@ const Pricing = () => {
       </div>
     </div>
 
-    <div className="group relative md:col-span-1 lg:w-[32%]">
+    <div  data-aos="fade-up" data-aos-delay='300' className="group relative md:col-span-1 lg:w-[32%]">
       <div
         aria-hidden="true"
         className="absolute top-0 h-full w-full rounded-xl border border-gray-200  bg-white  shadow-2xl shadow-gray-600/10  transition duration-500 group-hover:scale-105 lg:group-hover:scale-110"
