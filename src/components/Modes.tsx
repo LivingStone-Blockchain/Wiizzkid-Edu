@@ -13,7 +13,7 @@ const Modes = () => {
     <div className="mt-24" id="quiz">
 			<div data-aos="flip-down" className="text-center max-w-screen-lg mx-auto">
 				<h1 className="md:text-3xl text-2xl font-bold mb-4">Who are <span className="text-yellow-500">The Wiizzkids?</span></h1>
-				<p className="text-gray-500 md:text-base text-sm leading-relaxed">We want to change the methodologies of teaching across the world using the blockchain technology while kids learn in a fun and exiting way. Each student would collect coins at the end of each challenge and which can be converted to money. The parents of each child can then use the funds to buy educational materials or book a holiday for the child.</p>
+				<p className="text-gray-500 md:text-base text-sm leading-relaxed">We want to change the methodologies of teaching across the world using the blockchain technology while kids learn in a fun and exiting way.</p>
 			</div>
 			<div data-aos="fade-up" className="flex flex-col md:flex-row justify-center space-y-5 md:space-y-0 md:space-x-6 lg:space-x-10 mt-8">
 				<div className="relative md:w-5/12">

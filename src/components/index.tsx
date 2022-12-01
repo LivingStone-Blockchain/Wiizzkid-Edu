@@ -10,7 +10,7 @@ export { default as Footer } from './Footer';
 export { default as Form } from './Form';
 export { default as Header } from './Header';
 export { default as Metaverse } from './Metaverse';
-export { default as Mode } from './Mode';
+export { default as GameModes } from './GameModes';
 export { default as Overlay } from './Overlay';
 export { default as Preloader } from './Preloader';
 export { default as Banner } from './Banner';

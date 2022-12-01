@@ -23,7 +23,7 @@ const Banner: FC<BannerProps> = ({title}) => {
           <div className="text-center">
             <h1 className="text-4xl font-semibold text-white">{title}</h1>
           </div>
-          <p className='absolute md:bottom-10 bottom-7 left-6 md:left-24 right-0 mx-auto text-white flex gap-1 md:text-base text-sm'>
+          <p className='absolute md:bottom-10 bottom-7 left-4 md:left-16 right-0 mx-auto text-white flex gap-1 md:text-base text-sm'>
             <span className='text-xl cursor-pointer flex items-center justify-center hover:text-[#37b9b2]' onClick={() => navigate('/')}><FaHome /></span>
             <span className='flex items-center justify-center text-gray-300 px-1 font-medium'>{'>'}</span>
             <span className='text-[#37b9b2] font-medium'>{location.pathname.slice(1)}</span>
