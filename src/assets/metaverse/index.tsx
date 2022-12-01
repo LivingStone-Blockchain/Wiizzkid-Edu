@@ -3,7 +3,7 @@ export { default as abacus } from './abacus.png';
 export { default as calculator } from './calculator.png';
 export { default as geo } from './geometry.png';
 export { default as signs } from './signs.png';
-export { default as think } from './think.png';
 export { default as tools } from './tools.png';
 export { default as vrStudentPlaceholder } from './vr-student.jpg';
 export { default as vrStudent } from './vr-student.png';
+export { default as choose } from './choose.png';

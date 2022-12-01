@@ -1,5 +1,5 @@
 import CountDown from './Countdown'
-import { vrStudent, vrStudentPlaceholder, maths, calculator, tools, geo, abacus, signs, think } from '../assets/metaverse';
+import { vrStudent, vrStudentPlaceholder, maths, choose, geo, abacus, signs } from '../assets/metaverse';
 import Button from './Button';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -22,17 +22,25 @@ const Metaverse = () => {
         <div className="bg-[#5B61EB] w-36 h-36 rounded-full absolute z-0 right-16 -bottom-1 animate-pulse hidden md:block"></div>
         <div className="bg-[#ff5d5d] w-5 h-5 rounded-full absolute z-0 right-52 bottom-1 animate-ping"></div>
 
-        <div  className="absolute top-20 left-72 sm:top-32 sm:left-[450px] md:top-16 md:left-[250px] lg:left-[330px] lg:top-24 floating-4">
-            <img src={maths} alt="maths" className='w-full h-auto lg:max-w-[40px] md:max-w-[30px] sm: sm:max-w-[55px] max-w-[35px]'/>     
+        <div  className="absolute top-20 left-[270px] sm:top-32 sm:left-[450px] md:top-16 md:left-[250px] lg:left-[330px] lg:top-24 floating-4">
+            <img src={maths} alt="maths" className='w-full h-auto lg:max-w-[45px] md:max-w-[35px] sm: sm:max-w-[60px] max-w-[40px]'/>     
         </div>
 
-        <div  className="absolute top-0 left-80 sm:top-6 sm:left-[550px] md:-top-8 md:left-[290px] lg:left-[400px] lg:top-2 floating">
-            <img src={calculator} alt="maths" className='w-full h-auto lg:max-w-[40px] md:max-w-[30px] sm: sm:max-w-[55px] max-w-[35px]'/>     
+        <div  className="absolute top-0 left-[340px] sm:top-6 sm:left-[550px] md:-top-8 md:left-[290px] lg:left-[400px] lg:top-2 floating">
+            <img src={geo} alt="maths" className='w-full h-auto lg:max-w-[40px] md:max-w-[30px] sm: sm:max-w-[55px] max-w-[35px]'/>     
         </div>
 
         <div className="absolute top-4 left-56 sm:top-6 sm:left-[370px] md:-top-2 md:left-[200px] lg:left-[300px] lg:top-6 floating-4">
             <img src={signs} alt="maths" className='w-full h-auto lg:max-w-[40px] md:max-w-[30px] sm: sm:max-w-[55px] max-w-[35px]'/>     
         </div>
+
+        <div className="absolute top-36 left-80 sm:top-56 sm:left-[530px] md:top-32 md:left-[300px] lg:left-[450px] lg:top-32 floating">
+            <img src={abacus} alt="maths" className='w-full h-auto lg:max-w-[40px] md:max-w-[30px] sm: sm:max-w-[55px] max-w-[35px]'/>     
+        </div>
+
+        {<div className="hidden absolute top-36 left-[244px] sm:top-56 sm:left-[530px] md:top-32 md:left-[300px] lg:left-[300px] lg:top-56 floating">
+            <img src={choose} alt="maths" className='w-full h-auto lg:max-w-[45px] md:max-w-[35px] sm: sm:max-w-[60px] max-w-[40px]'/>     
+            </div>}
         
     </div>
     <div data-aos="fade-down" className="flex flex-col items-start md:w-1/2 mt-20 md:mt-0 text-gray-500 relative">
