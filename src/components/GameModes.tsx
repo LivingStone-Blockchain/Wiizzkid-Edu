@@ -16,7 +16,7 @@ const modeData: modeDataType[] = [
 	{
 		id: 1,
 		headerText: 'London',
-		mainText: 'Learning becomes a lot easier when you have fun practicing and sharpening your skills.',
+		mainText: 'Practice your way to greatness in the London mode. Hone your skills while you prepare to battle it out in the advanced modes.',
 		color: '#5b72ee',
 		shadow: 'rgba(37, 99, 235, 0.2)',
 		aosDelay: '',
@@ -24,21 +24,21 @@ const modeData: modeDataType[] = [
 	},
 	{
 		id: 2,
-		headerText: 'Beijing',
+		headerText: 'Shanghai',
 		mainText: 'Play with another player to earn some crypto coins. You will need speed, knowledge and accuracy to win this contest.',
 		color: '#FF3939',
 		shadow: ' rgba(220, 38, 38, 0.2)',
 		aosDelay: '150',
-		icon: <img src={beijing} alt="beijing" className='w-[60px]'/>
+		icon: <img src={shanghai} alt="shanghai" className='w-[60px]'/>
 	},
 	{
 		id: 3,
-		headerText: 'Shanghai',
-		mainText: 'Play with a group of friends/class to win the challenge. The team with the highest average would win and collect the crypto coins.',
+		headerText: 'Beijing',
+		mainText: 'This a B2B platform where organizations develop their own quiz templates for competitions and utilize them in our metaverse',
 		color: '#37b9b2',
 		shadow: 'rgba(8, 145, 178, 0.2)',
 		aosDelay: '300',
-		icon: <img src={shanghai} alt="shanghai" className='w-[60px]'/>
+		icon: <img src={beijing} alt="beijing" className='w-[60px]'/>
 	}
 ]
 
