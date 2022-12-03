@@ -34,14 +34,11 @@ const Contact = () => {
   };
 
   return (
-    <section className="relative text-darken pt-28">
-    <div
-      className="absolute top-0 left-0 z-[-1] h-1/2 w-full lg:h-[45%] xl:h-1/2"
-    ></div>
+    <section className="text-darken pt-28">
     <div className="container">
       <div className="-mx-4 flex flex-wrap items-center">
         <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
-          <div data-aos="fade-right" className="">
+          <div data-aos="fade-right">
             <div className="mb-12 lg:mb-[150px]">
               <span
                 className="font-headingFont mb-5 text-base font-semibold text-yellow-500"

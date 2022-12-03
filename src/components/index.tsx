@@ -1,8 +1,8 @@
 export { default as Modes } from './Modes';
 export { default as BackToTop } from './BackToTop';
 export { default as Blog } from './Blog';
-export { default as Brand } from './Brand';
 export { default as Button } from './Button';
+export { default as Brand } from './Brand';
 export { default as ConnectWalletBtn } from './ConnectWalletBtn';
 export { default as Countdown } from './Countdown';
 export { default as Features } from './Features';
@@ -18,3 +18,4 @@ export {default as UserRoute } from './routes/UserRoute';
 export { default as LoadingToRedirect } from './routes/LoadingToRedirect';
 export { default as Hero } from './Hero';
 export { default as Contact } from './Contact';
+export { default as Share } from './share/Share';

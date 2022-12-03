@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing } from "./pages";
+import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing, BlogDetails } from "./pages";
 import { Header, Footer, BackToTop, Preloader, UserRoute } from './components/index'
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import AOS from 'aos';
@@ -34,6 +34,7 @@ function App() {
       <Route path="/dashboard" element={<UserRoute children={<Dashboard />}/>}/>
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/about" element={<About />}/>
+      <Route path="/blogs/:id" element={<BlogDetails />}/>
       <Route path="/roadmap" element={<Roadmap />} />
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
       <Route path="/quiz" element={<QuizPlay />} />

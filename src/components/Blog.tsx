@@ -1,8 +1,11 @@
 import React from 'react'
 import { quizNews, vrNews, crypto, study } from '../assets/blog';
+import { useNavigate } from 'react-router-dom';
+import blogData from '../data/blogData';
 
 
 const Blog = () => {
+    const navigate = useNavigate();
     
   return (
     <div id="blog">
@@ -11,50 +14,32 @@ const Blog = () => {
             <p className="text-gray-500 my-5 lg:text-base text-sm">Stay ahead with our latest blog posts.</p>
         </div>
         <div data-aos="zoom-in-up" className="my-14 flex flex-col lg:flex-row lg:space-x-20">
-            <div className="lg:w-6/12 hover:bg-[#eee]">
-                <img className="w-full rounded-xl mb-6" src={quizNews} />
-                <span className="bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full">Latest</span>
-                <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">Trivia Virtual Quizzes with friends</h1>
-                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">Wiizkid Education is creating a fun new way to to learn and earn alongside your friends virtually online, anywhere, anytime...</p>
-                <a href="" className="underline sm:text-base text-sm">Read more</a>
-            </div>
+        {blogData.filter((item) => item.id === blogData[0].id).map((data) => 
+            <div className="lg:w-6/12 rounded-lg" key={data.id}>
+                <img className="w-full rounded-xl mb-6" src={data.blogImg} />
+                <span className="bg-[#e0b00d] text-darken font-semibold px-4 py-px text-sm rounded-full">Latest</span>
+                <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">{data.title}</h1>
+                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.contentOne?.slice(0, 124)}...</p>
+                <button onClick={() => navigate(`/blogs/${data.id}`) } className="underline sm:text-base text-sm hover:text-[#37b9b2] cursor-pointer">Read more</button>
+            </div>  
+        )}
+
         <div className="lg:w-7/12 flex flex-col justify-between mt-12 space-y-5 lg:space-y-0 lg:mt-0">
-            <div className="flex space-x-5 hover:bg-[#eee]">
+            {blogData.filter((item) => item.id !== blogData[0].id).map((data) => 
+                <div className="flex space-x-5 rounded-lg"key={data.id}>
                 <div className="w-4/12">
                     <div className="relative">
-                        <img className="rounded-xl w-full" src={crypto} />
-                        <span className="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">Token</span>
+                        <img className="rounded-xl w-full" src={data.blogImg} />
+                        <span className="absolute bottom-2 right-2 bg-[#e0b00d] text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">{data.tags[0]}</span>
                     </div>
                 </div>
                 <div className="w-8/12">
-                    <h1 className="text-gray-800 text-base sm:text-lg font-semibold">What is the Stone token and how do we use it?</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Wiizzkid Education is a token-based educational empowerment platorm set to launch it's native...</p>
+                    <h1 onClick={() => navigate(`/blogs/${data.id}`)} className="text-gray-800 text-base sm:text-lg font-semibold hover:text-[#37b9b2] cursor-pointer">{data.title}</h1>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">{data.contentOne?.slice(0, 95)}...</p>
                 </div>
             </div>
-            <div className="flex space-x-5  hover:bg-[#eee]">
-                <div className="w-4/12">
-                    <div className="relative">
-                        <img className="rounded-xl w-full" src={vrNews} />
-                        <span className="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">VR</span>
-                    </div>
-                </div>
-                <div className="w-8/12">
-                    <h1 className="text-gray-800 text-base sm:text-lg font-semibold">Virtual Reality in Education: Benefits, Tools, and Resources</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Virtual reality can improve education by providing students with memorable and immersive experiences that would otherwise not be possible. What's more, it can ...</p>
-                </div>
-            </div>
-            <div className="flex space-x-5 hover:bg-[#eee]">
-                <div className="w-4/12">
-                    <div className="relative">
-                        <img className="rounded-xl w-full" src={study} />
-                        <span className="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">Quiz</span>
-                    </div>
-                </div>
-                <div className="w-8/12">
-                    <h1 className="text-gray-800 text-base sm:text-lg font-semibold">Elementary school high-flyers making the most of the opportunity</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">Play our classic quizzes, anywhere, anytime & fight your way to the top of the leaderboard ...</p>
-                </div>
-            </div>
+            )}
+          
         </div>
     </div>
 </div>
@@ -62,3 +47,4 @@ const Blog = () => {
 }
 
 export default Blog;
+

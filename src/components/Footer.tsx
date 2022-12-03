@@ -12,8 +12,8 @@ const Footer = () => {
   const location = useLocation();
 
 
-  //render based on location data-aos="fade-up" data-aos-delay={aosDelay} data-aos="fade-up" data-aos-delay={aosDelay}
-    if (location.pathname !== "/" && location.pathname !== "/pricing"  && location.pathname !== "/about") {
+  //render based on location
+    if (location.pathname !== "/" && location.pathname !== "/pricing"  && location.pathname !== "/about"  && !location.pathname.includes("blogs/")) {
       return null;
   }
 
