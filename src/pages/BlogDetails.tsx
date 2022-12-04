@@ -27,13 +27,11 @@ useEffect(() => {
 
   return (
     <>
+    {isLoading && (<Preloader homeLoader={true} />)}
     <Banner 
       title='Blogs'
     />
-    {isLoading ? (
-      <Preloader homeLoader={true} />
-    ): (
-      <section className="pt-20 pb-10 lg:pt-[120px] lg:pb-20 container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700">
+    <section className="pt-20 pb-10 lg:pt-[120px] lg:pb-20 container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700">
     <div className="container mx-auto">
          <div className="-mx-4 flex flex-wrap justify-center">
         <div className="w-full px-4">
@@ -366,8 +364,6 @@ useEffect(() => {
       </div>
     </div>
   </section>
-    )}
-    
     </>
   )
 }
