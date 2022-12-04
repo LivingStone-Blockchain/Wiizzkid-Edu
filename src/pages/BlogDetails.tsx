@@ -5,6 +5,7 @@ import { Dotted, QuarterCircle } from '../shapes';
 import blogData from '../data/blogData';
 import { useParams, Link } from 'react-router-dom';
 
+
 const BlogDetails = () => {
   const [isLoading ,setIsLoading] = useState<boolean>(true);
   let { id } = useParams();
@@ -127,13 +128,13 @@ useEffect(() => {
                           className="wow fadeInUp mb-8 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide text-body-color"
                           data-wow-delay=".1s"
                         >
-                          {data.contentOne}
+                          {data.content?.one}
                         </p>
                         <p
                           className="wow fadeInUp mb-10 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
                           data-wow-delay=".1s"
                         >
-                          {data.contentTwo}
+                          {data.content?.two}
                         </p>
                         <div
                           className="wow fadeInUp relative z-10 mb-10 overflow-hidden rounded bg-[#37b9b2] bg-opacity-5 py-8 px-6 text-center sm:p-10 md:px-[60px]"
@@ -169,23 +170,69 @@ useEffect(() => {
                         </div>
         
                         <h3
-                          className="wow fadeInUp mb-8 text-2xl font-bold text-[#252641] sm:text-[26px]"
+                          className="wow fadeInUp mb-6 text-2xl font-bold leading-snug text-[#252641] sm:leading-snug md:leading-snug"
                           data-wow-delay=".1s"
                         >
-                           {data.subTitle}
+                           {data.subTitleOne}
                         </h3>
         
                         <p
                           className="wow fadeInUp mb-8 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
                           data-wow-delay=".1s"
                         >
-                          {data.subContentOne}
+                          {data.subContentOne?.one}
                         </p>
                         <p
                           className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
                           data-wow-delay=".1s"
                         >
-                          {data.subContentTwo}
+                          {data.subContentOne?.two}
+                        </p>
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentOne?.three}
+                        </p>
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentOne?.four}
+                        </p>
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentOne?.five}
+                        </p>
+                        <h3
+                          className="wow fadeInUp mb-6 text-2xl font-bold leading-snug text-[#252641] sm:leading-snug md:leading-snug"
+                          data-wow-delay=".1s"
+                        >
+                           {data.subTitleTwo}
+                        </h3>
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentTwo.one}
+                        </p>
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentTwo.two?.contentStart}
+                          <a href={data.subContentTwo.two?.url} className="px-1 text-[#37b9b2]">{data.subContentTwo.two?.text}</a>
+                          {data.subContentTwo.two?.contentEnd}
+                        </p>
+
+                        <p
+                          className="wow fadeInUp mb-11 md:text-base text-[15px] md:leading-8 leading-8 tracking-wide  text-body-color"
+                          data-wow-delay=".1s"
+                        >
+                          {data.subContentTwo.three?.contentStart}
+                          {data.subContentTwo.three?.contentEnd}
                         </p>
         
                         <div className="-mx-4 mb-12 flex flex-wrap items-center">
@@ -236,7 +283,7 @@ useEffect(() => {
                             Join our newsletter!
                           </h3>
                           <p className="mb-8 text-base text-white">
-                            Enter your email to receive our latest newsletter.
+                            Enter your email to receive our latest articles.
                           </p>
                           <form>
                             <input
@@ -355,7 +402,7 @@ useEffect(() => {
                   </Link>
                 </h3>
                 <p className="md:text-base text-sm text-body-color">
-                  {data.contentOne?.slice(0, 60)}...
+                  {data.content.one?.slice(0, 70)}...
                 </p>
               </div>
             </div>

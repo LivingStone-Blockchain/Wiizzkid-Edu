@@ -19,7 +19,7 @@ const Blog = () => {
                 <img className="w-full rounded-xl mb-6" src={data.blogImg} />
                 <span className="bg-[#e0b00d] text-darken font-semibold px-4 py-px text-sm rounded-full">Latest</span>
                 <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">{data.title}</h1>
-                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.contentOne?.slice(0, 124)}...</p>
+                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.content.one?.slice(0, 124)}...</p>
                 <button onClick={() => navigate(`/blogs/${data.id}`) } className="underline sm:text-base text-sm hover:text-[#37b9b2] cursor-pointer">Read more</button>
             </div>  
         )}
@@ -35,7 +35,7 @@ const Blog = () => {
                 </div>
                 <div className="w-8/12">
                     <h1 onClick={() => navigate(`/blogs/${data.id}`)} className="text-gray-800 text-base sm:text-lg font-semibold hover:text-[#37b9b2] cursor-pointer">{data.title}</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">{data.contentOne?.slice(0, 95)}...</p>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">{data.content.one?.slice(0, 95)}...</p>
                 </div>
             </div>
             )}
