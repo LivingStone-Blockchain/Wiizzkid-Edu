@@ -16,10 +16,10 @@ const Blog = () => {
         <div data-aos="zoom-in-up" className="my-14 flex flex-col lg:flex-row lg:space-x-20">
         {blogData.filter((item) => item.id === blogData[0].id).map((data) => 
             <div className="lg:w-6/12 rounded-lg" key={data.id}>
-                <img className="w-full rounded-xl mb-6" src={data.blogImg} />
+                <img className="w-full rounded-xl mb-6" src={data.details.blogImg} />
                 <span className="bg-[#e0b00d] text-darken font-semibold px-4 py-px text-sm rounded-full">Latest</span>
-                <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">{data.title}</h1>
-                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.content.one?.slice(0, 124)}...</p>
+                <h1 className="text-gray-800 font-semibold my-3 sm:text-xl text-lg">{data.content.one.datum}</h1>
+                <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.content.two.datum?.slice(0, 124)}...</p>
                 <button onClick={() => navigate(`/blogs/${data.id}`) } className="underline sm:text-base text-sm hover:text-[#37b9b2] cursor-pointer">Read more</button>
             </div>  
         )}
@@ -29,13 +29,13 @@ const Blog = () => {
                 <div className="flex space-x-5 rounded-lg"key={data.id}>
                 <div className="w-4/12">
                     <div className="relative">
-                        <img className="rounded-xl w-full" src={data.blogImg} />
-                        <span className="absolute bottom-2 right-2 bg-[#e0b00d] text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">{data.tags[0]}</span>
+                        <img className="rounded-xl w-full" src={data.details.blogImg} />
+                        <span className="absolute bottom-2 right-2 bg-[#e0b00d] text-darken font-semibold px-4 py-px text-xs rounded-full hidden sm:block">{data.content.last.datum[0]}</span>
                     </div>
                 </div>
                 <div className="w-8/12">
-                    <h1 onClick={() => navigate(`/blogs/${data.id}`)} className="text-gray-800 text-base sm:text-lg font-semibold hover:text-[#37b9b2] cursor-pointer">{data.title}</h1>
-                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">{data.content.one?.slice(0, 95)}...</p>
+                    <h1 onClick={() => navigate(`/blogs/${data.id}`)} className="text-gray-800 text-base sm:text-lg font-semibold hover:text-[#37b9b2] cursor-pointer">{data.content.one.datum}</h1>
+                    <p className="text-gray-500 my-2 sm:my-4 text-sm sm:text-base leading-relaxed">{data.content.two.datum.slice(0, 95)}...</p>
                 </div>
             </div>
             )}
@@ -47,4 +47,3 @@ const Blog = () => {
 }
 
 export default Blog;
-

@@ -19,3 +19,4 @@ export { default as LoadingToRedirect } from './routes/LoadingToRedirect';
 export { default as Hero } from './Hero';
 export { default as Contact } from './Contact';
 export { default as Share } from './share/Share';
+export { default as BlogBuilder } from './BlogBuilder';
