@@ -10,3 +10,4 @@ export { default as NotFound } from './NotFound'
 export { default as Pricing } from './Pricing';
 export { default as About } from './About';
 export { default as BlogDetails } from './BlogDetails';
+export { default as ResetPassword } from './resetPassword/ResetPassword';

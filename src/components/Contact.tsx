@@ -36,7 +36,7 @@ const Contact = () => {
   return (
     <section className="text-darken pt-28">
     <div className="container">
-      <div className="-mx-4 flex flex-wrap items-center">
+      <div className="mx-4 flex flex-wrap items-center">
         <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
           <div data-aos="fade-right">
             <div className="mb-12 lg:mb-[150px]">
@@ -93,9 +93,9 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        <div className="w-full px-4 lg:w-5/12 xl:w-4/12" data-aos="fade-left">
+        <div className="w-full lg:w-5/12 xl:w-4/12 mx-auto" data-aos="fade-left">
           <div
-            className="wow fadeInUp bg-white shadow-xl rounded-xl border border-gray-200  py-10 px-8 shadow-testimonial sm:py-12 sm:px-10 md:p-[60px] lg:p-10 lg:py-12 lg:px-10 2xl:p-[60px]"
+            className="wow fadeInUp bg-white shadow-xl rounded-xl border border-gray-200 py-10 px-8 shadow-testimonial sm:py-12 sm:px-10 md:p-[60px] lg:p-10 lg:py-12 lg:px-10 2xl:p-[60px]"
             data-wow-delay=".2s"
           >
             <h3 className="mb-8 text-2xl font-semibold md:text-[26px]">

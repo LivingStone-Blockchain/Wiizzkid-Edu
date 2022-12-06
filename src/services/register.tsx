@@ -4,7 +4,8 @@ import axios from "axios";
 type credentialsType = {
     full_name: string,
     email: string,
-    password: string
+    password: string,
+    referral_code?: string,
 }
 
 

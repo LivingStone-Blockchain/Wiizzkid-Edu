@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { login } from '../assets/auth';
 import { Link } from 'react-router-dom';
-import { UserContext, UserContextType } from '../context/user.context'
+import { UserContext, UserContextType } from '../context/user.context';
 import { Form , Preloader, LoadingToRedirect } from '../components/index';
 
 
