@@ -217,7 +217,7 @@ const blogData = [
                     },
                     {
                         question: "Who is running this project? What are their qualifications?",
-                        answer: parse("This Project is spearheaded by Mr Richard Famojuro. He has been in the educational industry for over a decade and holds a math degree from one of UK's leading institution <span className='relative'><img src='https://res.cloudinary.com/dhegyaino/image/upload/v1670263347/boss_ndvudj.png' alt='Wiizzkid CEO' className='object-cover object-top rounded-full shadow-lg h-52 w-full mt-8 mb-2 border-[5px] border-[#252641] max-w-[300px]'/><span className='relative bottom-[40px] left-72'>Founder Livingstone.</span></span>"),
+                        answer: parse("This Project is spearheaded by Mr Richard Famojuro. He has been in the educational industry for over a decade and holds a math degree from one of UK's leading institution <span className='relative'><img src='https://res.cloudinary.com/dhegyaino/image/upload/v1670263347/boss_ndvudj.png' alt='Wiizzkid CEO' className='object-cover object-top rounded-full shadow-lg h-52 w-full mt-8 mb-2 border-[5px] border-[#252641] max-w-[300px]'/><span className='relative sm:bottom-[40px] bottom-0 sm:left-72 left-0'>Founder Livingstone.</span></span>"),
                     },
                     {
                         question: "Is this project centralized or decentralized?",

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Banner, Preloader, BlogBuilder } from '../components';
 import { bannerAd } from '../assets/blog';
 import { Dotted } from '../shapes';
@@ -14,11 +14,11 @@ const BlogDetails = () => {
   
 //kill loader after 2sec
 useEffect(() => {
- /* window.scrollTo({
+ window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
-*/
+
   setTimeout(() => {
   id && setIsLoading(false);
 }, 3000)
