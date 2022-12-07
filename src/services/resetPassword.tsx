@@ -3,10 +3,8 @@ import axios from "axios";
 
 type credentialsType = {
     password: string,
-    data: {
-        uidb64: string,
-        token: string,
-    }
+    token: any,
+    uidb64: string,
 }
 
 

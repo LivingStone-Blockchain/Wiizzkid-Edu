@@ -47,7 +47,7 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({data}) => {
     onSubmit: async function (values) {
         let password = values.confirmPassword;
         let token= data.token;
-        let uidb64 = data.uidb64
+        let uidb64 = data.uidb64;
       
       
         setIsLoading(true);
