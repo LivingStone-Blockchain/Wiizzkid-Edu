@@ -88,7 +88,7 @@ const Register = () => {
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.password}</span>
             ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-20 text-xs ml-3 bg-green-50 p-1 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><span>checked</span><BsCheck className='text-green-700' /></span>}
           </div>
-          <div>
+          <div className="space-y-2">
             <input
               type="password"
               name="confirmPassword"
@@ -104,7 +104,7 @@ const Register = () => {
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.confirmPassword}</span>
             ) : null}
           </div>
-          <div className="relative -top-2 pl-1 cursor-pointer w-[50%]">
+          <div className="relative pl-1 cursor-pointer md:w-1/2 w-[90%]">
             {toggle ? (
                  <div className={`space-y-2 transition duration-300 ${toggle ? 'block' : 'hidden'}`}>
                  <input
@@ -118,7 +118,7 @@ const Register = () => {
                    value={registerFormik.values.referral}
                    className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
                  />     
-                {toggle &&  <MdCancel className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'bottom-10' : 'bottom-4'}`}  onClick={() => setToggle(false)} />}
+                {toggle &&  <MdCancel className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'md:bottom-10 bottom-9' : 'md:bottom-4 bottom-3'}`}  onClick={() => setToggle(false)} />}
                 {registerFormik.touched.referral && registerFormik.errors.referral ? (
                 <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.referral}</span>
             ) : registerFormik.touched.referral && !registerFormik.errors.referral && <span className='flex justify-center items-center w-20 text-xs ml-3 bg-green-50 p-1 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><span>checked</span><BsCheck className='text-green-700' /></span>}
