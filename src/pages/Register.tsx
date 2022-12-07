@@ -24,7 +24,7 @@ const Register = () => {
       <form onSubmit={registerFormik.handleSubmit} className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
         <div className="w-full flex flex-col md:gap-7 gap-5">
           <h1 className="mb-4 text-xl font-semibold text-[#252641]">Create account</h1>
-          <div className="space-y-2">
+          <div className={`space-y-2 ${registerFormik.touched.full_name && registerFormik.errors.full_name ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
               type="text"
               name="full_name"
@@ -34,14 +34,16 @@ const Register = () => {
               onChange={registerFormik.handleChange}
               onBlur={registerFormik.handleBlur}
               value={registerFormik.values.full_name}
-              className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className={`text-sm placeholder:text-sm focus:outline-none block ${registerFormik.touched.full_name && !registerFormik.errors.full_name ? 'w-[95%]' : 'w-full'} rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]`}  
             />
             {registerFormik.touched.full_name && registerFormik.errors.full_name ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.full_name}</span>
-            ) : registerFormik.touched.full_name && !registerFormik.errors.full_name && <span className='flex justify-center items-center w-20 text-xs ml-3 bg-green-50 p-1 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><span>checked</span><BsCheck className='text-green-700' /></span>}
+            ) : registerFormik.touched.full_name && !registerFormik.errors.full_name && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
 
           </div>
-          <div className="space-y-2">
+
+
+          <div className={`space-y-2 ${registerFormik.touched.email && registerFormik.errors.email ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
               type="email"
               name="email"
@@ -51,13 +53,13 @@ const Register = () => {
               onChange={registerFormik.handleChange}
               onBlur={registerFormik.handleBlur}
               value={registerFormik.values.email}
-              className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className={`text-sm placeholder:text-sm focus:outline-none block ${registerFormik.touched.email && !registerFormik.errors.email ? 'w-[95%]' : 'w-full'} rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]`} 
             />
             {registerFormik.touched.email && registerFormik.errors.email ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.email}</span>
-            ) : registerFormik.touched.email && !registerFormik.errors.email && <span className='flex justify-center items-center w-20 text-xs ml-3 bg-green-50 p-1 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><span>checked</span><BsCheck className='text-green-700' /></span>}
+            ) : registerFormik.touched.email && !registerFormik.errors.email && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
           </div>
-          <div className="space-y-2">
+          <div className={`space-y-2 ${registerFormik.touched.password && registerFormik.errors.password ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
               type="password"
               name="password"
@@ -67,11 +69,11 @@ const Register = () => {
               onChange={registerFormik.handleChange}
               onBlur={registerFormik.handleBlur}
               value={registerFormik.values.password}
-              className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className={`text-sm placeholder:text-sm focus:outline-none block ${registerFormik.touched.password && !registerFormik.errors.password ? 'w-[95%]' : 'w-full'} rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]`} 
             />
             {registerFormik.touched.password && registerFormik.errors.password ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.password}</span>
-            ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-20 text-xs ml-3 bg-green-50 p-1 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><span>checked</span><BsCheck className='text-green-700' /></span>}
+            ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
           </div>
           <div className="space-y-2">
             <input
@@ -83,7 +85,7 @@ const Register = () => {
               onChange={registerFormik.handleChange}
               onBlur={registerFormik.handleBlur}
               value={registerFormik.values.confirmPassword}
-              className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className="text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]"
             />
             {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.confirmPassword}</span>
@@ -101,9 +103,9 @@ const Register = () => {
                    onChange={registerFormik.handleChange}
                    onBlur={registerFormik.handleBlur}
                    value={registerFormik.values.referral}
-                   className="sm:text-base text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+                   className="text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]"
                  />     
-                {referralToggle &&  <MdCancel className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'md:bottom-10 bottom-9' : 'md:bottom-4 bottom-3'}`}  onClick={() => setReferralToggle(false)} />}
+                {referralToggle &&  <MdCancel className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'bottom-9' : 'bottom-3'}`}  onClick={() => setReferralToggle(false)} />}
                 {registerFormik.touched.referral && registerFormik.errors.referral ? (
                 <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.referral}</span>
             ) : null}

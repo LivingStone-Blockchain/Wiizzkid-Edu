@@ -24,7 +24,7 @@ const ForgotPassword = () => {
                 onChange={({ target }) => setForgotPasswordEmail(target.value)}
                 autoComplete="email"
                 required
-                className="sm:text-base text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 focus:ring-2 focus:ring-[#96fde3]"
+                className="text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 focus:ring-2 focus:ring-[#96fde3]"
             />
           </div>
           <button type="submit" className={`my-1 relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 rounded-full ${isLoading ? "cursor-not-allowed bg-[#37385e]" : "cursor-pointer transition duration-300 hover:scale-105 active:duration-75 active:scale-95 bg-[#252641]"}`}>

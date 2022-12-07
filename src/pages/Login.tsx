@@ -32,7 +32,7 @@ const Login = () => {
               name="email"
               onChange={({ target }) => setEmailLogin(target.value)}
               autoComplete="email"
-              className="sm:text-base text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className="text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
             />
           </div>
           <div className="space-y-2">
@@ -45,7 +45,7 @@ const Login = () => {
               name="password"
               onChange={({ target }) => setPasswordLogin(target.value)}
               autoComplete="password"
-              className="sm:text-base text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className="text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
             />
 
           </div>
