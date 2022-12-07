@@ -1,11 +1,12 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
 interface ButtonProps {
-  children: any;
+  children: React.ReactNode | string;
   onClick?: () => void;
   btnDefault?: boolean;
   className?: string;
   type?: "button" | "submit";
+  style?: React.CSSProperties;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -14,8 +15,8 @@ const Button: FC<ButtonProps> = ({
   btnDefault = false,
   type,
   children,
+  style,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
 
   if (btnDefault) {
     return (
@@ -23,6 +24,7 @@ const Button: FC<ButtonProps> = ({
         type={type}
         onClick={onClick}
         className={`${className} flex items-center justify-center transition py-3 font-bold`}
+        style={style}
       >
         {children}
       </button>
@@ -33,7 +35,8 @@ const Button: FC<ButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} flex items-center justify-center transition px-8 py-3 bg-gradient-to-r from-orange-600 to-yellow-600 rounded text-white text-center font-bold text-sm hover:from-yellow-600 hover:to-orange-600`}
+      className={`${className} rounded-full transform transition hover:scale-110 duration-300 ease-in-out z-60`}
+      style={style}
     >
       {children}
     </button>

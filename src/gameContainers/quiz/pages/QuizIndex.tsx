@@ -17,8 +17,7 @@ export default function QuizIndex() {
   const navigate = useNavigate();
   const { setScreen, setScore} = useContext(QuizContext) as QuizContextType;
   const [quizGameCode, setQuizGameCode] = useState<string>("");
-  const [showCreateGameModal, setShowCreateGameModal] =
-    useState<boolean>(false);
+  const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
 
 
   const handlePlayQuizGame = (e: any) => {
@@ -47,7 +46,7 @@ export default function QuizIndex() {
     <React.Fragment>
       <Overlay loading={showCreateGameModal} />
 
-      <div className="bg-gradient-to-r from-orange-600 via-red-500 to-yellow-600 opacity-95">
+      <div className="">
         <nav className="w-full text-white h-40">
           <section className="flex justify-between items-center max-w-3xl mx-auto p-6">
             <article className="text-sm">
@@ -68,7 +67,7 @@ export default function QuizIndex() {
             backgroundSize: "cover",
           }}
         >
-          <div className="p-6 -my-12 shadow-2xl bg-white rounded w-full h-full">
+          <div className="p-6 -my-12 shadow-2xl bg-[#252641] rounded w-full h-full">
             <h2 className="font-bold tracking-wide">Enter your quiz code</h2>
             <p>To play with your friends</p>
 
@@ -76,6 +75,20 @@ export default function QuizIndex() {
               onSubmit={handlePlayQuizGame}
               className="grid grid-cols-12 mt-6"
             >
+            
+                <input 
+                  value={quizGameCode}
+                  onChange={(e) => setQuizGameCode(e.target.value)}
+                  type="text" 
+                  placeholder="Ex. c19090" 
+                  className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-gray-400 rounded-full" />
+                <Button 
+                    children='Enter'
+                    type='submit'
+                    className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken col-span-4 md:col-span-2 transition text-center ml-2'
+                    style={{background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)"}}
+                />
+         
               <input
                 value={quizGameCode}
                 onChange={(e) => setQuizGameCode(e.target.value)}

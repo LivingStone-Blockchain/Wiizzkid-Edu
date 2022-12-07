@@ -38,6 +38,8 @@ export interface UserContextType {
     setPasswordLogin: React.Dispatch<React.SetStateAction<string>>,
     forgotPasswordEmail: string,
     setForgotPasswordEmail: React.Dispatch<React.SetStateAction<string>>,
+    referralToggle: boolean,
+    setReferralToggle: React.Dispatch<React.SetStateAction<boolean>>,
     user: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
@@ -56,6 +58,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [emailLogin, setEmailLogin] = useState<string>('');
     const [passwordLogin, setPasswordLogin] = useState<string>('');
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState<string>('');
+    const [referralToggle, setReferralToggle] = useState<boolean>(false);
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
     const param = useParams();
@@ -93,8 +96,8 @@ const UserProvider: FC<any> = ({ children }) => {
             confirmPassword: Yup.string()
                 .required("Confirm your password")
                 .oneOf([Yup.ref('password'), null], "Passwords don't match"),
-            referral: Yup.string()
-            .required("Referral code is required")
+             referral: referralToggle ? Yup.string()
+             .required("Referral code is required") : Yup.string().notRequired()
         }),
         onSubmit: async function (values) {
             let email = values.email;
@@ -113,10 +116,10 @@ const UserProvider: FC<any> = ({ children }) => {
                 values.full_name = "";
                 values.password = "";
                 values.confirmPassword = "";
-                values.referral = "",
+                values.referral = "";
 
                 setEmailNotify(email);
-                navigate('/registration-notification');
+                navigate('/registration-notification', { replace: true });
                 setIsLoading(false);
             } catch (error: any) {
                 toast.error(`${error.response.data.errors.email[0]}!`, { duration: 5000, id: "register" });
@@ -213,7 +216,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle }}>
             {children}
         </UserContext.Provider>
     )
