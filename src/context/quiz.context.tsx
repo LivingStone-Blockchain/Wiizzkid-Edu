@@ -164,7 +164,7 @@ useEffect(() => {
     sound.fade(0.5, 0, 9000)
   }
   else return;
-}, [showSplashScreen, start, location.pathname, screen]);
+}, [showSplashScreen, start, location.pathname]);
 
 
 
