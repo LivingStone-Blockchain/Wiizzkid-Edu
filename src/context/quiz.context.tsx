@@ -116,7 +116,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [category, setCategory] = useState<string>("");
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
   const location = useLocation();
-  //get user details from user context
+  //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
 
 
@@ -155,11 +155,16 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
  
- 
-
 //fade into oblivion on game start
-!showSplashScreen && location.pathname.includes('quiz') && play();
-location.pathname.includes('quiz') && start && sound.fade(0.5, 0, 9000);
+useEffect(() => {
+  if (!showSplashScreen && location.pathname === '/quiz-home') {
+    play();
+  }
+  else if ( location.pathname === '/quiz' && start) {
+    sound.fade(0.5, 0, 9000)
+  }
+  else return;
+}, [showSplashScreen, start, location.pathname, screen]);
 
 
 

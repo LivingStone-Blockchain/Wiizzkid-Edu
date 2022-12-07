@@ -137,7 +137,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     );
   }
 
-  console.log(gameCreated);
+
 
   return (
     <section className="pb-4 w-full">
