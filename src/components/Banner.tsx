@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 
 
-
 type BannerProps = {
-    title: string
+    title: string,
+    children?: React.ReactNode,
 }
 
-const Banner: FC<BannerProps> = ({title}) => {
+const Banner: FC<BannerProps> = ({title, children}) => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -28,6 +28,8 @@ const Banner: FC<BannerProps> = ({title}) => {
             <span className='flex items-center justify-center text-gray-300 px-1 font-medium'>{'>'}</span>
             <span className='text-[#37b9b2] font-medium'>{location.pathname.slice(1).split('/')[0]}</span>
           </p>
+
+         {children} 
         </div>
       </div>
     </div>

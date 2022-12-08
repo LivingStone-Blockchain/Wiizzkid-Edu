@@ -29,7 +29,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
   
               <button
                 onClick={() =>
-                  {toast.loading("Quitting game...", { duration: 4000 }); setTimeout(() => {toast.dismiss(); navigate('/')}, 4000); }
+                  {toast.loading("Quitting game...", { duration: 4000 }); setTimeout(() => {toast.dismiss(); navigate('/quiz-home')}, 4000); }
                 }
                 className="font-bold py-2 px-3 border border-red-400 text-red-500 ml-3 rounded"
               >

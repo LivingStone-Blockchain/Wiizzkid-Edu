@@ -76,10 +76,14 @@ export interface QuizContextType {
   setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>,
   triviaFetch: boolean,
   setTriviaFetch: React.Dispatch<React.SetStateAction<boolean>>,
+  gameCreated: boolean,
+  setGameCreated: React.Dispatch<React.SetStateAction<boolean>>,
   handleScreenTwo: () => void,
   handleInstructionScreen: () => void,
   showSplashScreen: boolean,
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>,
+  showCreateGameModal: boolean,
+  setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>,
   start: boolean,
   setStart: React.Dispatch<React.SetStateAction<boolean>>,
   user: userType | null,
@@ -109,12 +113,14 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [gameDuration, setGameDuration] = useState<number>(5);
   const [score, setScore] = useState<number>(0);
   const [quizData, setQuizData] = useState<questionsData[] | undefined>();
+  const [gameCreated, setGameCreated] = useState<boolean>(false);
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false);
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const [start, setStart] = useState<boolean>(false);
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.5 });
   const [category, setCategory] = useState<string>("");
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
+  const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
   const location = useLocation();
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
@@ -201,7 +207,6 @@ useEffect(() => {
 
 
 
-
   // function to start a game:
   const startGame = (date: any) => {
     setTimeOfStart(date);
@@ -225,7 +230,7 @@ useEffect(() => {
 
   return (
     <QuizContext.Provider
-      value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user}}
+      value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user, gameCreated, setGameCreated, showCreateGameModal, setShowCreateGameModal}}
     >
       {children}
     </QuizContext.Provider>

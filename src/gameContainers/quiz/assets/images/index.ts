@@ -5,5 +5,6 @@ import educationImg from "./education.jpg";
 import successImg from "./success.png";
 import win from './win.png';
 import low from './low.png';
+import eduImg from './edu.png';
 
-export { mathImg, englishImg, generalKnowledgeImg, win, low, educationImg, successImg };
+export { mathImg, englishImg, generalKnowledgeImg, win, low, educationImg, successImg, eduImg };

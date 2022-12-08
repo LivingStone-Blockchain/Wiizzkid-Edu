@@ -4,7 +4,10 @@ import {
   englishImg,
   generalKnowledgeImg,
   mathImg,
+  eduImg
 } from "../assets/images";
+import { girlNavy } from './../../../assets/modes/index';
+import QuickPlay from "../components/QuickPlay";
 import { FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -12,12 +15,15 @@ import CreateQuizGameModal from "../components/CreateQuizGameModal";
 import Overlay from "../components/Overlay";
 import Button from "../components/button/Button";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
+import { Banner } from "../../../components";
+import ScoreBalance from "../components/Score&Balance";
 
-export default function QuizIndex() {
+
+
+const QuizIndex = () => {
   const navigate = useNavigate();
-  const { setScreen, setScore} = useContext(QuizContext) as QuizContextType;
+  const { setScreen, setScore, showCreateGameModal, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
   const [quizGameCode, setQuizGameCode] = useState<string>("");
-  const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
 
 
   const handlePlayQuizGame = (e: any) => {
@@ -31,10 +37,11 @@ export default function QuizIndex() {
     navigate(`/quiz?code=${quizGameCode}`);
   };
 
+
   const handleDisplayCreateGameModal = () => {
     setShowCreateGameModal(true);
-    setScreen(1)
-    setScore(0)
+    setScreen(1);
+    setScore(0);
 
     toast(
       <CreateQuizGameModal setShowCreateGameModal={setShowCreateGameModal} />,
@@ -43,75 +50,64 @@ export default function QuizIndex() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Overlay loading={showCreateGameModal} />
-
-      <div className="">
-        <nav className="w-full text-white h-40">
-          <section className="flex justify-between items-center max-w-3xl mx-auto p-6">
-            <article className="text-sm">
-              <h1 className="text-2xl font-bold tracking-wide">Let's play</h1>
-              <p>...join the Wiizkid revolution</p>
+      <Banner
+        title="Wiizzkid Quiz"
+        children={<ScoreBalance />}
+      />
+      <section className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 mt-24">
+        <div className="w-full text-white mb-16">
+          <div className="flex justify-between items-center max-w-full mx-auto">
+            <article>
+              <h1 className="md:text-2xl text-xl font-semibold text-[#252641]">Let's <span className="text-yellow-500">play</span></h1>
+              <p className="text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed font-medium">Join the Wiizzkid revolution...</p>
             </article>
+          </div>
+        </div>
 
-            <div className="bg-white rounded-full w-8 h-8 text-gray-700 flex">
-              <span className="m-auto">DE</span>
-            </div>
-          </section>
-        </nav>
-
-        <section
+        <div
           className="-my-8 pb-40 p-6 max-w-3xl mx-auto text-sm bg-stone-800 rounded-tl-3xl rounded-tr-3xl"
           style={{
-            backgroundImage: `url(${educationImg})`,
+            backgroundImage: `url(${girlNavy})`,
             backgroundSize: "cover",
           }}
         >
-          <div className="p-6 -my-12 shadow-2xl bg-[#252641] rounded w-full h-full">
-            <h2 className="font-bold tracking-wide">Enter your quiz code</h2>
-            <p>To play with your friends</p>
+          <div className="p-6 -my-12 shadow-2xl bg-[#252641] text-white rounded w-full h-full">
+            <h2 className="font-bold tracking-wide md:text-base text-sm">Enter your quiz code</h2>
+            <p className="text-sm">To play with your friends</p>
 
             <form
               onSubmit={handlePlayQuizGame}
-              className="grid grid-cols-12 mt-6"
+              className="flex flex-row space-x-3 my-8 justify-start w-full"
             >
-            
-                <input 
-                  value={quizGameCode}
-                  onChange={(e) => setQuizGameCode(e.target.value)}
-                  type="text" 
-                  placeholder="Ex. c19090" 
-                  className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-gray-400 rounded-full" />
-                <Button 
-                    children='Enter'
-                    type='submit'
-                    className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken col-span-4 md:col-span-2 transition text-center ml-2'
-                    style={{background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)"}}
-                />
-         
+
               <input
                 value={quizGameCode}
                 onChange={(e) => setQuizGameCode(e.target.value)}
                 type="text"
-                className="p-3 bg-gray-100 col-span-8 md:col-span-10 rounded-tl rounded-bl border"
                 placeholder="Ex. c19090"
+                className="flex-initial w-full first-letter:rounded-full py-3 placeholder:text-sm placeholder:text-gray-400 text-sm pl-5 bg-transparent border-2 border-white rounded-full" />
+              <Button
+                children='Enter'
+                type='submit'
+                className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken col-span-4 md:col-span-2 transition text-center ml-2'
+                style={{ background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)" }}
               />
-
-              <button className="p-3 rounded bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold text-sm col-span-4 md:col-span-2 hover:from-orange-600 hover:to-yellow-600 transition text-center ml-2">
-                Enter
-              </button>
             </form>
 
             <p
               onClick={handleDisplayCreateGameModal}
-              className="mt-8 text-xs cursor-pointer capitalize font-semibold text-gray-600 flex items-center"
+              className="text-xs cursor-pointer capitalize font-semibold text-white flex items-center"
             >
               Or start a quiz game <FaAngleRight className="ml-1" />
             </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <main className="py-24 max-w-3xl mx-auto p-6 ">
+      <QuickPlay handleDisplayCreateGameModal = {handleDisplayCreateGameModal}/>
+      {/*<main className="py-24 max-w-3xl mx-auto p-6 ">
           <h1 className="font-bold text-gray-100 text-lg mb-6">
             Your Quiz History
           </h1>
@@ -121,10 +117,12 @@ export default function QuizIndex() {
               <span className="col-span-3">
                 <img
                   src={mathImg}
-                  alt=""
+                  alt="student"
                   className="w-full h-full object-cover"
                 />
               </span>
+
+
 
               <article className="col-span-9">
                 <h1 className="font-bold text-gray-700">Mathematics</h1>
@@ -204,8 +202,9 @@ export default function QuizIndex() {
           >
             Start A Quiz Game <FaAngleRight className="ml-3" />
           </Button>
-        </main>
-      </div>
-    </React.Fragment>
+        </main>*/}
+    </>
   );
 }
+
+export default QuizIndex;

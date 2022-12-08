@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { register } from '../assets/auth';
 import { Link } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
 import { BsCheck, BsQuestionCircle } from 'react-icons/bs';
 import {MdCancel } from 'react-icons/md'
 import { Form, LoadingToRedirect } from '../components/index';
+
 
 
 const Register = () => {
@@ -111,7 +112,7 @@ const Register = () => {
             ) : null}
                </div>
             ) : (
-              <div className='flex justify-start items-center gap-1  text-text-[#252641] sm:text-base text-sm'  onClick={() => setReferralToggle(!referralToggle)}><span>Referral Code</span><BsQuestionCircle /></div>
+              <div className='flex justify-start items-center gap-1  text-text-[#252641] text-sm'  onClick={() => setReferralToggle(!referralToggle)}><span>Referral Code</span><BsQuestionCircle /></div>
             )}
           </div>
 

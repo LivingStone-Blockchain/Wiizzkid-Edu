@@ -2,7 +2,6 @@ import { Brand, Features, Modes, Metaverse, Blog }  from '../components/index'
 
 
 
-
 const Home = () => {
   
 

@@ -195,7 +195,7 @@ useEffect(() => {
                           <h3 className="mb-2 text-2xl font-semibold text-white">
                             Join our newsletter!
                           </h3>
-                          <p className="mb-8 text-base text-white">
+                          <p className="mb-8 md:text-base text-sm  text-white">
                             Enter your email to receive our latest articles.
                           </p>
                           <form>

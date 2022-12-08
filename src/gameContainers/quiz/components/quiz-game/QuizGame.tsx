@@ -31,7 +31,7 @@ interface QuizGameTypes {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, score, setStart, timeOfStart, category, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, gameMode, triviaFetch, setTriviaFetch, gameDetails } = useContext(QuizContext) as QuizContextType;
+  const { quizData, score, setStart, timeOfStart, category, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, gameMode, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();  
@@ -61,6 +61,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(category)).toLowerCase()  && (data.difficulty).toLowerCase() === difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, totalAllowedQuestions);
 
 
+    console.log(sortedMapped_questions);
 
   //render first question from array on page load
   useEffect(() => {
@@ -101,6 +102,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     const submitTimeArray = submitTimeRef.current?.innerText.split(':');
     setLoading(true);
 
+    toast.dismiss();
     toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
 
 
@@ -119,14 +121,15 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);
-
- 
   };
 
 
   const handleFinalSubmit = (e: any) => {
     e.preventDefault();
+
+    toast.dismiss();
     submitQuiz();
+    setShowCreateGameModal(false);
   };
 
   if (!showModal) {

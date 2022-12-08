@@ -18,7 +18,7 @@ import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 
 interface CreateQuizGameModalType {
-  setShowCreateGameModal: any;
+  setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 
@@ -28,8 +28,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 }) => {
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
-  const [gameCreated, setGameCreated] = useState<boolean>(false);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user } = useContext(QuizContext) as QuizContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user, gameCreated, setGameCreated } = useContext(QuizContext) as QuizContextType;
  
 
 

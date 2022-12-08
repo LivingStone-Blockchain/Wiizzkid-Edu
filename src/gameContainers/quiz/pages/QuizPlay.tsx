@@ -12,7 +12,6 @@ export default function QuizPlay() {
 
 
   const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
 
@@ -23,9 +22,7 @@ export default function QuizPlay() {
       return toast.error("Please enter a username!");
     }
 
-    if (!email) {
-      return toast.error("Please enter your email!");
-    }
+
 
     setLoading(true);
     toast.loading("Preparing to start quiz...", { duration: 3000, id: "prepping" });
@@ -33,7 +30,6 @@ export default function QuizPlay() {
 
     const payload = {
       username,
-      email,
     };
 
     console.log(payload);
@@ -107,19 +103,6 @@ export default function QuizPlay() {
                 type="text"
                 className="w-full border rounded p-2 bg-stone-200"
                 placeholder="Enter Username"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="mb-1 block text-gray-700" htmlFor="">
-                Email
-              </label>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Your Email"
-                className="w-full border rounded p-2 bg-stone-200"
               />
             </div>
 
