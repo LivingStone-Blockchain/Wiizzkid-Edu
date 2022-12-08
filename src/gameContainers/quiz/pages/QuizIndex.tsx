@@ -56,7 +56,7 @@ const QuizIndex = () => {
         title="Wiizzkid Quiz"
         children={<ScoreBalance />}
       />
-      <section className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 mt-24">
+      <section className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
         <div className="w-full text-white mb-16">
           <div className="flex justify-between items-center max-w-full mx-auto">
             <article>
