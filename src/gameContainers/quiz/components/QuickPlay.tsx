@@ -1,5 +1,5 @@
 import React, { useContext, FC } from 'react'
-import { eduImg } from '../assets/images'
+import { eduImg, rocket, geography, general, custom, basket, soccer } from '../assets/images'
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import toast from "react-hot-toast";
 import CreateQuizGameModal from './../components/CreateQuizGameModal'
@@ -20,13 +20,13 @@ type quickPlayType = {
 }
 
 
-const quickplayData: quickPlayType[] = [
+const quickPlayData: quickPlayType[] = [
     {
         id: 1,
         title: "Science",
         category: "7",
         difficulty: "Easy",
-        img: eduImg,
+        img: rocket,
         description: "Lets go rock the Sciences with your grit and knowledge."
     },
     {
@@ -34,7 +34,7 @@ const quickplayData: quickPlayType[] = [
         title: "General",
         category: "8",
         difficulty: "Easy",
-        img: eduImg,
+        img: general,
         description: "Lets go play some General Knowledge quiz. Show What you've got!"
     },
     {
@@ -42,7 +42,7 @@ const quickplayData: quickPlayType[] = [
         title: "Sports",
         category: "9",
         difficulty: "Easy",
-        img: eduImg,
+        img: soccer,
         description: "You think you know about the sporting and leisure terrain? Shoot!"
     },
     {
@@ -50,7 +50,7 @@ const quickplayData: quickPlayType[] = [
         title: "Geography",
         category: "10",
         difficulty: "Easy",
-        img: eduImg,
+        img: geography,
         description: "The universe is waiting to test your knowledge about its landscape."
     },
 ]
@@ -62,7 +62,7 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
 
 
     const handleQuickPlay = (id: number) => {
-        const data = quickplayData.find((game) => game.id === id);
+        const data = quickPlayData.find((game) => game.id === id);
 
         console.log(data);
         setGameMode("london");
@@ -104,8 +104,11 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
         
         setGameDetails(payload);
       }
-     
-   
+     //#a5a6c8
+        //#34355d
+   //#4a4c7e
+   //#FF3939
+   //#cd2525
   return (
     <div className="container py-20 px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 mt-24">
       <div className="mb-16 md:w-2/3 lg:w-1/2">
@@ -113,10 +116,10 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
         <p className="text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed font-medium">Explore the categories available in the London mode</p>
       </div>
       <div className="grid gap-6 px-4 sm:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {quickplayData.map(({id, title, category, difficulty, img, description}: quickPlayType) => (
+        {quickPlayData.map(({id, title, category, difficulty, img, description}: quickPlayType) => (
             <div className="group relative rounded-xl  space-y-6 overflow-hidden cursor-pointer" key={id} onClick={() => handleQuickPlay(id)}>
             <img
-              className="mx-auto h-[22rem] w-full object-cover object-top transition duration-500 group-hover:scale-105"
+              className="mx-auto h-[20rem] w-full object-contain bg-[#4a4c7e] object-center transition duration-500 group-hover:scale-105"
               src={img}
               alt="quick-play"
               loading="lazy"
@@ -135,8 +138,8 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
         ))}
         <div className="group relative rounded-xl  space-y-6 overflow-hidden cursor-pointer" onClick={handleDisplayCreateGameModal}>
             <img
-              className="mx-auto h-[22rem] w-full object-cover object-top transition duration-500 group-hover:scale-105"
-              src={eduImg}
+              className="mx-auto h-[22rem] w-full object-cover object-top bg-[#4a4c7e] transition duration-500 group-hover:scale-105"
+              src={custom}
               alt="quick-play"
               loading="lazy"
               width="640"
