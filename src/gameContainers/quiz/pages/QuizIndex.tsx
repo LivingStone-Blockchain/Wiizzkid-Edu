@@ -26,6 +26,8 @@ const QuizIndex = () => {
   const [quizGameCode, setQuizGameCode] = useState<string>("");
 
 
+
+
   const handlePlayQuizGame = (e: any) => {
     e.preventDefault();
 
@@ -57,7 +59,7 @@ const QuizIndex = () => {
         children={<ScoreBalance />}
       />
       <section className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
-        <div className="w-full text-white mb-16">
+        <div className="w-full text-white mb-24">
           <div className="flex justify-between items-center max-w-full mx-auto">
             <article>
               <h1 className="md:text-2xl text-xl font-semibold text-[#252641]">Let's <span className="text-yellow-500">play</span></h1>

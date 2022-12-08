@@ -18,7 +18,7 @@ const Input: FC<InputType> = ({ type = "text", value, onChange, placeholder, min
       onChange={onChange}
       min={min}
       max={max}
-      className="w-full border rounded border-2 p-2 text-sm"
+      className="w-full rounded border-2 p-2 text-sm"
     />
   );
 };

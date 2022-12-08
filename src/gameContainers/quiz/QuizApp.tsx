@@ -12,6 +12,11 @@ function QuizApp() {
   
     //set Video
     useEffect(() => {
+        window.scrollTo({
+           top: 0,
+           behavior: 'smooth'
+         });
+
       setTimeout(() => {
         setShowSplashScreen(false);
       }, 7000);

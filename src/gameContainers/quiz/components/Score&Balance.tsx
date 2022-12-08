@@ -15,6 +15,7 @@ const ScoreBalance = () => {
           value: 0,
         }
       ] 
+      
   return (
     <div className='absolute md:bottom-5 bottom-[14px] md:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
            <div className={`bg-gray-100 border-4 text-center flex w-[120px] md:w-[160px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-[#37b9b2]`}>

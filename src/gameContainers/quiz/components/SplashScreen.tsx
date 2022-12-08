@@ -1,4 +1,4 @@
-import { FC, useEffect, useContext } from "react";
+import { FC } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { vrGameVideo } from "../assets/videos";
 import Button from "./button/Button";
@@ -17,14 +17,14 @@ const SplashScreen: FC<SplashScreenProps> = ({
   return (
     <section className="flex w-full h-full min-h-screen p-6 ">
       <div className="m-auto z-50">
-        <h1 className="text-2xl font-bold motion-safe:animate-bounce text-center bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent transition">
-          <span className="text-5xl block mb-2">Join</span> the Wiizkid
-          Revolution!
+        <h1 className="text-2xl font-bold motion-safe:animate-bounce text-center bg-[#37b9b2] bg-clip-text text-transparent transition">
+          <span className="text-5xl block mb-2">Join!</span> The Wiizzkid
+          Revolution.
         </h1>
 
          <Button
           onClick={() => setShowSplashScreen(false)}
-          className="mx-auto mt-12"
+          className="mt-12 flex justify-center items-center gap-2 md:w-36 w-28 md:text-base text-sm text-[#37b9b2] mx-auto font-semibold px-5 py-3  bg-text-darken shadow-btn-darken transition text-center"
         >
           Skip <FaAngleRight />
         </Button>

@@ -93,33 +93,33 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         <img src={successImg} className="w-24 mx-auto" alt="" />
 
         <article className="text-center mt-4">
-          <h1 className="text-2xl font-bold text-green-600">
+            <h1 className="text-2xl font-bold text-[#37b9b2]">
             Quiz Game Created!
           </h1>
       
       {gameMode !== 'london' ? (
         <>
         <p className="mt-8">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-[#252641]">
               {gameDetails?.invite_code}
             </span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative">
             <span ref={textRef} onClick={handleCopyClick}>{`https://game.wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
-            <span className="text-xs font-bold animate-pulse text-green-600 absolute top-5 right-10">copy</span>
+            <span className="text-xs font-bold animate-pulse text-[#37b9b2] absolute top-5 right-10">copy</span>
           </p>
-          <p className="mt-4">
+          <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
             Copy and share your quiz code or link to your friends!
           </p>
         </>
       ) : (
         <>
            <p className="mt-8">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-[#252641]">
               Free Mode
             </span>
           </p>
-           <p className="mt-8">
+           <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
             Game codes/links can be generated and shared in premium modes!
           </p>
         </>
@@ -127,7 +127,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
           <Button
             onClick={handleStartGame}
-            className={`mx-auto mt-14`}
+            className="mt-14 flex justify-center items-center gap-2 w-full md:text-base text-sm bg-[#252641] mx-auto font-semibold px-5 py-3  text-white transition text-center"
           >
             Play Quiz
           </Button>
@@ -142,7 +142,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     <section className="pb-4 w-full">
       <div className="mb-7 flex items-center justify-between">
         {screen === 2 ? (
-          <Button type="button" onClick={() => setScreen(1)} btnDefault>
+          <Button type="button" className="text-[#252641]" onClick={() => setScreen(1)} btnDefault>
             <FaAngleLeft className="mr-1" /> Back
           </Button>
         ) : (
@@ -151,17 +151,14 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
         <FaTimes
           onClick={handleCloseModal}
-          className="float-right text-red-600 cursor-pointer text-xl"
+          className="float-right text-yellow-500 cursor-pointer md:text-xl text-lg"
         />
       </div>
 
       {screen !== 2 && (
         <article>
-          <h1 className="text-2xl font-bold mb-3 bg-gradient-to-r from-orange-600 via-red-500 to-yellow-500 bg-clip-text text-transparent">
-            Create A New Wiizkid Revolution!
-          </h1>
-
-          <p className="">Start A Quiz Game</p>
+          <h1 className="md:text-2xl text-xl font-bold mb-3 text-[#252641]">Create a new Wiizzkid<span className="text-yellow-500 block">Revolution!</span></h1>
+          <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Start a Quiz Game</p>
         </article>
       )}
 
@@ -267,17 +264,21 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         {/* <FormGroup>
           <Label>Game Region</Label>
           <Input type="text" placeholder="E.g. UK" />
-        </FormGroup> */}
+         </FormGroup>  
+        
+        */}
 
         <div className="mt-8">
           {screen === 1 && (
-            <Button onClick={handleScreenTwo}>
+            <Button onClick={handleScreenTwo}
+            className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-[#252641] mx-auto font-semibold px-5 py-3  text-white transition text-center"
+            >
               Next <FaArrowRight className="ml-3" />
             </Button>
           )}
 
           {screen === 2 && (
-            <Button type="submit" className="w-full" onClick={handleInstructionScreen}>
+            <Button type="submit"   className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-[#252641] mx-auto font-semibold px-5 py-3  text-white transition text-center" onClick={handleInstructionScreen}>
               Create Quiz
             </Button>
           )}

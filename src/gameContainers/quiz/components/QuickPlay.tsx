@@ -111,7 +111,7 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
    //#cd2525
   return (
     <div className="container md:py-20 py-16 px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
-      <div className="mb-16 md:w-2/3 lg:w-1/2">
+      <div className="md:mb-16 mb-12 md:w-2/3 lg:w-1/2">
         <h1 className="md:text-2xl text-xl font-semibold text-[#252641]">Quick<span className="text-yellow-500">play</span></h1>
         <p className="text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed font-medium">Explore the categories available in the London mode</p>
       </div>
@@ -129,7 +129,7 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
             <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-[#252641] md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
               <div>
                 <h4 className="md:text-xl text-lg font-medium text-white">{title}</h4>
-                <span className="block md:text-sm text-xs text-gray-500">{difficulty}</span>
+                <span className="block md:text-sm text-xs text-gray-400">{difficulty}</span>
               </div>
               <p className="mt-8 md:text-base text-sm  text-gray-300">{description}</p>
             </div>
@@ -145,10 +145,10 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
               width="640"
               height="805"
             />
-            <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-[#252641] translate-y-24 transition duration-300 ease-in-out group-hover:translate-y-0">
+            <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-[#252641] md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
               <div>
                 <h4 className="md:text-xl text-lg font-medium text-white">Custom Quiz</h4>
-                <span className="block md:text-sm text-xs text-gray-500">Easy</span>
+                <span className="block md:text-sm text-xs text-gray-400">Easy</span>
               </div>
               <p className="mt-8 md:text-base text-sm  text-gray-300">Create a quiz game with your preferred selections. Get Started!</p>
             </div>
