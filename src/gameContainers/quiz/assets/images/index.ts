@@ -12,5 +12,6 @@ import general from './general.png';
 import custom from './custom.png';
 import basket from './basket.png';
 import soccer from './corner.png';
+import gameOver from './game-over.png';
 
-export { custom, basket, soccer, mathImg, englishImg, generalKnowledgeImg, win, low, educationImg, successImg, eduImg, rocket, geography, general };
+export { custom, basket, soccer, mathImg, englishImg, generalKnowledgeImg, win, low, educationImg, successImg, eduImg, rocket, geography, general, gameOver };

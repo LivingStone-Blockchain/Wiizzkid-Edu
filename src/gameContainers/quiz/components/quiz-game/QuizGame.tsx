@@ -9,6 +9,7 @@ import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
 import quizCompletedToast from "../toasts/quizCompleteToast";
 import quizEndGameToast from "../toasts/quitGameToast";
+import gameOverToast from "../toasts/gameOverToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
 import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
@@ -91,7 +92,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   const quitGame = () => {
     setLoading(true);
     setTriviaFetch(false);
-    quizEndGameToast(setLoading, navigate);
+    quizEndGameToast(setLoading, navigate, setShowCreateGameModal);
     return;
   };
 
@@ -103,7 +104,8 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     setLoading(true);
 
     toast.dismiss();
-    toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
+    //if time elapses, auto submit and toast game over
+    submitTimeArray[0] === "0" && submitTimeArray[1].includes("0") ?  gameOverToast() :  toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
 
 
     const payload = {
@@ -117,7 +119,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     setTimeout(() => {
       console.log(payload);
       toast.dismiss("completed");
-      quizCompletedToast(score, totalAllowedQuestions, timeDiffCalculator(gameDuration, payload.submitTime), setStart, setTriviaFetch, navigate);
+      quizCompletedToast(score, totalAllowedQuestions, timeDiffCalculator(gameDuration, payload.submitTime), setStart, setTriviaFetch, setShowCreateGameModal, navigate);
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);
@@ -147,18 +149,18 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       <div className="max-w-xl mx-auto opacity-90">
         <nav className="flex justify-between items-center">
           <FaTimes
-            className="text-2xl cursor-pointer"
+            className="text-2xl cursor-pointer text-[#252641]"
             onClick={quitGame}
           />
 
-        <h1 className="font-bold text-xl">{`${categoryStrings(Number(category))[0].toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`}</h1>
+        <h1 className="text-xl font-bold text-[#252641]">{`${categoryStrings(Number(category))[0].toUpperCase()}${categoryStrings(Number(category)).slice(1)}`} <span className="text-yellow-500">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
-              <FaQuestionCircle className="text-2xl cursor-pointer"/>   
+              <FaQuestionCircle className="text-2xl cursor-pointer text-[#252641]"/>   
                 <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
                     <div className="max-w-xs flex-col items-center">
-                    <div className="clip-bottom h-2 w-4 bg-gray-700 hidden md:flex mx-auto" style={{clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)"}}></div>
-                        <div className="w-52 rounded bg-gray-700 font-semi-bold p-2 text-xs text-center shadow-lg">Make sure to answer this question before proceeding to the next.</div>                
+                    <div className="clip-bottom h-2 w-4 bg-[#252641] hidden md:flex mx-auto" style={{clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)"}}></div>
+                        <div className="w-52 rounded bg-[#252641] font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Make sure to answer this question before proceeding to the next.</div>                
                     </div>
                 </div>
             </div>
@@ -178,7 +180,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
         </main>
 
         <footer className="fixed bottom-0 right-0 left-0 w-full bg-gray-100 shadow p-4 flex items-center justify-between">
-          <span className="font-bold animate-pulse flex items-center">
+          <span className="font-bold animate-pulse flex items-center text-[#252641] opacity-80">
             <FaClock className="mr-2" />{" "}
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
@@ -191,12 +193,12 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
           {selectedOption && current_page + 1 === questions.length? (
             <form onSubmit={handleFinalSubmit}>
-              <ActionButton className="bg-red-100" disabled={loading}>
+              <ActionButton className="bg-[#ffe1e1]" disabled={loading}>
                 {loading ? <span ref={submitText}>Submitting</span> : "Submit Game"}
               </ActionButton>
             </form>
           ) : (
-            <ActionButton className={selectedOption ? "cursor-pointer border-orange-600" : "cursor-not-allowed border-gray-700"} onClick={handleGoToNextQuestion} disabled={selectedOption ? false : true}>
+            <ActionButton className={selectedOption ? "cursor-pointer border-[#ff3939]" : "cursor-not-allowed border-[#252641]"} onClick={handleGoToNextQuestion} disabled={selectedOption ? false : true}>
               Next <FaArrowRight className="ml-3" />
             </ActionButton>
           )}
@@ -221,7 +223,7 @@ function ActionButton({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${className} px-6 py-2 flex items-center border-2 border-orange-600 rounded shadow text-center text-sm font-bold text-orange-600 hover:from-yellow-600 hover:to-orange-700 transition`}
+      className={`${className} px-6 py-2 flex items-center border-2 border-[#ff3939] rounded-full shadow text-center text-sm font-bold text-yellow-500 transition`}
     >
       {children}
     </button>

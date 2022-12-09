@@ -1,5 +1,5 @@
 import React from 'react'
-import { duo, single, multi } from '../assets/mode';
+import { duo, single, multi, graduate } from '../assets/mode';
 import { Link } from 'react-router-dom';
 
 const Features = () => {
@@ -29,7 +29,7 @@ const Features = () => {
             >
               Single player
             </h5>
-            <p className="text-gray-500 md:text-base text-sm">
+            <p className="text-gray-500 md:text-base text-sm leading-relaxed">
               Learning becomes a lot easier when you have fun practicing and sharpening your skills.
             </p>
           </div>
@@ -51,7 +51,7 @@ const Features = () => {
             >
               Two players
             </h5>
-            <p className="text-gray-500 md:text-base text-sm">
+            <p className="text-gray-500 md:text-base text-sm leading-relaxed">
             Play with another player to earn some crypto coins. You will need speed, knowledge and accuracy to win.
             </p>
           </div>
@@ -61,7 +61,7 @@ const Features = () => {
         <div className="relative space-y-8 py-12 p-8">
           <img
             src={multi}
-            className="w-12"
+            className="w-14"
             width="512"
             height="512"
             alt="burger illustration"
@@ -73,7 +73,7 @@ const Features = () => {
             >
               Multiple players
             </h5>
-            <p className="text-gray-500 md:text-base text-sm">
+            <p className="text-gray-500 md:text-base text-sm leading-relaxed">
             Play with a group of friends/class to win the challenge. The team with the highest average wins.
             </p>
           </div>
@@ -87,8 +87,8 @@ const Features = () => {
           className="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white"
         >
           <img
-             src="https://cdn-icons-png.flaticon.com/512/4341/4341160.png"
-            className="w-12"
+             src={graduate}
+            className="w-14"
             width="512"
             height="512"
             alt="burger illustration"
@@ -100,7 +100,7 @@ const Features = () => {
             >
               More on Wiizzkids
             </h5>
-            <p className="text-gray-500 md:text-base text-sm">
+            <p className="text-gray-500 md:text-base text-sm leading-relaxed">
               Take a deeper dive into the Wiizzkid universe and learn more about the platform.
             </p>
           </div>

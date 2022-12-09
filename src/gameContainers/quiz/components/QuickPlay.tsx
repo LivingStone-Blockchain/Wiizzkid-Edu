@@ -78,7 +78,7 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
 
     
         
-        toast.loading("Creating quiz game...", { duration: 3000, id: "loading" });
+        toast.loading("Creating quiz game...", { duration: 4000, id: "loading" });
     
         setTimeout(() => {
           toast.dismiss("loading");
@@ -105,10 +105,15 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
         setGameDetails(payload);
       }
      //#a5a6c8
-        //#34355d
+      //#34355d
    //#4a4c7e
+   //#5b5c8d
+   //#f75858
    //#FF3939
    //#cd2525
+   //#37b9b2
+   //#72c9c4
+   //#98cfcc
   return (
     <div className="container md:py-20 py-16 px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
       <div className="md:mb-16 mb-12 md:w-2/3 lg:w-1/2">

@@ -20,7 +20,7 @@ export default function QuizPlay() {
     e.preventDefault();
 
     if (!username) {
-      return toast.error("Please enter a username!");
+      return toast.error("Please enter a username!", {id: "username"});
     }
 
 
@@ -40,6 +40,7 @@ export default function QuizPlay() {
 
    setTimeout(() => {
       toast.dismiss("prepping");
+      toast.dismiss("username");
       setLoading(false);
       setStart(true);
       startGame(Date.now());
@@ -73,9 +74,9 @@ export default function QuizPlay() {
             <h1 className="md:text-2xl text-xl font-bold mb-4 text-[#252641]">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-yellow-500">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 
-            <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+            <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
               There are <span className="font-bold">{totalAllowedQuestions}</span> multiple choice questions. Each question has one
-              point. Attempt to answer all the questions within <span className="font-bold m-0">{gameDuration}</span>  minutes.
+              point. Attempt to answer all the questions within <span className="font-bold">{gameDuration}</span>  minutes.
             </p>
 
             <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
@@ -104,7 +105,7 @@ export default function QuizPlay() {
               />
             </div>
             <Button 
-              className="mt-6 flex justify-center items-center gap-2 md:w-48 w-36 md:text-base text-sm text-white font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken transition text-center"
+                className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center shadow-btn-darken"
             >
              Start Quiz <FaArrowRight className="ml-3" />
             </Button>

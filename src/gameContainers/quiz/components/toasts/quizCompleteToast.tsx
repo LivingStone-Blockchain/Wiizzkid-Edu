@@ -6,7 +6,7 @@ import { NavigateFunction } from "react-router-dom";
 
 
 
-const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiffCalculator:string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction) => {
+const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiffCalculator:string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void,  setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction) => {
 
              toast(
                 () => (
@@ -18,16 +18,16 @@ const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiff
                   )}
           
                   <article className="text-center mt-4">
-                    <h1 className="text-2xl font-bold text-green-600">
+                    <h1  className="text-2xl font-bold text-[#37b9b2]">
                       Quiz Game Completed!
                     </h1>
                 
                     <p className="mt-8">
-                      <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
+                      <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-[#252641]">
                         Score: {score}
                       </span>
                     </p>
-                    <p className="mt-4">
+                    <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
                         {`Completion Time: ${timeDiffCalculator} mins.`}
                   </p>
         
@@ -40,8 +40,8 @@ const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiff
         
           
                     <Button
-                      className="mx-auto mt-8"
-                      onClick={() => {toast.dismiss(); setStart(false); setTriviaFetch(false); navigate('/quiz-home')}}
+                       className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center mt-8"
+                      onClick={() => {toast.dismiss(); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home')}}
                     >
                       Back home
                     </Button>
