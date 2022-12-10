@@ -3,7 +3,7 @@ import { registerService, loginService, forgotPasswordService } from "../service
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 
 type registerFormikType = {
@@ -65,6 +65,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
     const param = useParams();
+    const location = useLocation();
 
 
 
@@ -160,7 +161,8 @@ const UserProvider: FC<any> = ({ children }) => {
             setEmailLogin('');
             setPasswordLogin('');
             //navigate('/', { replace: true });
-            navigate(-1);
+            //do not navigate to previous url if its password-reset url
+            location.pathname.includes('/user/password-reset') ? navigate('/') : navigate(-1);
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
