@@ -76,7 +76,7 @@ const Register = () => {
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.password}</span>
             ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
           </div>
-          <div className="space-y-2">
+          <div className={`space-y-2 ${registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
               type="password"
               name="confirmPassword"
@@ -86,11 +86,11 @@ const Register = () => {
               onChange={registerFormik.handleChange}
               onBlur={registerFormik.handleBlur}
               value={registerFormik.values.confirmPassword}
-              className="text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]"
+              className={`text-sm placeholder:text-sm focus:outline-none block ${registerFormik.touched.confirmPassword && !registerFormik.errors.confirmPassword ? 'w-[95%]' : 'w-full'} rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]`} 
             />
-            {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? (
+           {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.confirmPassword}</span>
-            ) : null}
+            ) : registerFormik.touched.confirmPassword && !registerFormik.errors.confirmPassword && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
           </div>
           <div className="relative pl-1 cursor-pointer md:w-1/2 w-[90%]">
             {referralToggle ? (
