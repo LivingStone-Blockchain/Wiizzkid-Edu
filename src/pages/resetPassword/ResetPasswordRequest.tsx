@@ -56,9 +56,9 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({ data }) => {
         await resetPasswordService.resetPassword({ password, token, uidb64 });
         values.password = "";
         values.confirmPassword = "";
+        //repeated twice to avoid login's navigate(-1), which takes users to user/password-reset/id/token after login, this way users land on login after password update
+        navigate('/');
         navigate('/login');
-        navigate('/login');
-        //will be taken to page before login, in this case its password update page with url user/password-reset/id/token
         setIsLoading(false);
         toast.success("Password reset successfully!", { duration: 5000, id: "reset" });
         setTimeout(() => {
