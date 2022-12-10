@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ResetPasswordRequest from './ResetPasswordRequest';
 import NotFound from './../NotFound';
@@ -14,9 +14,12 @@ type AuthUserType = {
     uidb64: string,
 }
 
+type validUrlType = {
+  urlCheck: 'loading' | 'done' | 'error' 
+}
+
 const ResetPassword = () => {
-    const [validUrl, setValidUrl] = useState<boolean>(false);
-    const [delay, setDelay] = useState<boolean>(true);
+  const [validUrl, setValidUrl] = useState<validUrlType>({urlCheck: 'loading'});
     const [authUser, setAuthUser] = useState<AuthUserType>();
     const param = useParams();
 
@@ -29,34 +32,22 @@ const ResetPassword = () => {
           try {
             const url = `${baseUrl}/user/password-reset/${param.uidb64}/${param.token}/`;
             await axios.get(url).then((res) => setAuthUser(res.data));
-            setValidUrl(true);
+            setValidUrl({urlCheck: 'done'});
           } catch (error) {
-            setValidUrl(false);
+            setValidUrl({urlCheck: 'error'});
           }
         };
         verifyEmailUrl();
       }, [param])
 
 
-    //delay loading components
-    setTimeout(() => {
-        setDelay(false)
-    }, 3000);
-
-
 
 
   return (
     <>
-         {delay ? (
-        <Preloader load={validUrl}/>
-      ) : (
-        validUrl ? (
-          <ResetPasswordRequest data={authUser!}/>
-        ) : (
-          <NotFound />
-        )
-      )}
+      {validUrl.urlCheck === "loading" && (<Preloader homeLoader={true} />)}
+      {validUrl.urlCheck === "done" && ( <ResetPasswordRequest data={authUser!}/>)}
+      {validUrl.urlCheck === "error" && (<NotFound />)}
     </>
   )
 }

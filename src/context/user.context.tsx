@@ -139,6 +139,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
 
 
+    
     //Handle login
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -161,8 +162,7 @@ const UserProvider: FC<any> = ({ children }) => {
             setEmailLogin('');
             setPasswordLogin('');
             //navigate('/', { replace: true });
-            //do not navigate to previous url if its password-reset url
-            location.pathname.includes('/user/password-reset') ? navigate('/') : navigate(-1);
+            navigate(-1);
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);

@@ -7,9 +7,12 @@ import Preloader from '../components/Preloader';
 import successGif from '../assets/registerVerify/check.gif';
 
 
+type validUrlType = {
+  urlCheck: 'loading' | 'done' | 'error' 
+}
+
 const RegistrationVerify = () => {
-  const [validUrl, setValidUrl] = useState<boolean>(false);
-  const [delay, setDelay] = useState<boolean>(true);
+  const [validUrl, setValidUrl] = useState<validUrlType>({urlCheck: 'loading'});
   const param = useParams();
   const navigate = useNavigate();
 
@@ -23,18 +26,14 @@ const RegistrationVerify = () => {
       try {
         const url = `${baseUrl}/user/email-verify/${param.token}`;
         await axios.get(url);
-        setValidUrl(true);
+        setValidUrl({urlCheck: 'done'});
       } catch (error) {
-        setValidUrl(false);
+        setValidUrl({urlCheck: 'error'});
       }
     };
     verifyEmailUrl();
   }, [param])
 
-  //delay loading components
-  setTimeout(() => {
-    setDelay(false)
-  }, 3000);
 
 
 
@@ -65,14 +64,9 @@ const RegistrationVerify = () => {
 
   return (
     <div>
-      {delay ?
-        (<Preloader />)
-        :
-        (validUrl ? (
-          <Success />
-        ) : (
-          <NotFound />
-        ))}
+      {validUrl.urlCheck === "loading" && (<Preloader />)}
+      {validUrl.urlCheck === "done" && (<Success />)}
+      {validUrl.urlCheck === "error" && (<NotFound />)}
     </div>
   )
 }

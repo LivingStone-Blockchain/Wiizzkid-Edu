@@ -57,6 +57,8 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({ data }) => {
         values.password = "";
         values.confirmPassword = "";
         navigate('/login');
+        navigate('/password-recovery');
+        //will be taken to page before login, in this case its password update page with url user/password-reset/id/token
         setIsLoading(false);
         toast.success("Password reset successfully!", { duration: 5000, id: "reset" });
         setTimeout(() => {
