@@ -96,7 +96,7 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({ data }) => {
               <span className='text-xs text-red-600 pl-5'>{resetPasswordFormik.errors.password}</span>
             ) : resetPasswordFormik.touched.password && !resetPasswordFormik.errors.password && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
           </div>
-          <div>
+          <div  className={`space-y-2 ${resetPasswordFormik.touched.confirmPassword && resetPasswordFormik.errors.confirmPassword ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
               type="password"
               name="confirmPassword"
