@@ -47,7 +47,7 @@ useEffect(() => {
             <img
               src={data.details.blogImg}
               alt="blog photo"
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-fill object-center"
             />
             <div
               className="absolute top-0 left-0 z-10 flex h-full w-full items-end bg-gradient-to-t from-[#090e34b3] to-transparent"

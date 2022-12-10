@@ -1,6 +1,5 @@
-import { spawn } from 'child_process';
 import parse from 'html-react-parser';
-import { quizNews, boss, author111, blog111, vrNews, crypto, study } from "../assets/blog";
+import { author111, blog111, vrNews, crypto } from "../assets/blog";
 
 
 

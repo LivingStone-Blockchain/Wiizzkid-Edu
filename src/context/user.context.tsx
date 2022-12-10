@@ -40,6 +40,8 @@ export interface UserContextType {
     setForgotPasswordEmail: React.Dispatch<React.SetStateAction<string>>,
     referralToggle: boolean,
     setReferralToggle: React.Dispatch<React.SetStateAction<boolean>>,
+    loginLoader: boolean,
+    setLoginLoader: React.Dispatch<React.SetStateAction<boolean>>,
     user: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
@@ -58,7 +60,8 @@ const UserProvider: FC<any> = ({ children }) => {
     const [emailLogin, setEmailLogin] = useState<string>('');
     const [passwordLogin, setPasswordLogin] = useState<string>('');
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState<string>('');
-    const [referralToggle, setReferralToggle] = useState<boolean>(false);
+    const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
+    const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
     const param = useParams();
@@ -202,7 +205,7 @@ const UserProvider: FC<any> = ({ children }) => {
     //logout handler
     const handleLogout = useCallback(() => {
 
-        setIsLoading(true);
+        setLoginLoader(true);
         navigate('/login');
         window.localStorage.removeItem('loggedWiizzikidUser');
         setEmailLogin('');
@@ -216,7 +219,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader }}>
             {children}
         </UserContext.Provider>
     )

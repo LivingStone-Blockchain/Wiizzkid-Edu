@@ -14,7 +14,7 @@ const ForgotPassword = () => {
         <div className="w-full flex flex-col md:gap-6 gap-4">
           <h1 className="mb-4 text-xl font-semibold text-[#252641]">Forgot Password</h1>
           <div className="space-y-2">
-            <label htmlFor="email" className='text-[#252641] sm:text-base text-sm'>Email</label>
+            <label htmlFor="email" className='text-[#252641] text-sm'>Email</label>
             <input
                 type="email"
                 placeholder="Email"

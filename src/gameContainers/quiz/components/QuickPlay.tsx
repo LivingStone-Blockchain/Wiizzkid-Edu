@@ -108,6 +108,7 @@ const QuickPlay: FC<QuickPlayProp> = ({handleDisplayCreateGameModal}) => {
       //#34355d
    //#4a4c7e
    //#5b5c8d
+   //#f07575
    //#f75858
    //#FF3939
    //#cd2525

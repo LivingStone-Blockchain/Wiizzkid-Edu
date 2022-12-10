@@ -110,7 +110,8 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({ data }) => {
             />
             {resetPasswordFormik.touched.confirmPassword && resetPasswordFormik.errors.confirmPassword ? (
               <span className='text-xs text-red-600 pl-5'>{resetPasswordFormik.errors.confirmPassword}</span>
-            ) : null}
+            ) : resetPasswordFormik.touched.confirmPassword && !resetPasswordFormik.errors.confirmPassword && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
+
           </div>
 
           <button type="submit" className={`my-1 relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 rounded-full ${isLoading ? "cursor-not-allowed bg-[#37385e]" : "cursor-pointer transition duration-300 hover:scale-105 active:duration-75 active:scale-95 bg-[#252641]"}`}>

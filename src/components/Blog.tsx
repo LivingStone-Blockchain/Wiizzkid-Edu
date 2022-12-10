@@ -1,5 +1,4 @@
 import React from 'react'
-import { quizNews, vrNews, crypto, study } from '../assets/blog';
 import { useNavigate } from 'react-router-dom';
 import blogData from '../data/blogData';
 

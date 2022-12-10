@@ -1,12 +1,22 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { login } from '../assets/auth';
 import { Link } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context';
-import { Form, LoadingToRedirect } from '../components/index';
+import { Form, LoadingToRedirect, Preloader } from '../components/index';
 
 
 const Login = () => {
-  const { user, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, handleLogin, isLoading } = useContext(UserContext) as UserContextType;
+  const { user, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, handleLogin, isLoading , loginLoader, setLoginLoader} = useContext(UserContext) as UserContextType;
+ 
+
+useEffect(() => {
+     //delay loading components
+     setTimeout(() => {
+      setLoginLoader(false)
+    }, 3000);
+}, [loginLoader])
+
+
 
 
   //restrict access to page for logged users
@@ -18,12 +28,14 @@ const Login = () => {
 
 
   return (
-    <Form alt='login' img={login}>
+    <>
+        {loginLoader && (<Preloader homeLoader={true} />)}
+        <Form alt='login' img={login}>
       <form onSubmit={handleLogin} className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
         <div className="w-full flex flex-col md:gap-6 gap-4">
           <h1 className="mb-4 text-xl font-semibold text-[#252641]">Sign in to your account</h1>
           <div className="space-y-2">
-            <label htmlFor="email" className='text-[#252641] sm:text-base text-sm'>Email</label>
+            <label htmlFor="email" className='text-[#252641] text-sm'>Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -36,7 +48,7 @@ const Login = () => {
             />
           </div>
           <div className="space-y-2">
-            <label htmlFor="password" className='text-[#252641] sm:text-base text-sm'>Password</label>
+            <label htmlFor="password" className='text-[#252641] text-sm'>Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -81,6 +93,8 @@ const Login = () => {
         </div>
       </form>
     </Form>
+    </>
+    
 
   )
 }
