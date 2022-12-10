@@ -106,7 +106,7 @@ const ResetPasswordRequest: FC<AuthUserProp> = ({ data }) => {
               onChange={resetPasswordFormik.handleChange}
               onBlur={resetPasswordFormik.handleBlur}
               value={resetPasswordFormik.values.confirmPassword}
-              className="text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-[#96fde3]"
+              className={`text-sm placeholder:text-sm focus:outline-none block ${resetPasswordFormik.touched.password && !resetPasswordFormik.errors.password ? 'w-[95%]' : 'w-full'} rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]`} 
             />
             {resetPasswordFormik.touched.confirmPassword && resetPasswordFormik.errors.confirmPassword ? (
               <span className='text-xs text-red-600 pl-5'>{resetPasswordFormik.errors.confirmPassword}</span>
