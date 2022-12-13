@@ -18,7 +18,7 @@ import { TimestableContext, TimestableContextType } from "../../../context/times
 
 
 type CreateTimestableType =  {
-  setShowCreateGameModal: any;
+  setShowCreateGameModal: any
 }
 
 
