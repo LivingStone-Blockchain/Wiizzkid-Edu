@@ -12,4 +12,4 @@ const Overlay: FC<OverlayTypes> = ({ loading }) => {
   );
 };
 
-export default Overlay;
+export default Overlay
