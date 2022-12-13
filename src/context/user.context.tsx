@@ -17,6 +17,7 @@ type registerFormikType = {
 
 
 type userType = {
+    id: number,
     email: string,
     tokens: {
         access: string,
@@ -24,7 +25,7 @@ type userType = {
     },
     full_name: string,
     stone_token: number,
-    id: number,
+    player_code: string,
 }
 
 export interface UserContextType {
@@ -64,8 +65,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
-    const param = useParams();
-    const location = useLocation();
+
 
 
 

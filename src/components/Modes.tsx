@@ -28,6 +28,7 @@ const Modes = () => {
 						<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
 							<h1 className="uppercase text-white font-bold text-center text-sm lg:text-xl mb-3">FUN LEARNING</h1>
 							<Button 
+								onClick={() => navigate('/timestable-home')}
 								children="Try our timestable"
 								className='text-white border text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none '
 							/>

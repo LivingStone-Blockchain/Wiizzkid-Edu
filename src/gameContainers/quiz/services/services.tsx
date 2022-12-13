@@ -11,7 +11,9 @@ type gameDetailsType = {
     game_mode: string, 
     game_duration: number,
     category: number | string,
+    creator: number,
 }
+
 
 
 const getAll = async () => {

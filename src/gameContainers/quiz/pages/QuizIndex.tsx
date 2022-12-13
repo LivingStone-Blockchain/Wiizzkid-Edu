@@ -22,7 +22,7 @@ import ScoreBalance from "../components/Score&Balance";
 
 const QuizIndex = () => {
   const navigate = useNavigate();
-  const { setScreen, setScore, showCreateGameModal, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { setScreen, showCreateGameModal, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
   const [quizGameCode, setQuizGameCode] = useState<string>("");
 
 
@@ -43,7 +43,6 @@ const QuizIndex = () => {
   const handleDisplayCreateGameModal = () => {
     setShowCreateGameModal(true);
     setScreen(1);
-    setScore(0);
 
     toast(
       <CreateQuizGameModal setShowCreateGameModal={setShowCreateGameModal} />,

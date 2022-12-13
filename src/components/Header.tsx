@@ -159,7 +159,7 @@ const Header = () => {
                                                             </div>
                                                         </div>
                                                         <div className="border-b">
-                                                            <Link to="/dashboard" className="px-4 py-3 hover:bg-gray-100 flex" onClick={() => { setMobileDropdownOpen(false); setOpen(false) }}>
+                                                            <Link to="/dashboard-home" className="px-4 py-3 hover:bg-gray-100 flex" onClick={() => { setMobileDropdownOpen(false); setOpen(false) }}>
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineSpaceDashboard className="w-4 h-4" />
                                                                 </div>
@@ -269,7 +269,7 @@ const Header = () => {
                                                             </div>
                                                         </div>
                                                         <div className="border-b">
-                                                            <Link to="/dashboard" className="px-4 py-2 hover:bg-gray-50 flex" onClick={() => setDropdownOpen(false)}>
+                                                            <Link to="/dashboard-home" className="px-4 py-2 hover:bg-gray-50 flex" onClick={() => setDropdownOpen(false)}>
 
                                                                 <div className="text-gray-800">
                                                                     <MdOutlineSpaceDashboard className="w-4 h-4" />

@@ -25,7 +25,7 @@ type questionsData = {
 type returnedDataType = {
   id?: string,
   invite_code?: string,
-  correctAnswer?: string,
+  creator?: number,
   difficulty: string,
   total_questions: number,
   total_players: number,
@@ -44,6 +44,7 @@ type userType = {
   full_name: string,
   stone_token: number,
   id: number,
+  player_code: string,
 }
 
 
@@ -180,6 +181,9 @@ useEffect(() => {
   }
 
 
+
+  
+
   //function create game form 2
   const handleInstructionScreen = async () => {
 
@@ -190,12 +194,12 @@ useEffect(() => {
       game_mode: gameMode,
       game_duration: gameDuration,
       category: Number(category),
-      creator: user?.id,
+      creator: user!.id,
     }
     
     //persist only logged user data to backend
     try {
-      user?.stone_token
+      user?.tokens
       ? await service.createGame(payload).then((res) => {
         setGameDetails(res); 
       })

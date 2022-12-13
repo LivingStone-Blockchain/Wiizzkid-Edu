@@ -1,0 +1,10 @@
+export { default as CTA } from './CTA';
+export { default as InfoCard } from './InfoCard';
+export { default as BuyStone } from './BuyStone';
+export { default as QuizHistory } from './QuizHistory';
+export { default as Quizzes } from './Quizzes';
+export { default as WiizzkidMetaverse } from './WiizzkidMetaverse';
+export { default as SideBar } from './SideBar';
+export { default as DashboardHome } from './DashboardHome';
+export { default as OverlayDashboard } from './OverlayDashboard';
+export { default as MainBar } from './MainBar';

@@ -96,6 +96,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     return;
   };
 
+ 
 
   const submitQuiz = () => {
     //freeze time
@@ -108,6 +109,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     submitTimeArray[0] === "0" && submitTimeArray[1].includes("0") ?  gameOverToast() :  toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
 
 
+    //send to backend
     const payload = {
       gameId: gameDetails?.id,
       score,

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa";
-import { educationImg, eduImg } from "../assets/images";
+import { eduImg } from "../assets/images";
 import { Button } from "../../../components";
 import categoryStrings from "../components/functions/categoryStringConveter";
 import Overlay from "../components/Overlay";
@@ -9,31 +9,20 @@ import QuizGame from "../components/quiz-game/QuizGame";
 import {QuizContext, QuizContextType } from "../../../context/quiz.context";
 
 export default function QuizPlay() {
-  const { startGame, start, setStart, category, difficulty, totalAllowedQuestions, gameMode, gameDuration } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, category, difficulty, totalAllowedQuestions, gameDuration } = useContext(QuizContext) as QuizContextType;
 
 
-  const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
 
-  const handleStartGame = (e: any) => {
-    e.preventDefault();
-
-    if (!username) {
-      return toast.error("Please enter a username!", {id: "username"});
-    }
-
-
+  const handleStartGame = () => {
 
     setLoading(true);
     toast.loading("Preparing to start quiz...", { duration: 3000, id: "prepping" });
 
 
-    const payload = {
-      username,
-    };
+    setScore(0);
 
-    console.log(payload);
 
     // send username & email to backend and return JWT
     // store JWT in localStorage
@@ -46,8 +35,6 @@ export default function QuizPlay() {
       startGame(Date.now());
       toast.success("Your Wiizzkid quiz game has begun!", { id: "begin" });
     }, 3000)
-
-
 
   };
 
@@ -91,25 +78,12 @@ export default function QuizPlay() {
             </p>
           </article>
 
-          <form onSubmit={handleStartGame} className="mt-8">
-            <div className="mb-3">
-              <label className="mb-2 block text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed font-normal" htmlFor="">
-                Username
-              </label>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                type="text"
-                className="w-full border rounded p-2 bg-stone-200"
-                placeholder="Enter Username"
-              />
-            </div>
-            <Button 
-                className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center shadow-btn-darken"
+          <Button 
+            onClick={handleStartGame}
+            className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center"
             >
              Start Quiz <FaArrowRight className="ml-3" />
             </Button>
-          </form>
         </div>
       </section>
     </main>

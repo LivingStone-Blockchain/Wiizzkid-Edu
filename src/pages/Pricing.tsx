@@ -15,7 +15,7 @@ const Pricing = () => {
       return navigate('/login');
     }
 
-    navigate('/dashboard')
+    navigate('/dashboard/buy-token');
   }
 
 
@@ -152,6 +152,7 @@ const Pricing = () => {
           </li>
         </ul>
         <Button 
+            onClick={() => navigate('/dashboard/quizzes')}
             children='Get started'
             className='relative flex h-11 w-full items-center justify-center px-6 py-6 before:absolute before:inset-0 font-semibold border-2 border-[#252641] text-[#252641] transition duration-300 hover:scale-105 active:duration-75 active:scale-95'
         />

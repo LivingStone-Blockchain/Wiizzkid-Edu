@@ -1,21 +1,25 @@
 import React, { useContext } from 'react'
-import { UserContext, UserContextType } from '../../../context/user.context';
+import { QuizContext, QuizContextType } from '../../../context/quiz.context';
 
+type BoardDataType = {
+  title: string,
+  value: number,
+}
 
 const ScoreBalance = () => {
-    const { user } = useContext(UserContext) as UserContextType;
+    const { user, score } = useContext(QuizContext) as QuizContextType;
 
-    const boardData =[
+    const boardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: user?.stone_token,
+          value: user ? user?.stone_token : 0,
         },
         {
           title: "Score",
-          value: 0,
+          value: score,
         }
       ] 
-      
+
   return (
     <div className='absolute md:bottom-5 bottom-[14px] md:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
            <div className={`bg-gray-100 border-4 text-center flex w-[120px] md:w-[160px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-[#37b9b2]`}>
