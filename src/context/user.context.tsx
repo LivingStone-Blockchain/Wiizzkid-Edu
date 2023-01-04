@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 
+
 type registerFormikType = {
     full_name: string,
     email: string,
@@ -65,6 +66,10 @@ const UserProvider: FC<any> = ({ children }) => {
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null);
     const navigate = useNavigate();
+
+
+    
+
 
 
 

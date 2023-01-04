@@ -5,3 +5,6 @@ export { default as average } from './average.png';
 export { default as puzzle } from './puzzle.png';
 export { default as excel } from './excel.png';
 export { default as coming } from './coming-soon.png';
+export { default as crypto } from './crypto.png';
+export { default as coingate } from './coingate.png';
+export { default as paypal} from './paypal.png';

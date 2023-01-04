@@ -3,44 +3,13 @@
 @tailwind utilities;
 
 
-/*
-.bg-cream {
-  background-color: #ffedef;
-}
-
-/*font*/
-body {
-  font-family: 'Poppins', sans-serif;
+@layer base {
+  html {
+    font-family: 'Poppins', sans-serif;
+  }
 }
 
 
-.bg-yellow-500 {
-  background-color: #FF3939;
-}
-.text-yellow-500 {
-  color: #FF3939;
-}
-
-.bg-teally {
-background: #23bdee;
-}
-
-
-.shadow-btn-red {
-  box-shadow: 0px 15px 20px rgba(255, 57, 57, 0.4);
-}
-
-.shadow-btn-yellow {
-  box-shadow: 0px 15px 20px rgba(238, 187, 13, 0.4);
-}
-
-.shadow-btn-green {
-  box-shadow: 0px 15px 20px rgba(55,185,178, 0.4);
-}
-
-.shadow-btn-darken {
-  box-shadow: 0px 15px 20px rgba(37,38,65, 0.4);
-}
 
 
 .floating { 
@@ -65,8 +34,16 @@ background: #23bdee;
   50% { transform: translate(0, 8px); } 
   100% { transform: translate(0, -0px); }  
 }
-.text-darken {
-  color: #252641;
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 
@@ -80,4 +57,5 @@ span.lazy-load-image-background > img {
 div.marquee-container > div.overlay::before, div.overlay::after {
   --gradient-width:80px;
 }
+
 

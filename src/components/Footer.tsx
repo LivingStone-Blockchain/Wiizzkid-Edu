@@ -20,7 +20,7 @@ const Footer = () => {
 
 
    return (
-   <footer className="mt-24 bg-[#252641]">
+   <footer className="mt-24 bg-navy">
    <div className="lg:container m-auto space-y-8 px-4 py-16 text-gray-600 md:px-8">
      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-8">
        <div className={`flex justify-center items-center border-2  h-14 w-14 rounded-lg p-1`} style={{borderColor: `${colors[value]}`}}>
@@ -28,7 +28,7 @@ const Footer = () => {
        </div>
        <div className="flex gap-6">
          
-         <a href="#" target="blank" aria-label="github" className="hover:text-cyan-600 text-gray-400">
+         <a href="#" target="blank" aria-label="github" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
@@ -42,7 +42,7 @@ const Footer = () => {
              />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="twitter" className="hover:text-cyan-600 text-gray-400">
+         <a href="#" target="blank" aria-label="twitter" className="hover:text-tealLight text-gray-400">
            <svg
              xmlns="http://www.w3.org/2000/svg"
              width="20"
@@ -56,7 +56,7 @@ const Footer = () => {
              />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="medium" className="hover:text-cyan-600 text-gray-400">
+         <a href="#" target="blank" aria-label="medium" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
@@ -69,7 +69,7 @@ const Footer = () => {
              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"            />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="medium" className="hover:text-cyan-600 text-gray-400">
+         <a href="#" target="blank" aria-label="medium" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
@@ -89,16 +89,16 @@ const Footer = () => {
          <h6 className="text-lg font-medium text-white">Quick Links</h6>
          <ul className="mt-4 mb-5 md:mb-0 list-inside space-y-4 text-gray-400 text-sm">
            <li>
-             <a href="#" className={`transition hover:text-[#37b9b2]`}>Wiizzkid Quiz</a>
+             <a href="#" className={`transition hover:text-tealLight`}>Wiizzkid Quiz</a>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-[#37b9b2]`}>Wiizzkid Metaverse</a>
+             <a href="#" className={`transition hover:text-tealLight`}>Wiizzkid Metaverse</a>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-[#37b9b2]`}>Roadmap</a>
+             <a href="#" className={`transition hover:text-tealLight`}>Roadmap</a>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-[#37b9b2]`}>Blog</a>
+             <a href="#" className={`transition hover:text-tealLight`}>Blog</a>
            </li>
          </ul>
        </div>
@@ -106,16 +106,16 @@ const Footer = () => {
          <h6 className="text-lg font-medium text-white">Information</h6>
          <ul className="mt-4 mb-5 md:mb-0 list-inside space-y-4 text-gray-400 text-sm">
            <li>
-             <a href="#" className="transition hover:text-[#37b9b2]">Portfolio</a>
+             <a href="#" className="transition hover:text-tealLight">Portfolio</a>
            </li>
            <li>
-             <a href="#" className="transition hover:text-[#37b9b2]">Privacy Policy</a>
+             <a href="#" className="transition hover:text-tealLight">Privacy Policy</a>
            </li>
            <li>
-             <a href="#" className="transition hover:text-[#37b9b2]">Latest News</a>
+             <a href="#" className="transition hover:text-tealLight">Latest News</a>
            </li>
            <li>
-             <a href="#" className="transition hover:text-[#37b9b2]">Pricing</a>
+             <a href="#" className="transition hover:text-tealLight">Pricing</a>
            </li>
          </ul>
        </div>

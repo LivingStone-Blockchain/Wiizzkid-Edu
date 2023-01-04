@@ -5,6 +5,7 @@ import {
   FaQuestionCircle,
   FaTimes,
 } from "react-icons/fa";
+import service from "../../services/services";
 import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
 import quizCompletedToast from "../toasts/quizCompleteToast";
@@ -15,24 +16,19 @@ import toast from "react-hot-toast";
 import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 import CountDownTimer from "../CountDownTimer";
 import { useNavigate } from 'react-router-dom';
+import { Preloader } from "../../../../components";
 
 
-interface QuizGameTypes {
+
+type QuizGameTypes =  {
   showModal: true | false;
 }
 
-/*interface QuestionBankIdentifierTypes {
-  category: number;
-  question: string;
-  options: string[];
-  difficulty: string;
-  id: number;
-  tags: string[];
-}*/
+
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, score, setStart, timeOfStart, category, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, gameMode, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { quizData, score, setStart, timeOfStart, category, gameMode, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();  
@@ -62,7 +58,6 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(category)).toLowerCase()  && (data.difficulty).toLowerCase() === difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, totalAllowedQuestions);
 
 
-    console.log(sortedMapped_questions);
 
   //render first question from array on page load
   useEffect(() => {
@@ -98,7 +93,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
  
 
-  const submitQuiz = () => {
+  const submitQuiz = async () => {
     //freeze time
     submitTimeRef.current.innerText = submitTimeRef.current?.innerText;
     const submitTimeArray = submitTimeRef.current?.innerText.split(':');
@@ -111,17 +106,24 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     //send to backend
     const payload = {
-      gameId: gameDetails?.id,
+      player_id: user!.id,
+      game_id: gameDetails!.id,
       score,
-      submitTime: submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]), //convert say mm:ss to seconds. Highest time wins if score is tied.
+      submit_time: submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]), //convert say mm:ss to seconds. Highest time wins if score is tied.
     };
+    
+    
+    //send payload to backend for registered users...
+    try {
+     user &&  await service.scoreResult(payload);
+    } catch (error) {
+      console.log(error);
+    }
 
-   
-    // send payload to backend...
+    
     setTimeout(() => {
-      console.log(payload);
       toast.dismiss("completed");
-      quizCompletedToast(score, totalAllowedQuestions, timeDiffCalculator(gameDuration, payload.submitTime), setStart, setTriviaFetch, setShowCreateGameModal, navigate);
+      quizCompletedToast(score, totalAllowedQuestions, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, navigate);
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);
@@ -151,25 +153,29 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       <div className="max-w-xl mx-auto opacity-90">
         <nav className="flex justify-between items-center">
           <FaTimes
-            className="text-2xl cursor-pointer text-[#252641]"
+            className="text-2xl cursor-pointer text-navy"
             onClick={quitGame}
           />
 
-        <h1 className="text-xl font-bold text-[#252641]">{`${categoryStrings(Number(category))[0].toUpperCase()}${categoryStrings(Number(category)).slice(1)}`} <span className="text-yellow-500">Quiz</span></h1>
+        <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(category))[0].toUpperCase()}${categoryStrings(Number(category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
-              <FaQuestionCircle className="text-2xl cursor-pointer text-[#252641]"/>   
+              <FaQuestionCircle className="text-2xl cursor-pointer text-navy"/>   
                 <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
                     <div className="max-w-xs flex-col items-center">
-                    <div className="clip-bottom h-2 w-4 bg-[#252641] hidden md:flex mx-auto" style={{clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)"}}></div>
-                        <div className="w-52 rounded bg-[#252641] font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Make sure to answer this question before proceeding to the next.</div>                
+                    <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)"}}></div>
+                        <div className="w-52 rounded bg-navy font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Make sure to answer this question before proceeding to the next.</div>                
                     </div>
                 </div>
             </div>
         </nav>
 
         <main className="py-10">
-          <QuizQuestionCard
+          {/*quiz data can only be over 200 if its not trivia*/}
+          {!quizData || (gameMode === "london" && quizData.length > 200) ? (
+            <Preloader homeLoader={true}/>
+          ) : (
+            <QuizQuestionCard
             question={current_question?.question}
             category={current_question?.category}
             options={current_question?.options}
@@ -179,10 +185,11 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             type={current_question?.type}
             page={`${current_page + 1}/${totalAllowedQuestions}`}
           />
+          )}
         </main>
 
         <footer className="fixed bottom-0 right-0 left-0 w-full bg-gray-100 shadow p-4 flex items-center justify-between">
-          <span className="font-bold animate-pulse flex items-center text-[#252641] opacity-80">
+          <span className="font-bold animate-pulse flex items-center text-navy opacity-80">
             <FaClock className="mr-2" />{" "}
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
@@ -200,7 +207,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
               </ActionButton>
             </form>
           ) : (
-            <ActionButton className={selectedOption ? "cursor-pointer border-[#ff3939]" : "cursor-not-allowed border-[#252641]"} onClick={handleGoToNextQuestion} disabled={selectedOption ? false : true}>
+            <ActionButton className={selectedOption ? "cursor-pointer border-tomato" : "cursor-not-allowed border-navy"} onClick={handleGoToNextQuestion} disabled={selectedOption ? false : true}>
               Next <FaArrowRight className="ml-3" />
             </ActionButton>
           )}
@@ -225,7 +232,7 @@ function ActionButton({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${className} px-6 py-2 flex items-center border-2 border-[#ff3939] rounded-full shadow text-center text-sm font-bold text-yellow-500 transition`}
+      className={`${className} px-6 py-2 flex items-center border-2 border-tomato rounded-full shadow text-center text-sm font-bold text-tomato transition`}
     >
       {children}
     </button>

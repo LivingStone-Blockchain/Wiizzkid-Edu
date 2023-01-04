@@ -4,9 +4,10 @@ import loaderGif from './../assets/preloader/loader.gif';
 
 type PreloaderProp = {
   homeLoader?: boolean
+  dashboardLoader?: boolean
 }
 
-const Preloader: FC<PreloaderProp> = ({homeLoader}) => {
+const Preloader: FC<PreloaderProp> = ({homeLoader, dashboardLoader}) => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   //kill loader after 2sec
@@ -22,6 +23,14 @@ const Preloader: FC<PreloaderProp> = ({homeLoader}) => {
       <div className={`flex justify-center items-center left-0 right-0 z-[100] h-full ${isLoading ? 'opacity-0 bg-none hidden' : 'fixed opacity-100 bg-white block'}`}>
       <img src={loaderGif} alt="loader" className="w-full h-auto mx-auto sm:max-w-[250px] max-w-[200px]"/>
     </div>
+    )
+  }
+
+  if (dashboardLoader) {
+    return (
+      <div className={`flex justify-center items-center h-auto`}>
+      <img src={loaderGif} alt="loader" className="w-full h-auto sm:max-w-[250px] max-w-[200px] "/>
+  </div>
     )
   }
 

@@ -51,7 +51,7 @@ const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, total
       
                 <Button
                   className="mx-auto mt-8"
-                  onClick={() => {toast.dismiss(); navigate('/'); setShowCreateGameModal(false)}}
+                  onClick={() => {toast.dismiss(); navigate('/timestable-home'); setShowCreateGameModal(false)}}
                   value="Back Home"
                 />
               </article>

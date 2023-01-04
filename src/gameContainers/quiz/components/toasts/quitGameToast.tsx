@@ -10,7 +10,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
         () => (
           <article className="text-sm">
             <p className="mb-4">
-              <FaExclamationCircle className="text-3xl text-[#FF3939]" />
+              <FaExclamationCircle className="text-3xl text-tomato" />
             </p>
   
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">Leaving the game will cancel your current game progress...</p>
@@ -22,7 +22,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
                   setLoading(false);
                   toast.dismiss();
                 }}
-                className="flex justify-center items-center gap-2 md:text-base text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center"
+                className="flex justify-center items-center gap-2 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
               />
 
               <Button 
@@ -30,7 +30,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
                 onClick={() =>
                   {toast.loading("Quitting game...", { duration: 4000 }); setTimeout(() => {toast.dismiss(); navigate('/quiz-home'); setShowCreateGameModal(false)}, 4000); }
                 }
-                className="flex justify-center items-center gap-2 md:text-base text-sm text-[#252641] border-2 border-[#252641] font-semibold px-5 py-[9px]  bg-white transition text-center"
+                className="flex justify-center items-center gap-2 md:text-base text-sm text-navy border-2 border-navy font-semibold px-5 py-[9px]  bg-white transition text-center"
               />
              
             </div>

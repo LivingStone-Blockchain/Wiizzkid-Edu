@@ -1,17 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-//const windmill = require("@windmill/react-ui/config");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        reddy: "#FF5959",
-        "bg-yellow-500": "#FFAD5A",
-        "text-yellow-500": "#FFAD5A",
-        "bg-cream": "#fffaf6",
-        teally: "#4F9DA6",
-        "text-darken": "#1A0841",
+        tomatoLighter: "#ffedef",
+        tomato: "#FF3939",
+        tealLighter: "#e5fbfa",
+        tealLight: "#37b9b2",
+        teal: "#26a8a1",
+        navyLight: "#4a4c7e",
+        navy: "#252641",
+        pop: "#5b72ee",
+        goldenLighter: "#fff2e1",
+        golden: "#e0b00d",
       },
       keyframes: {
         floating: {

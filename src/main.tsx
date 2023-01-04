@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { BrowserRouter } from "react-router-dom";
 import './index.css'
-import { WiizzkidProvider, UserProvider, QuizProvider, TimestableProvider } from './context';
+import { WiizzkidProvider, UserProvider, QuizProvider, TimestableProvider, TokenProvider } from './context';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { chain, configureChains, createClient, WagmiConfig, } from 'wagmi';
@@ -16,7 +16,7 @@ import { publicProvider } from 'wagmi/providers/public';
 const alchemyApi = import.meta.env.VITE_ALCHEMY_API;
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.goerli],
+  [chain.goerli],
   [
     alchemyProvider({apiKey: alchemyApi}),
     publicProvider()
@@ -43,9 +43,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <UserProvider>
           <QuizProvider>
           <TimestableProvider>
+          <TokenProvider>
           <WiizzkidProvider>
               <App />
           </WiizzkidProvider>
+          </TokenProvider>
           </TimestableProvider>
           </QuizProvider>
           </UserProvider>

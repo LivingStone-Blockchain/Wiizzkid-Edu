@@ -26,8 +26,8 @@ const Hero: FC<HeroProps> = ({colorDeep, mobileDropdownOpen, text, shadow, mobil
     <>
         <div id="home" className={`${mobileDropdownOpen && 'md:blur-0 blur-2xl'} max-w-screen-xl px-8 mx-auto flex flex-col lg:flex-row items-start z-10 relative overflow-hidden pt-[30px] md:pt-[90px] lg:pt-[120px]`} onClick={() => setDropdownOpen(false)}>
                         <div className="flex flex-col w-full lg:w-6/12 justify-center lg:pt-24 items-start text-center lg:text-left mb-5 md:mb-0">
-                            <h1 data-aos="fade-right" data-aos-once="true" className="my-4 text-4xl md:text-5xl font-bold leading-tight text-darken">We are the <span style={{ color: `${colorDeep}` }}>{tagline}</span></h1>
-                            <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal md:text-2xl text-xl mb-8">{text}</p>
+                            <h1 data-aos="fade-right" data-aos-once="true" className="my-4 text-4xl md:text-5xl lg:mx-0 mx-auto font-bold leading-tight text-navy">We are the <span style={{ color: `${colorDeep}` }}>{tagline}!</span></h1>
+                            <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal md:text-2xl text-lg mb-8 text-navy">{text}</p>
                             <div className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5">
                                 <Button 
                                     children="Buy Stone Token"
@@ -46,7 +46,7 @@ const Hero: FC<HeroProps> = ({colorDeep, mobileDropdownOpen, text, shadow, mobil
 
                             <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="absolute top-20 -left-6 sm:top-32 sm:left-10 md:top-40 md:left-16 lg:-left-0 lg:top-52 floating-4">
                                 <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center'>
-                                    <p className='bg-teally text-white rounded-md p-1 text-2xl'><AiFillCalculator /></p>
+                                    <p className='bg-navy text-white rounded-md p-1 text-2xl'><AiFillCalculator /></p>
                                     <p className='flex flex-col'>
                                         <span className='font-semibold text-gray-500 text-sm tracking-wide'>Multiply</span>
                                         <span className='text-xs text-gray-500 tracking-wide'>Timestable Wiizzkid</span>

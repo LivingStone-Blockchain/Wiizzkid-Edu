@@ -1,6 +1,6 @@
 export { default as Modes } from './Modes';
 export { default as BackToTop } from './BackToTop';
-export { default as Blog } from './Blog';
+export { default as Blog } from './blog/Blog';
 export { default as Button } from './Button';
 export { default as Brand } from './Brand';
 export { default as ConnectWalletBtn } from './ConnectWalletBtn';
@@ -19,4 +19,4 @@ export { default as LoadingToRedirect } from './routes/LoadingToRedirect';
 export { default as Hero } from './Hero';
 export { default as Contact } from './Contact';
 export { default as Share } from './share/Share';
-export { default as BlogBuilder } from './BlogBuilder';
+export { default as BlogBuilder } from './blog/BlogBuilder';

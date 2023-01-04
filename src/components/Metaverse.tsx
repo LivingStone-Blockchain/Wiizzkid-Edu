@@ -8,10 +8,10 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Metaverse = () => {
   return (
-    <div id="metaverse" className="md:flex mt-24 py-16 px-4 md:px-8 md:space-x-10 items-start bg-[#252641]">
+    <div id="metaverse" className="md:flex mt-24 py-16 px-4 md:px-8 md:space-x-10 items-start bg-navy">
     <div data-aos="fade-down" className="md:w-7/12 relative lg:self-start self-center">
-        <div className="bg-[#37b9b2] w-32 h-32 rounded-full absolute z-0 left-4 -top-12 animate-pulse"></div>
-        <div className="bg-[#e0b00d] w-5 h-5 rounded-full absolute z-0 left-36 -top-12 animate-ping"></div>
+        <div className="bg-tealLight w-32 h-32 rounded-full absolute z-0 left-4 -top-12 animate-pulse"></div>
+        <div className="bg-golden w-5 h-5 rounded-full absolute z-0 left-36 -top-12 animate-ping"></div>
         <LazyLoadImage 
                 src={vrStudent} 
                 placeholderSrc={vrStudentPlaceholder}
@@ -19,8 +19,8 @@ const Metaverse = () => {
                 alt="boy on VR"
                 className="relative z-50 w-full h-auto lg:max-w-[450px]"
             />
-        <div className="bg-[#5B61EB] w-36 h-36 rounded-full absolute z-0 right-16 -bottom-1 animate-pulse hidden md:block"></div>
-        <div className="bg-[#ff5d5d] w-5 h-5 rounded-full absolute z-0 right-52 bottom-1 animate-ping"></div>
+        <div className="bg-pop w-36 h-36 rounded-full absolute z-0 right-16 -bottom-1 animate-pulse hidden md:block"></div>
+        <div className="bg-tomato w-5 h-5 rounded-full absolute z-0 right-52 bottom-1 animate-ping"></div>
 
         <div  className="absolute top-20 left-[270px] sm:top-32 sm:left-[450px] md:top-16 md:left-[250px] lg:left-[330px] lg:top-24 floating-4">
             <img src={maths} alt="maths" className='w-full h-auto lg:max-w-[45px] md:max-w-[35px] sm: sm:max-w-[60px] max-w-[40px]'/>     
@@ -44,9 +44,9 @@ const Metaverse = () => {
         
     </div>
     <div data-aos="fade-down" className="flex flex-col items-start md:w-1/2 mt-20 md:mt-0 text-gray-500 relative">
-        <h1 className="md:text-2xl text-xl font-semibold text-white lg:pr-30">Wiizzkid Metaverse <span className="text-yellow-500">coming soon</span></h1>
-        <div className="bg-[#37b9b2] w-6 h-6 rounded-full absolute z-0 lg:right-36 right-4 -top-8 lg:-top-8 animate-pulse"></div>
-        <div className="bg-[#5B61EB] w-16 h-16 rounded-full absolute z-0 lg:right-36 right-4 -top-8 lg:-top-8 opacity-30"></div>
+        <h1 className="md:text-2xl text-xl font-semibold text-white lg:pr-30">Wiizzkid Metaverse <span className="text-tomato">coming soon</span></h1>
+        <div className="bg-tealLight w-6 h-6 rounded-full absolute z-0 lg:right-36 right-4 -top-8 lg:-top-8 animate-pulse"></div>
+        <div className="bg-pop w-16 h-16 rounded-full absolute z-0 lg:right-36 right-4 -top-8 lg:-top-8 opacity-30"></div>
         <p  className="space-x-5 my-5 text-white md:text-base text-sm">We are preparing something exciting and amazing for you.</p>
         <CountDown 
             day={8}
@@ -56,7 +56,7 @@ const Metaverse = () => {
          <div className="pt-8 w-full">
             <p className="space-x-5 my-5 text-white md:text-base text-sm z-1">Want to be the first to know when we launch ?</p>
             <div className="flex flex-row space-x-3 justify-start mt-3 w-full">
-                <input type="email" placeholder="Your Email" className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-gray-400 rounded-full" />
+                <input type="email" placeholder="Your Email" className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-white rounded-full" />
                 <Button 
                     children='Subscribe'
                     type='submit'

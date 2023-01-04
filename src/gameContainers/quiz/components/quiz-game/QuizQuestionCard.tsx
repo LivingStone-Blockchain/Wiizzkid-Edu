@@ -33,11 +33,11 @@ const QuizQuestionCard: FC<QuizQuestionCardProps> = (question) => {
   return (
     <div>
       <article>
-        <h2 className="font-bold text-yellow-500 mb-4">
+        <h2 className="font-bold text-tomato0 mb-4">
           Question {question?.page}
         </h2>
 
-        <h1 className="text-2xl md:text-lg text-[#252641] font-bold tracking-wide">
+        <h1 className="text-2xl md:text-lg text-navy font-bold tracking-wide">
           {question?.question}
         </h1>
       </article>

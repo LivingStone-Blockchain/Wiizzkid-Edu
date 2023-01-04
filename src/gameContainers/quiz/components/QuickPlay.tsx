@@ -4,6 +4,7 @@ import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import toast from "react-hot-toast";
 import CreateQuizGameModal from './../components/CreateQuizGameModal'
 import categoryStrings from './functions/categoryStringConveter';
+import service from '../services/services';
 
 
 type QuickPlayProp = {
@@ -61,10 +62,10 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
   const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
 
 
-  const handleQuickPlay = (id: number) => {
+  const handleQuickPlay = async (id: number) => {
     const data = quickPlayData.find((game) => game.id === id);
 
-    console.log(data);
+
     setGameMode("london");
     setCategory(data!.category);
     setDifficulty('easy');
@@ -99,10 +100,20 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
       game_mode: "london",
       game_duration: 5,
       category: Number(data?.category),
-      creator: user?.id,
+      creator: user!.id,
     }
 
-    setGameDetails(payload);
+    
+    //persist only logged user data to backend
+    try {
+      user?.tokens
+      ? await service.createGame(payload).then((res) => {
+        setGameDetails(res); 
+      })
+      : setGameDetails(payload);
+    } catch (error) {
+      console.log(error);
+    }
   }
   //#a5a6c8
   //#34355d
@@ -112,6 +123,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
   //#f75858
   //#FF3939
   //#cd2525
+  //#26a8a1
   //#37b9b2
   //#72c9c4
   //#98cfcc
@@ -120,21 +132,21 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
   return (
     <div className="container md:py-20 py-16 px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
       <div className="md:mb-16 mb-12 md:w-2/3 lg:w-1/2">
-        <h1 className="md:text-2xl text-xl font-semibold text-[#252641]">Quick<span className="text-yellow-500">play</span></h1>
+        <h1 className="md:text-2xl text-xl font-semibold text-navy">Quick<span className="text-tomato">play</span></h1>
         <p className="text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed font-medium">Explore the categories available in the London mode</p>
       </div>
       <div className="grid gap-6 px-4 sm:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {quickPlayData.map(({ id, title, category, difficulty, img, description }: quickPlayType) => (
           <div className="group relative rounded-xl  space-y-6 overflow-hidden cursor-pointer" key={id} onClick={() => handleQuickPlay(id)}>
             <img
-              className="mx-auto h-[20rem] w-full object-contain bg-[#4a4c7e] object-center transition duration-500 group-hover:scale-105"
+              className="mx-auto h-[20rem] w-full object-contain bg-navyLight object-center transition duration-500 group-hover:scale-105"
               src={img}
               alt="quick-play"
               loading="lazy"
               width="640"
               height="805"
             />
-            <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-[#252641] md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
+            <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-navy md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
               <div>
                 <h4 className="md:text-xl text-lg font-medium text-white">{title}</h4>
                 <span className="block md:text-sm text-xs text-gray-400">{difficulty}</span>
@@ -146,14 +158,14 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
         ))}
         <div className="group relative rounded-xl  space-y-6 overflow-hidden cursor-pointer" onClick={handleDisplayCreateGameModal}>
           <img
-            className="mx-auto h-[20rem] w-full object-contain bg-[#4a4c7e] object-center transition duration-500 group-hover:scale-105"
+            className="mx-auto h-[20rem] w-full object-contain bg-navyLight object-center transition duration-500 group-hover:scale-105"
             src={custom}
             alt="quick-play"
             loading="lazy"
             width="640"
             height="805"
           />
-          <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-[#252641] md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
+          <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-navy md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
             <div>
               <h4 className="md:text-xl text-lg font-medium text-white">Custom Quiz</h4>
               <span className="block md:text-sm text-xs text-gray-400">Easy</span>

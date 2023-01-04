@@ -8,7 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { successImg } from "../assets/images";
-import Button from "../components/Button";
+import Button from "./Button";
 import FormGroup from "./forms/FormGroup";
 import Input from "./forms/Input";
 import Label from "./forms/Label";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Banner, Preloader, BlogBuilder } from '../components';
 import { bannerAd } from '../assets/blog';
 import { Dotted } from '../shapes';
-import blogData from '../data/blogData';
+import blogData from '../components/blog/blogData';
 import { useParams, Link } from 'react-router-dom';
 
 

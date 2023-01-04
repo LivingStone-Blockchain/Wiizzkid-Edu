@@ -1,7 +1,10 @@
-import { createContext, FC, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, FC, useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import service from '../gameContainers/timestable/services/services';
+import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios";
+import useSound from 'use-sound';
+import { UserContext, UserContextType } from './user.context';
 
 
 type numData = {
@@ -12,13 +15,26 @@ type numData = {
 //expected object key types from backend
 type returnedDataType = {
     id: string,
-    invite_code: string,
+    invite_code?: string,
     difficulty: string,
     total_players: number,
     game_mode: string,
     game_duration: number,
+    creator: number
   }
 
+
+  type userType = {
+    email: string,
+    tokens: {
+        access: string,
+        refresh: string,
+    },
+    full_name: string,
+    stone_token: number,
+    id: number,
+    player_code: string,
+  }
 
 export interface TimestableContextType {
     digit: numData,
@@ -33,10 +49,12 @@ export interface TimestableContextType {
     setGameMode: React.Dispatch<React.SetStateAction<string>>,
     difficulty: string,
     setDifficulty: React.Dispatch<React.SetStateAction<string>>,
+    showSplashScreen: boolean,
+  setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>,
     showCreateGameModal: boolean,
     setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>,
     gameDetails: returnedDataType | undefined,
-  setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>,
+    setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>,
     gameDuration: number,
     setGameDuration: React.Dispatch<React.SetStateAction<number>>,
     start: boolean,
@@ -48,6 +66,7 @@ export interface TimestableContextType {
     scoreTracker: (correctAnswer: number) => void,
     handlePlayTimestable: () => void,
     handleSubmission: () => void,
+    user: userType | null,
 }
 
 
@@ -68,12 +87,35 @@ const TimestableProvider: FC<any> = ({ children }) => {
     const [gameCreated, setGameCreated] = useState<boolean>(false);
     const [difficulty, setDifficulty] = useState<string>("easy");
     const [gameDuration, setGameDuration] = useState<number>(2);
+    const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
     const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1);
     const [gameMode, setGameMode] = useState<string>(GameModes.london);
     const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
     const [start, setStart] = useState<boolean>(false);
+    const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.5 });
     const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
+      //get user details from userContext
+    const { user } = useContext(UserContext) as UserContextType;
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+
+
+    //fade into oblivion on game start
+    useEffect(() => {
+        if (!showSplashScreen && pathname === '/timestable-home') {
+        play();
+        }
+        else if ( pathname === '/timestable' && start) {
+        sound.fade(0.5, 0, 9000)
+        }
+        else if ( pathname === '/') {
+            sound?.fade(0.5, 0, 4000);
+          }
+        else return;
+    }, [showSplashScreen, start, pathname]);
+
+    
 
     const handleDigit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -123,12 +165,13 @@ const TimestableProvider: FC<any> = ({ children }) => {
             game_mode: gameMode,
             game_duration: gameDuration,
             total_players: Number(totalAllowedPlayers), 
-            creator: 1,
+            creator: user!.id,
         }
 
          
     try {
         await service.createGame(payload).then((res) => {
+            console.log(res);
           setGameDetails(res);
         });
       } catch (error) {
@@ -144,7 +187,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
 
     return (
         <TimestableContext.Provider
-            value={{ digit, setDigit, handleDigit, handleDelete, score, setScore, scoreTracker, handlePlayTimestable, loading, setLoading, gameCreated, setGameCreated, gameDuration,  difficulty, setDifficulty, gameMode, setGameMode, setGameDuration, showCreateGameModal, setShowCreateGameModal, start, setStart, handleSubmission, totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails }}
+            value={{ digit, setDigit, handleDigit, handleDelete, score, setScore, scoreTracker, handlePlayTimestable, loading, setLoading, gameCreated, setGameCreated, gameDuration,  difficulty, setDifficulty, gameMode, setGameMode, setGameDuration, showSplashScreen, setShowSplashScreen, showCreateGameModal, setShowCreateGameModal, start, setStart, handleSubmission, totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails, user }}
         >
             {children}
         </TimestableContext.Provider>

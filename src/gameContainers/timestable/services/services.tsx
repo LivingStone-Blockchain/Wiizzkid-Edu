@@ -9,6 +9,7 @@ type gameDetailsType = {
     total_players: number, 
     game_mode: string, 
     game_duration: number,
+    creator: number,
 }
 
 

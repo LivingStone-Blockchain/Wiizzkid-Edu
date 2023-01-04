@@ -10,6 +10,8 @@ import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet
 import Button from './Button';
 import { ConnectWalletBtn, Hero } from './index';
 import { UserContext, UserContextType } from '../context/user.context';
+import { TokenContext, TokenContextType } from '../context/token.context';
+import { utils } from "ethers";
 
 
 
@@ -47,12 +49,12 @@ const data: headerDataType[] = [
     },
     {
         id: 3,
-        colorDeep: '#37b9b2',
+        colorDeep: '#26a8a1',
         colorLight: '#e5fbfa',
         tagline: "Wiizzkids",
         text: "We are providing a decentralized educational system in a rewarding hybrid educational environment.",
-        shadow: '0px 10px 20px rgba(55,185,178, 0.4)',
-        mobileShadow: '0px 5px 20px rgba(55, 185, 178, 0.4)',
+        shadow: '0px 10px 20px rgba(38, 168, 161, 0.4)',
+        mobileShadow: '0px 5px 20px rgba(38, 168, 161, 0.4)',
         img: pcboy,
     }
 ]
@@ -64,8 +66,9 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
     const { user, handleLogout } = useContext(UserContext) as UserContextType;
+    const { stBalance } = useContext(TokenContext) as TokenContextType;
 
-
+   
 
     //prevent scroll when profile dropdown is clicked
     useEffect(() => {
@@ -145,7 +148,7 @@ const Header = () => {
                                             {mobileDropdownOpen && (
                                                 <div data-aos="fade-up" data-aos-delay="100" className="absolute left-0 mt-3 w-full md:w-96 z-40">
                                                     <div className="bg-white rounded-xl overflow-hidden shadow-xl z-50">
-                                                        <div className="text-center p-6 bg-[#252641] border-b relative">
+                                                        <div className="text-center p-6 bg-navy border-b relative">
                                                             <FaTimes className='text-white absolute right-4 top-4 cursor-pointer' onClick={() => setMobileDropdownOpen(false)} />
                                                             {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
                                                             <p className="pt-2 text-lg font-semibold text-gray-50">{user?.full_name}</p>
@@ -154,7 +157,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{`${user?.stone_token}.00`}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{utils.formatEther(stBalance)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -214,7 +217,7 @@ const Header = () => {
                                         mobileDropdownOpen={mobileDropdownOpen}
                                     />
 
-                                    {/*<span className='mt-3 lg:mt-8  lg:ml-4 rounded-full bg-[#252641] p-1'>
+                                    {/*<span className='mt-3 lg:mt-8  lg:ml-4 rounded-full bg-navy p-1'>
                                     <ConnectButton 
                                         chainStatus="none"
                                         label="Connect wallet"
@@ -256,7 +259,7 @@ const Header = () => {
                                             {dropdownOpen && (
                                                 <div data-aos="fade-up" data-aos-delay="100" className="absolute right-0 mt-3 w-72 z-40">
                                                     <div className="bg-white rounded-xl overflow-hidden shadow-xl z-50">
-                                                        <div className="text-center p-6 bg-[#252641] border-b">
+                                                        <div className="text-center p-6 bg-navy border-b">
                                                             {/*<svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>*/}
                                                             <p className="pt-2 text-lg font-semibold text-gray-50">{user?.full_name}</p>
                                                             <p className="text-sm text-gray-100">{user?.email}</p>
@@ -264,7 +267,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{`${user?.stone_token}.00`}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{utils.formatEther(stBalance)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>

@@ -34,14 +34,14 @@ const Contact = () => {
   };
 
   return (
-    <section className="text-darken pt-28">
+    <section className="text-navy pt-28">
     <div className="container">
       <div className="mx-4 flex flex-wrap items-center">
         <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
           <div data-aos="fade-right">
             <div className="mb-12 lg:mb-[150px]">
               <span
-                className="font-headingFont mb-5 text-base font-semibold text-yellow-500"
+                className="font-headingFont mb-5 text-base font-semibold text-tomato"
               >
                 CONTACT US
               </span>
@@ -52,7 +52,7 @@ const Contact = () => {
             </div>
             <div className="mb-12 flex flex-wrap justify-between lg:mb-0">
               <div className="mb-8 flex w-[330px] max-w-full">
-                <div className="mr-6 text-[32px] text-darken">
+                <div className="mr-6 text-[32px] text-navy">
                   <svg
                     viewBox="0 0 29 35"
                     className="fill-current md:w-[25px] md:h-[31px] w-[20px] h-[26px]"
@@ -66,14 +66,14 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h5 className="md:mb-5 mb-3 text-lg font-semibold text-darken">Our Location</h5>
+                  <h5 className="md:mb-5 mb-3 text-lg font-semibold text-navy">Our Location</h5>
                   <p className="md:text-base text-sm text-gray-500">
                     Ealing, London
                   </p>
                 </div>
               </div>
               <div className="mb-8 flex w-[330px] max-w-full">
-                <div className="mr-6 text-[32px] text-darken">
+                <div className="mr-6 text-[32px] text-navy">
                   <svg
                     width="30"
                     height="21"
@@ -86,7 +86,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h5 className="md:mb-5 mb-3 text-lg font-semibold text-darken">How Can We Help?</h5>
+                  <h5 className="md:mb-5 mb-3 text-lg font-semibold text-navy">How Can We Help?</h5>
                   <p className="md:text-base text-sm text-gray-500">engagewithme007@gmail.com</p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ const Contact = () => {
             </h3>
             <form ref={formRef} onSubmit = {sendEmail}>
               <div className="mb-6">
-                <label htmlFor="fullName" className="block md:text-sm text-xs text-darken"
+                <label htmlFor="fullName" className="block md:text-sm text-xs text-navy"
                   >Full Name*</label
                 >
                 <input
@@ -113,7 +113,7 @@ const Contact = () => {
                 />
               </div>
               <div className="mb-6">
-                <label htmlFor="email" className="block md:text-sm text-xs text-darken"
+                <label htmlFor="email" className="block md:text-sm text-xs text-navy"
                   >Email*</label
                 >
                 <input
@@ -124,7 +124,7 @@ const Contact = () => {
                 />
               </div>
               <div className="mb-6">
-                <label htmlFor="phone" className="block md:text-sm text-xs text-darken"
+                <label htmlFor="phone" className="block md:text-sm text-xs text-navy"
                   >Phone*</label
                 >
                 <input
@@ -135,7 +135,7 @@ const Contact = () => {
                 />
               </div>
               <div className="mb-6">
-                <label htmlFor="message" className="block md:text-sm text-xs text-darken"
+                <label htmlFor="message" className="block md:text-sm text-xs text-navy"
                   >Message*</label
                 >
                 <textarea

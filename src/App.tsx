@@ -2,7 +2,7 @@ import React,{useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing, BlogDetails, ResetPassword } from "./pages";
 import { Header, Footer, BackToTop, Preloader, UserRoute } from './components/index'
-import { DashboardHome, BuyStone, Quizzes, QuizHistory, WiizzkidMetaverse } from "./components/dashboard";
+import { DashboardHome, BuyStone, Quizzes, QuizHistory, WiizzkidMetaverse } from "./components/dashboard/pages/index";
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import AOS from 'aos';
 import 'aos/dist/aos.css';

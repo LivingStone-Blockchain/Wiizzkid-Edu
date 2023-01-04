@@ -33,7 +33,7 @@ const SingleQuestion: FC<SingleQuestionProps> = ({
       onClick={handleSelect}
       className={`grid grid-cols-12 gap-2 py-4 ${
         title === selectedOption ? "bg-[#ffa6a6]" : "bg-white"
-      } shadow-2xl cursor-pointer transition border rounded px-4 text-[#252641]`}
+      } shadow-2xl cursor-pointer transition border rounded px-4 text-navy`}
     >
       <span className="col-span-2 text-2xl md:text-sm mt-1">
         {title === selectedOption ? <FaRegDotCircle /> : <FaRegCircle />}

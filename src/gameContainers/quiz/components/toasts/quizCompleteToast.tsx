@@ -18,12 +18,12 @@ const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiff
                   )}
           
                   <article className="text-center mt-4">
-                    <h1  className="text-2xl font-bold text-[#37b9b2]">
+                    <h1  className="text-2xl font-bold text-teal">
                       Quiz Game Completed!
                     </h1>
                 
                     <p className="mt-8">
-                      <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-[#252641]">
+                      <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
                         Score: {score}
                       </span>
                     </p>
@@ -40,7 +40,7 @@ const quizCompletedToast = (score:number, totalAllowedQuestions:number, timeDiff
         
           
                     <Button
-                       className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center mt-8"
+                       className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
                       onClick={() => {toast.dismiss(); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home')}}
                     >
                       Back home

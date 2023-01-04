@@ -15,7 +15,7 @@ const Banner: FC<BannerProps> = ({title, children}) => {
 
   return (
     <div
-    className="relative z-10 overflow-hidden bg-[#252641] pt-[120px] pb-[100px] md:pt-[130px] lg:pt-[160px]"
+    className="relative z-10 overflow-hidden bg-navy pt-[120px] pb-[100px] md:pt-[130px] lg:pt-[160px]"
   >
     <div className="container">
       <div className="-mx-4 flex flex-wrap items-center">
@@ -24,9 +24,9 @@ const Banner: FC<BannerProps> = ({title, children}) => {
             <h1 className="text-4xl font-semibold text-white">{title}</h1>
           </div>
           <p className='absolute md:bottom-10 bottom-7 left-4 md:left-16 right-0 mx-auto text-white flex gap-1 md:text-base text-sm'>
-            <span className='text-xl cursor-pointer flex items-center justify-center hover:text-[#37b9b2]' onClick={() => navigate('/')}><FaHome /></span>
+            <span className='text-xl cursor-pointer flex items-center justify-center hover:text-tealLight' onClick={() => navigate('/')}><FaHome /></span>
             <span className='flex items-center justify-center text-gray-300 px-1 font-medium'>{'>'}</span>
-            <span className='text-[#37b9b2] font-medium'>{location.pathname.slice(1).split('/')[0]}</span>
+            <span className='text-tealLight font-medium'>{location.pathname.slice(1).split('/')[0]}</span>
           </p>
 
          {children} 

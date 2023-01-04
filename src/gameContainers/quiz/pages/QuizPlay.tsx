@@ -54,11 +54,11 @@ export default function QuizPlay() {
           backgroundAttachment: "fixed",
         }}
       >
-        <div className="bg-gradient-to-r from-[#4a4c7e] via-[#4a4c7e] to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
+        <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
-        <div className="mx-auto max-w-lg text-sm shadow border border-[#252641] p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative">
+        <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative">
           <article className="text-gray-700">
-            <h1 className="md:text-2xl text-xl font-bold mb-4 text-[#252641]">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-yellow-500">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
+            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-yellow-500">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
@@ -72,7 +72,7 @@ export default function QuizPlay() {
               highest score and quickest to submit.
             </p>
 
-            <p className="font-bold mt-8 text-[#252641]">
+            <p className="font-bold mt-8 text-navy">
               <span className="text-xl">Ready</span> to join the Wiizkid
               revolution? Proceed.
             </p>
@@ -80,7 +80,7 @@ export default function QuizPlay() {
 
           <Button 
             onClick={handleStartGame}
-            className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-[#252641] font-semibold px-5 py-3  text-white transition text-center"
+            className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
             >
              Start Quiz <FaArrowRight className="ml-3" />
             </Button>

@@ -68,7 +68,7 @@ const CountDown: FC<CountdownPropTypes> = ({day, month, year}) =>  {
          <div className="col-4" key={interval}>
          <div style={{color: `${colors[value]}`}} className={`text-base bg-gray-200 p-3 font-semibold border-x border-gray-300`}>
            <p id="m-0"> {timeLeft[interval as keyof typeof timeLeft]}</p>
-           <span className="text-sm leading-none font-normal text-darken"> {interval}</span>
+           <span className="text-sm leading-none font-normal text-navy"> {interval}</span>
          </div>
        </div>
     );

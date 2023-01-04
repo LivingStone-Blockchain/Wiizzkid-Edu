@@ -57,21 +57,21 @@ const GameModes = () => {
 
 
 	return (
-		<>
-			<div data-aos="flip-up" className="max-w-xl mx-auto text-center mt-16">
-				<h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">Our Game Modes <span className="text-yellow-500">Explained.</span></h1>
+		<div className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700">
+			<div data-aos="flip-up" className="max-w-xl mx-auto text-center mt-16 ">
+				<h1 className="font-bold text-navy my-3 text-2xl">Our Game Modes <span className="text-tomato">Explained.</span></h1>
 				<p className="leading-relaxed text-gray-500 lg:text-base text-sm">The possibilities are beyond your imagination. Explore the library.</p>
 			</div>
 			<div className="grid md:grid-cols-3 gap-14 md:gap-5 mt-20">
 				{modeData.map(({ id, headerText, mainText, color, icon, aosDelay, shadow }: modeDataType) => (
 					<div key={id} data-aos="fade-up" data-aos-delay={aosDelay} className={`bg-white shadow-xl p-6 text-center rounded-xl border border-gray-200 duration-300 hover:shadow-lg hover:shadow-[${shadow}]`} onMouseEnter={() => handleMouseEnter(id)} onMouseLeave={handleMouseLeave} style={{ borderColor: hover && active == id ? color : '', boxShadow: hover && active == id ? shadow : ''}}>
 						<div style={{ backgroundColor: `${color}` }} className="text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto shadow-lg transform -translate-y-12">{icon}</div>
-						<h1 className="font-medium md:text-xl text-lg mb-3 lg:px-14 text-darken">{headerText}</h1>
+						<h1 className="font-medium md:text-xl text-lg mb-3 lg:px-14 text-navy">{headerText}</h1>
 						<p className="px-4 text-gray-500 md:text-base text-sm">{mainText}</p>
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	)
 }
 

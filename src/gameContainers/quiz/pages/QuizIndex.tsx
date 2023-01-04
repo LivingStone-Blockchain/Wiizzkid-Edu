@@ -61,7 +61,7 @@ const QuizIndex = () => {
         <div className="w-full text-white mb-24">
           <div className="flex justify-between items-center max-w-full mx-auto">
             <article>
-              <h1 className="md:text-2xl text-xl font-semibold text-[#252641]">Let's <span className="text-yellow-500">play</span></h1>
+              <h1 className="md:text-2xl text-xl font-semibold text-navy">Let's <span className="text-tomato">play</span></h1>
               <p className="text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed font-medium">Join the Wiizzkid revolution...</p>
             </article>
           </div>
@@ -74,7 +74,7 @@ const QuizIndex = () => {
             backgroundSize: "cover",
           }}
         >
-          <div className="p-6 -my-12 shadow-2xl bg-[#252641] text-white rounded w-full h-full">
+          <div className="p-6 -my-12 shadow-2xl bg-navy text-white rounded w-full h-full">
             <h2 className="font-bold tracking-wide md:text-base text-sm">Enter your quiz code</h2>
             <p className="text-sm">To play with your friends</p>
 
@@ -92,7 +92,7 @@ const QuizIndex = () => {
               <Button
                 children='Enter'
                 type='submit'
-                className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken col-span-4 md:col-span-2 transition text-center ml-2'
+                className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-navy shadow-btn-darken col-span-4 md:col-span-2 transition text-center ml-2'
                 style={{ background: "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)" }}
               />
             </form>
