@@ -15,6 +15,8 @@ import Label from "./forms/Label";
 import Select from "./forms/Select";
 import { useNavigate } from 'react-router-dom';
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
+import { TokenContext, TokenContextType } from "../../../context/token.context";
+import { utils } from "ethers";
 
 
 interface CreateQuizGameModalType {
@@ -28,13 +30,16 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 }) => {
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, user, gameCreated, setGameCreated } = useContext(QuizContext) as QuizContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated } = useContext(QuizContext) as QuizContextType;
+  const {stBalance }= useContext(TokenContext) as TokenContextType;
+  const stoneBalance = Number(utils.formatEther(stBalance));
+
  
 
 
   //prevent unlogged user from accessing premium
   useEffect(() => {
-    if (!user?.stone_token && gameMode !== 'london') {
+    if (stoneBalance < 100 && gameMode !== 'london') {
       toast.dismiss('unlogged');
       toast.error(`Buy Stone to play ${gameMode} mode!`, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
@@ -42,7 +47,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         setGameMode('london');
       }, 3000);
     }
-  },[gameMode, user]);
+  },[gameMode, stoneBalance]);
 
 
   //copy paste function
@@ -172,8 +177,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                <option value="beijing" className={`${!user?.stone_token ? 'text-gray-500' : ''}`}>Beijing Mode</option>
-                <option value="shanghai" className={`${!user?.stone_token ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                <option value="beijing" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
+                <option value="shanghai" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
               </Select>
             </FormGroup>
 
@@ -234,7 +239,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
                 <option value="1">1</option>
-                {user?.stone_token && (
+                {stoneBalance > 100 && (
                   <>
                     <option value="2">2</option>
                     <option value="3">3</option>

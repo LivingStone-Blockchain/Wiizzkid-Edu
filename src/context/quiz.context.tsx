@@ -75,7 +75,10 @@ export interface QuizContextType {
   timeOfStart: any;
   startGame: (date: any) => void,
   quizData: questionsData[] | undefined,
-  setQuizData:React.Dispatch<React.SetStateAction<questionsData[] | undefined>>, 
+  setQuizData:React.Dispatch<React.SetStateAction<questionsData[] | undefined>>,
+  triviaData: questionsData[] | undefined,
+  setTriviaData:React.Dispatch<React.SetStateAction<questionsData[] | undefined>>,  
+  dataType: questionsData[] | undefined,
   recentGames: RecentGamesData | undefined,
   setRecentGames:React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>, 
   selectedOption: number | string,
@@ -103,6 +106,8 @@ export interface QuizContextType {
   setTriviaFetch: React.Dispatch<React.SetStateAction<boolean>>,
   gameCreated: boolean,
   setGameCreated: React.Dispatch<React.SetStateAction<boolean>>,
+  questionsLoader: boolean,
+  setQuestionsLoader: React.Dispatch<React.SetStateAction<boolean>>,
   handleScreenTwo: () => void,
   handleInstructionScreen: () => void,
   showSplashScreen: boolean,
@@ -139,7 +144,9 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [score, setScore] = useState<number>(0);
   const [recentGames, setRecentGames] = useState<RecentGamesData | undefined>();
   const [quizData, setQuizData] = useState<questionsData[] | undefined>();
+  const [triviaData, setTriviaData] = useState<questionsData[] | undefined>();
   const [gameCreated, setGameCreated] = useState<boolean>(false);
+  const [questionsLoader, setQuestionsLoader] = useState<boolean>(false);
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false);
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const [start, setStart] = useState<boolean>(false);
@@ -162,29 +169,53 @@ const QuizProvider: FC<any> = ({ children }) => {
   //fetch data from endpoint
   let triviaUrl =  `https://the-trivia-api.com/api/questions?categories=${categoryStrings(Number(category))}&limit=${totalAllowedQuestions}&difficulty=${difficulty}`;
 
-
   useEffect(() => {
    
     const fetchQuestion = async () => {
+      setQuestionsLoader(true);
 
       try {
-      triviaFetch ?
           await axios.get(triviaUrl).then((res) => {
-            setQuizData(res.data)
+            setTriviaData(res.data)
+            setQuestionsLoader(false);
        })
-       :
-        await service.getAll().then((res) => {
-          setQuizData(res);
-        })
  
       } catch (error) {
         console.log(error)
+        setQuestionsLoader(false);
       }
     }
 
     fetchQuestion();
   }, [triviaFetch])
 
+
+
+
+  //fetch data from main database
+  useEffect(() => {
+
+    const fetchQuestion = async () => {
+      setQuestionsLoader(true);
+
+      try {
+    await service.getAll().then((res) => {
+          setQuizData(res);
+          setQuestionsLoader(false);
+        })
+      } catch (error) {
+        console.log(error)
+        setQuestionsLoader(false);
+      }
+    }
+
+    fetchQuestion();
+  }, [triviaFetch])
+
+
+
+  //return data based on request
+  const dataType = triviaFetch ? triviaData : quizData;
 
  
 //fade into oblivion on game start
@@ -279,8 +310,8 @@ useEffect(() => {
 
   // when an option is selected compare with correct answer in database and affect score:
   const addAnswer = (payload: { questionId: string; option: string }) => {
-
-    const answer = quizData?.find(item => (item.id) === payload.questionId)
+  
+    const answer = dataType?.find(item => (item.id) === payload.questionId)
    
 
       if (answer?.correctAnswer === payload.option) {
@@ -292,7 +323,7 @@ useEffect(() => {
 
   return (
     <QuizContext.Provider
-      value={{ quizData, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user, gameCreated, setGameCreated, showCreateGameModal, setShowCreateGameModal, recentGames, setRecentGames}}
+      value={{ dataType, quizData, triviaData, setTriviaData, questionsLoader, setQuestionsLoader, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user, gameCreated, setGameCreated, showCreateGameModal, setShowCreateGameModal, recentGames, setRecentGames}}
     >
       {children}
     </QuizContext.Provider>

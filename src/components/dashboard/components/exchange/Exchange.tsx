@@ -148,7 +148,7 @@ const Render = () => {
     return (
       <>
         <div className='flex  flex-col justify-center items-center gap-2 w-full'>
-              <p className="text-lg font-medium text-navy text-center"> {utils.formatEther(reservedST)} Stone Tokens Available</p>
+              <p className="text-lg font-medium text-navy text-center"> {Number(utils.formatEther(reservedST)).toFixed(6)} Stone Tokens Available</p>
               <p className="mb-2 text-sm font-normal text-gray-600 hidden"> {utils.formatEther(etherBalanceContract)} Ether in the Contract</p>
           </div>
          
@@ -156,6 +156,7 @@ const Render = () => {
           <input
             type="number"
             placeholder="Amount"
+            min="0" max="10000" step="0.01"
             onChange={async (e) => {
               setSwapAmount(e.target.value || "");
               // Calculate the amount of tokens user would receive after the swap
@@ -186,12 +187,12 @@ const Render = () => {
               <p className="mb-2 text-sm font-normal text-gray-600">
                   {/* Convert the BigNumber to string using the formatEther function from ethers.js */}
                 {ethSelected
-                  ? `You will get ${utils.formatEther(
+                  ? `You will get ${Number(utils.formatEther(
                       tokenToBeReceivedAfterSwap
-                    )} Stone Tokens`
-                  : `You will get ${utils.formatEther(
+                  )).toFixed(6)} Stone Tokens`
+                  : `You will get ${Number(utils.formatEther(
                       tokenToBeReceivedAfterSwap
-                    )} Eth`}
+                    )).toFixed(6)} Eth`}
               </p>
               <Button 
                 children='Swap'

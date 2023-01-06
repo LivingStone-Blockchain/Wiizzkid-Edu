@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 import CountDownTimer from "../CountDownTimer";
 import { useNavigate } from 'react-router-dom';
-import { Preloader } from "../../../../components";
+import SkeletonLoader from "../SkeletonLoader";
 
 
 
@@ -28,7 +28,7 @@ type QuizGameTypes =  {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, score, setStart, timeOfStart, category, gameMode, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { dataType, questionsLoader, score, setStart, timeOfStart, category, gameMode, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();  
@@ -40,8 +40,9 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
+ 
   // restructure fetched data
-  const mapped_questions = quizData?.map((question) => {
+  const mapped_questions = dataType?.map((question) => {
     return {
       category: typeof(question.category) === "number" ? categoryStrings(question.category) : question.category,
       question: question.question,
@@ -51,6 +52,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       tags: [...question.tags],
     };
   })
+
 
   //sort and filter restructured based on api url's returned data
   let sortedMapped_questions = triviaFetch 
@@ -67,7 +69,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     setQuestions([...sortedMapped_questions!]);
 
     return;
-  }, [quizData]);
+  }, [dataType]);
   
 
 
@@ -86,12 +88,10 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
   const quitGame = () => {
     setLoading(true);
-    setTriviaFetch(false);
-    quizEndGameToast(setLoading, navigate, setShowCreateGameModal);
+    quizEndGameToast(setLoading, setTriviaFetch, navigate, setShowCreateGameModal);
     return;
   };
 
- 
 
   const submitQuiz = async () => {
     //freeze time
@@ -171,9 +171,8 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
         </nav>
 
         <main className="py-10">
-          {/*quiz data can only be over 200 if its not trivia*/}
-          {!quizData || (gameMode === "london" && quizData.length > 200) ? (
-            <Preloader homeLoader={true}/>
+          {questionsLoader ? (
+            <SkeletonLoader />
           ) : (
             <QuizQuestionCard
             question={current_question?.question}

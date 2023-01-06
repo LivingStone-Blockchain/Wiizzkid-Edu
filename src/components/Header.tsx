@@ -157,7 +157,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{utils.formatEther(stBalance)}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(stBalance)).toFixed(2)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -267,7 +267,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{utils.formatEther(stBalance)}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(stBalance)).toFixed(2)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>

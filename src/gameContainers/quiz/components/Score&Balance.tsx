@@ -25,7 +25,7 @@ const ScoreBalance = () => {
     const boardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: utils.formatEther(stBalance),
+          value: Number(utils.formatEther(stBalance)).toFixed(1),
         },
         {
           title: "Score",

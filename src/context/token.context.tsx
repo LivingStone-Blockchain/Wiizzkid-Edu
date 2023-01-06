@@ -35,6 +35,8 @@ import {
   swapTokens,
   getAmountOfTokensReceivedFromSwap,
 } from "./../components/dashboard/components/exchange/DEX-components/swap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 
 
@@ -112,6 +114,7 @@ const TokenProvider: FC<any> = ({ children }) => {
     const [ethSelected, setEthSelected] = useState(true);
     //web3 wallet
     const { connector: isConnected } = useAccount();
+    const navigate = useNavigate();
 
 
 
@@ -150,6 +153,14 @@ const TokenProvider: FC<any> = ({ children }) => {
   };
 
   const _swapTokens = async () => {
+    if (swapAmount === "") {
+       return toast.error('Input cannot be empty!', {duration:3000});
+    }
+
+    if (Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
+        return toast.error('Insufficient funds!', {duration:3000});
+    }
+
     try {
       // Convert the amount entered by the user to a BigNumber using the `parseEther` library from `ethers.js`
       const swapAmountWei = utils.parseEther(swapAmount);
@@ -166,6 +177,10 @@ const TokenProvider: FC<any> = ({ children }) => {
         // Get all the updated amounts after the swap
         await getAmounts();
         setSwapAmount("");
+        toast.success('Swap successful', {duration: 3000})
+        setTimeout(() => {
+            navigate('/dashboard-home');
+        }, 3000)
       }
     } catch (err) {
       console.error(err);

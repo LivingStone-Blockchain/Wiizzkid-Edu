@@ -58,7 +58,7 @@ const DashboardHome = () => {
         />
         <InfoCard
           title="STN Balance"
-          value={utils.formatEther(stBalance)}
+          value={Number(utils.formatEther(stBalance)).toFixed(2)}
           img={balance}
         />
         <InfoCard
