@@ -157,7 +157,7 @@ const TokenProvider: FC<any> = ({ children }) => {
        return toast.error('Input cannot be empty!', {duration:3000});
     }
 
-    if (Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
+    if (Number(swapAmount) === 0 || Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
         return toast.error('Insufficient funds!', {duration:3000});
     }
 

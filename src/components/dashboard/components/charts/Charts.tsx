@@ -10,7 +10,7 @@ const Charts = () => {
   const { recentGames } = useContext(QuizContext) as QuizContextType;
   
   return (
-    <div data-aos="fade-up" data-aos-delay="400" className='w-full flex flex-col gap-5 mt-10'>
+    <div className='w-full flex flex-col gap-5 mt-10'>
       <h1 className='font-semibold text-navy'>Charts</h1>
       {recentGames === undefined ? (
         <Preloader dashboardLoader={true}/>
