@@ -1,13 +1,7 @@
 import React, { useState, useContext } from "react";
-import {
-  educationImg,
-  englishImg,
-  generalKnowledgeImg,
-  mathImg,
-  eduImg
-} from "../assets/images";
 import { girlNavy } from './../../../assets/modes/index';
 import QuickPlay from "../components/QuickPlay";
+import History from "../components/History";
 import { FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -57,8 +51,8 @@ const QuizIndex = () => {
         title="Wiizzkid Quiz"
         children={<ScoreBalance />}
       />
-      <section className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 md:mt-20 mt-16">
-        <div className="w-full text-white mb-24">
+      <section className="md:mt-20 mt-16">
+        <div className="w-full text-white mb-24 container px-4 lg:px-8 mx-auto max-w-screen-xl">
           <div className="flex justify-between items-center max-w-full mx-auto">
             <article>
               <h1 className="md:text-2xl text-xl font-semibold text-navy">Let's <span className="text-tomato">play</span></h1>
@@ -68,7 +62,7 @@ const QuizIndex = () => {
         </div>
 
         <div
-          className="-my-8 pb-40 p-6 max-w-3xl mx-auto text-sm bg-stone-800 rounded-tl-3xl rounded-tr-3xl"
+          className="-my-8 pb-40 py-6 px-4 max-w-3xl mx-auto text-sm bg-stone-800 rounded-tl-3xl rounded-tr-3xl"
           style={{
             backgroundImage: `url(${girlNavy})`,
             backgroundSize: "cover",
@@ -108,102 +102,7 @@ const QuizIndex = () => {
       </section>
 
       <QuickPlay handleDisplayCreateGameModal = {handleDisplayCreateGameModal}/>
-      {/*<main className="py-24 max-w-3xl mx-auto p-6 ">
-          <h1 className="font-bold text-gray-100 text-lg mb-6">
-            Your Quiz History
-          </h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <section className="bg-white shadow-2xl p-6 rounded grid grid-cols-12 gap-4">
-              <span className="col-span-3">
-                <img
-                  src={mathImg}
-                  alt="student"
-                  className="w-full h-full object-cover"
-                />
-              </span>
-
-
-
-              <article className="col-span-9">
-                <h1 className="font-bold text-gray-700">Mathematics</h1>
-
-                <p>
-                  <span>score:</span> 10/10
-                </p>
-              </article>
-            </section>
-
-            <section className="bg-white shadow-2xl p-6 rounded grid grid-cols-12 gap-4">
-              <span className="col-span-3">
-                <img
-                  src={englishImg}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </span>
-
-              <article className="col-span-9">
-                <h1 className="font-bold text-gray-700">
-                  English For Beginners
-                </h1>
-
-                <p>
-                  <span>score:</span> 10/10
-                </p>
-              </article>
-            </section>
-          </div>
-
-          <h1 className="font-bold text-gray-100 text-lg mt-10 mb-6">
-            Join & Play With Others
-          </h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <section className="bg-white shadow-2xl p-6 rounded grid grid-cols-12 gap-4">
-              <span className="col-span-3">
-                <img
-                  src={generalKnowledgeImg}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </span>
-
-              <article className="col-span-9">
-                <h1 className="font-bold text-gray-700">General Knowledge</h1>
-
-                <p>
-                  <span>icon</span> 10/10 questions
-                </p>
-              </article>
-            </section>
-
-            <section className="bg-white shadow-2xl p-6 rounded grid grid-cols-12 gap-4">
-              <span className="col-span-3">
-                <img
-                  src={generalKnowledgeImg}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </span>
-
-              <article className="col-span-9">
-                <h1 className="font-bold text-gray-700">Science Knowledge</h1>
-
-                <p>
-                  <span>icon</span> 10/10 questions
-                </p>
-              </article>
-            </section>
-          </div>
-
-          <Button
-            onClick={handleDisplayCreateGameModal}
-            className="mx-auto mt-20 border border-2"
-          >
-            Start A Quiz Game <FaAngleRight className="ml-3" />
-          </Button>
-        </main>*/}
+      <History />
     </>
   );
 }

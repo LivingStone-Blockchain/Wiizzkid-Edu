@@ -1,24 +1,31 @@
 import React, { useContext } from 'react'
 import { QuizContext, QuizContextType } from '../../../context/quiz.context';
 import { apiChartData } from '../../../components/dashboard/data/chartData';
+import { TokenContext, TokenContextType } from '../../../context/token.context';
+import { utils } from 'ethers';
+
 
 type BoardDataType = {
   title: string,
-  value: number | React.ReactNode,
+  value: number | string | React.ReactNode,
 }
 
 const ScoreBalance = () => {
-    const { user, recentGames } = useContext(QuizContext) as QuizContextType;
+    const { recentGames } = useContext(QuizContext) as QuizContextType;
+    const { stBalance } = useContext(TokenContext) as TokenContextType;
 
     
+  //returns data for a year
+  const dataPerYear =   apiChartData(recentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
   //latestScore
-  const scoreData =   apiChartData(recentGames!)?.map((item) => item.score);
-  const latestScore = scoreData.length > 0 ? scoreData[scoreData.length - 1] : 0;
+  const scoreData =   dataPerYear?.map((item) => item.score);
+  const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
+
 
     const boardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: user ? user?.stone_token : 0,
+          value: utils.formatEther(stBalance),
         },
         {
           title: "Score",
@@ -27,7 +34,7 @@ const ScoreBalance = () => {
       ] 
 
   return (
-    <div className='absolute md:bottom-5 bottom-[14px] md:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
+    <div className='absolute md:bottom-5 bottom-[14px] lg:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
            <div className={`bg-gray-100 border-4 text-center flex w-[120px] md:w-[160px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-tealLight`}>
             {boardData.map((item) => (
               <div className="col-4" key={item.title}>

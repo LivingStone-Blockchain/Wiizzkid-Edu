@@ -1,8 +1,3 @@
-import mathImg from "./math.png";
-import englishImg from "./english.png";
-import generalKnowledgeImg from "./general-knowledge.png";
-import educationImg from "./education.jpg";
-import successImg from "./success.png";
 import win from './win.png';
 import low from './low.png';
 import eduImg from './edu.png';
@@ -13,5 +8,13 @@ import custom from './custom.png';
 import basket from './basket.png';
 import soccer from './corner.png';
 import gameOver from './game-over.png';
+import music from './music.png';
+import movies from './movies.png';
+import church from './church.png';
+import mosque from './mosque.png';
+import news from './news.png';
+import culture from './unity.png'
+import successImg from './success.png'
 
-export { custom, basket, soccer, mathImg, englishImg, generalKnowledgeImg, win, low, educationImg, successImg, eduImg, rocket, geography, general, gameOver };
+
+export { successImg, win ,low, custom, culture, church, news, mosque, basket, soccer, music, movies, eduImg, rocket, geography, general, gameOver };

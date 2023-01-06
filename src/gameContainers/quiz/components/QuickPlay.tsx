@@ -36,7 +36,7 @@ const quickPlayData: quickPlayType[] = [
     category: "8",
     difficulty: "Easy",
     img: general,
-    description: "Lets go play some General Knowledge quiz. Show What you've got!"
+    description: "Play some General Knowledge quiz. Show What you've got!"
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const quickPlayData: quickPlayType[] = [
     category: "9",
     difficulty: "Easy",
     img: soccer,
-    description: "You think you know about the sporting and leisure terrain? Shoot!"
+    description: "Think you know about the sporting and leisure terrain? Shoot!"
   },
   {
     id: 4,
@@ -137,7 +137,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
       </div>
       <div className="grid gap-6 px-4 sm:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {quickPlayData.map(({ id, title, category, difficulty, img, description }: quickPlayType) => (
-          <div className="group relative rounded-xl  space-y-6 overflow-hidden cursor-pointer" key={id} onClick={() => handleQuickPlay(id)}>
+          <div className="group relative rounded-xl space-y-6 overflow-hidden cursor-pointer" key={id} onClick={() => handleQuickPlay(id)}>
             <img
               className="mx-auto h-[20rem] w-full object-contain bg-navyLight object-center transition duration-500 group-hover:scale-105"
               src={img}
@@ -165,13 +165,14 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
             width="640"
             height="805"
           />
+    
           <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-navy md:translate-y-24 translate-y-20 transition duration-300 ease-in-out group-hover:translate-y-0">
-            <div>
-              <h4 className="md:text-xl text-lg font-medium text-white">Custom Quiz</h4>
-              <span className="block md:text-sm text-xs text-gray-400">Easy</span>
+              <div>
+                <h4 className="md:text-xl text-lg font-medium text-white">Custom Quiz</h4>
+                <span className="block md:text-sm text-xs text-gray-400">Easy</span>
+              </div>
+              <p className="mt-8 md:text-base text-sm  text-gray-300">Create a quiz game with your preferred selections. Get Start!</p>
             </div>
-            <p className="mt-8 md:text-base text-sm  text-gray-300">Create a quiz game with your preferred selections. Get Started!</p>
-          </div>
 
         </div>
       </div>
