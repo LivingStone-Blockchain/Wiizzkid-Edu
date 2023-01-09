@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import { Outlet, useLocation } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
 
 type MainBarProp = {
@@ -83,6 +84,7 @@ const MainBar:FC<MainBarProp> = ({setOpen, open}) => {
           <button
             aria-label="chat"
             className="h-10 w-10 rounded-xl border bg-gray-100 active:bg-gray-200"
+            onClick={() => toast("No new messages", {duration: 3000})}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +104,7 @@ const MainBar:FC<MainBarProp> = ({setOpen, open}) => {
           <button
             aria-label="notification"
             className="h-10 w-10 rounded-xl border bg-gray-100 active:bg-gray-200"
+            onClick={() => toast("New notifications", {duration: 3000})}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

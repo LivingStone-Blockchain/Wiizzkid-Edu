@@ -150,7 +150,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false);
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const [start, setStart] = useState<boolean>(false);
-  const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.5 });
+  const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.3 });
   const [category, setCategory] = useState<string>("");
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
@@ -217,20 +217,19 @@ const QuizProvider: FC<any> = ({ children }) => {
   //return data based on request
   const dataType = triviaFetch ? triviaData : quizData;
 
- 
 //fade into oblivion on game start
 useEffect(() => {
   if (!showSplashScreen && pathname === '/quiz-home') {
     play();
   }
   else if ( pathname === '/quiz' && start) {
-    sound.fade(0.5, 0, 9000);
+    sound.fade(0.3, 0, 9000);
   }
   else if ( pathname === '/') {
-    sound?.fade(0.5, 0, 4000);
+    stop();
   }
   else return;
-}, [showSplashScreen, start, pathname]);
+}, [showSplashScreen, start, pathname, triviaFetch, showCreateGameModal]);
 
 
 
@@ -247,23 +246,24 @@ useEffect(() => {
   }, [user]);
 
 
+ 
 
 //fetch recent games played
 useEffect(() => {
   const fetchRecentGames = async () => {
+    if (userId !== undefined) {
+      try {
+        await service.recentResults(userId).then((res) => {
+          setRecentGames(res);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
-   
-   try {
-    await service.recentResults(userId!).then((res) => {
-        setRecentGames(res);
-    })
-   } catch (error) {
-      console.log(error);
-   }
-  }
-
- fetchRecentGames();
-}, [userId, pathname])
+  fetchRecentGames();
+}, [userId, pathname]);
 
 
 

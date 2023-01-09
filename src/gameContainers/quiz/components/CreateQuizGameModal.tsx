@@ -95,7 +95,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   if (gameCreated && gameDetails) {
     return (
       <section className="w-full py-4">
-        <img src={successImg} className="w-24 mx-auto" alt="" />
+        <img src={successImg} className="w-24 mx-auto" alt="success" />
 
         <article className="text-center mt-4">
             <h1 className="text-2xl font-bold text-teal">

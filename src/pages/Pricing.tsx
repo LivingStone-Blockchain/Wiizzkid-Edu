@@ -26,7 +26,7 @@ const Pricing = () => {
     />
     <div className="xl:container m-auto px-6 md:py-20 py-14 md:px-12 lg:px-20">
       <div className="m-auto text-center lg:w-7/12">
-      <h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">Pricing <span className="text-yellow-500">Table.</span></h1>
+      <h1 className="font-bold text-darken my-3 md:text-3xl text-2xl">Pricing <span className="text-tomato">Table.</span></h1>
 	    <p className="leading-relaxed text-gray-500 lg:text-base text-sm">A Wiizzkid subscription gives you access to our quizzes and games</p>
       </div>
       <div className="mt-12 grid items-center gap-6 md:grid-cols-2 lg:flex lg:space-x-8">

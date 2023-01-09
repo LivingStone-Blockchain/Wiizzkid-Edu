@@ -18,7 +18,6 @@ const Countdown:FC<timeProp> = ({duration, setStart}) => (
     strokeWidth={7}
     trailColor={'#d9d9d9'}
     onComplete={() => {
-        console.log("time up");
         setStart(false)
     }}
   >

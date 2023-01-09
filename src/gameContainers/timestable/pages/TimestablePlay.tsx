@@ -1,114 +1,59 @@
-import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Wrapper, Screen, ButtonBox } from '../components/index';
+import { FC, useContext, useEffect, useState, useRef } from 'react'
+import {
+  FaArrowRight,
+  FaClock,
+  FaQuestionCircle,
+  FaTimes,
+} from "react-icons/fa";
+import { TimestableGame } from '../components/index';
+import Overlay from './../components/Overlay';
 import { TimestableContext, TimestableContextType } from '../../../context/timestable.context';
-import { timestableMock } from "../data/questionBank";
-import { Countdown } from '../components/index';
-import GameCompletedToast from '../components/GameCompletedToast';
-import Overlay from '../components/Overlay';
-import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import quizEndGameToast from '../components/toasts/quitGameToast';
 
 
-type timestableData = {
-  title: string,
-  correctAnswer: number,
-  difficulty: string
-}
-
-
-
-
-const TimestablePlay= () => {
-  const { handleDigit, handleDelete, digit, setDigit, scoreTracker, difficulty, gameDuration, score, start, setStart, setShowCreateGameModal } = useContext(TimestableContext) as TimestableContextType;
-  const [questions, setQuestions] = useState<timestableData[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<timestableData | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+const TimestablePlay = () => {
   const navigate = useNavigate();
-  const btnValues = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    ["Delete", 0, "Enter"],
-  ];
+  const {start, setLoading, loading, setShowCreateGameModal } = useContext(TimestableContext) as TimestableContextType;
 
-  //Randomize questions
-  const mappedQuestions = timestableMock.filter(q => q.difficulty === difficulty).sort(() => Math.random() - 0.5);
-
-  useEffect(() => {
-    setCurrentQuestion(mappedQuestions[0]);
-    setQuestions([...mappedQuestions])
-    setCurrentPage(0);
-  }, [timestableMock])
-
-
-  const handleEvaluation = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (currentPage + 1 >= questions.length) {
-      return window.confirm("End")
-    }
-
-    setDigit({ num: 0 })
-    setCurrentQuestion(questions[currentPage + 1]);
-    setCurrentPage((prev) => prev + 1);
-
-    //collate scores
-    scoreTracker(currentQuestion!.correctAnswer);
-
-  }
-
-
-
-
-useEffect(() => {
-  //dismiss first to avoid duplicates
-  if (!start)  {
-    toast.dismiss();
-    toast(
-      <GameCompletedToast score={score} gameDuration={gameDuration} totalAttempted={currentPage} navigate={navigate} setShowCreateGameModal={setShowCreateGameModal}/>,
-      { duration: Infinity, className: "w-full" }
-    )
-  }
-}, [start])
-
+  const quitGame = () => {
+    setLoading(true);
+    quizEndGameToast(setLoading, navigate, setShowCreateGameModal);
+    return;
+  };
 
   return (
-    <Wrapper>
-      <Overlay loading={!start && true} />
-      <Screen
-        className='bg-gradient-to-b from-navy to-gray-800 text-center'
-        value={currentQuestion?.title}
-      />
-      <Screen
-        className='bg-gradient-to-b from-gray-800 to-gray-700 text-right'
-        children={<Countdown duration={gameDuration} setStart={setStart} />}
-        value={digit.num}
-        timer={true}
-      />
+    <section className="fixed top-0 bottom-0 right-0 left-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition">
+      <Overlay loading={loading || !start && true}/>
+      <div className="max-w-xl mx-auto opacity-90">
+        <nav className="flex justify-between items-center">
+          <FaTimes
+            className="text-2xl cursor-pointer text-navy"
+            onClick={quitGame}
+          />
 
-      <ButtonBox>
-        {
-          btnValues.flat().map((btn, i) => {
-            return (
-              <Button
-                key={i}
-                timestableBtn={true}
-                onClick={
-                  btn === "Enter"
-                    ? handleEvaluation
-                    : btn === "Delete"
-                      ? handleDelete
-                      : handleDigit
-                }
-                value={btn}
-                type='button'
-                className={`border border-indigo-400 rounded-lg ${btn === "Delete" ? ' bg-tomato hover:bg-opacity-90' : btn === "Enter" ? ' bg-teal hover:bg-opacity-80' : 'bg-pop hover:bg-transparent'}`}
-              />
-            )
-          })
-        }
-      </ButtonBox>
-    </Wrapper>
+          <h1 className="text-xl font-bold text-navy">Times<span className="text-tomato">table</span></h1>
+
+          <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center z-50">
+            <FaQuestionCircle className="text-2xl cursor-pointer text-navy" />
+            <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
+              <div className="max-w-xs flex-col items-center">
+                <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{ clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)" }}></div>
+                <div className="w-52 rounded bg-navy font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Answer as many questions as possible in selected time.</div>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <main className="py-10">
+          <TimestableGame />
+        </main>
+        <footer className="fixed bottom-0 right-0 left-0 w-full shadow p-4 flex items-center justify-between">
+          <p className='text-navy opacity-80 text-xs mx-auto'>Wiizzkid &copy; {new Date().getFullYear()}</p>
+        </footer>
+      </div>
+    </section>
+
   )
 }
 
-export default TimestablePlay;
-
+export default TimestablePlay

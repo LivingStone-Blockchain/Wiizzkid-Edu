@@ -9,7 +9,7 @@ type BannerProps = {
 }
 
 const Banner: FC<BannerProps> = ({title, children}) => {
-    const location = useLocation();
+    const {pathname} = useLocation();
     const navigate = useNavigate();
 
 
@@ -21,12 +21,12 @@ const Banner: FC<BannerProps> = ({title, children}) => {
       <div className="-mx-4 flex flex-wrap items-center">
         <div className="w-full px-4">
           <div className="text-center">
-            <h1 className="text-4xl font-semibold text-white">{title}</h1>
+            <h1 className={`md:text-4xl text-3xl font-semibold text-white ${pathname === '/timestable-home' || pathname === '/quiz-home' ? 'mb-10' : ''}`}>{title}</h1>
           </div>
           <p className='absolute md:bottom-10 bottom-7 left-4 lg:left-16 right-0 mx-auto text-white flex gap-1 md:text-base text-sm'>
             <span className='text-xl cursor-pointer flex items-center justify-center hover:text-tealLight' onClick={() => navigate('/')}><FaHome /></span>
             <span className='flex items-center justify-center text-gray-300 px-1 font-medium'>{'>'}</span>
-            <span className='text-tealLight font-medium'>{location.pathname.slice(1).split('/')[0]}</span>
+            <span className='text-tealLight font-medium'>{pathname.slice(1).split('/')[0]}</span>
           </p>
 
          {children} 

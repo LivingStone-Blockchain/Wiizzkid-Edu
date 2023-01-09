@@ -12,7 +12,7 @@ const Select: FC<SelectType> = ({ value, onChange, children, ...rest }) => {
       value={value}
       onChange={onChange}
       {...rest}
-      className="w-full p-2 h-10 rounded border border-2 text-sm"
+      className="w-full p-2 h-10 rounded border-2 text-sm"
     >
       {children}
     </select>

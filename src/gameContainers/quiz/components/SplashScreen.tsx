@@ -24,7 +24,7 @@ const SplashScreen: FC<SplashScreenProps> = ({
 
          <Button
           onClick={() => setShowSplashScreen(false)}
-          className="mt-12 flex justify-center items-center gap-2 md:w-36 w-28 md:text-base text-sm text-tealLight mx-auto font-semibold px-5 py-3  bg-text-darken shadow-btn-darken transition text-center"
+          className="mt-12 flex justify-center items-center gap-2 md:w-36 w-28 md:text-base text-sm bg-tealLight text-navy mx-auto font-semibold px-5 py-3  bg-text-darken shadow-btn-darken transition text-center"
         >
           Skip <FaAngleRight />
         </Button>

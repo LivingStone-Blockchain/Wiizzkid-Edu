@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { win, low } from "../assets/images";
-import Button from "./Button";
+import { win, low } from "../../assets/images";
+import { Button } from '../button/index';
 import toast from "react-hot-toast";
 import { NavigateFunction } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, total
               )}
       
               <article className="text-center mt-4">
-                <h1 className="text-2xl font-bold text-green-600">
+                <h1 className="text-2xl font-bold text-teal">
                     Timestable Completed!
                 </h1>
             
@@ -50,9 +50,9 @@ const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, total
     
       
                 <Button
-                  className="mx-auto mt-8"
+                   className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
                   onClick={() => {toast.dismiss(); navigate('/timestable-home'); setShowCreateGameModal(false)}}
-                  value="Back Home"
+                  children="Back Home"
                 />
               </article>
             </section>

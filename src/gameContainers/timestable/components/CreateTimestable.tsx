@@ -7,13 +7,15 @@ import {
   FaCheckCircle,
   FaTimes,
 } from "react-icons/fa";
-import { successImg } from "../assets/images";
-import Button from "./Button";
+import { success } from "../assets/images";
+import { Button } from './button/index';
 import FormGroup from "./forms/FormGroup";
 import Input from "./forms/Input";
 import Label from "./forms/Label";
 import Select from "./forms/Select";
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
+import { TokenContext, TokenContextType } from "../../../context/token.context";
+import { utils } from "ethers";
 
 
 
@@ -28,6 +30,22 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 }) => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const { gameCreated, setGameCreated, gameDuration, setGameDuration, gameMode, setGameMode, difficulty, setDifficulty, handlePlayTimestable , handleSubmission,  totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails } = useContext(TimestableContext) as TimestableContextType;
+  const {stBalance }= useContext(TokenContext) as TokenContextType;
+  const stoneBalance = Number(utils.formatEther(stBalance));
+
+
+   //prevent unlogged user from accessing premium
+   useEffect(() => {
+    if (stoneBalance < 100 && gameMode !== 'london') {
+      toast.dismiss('unlogged');
+      toast.error(`Buy Stone to play ${gameMode} mode!`, { duration: 3000, id: 'unlogged' });
+      setTimeout(() => {
+        toast.dismiss('unlogged');
+        setGameMode('london');
+      }, 3000);
+    }
+  },[gameMode, stoneBalance]);
+
 
 
   const handleCopyClick = async () => {
@@ -68,34 +86,45 @@ const CreateTimestable: FC<CreateTimestableType> = ({
   if (gameCreated && gameDetails) {
     return (
       <section className="w-full py-4">
-        <img src={successImg} className="w-24 mx-auto" alt="" />
+        <img src={success} className="w-24 mx-auto" alt="success" />
 
         <article className="text-center mt-4">
-          <h1 className="text-2xl font-bold text-green-600">
+            <h1 className="text-2xl font-bold text-teal">
             Timestable Created!
           </h1>
       
-          {gameMode !== "london" && (
-          <>
-            <p className="mt-8">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold">
-            {gameDetails?.invite_code}
+          {gameMode !== "london" ? (
+        <>
+        <p className="mt-8">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
+              {gameDetails?.invite_code}
             </span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative">
-            <span ref={textRef} onClick={handleCopyClick}>{`https://game.wiizkid.com/quiz?code=cz19x0`}</span>
-            <span className="text-xs font-bold animate-pulse text-green-600 absolute top-5 right-10">copy</span>
+            <span ref={textRef} onClick={handleCopyClick}>{`https://game.wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
+            <span className="text-xs font-bold animate-pulse text-teal absolute top-5 right-10">copy</span>
           </p>
-          <p className="mt-4">
+          <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
             Copy and share your quiz code or link to your friends!
           </p>
-          </>
+        </>
+      ) : (
+        <>
+           <p className="mt-8">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
+              Free Mode
+            </span>
+          </p>
+           <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+            Game codes/links can be generated and shared in premium modes!
+          </p>
+        </>
     )}
 
           <Button
-            value="Play Timestable"
+            children="Play Timestable"
             onClick={handlePlayTimestable}
-            className="mx-auto mt-8"
+            className="mt-14 flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
           />
         </article>
       </section>
@@ -104,16 +133,16 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 
   return (
     <section className="pb-4 w-full">
-        <article className="relative">
-          <h1 className="text-2xl font-bold mb-3 bg-gradient-to-r from-orange-600 via-red-500 to-yellow-500 bg-clip-text text-transparent">
-            Create A New Wiizkid Revolution!
-          </h1>
-          <FaTimes
+         <div className="mb-7 flex items-center justify-end">
+        <FaTimes
           onClick={handleCloseModal}
-          className="float-right text-red-600 cursor-pointer text-xl absolute top-1 right-0"
+          className="float-right text-tomato cursor-pointer md:text-xl text-lg"
         />
-
-          <p className="">Start Timestable</p>
+      </div>
+       
+        <article className="relative">
+          <h1 className="md:text-2xl text-xl font-bold mb-3 text-navy">Wiizzkid <span className="text-tomato">Revolution!</span></h1>
+          <p className="hidden text-gray-700 space-x-5 my-2 md:text-lg text-base leading-relaxed font-medium">Start Timestable</p>
         </article>
 
       <form onSubmit={handleSubmit} className="mt-8">
@@ -125,8 +154,8 @@ const CreateTimestable: FC<CreateTimestableType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                <option value="beijing">Beijing Mode</option>
-                <option value="shanghai">Shanghai Mode</option>
+                  <option value="beijing" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
+                <option value="shanghai" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
               </Select>
             </FormGroup>
             <FormGroup>
@@ -151,25 +180,30 @@ const CreateTimestable: FC<CreateTimestableType> = ({
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
                 <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                {stoneBalance > 100 && (
+                  <>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </>
+                )}
               </Select>
             </FormGroup>
           </div>
      
         <div className="mt-8">
                 <Button 
-                    value="Create Game" 
+                    children="Create Game" 
                     onClick={handleSubmission}
+                     className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
                 />
         </div>
       </form>

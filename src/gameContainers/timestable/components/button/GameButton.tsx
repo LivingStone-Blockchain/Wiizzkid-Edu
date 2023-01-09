@@ -6,7 +6,6 @@ type ButtonProps =  {
   className?: string;
   type?: "button" | "submit";
   style?: React.CSSProperties;
-  timestableBtn?: boolean,
 }
 
 const Button: FC<ButtonProps> = ({
@@ -15,11 +14,10 @@ const Button: FC<ButtonProps> = ({
   type,
   value,
   style,
-  timestableBtn
+
 }) => {
 
- if(timestableBtn) {
-  return (
+ return (
     <button
       type={type}
       onClick={onClick}
@@ -29,17 +27,6 @@ const Button: FC<ButtonProps> = ({
       {value}
     </button>
   );
- }
-
- return (
-  <button
-  type={type}
-  onClick={onClick}
-  className={`${className} flex items-center justify-center transition px-8 py-3 bg-gradient-to-r from-orange-600 to-yellow-600 rounded text-white text-center font-bold text-sm hover:from-yellow-600 hover:to-orange-600`}
->
-  {value}
-</button>
-)
 };
 
 export default Button;

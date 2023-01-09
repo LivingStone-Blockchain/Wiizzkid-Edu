@@ -53,6 +53,7 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
           <Link
             to='/dashboard-home'
             aria-label="dashboard"
+            onClick={() => setOpen(false)}
             className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 text-white ${pathname.includes('/dashboard-home') ? 'bg-navy' : 'text-gray-600'}`}
           >
             <svg className="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
@@ -69,12 +70,13 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 className={`fill-current text-gray-300 group-hover:text-[#98cfcc] ${pathname.includes('/dashboard-home') ? 'text-[#98cfcc]' : 'text-gray-300'}`}
               ></path>
             </svg>
-            <span className="-mr-1 font-medium text-sm leading-relaxed" onClick={() => setOpen(false)}>Dashboard</span>
+            <span className="-mr-1 font-medium text-sm leading-relaxed">Dashboard</span>
           </Link>
         </li>
         <li>
           <Link
             to='/dashboard/quizzes'
+            onClick={() => setOpen(false)}
             className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 ${pathname.includes('/dashboard/quizzes') ? 'bg-navy text-white' : 'text-gray-600'}`}
           >
             <svg
@@ -94,12 +96,13 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
               />
             </svg>
-            <span className={`text-sm leading-relaxed font-medium`} onClick={() => setOpen(false)}>Quizzes</span>
+            <span className={`text-sm leading-relaxed font-medium`}>Quizzes</span>
           </Link>
         </li>
         <li>
           <Link
             to='/dashboard/quiz-history'
+            onClick={() => setOpen(false)}
             className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 ${pathname.includes('/dashboard/quiz-history') ? 'bg-navy text-white' : 'text-gray-600'}`}
           >
             <svg
@@ -119,12 +122,13 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
               />
             </svg>
-            <span className={`text-sm leading-relaxed font-medium`} onClick={() => setOpen(false)}>Quiz History</span>
+            <span className={`text-sm leading-relaxed font-medium`}>Quiz History</span>
           </Link>
         </li>
         <li>
           <Link
             to='/dashboard/wiizzkid-metaverse'
+            onClick={() => setOpen(false)}
             className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 ${pathname.includes('/dashboard/wiizzkid-metaverse') ? 'bg-navy text-white' : 'text-gray-600'}`}
           >
             <svg
@@ -142,12 +146,13 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
               />
             </svg>
-            <span className={`text-sm leading-relaxed font-medium`} onClick={() => setOpen(false)}>Wiizzkid Metaverse</span>
+            <span className={`text-sm leading-relaxed font-medium`}>Wiizzkid Metaverse</span>
           </Link>
         </li>
         <li>
           <Link
             to='/dashboard/buy-token'
+            onClick={() => setOpen(false)}
             className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 ${pathname.includes('/dashboard/buy-token') ? 'bg-navy text-white' : 'text-gray-600'}`}
           >
             <svg

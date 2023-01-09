@@ -171,7 +171,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
                 <h4 className="md:text-xl text-lg font-medium text-white">Custom Quiz</h4>
                 <span className="block md:text-sm text-xs text-gray-400">Easy</span>
               </div>
-              <p className="mt-8 md:text-base text-sm  text-gray-300">Create a quiz game with your preferred selections. Get Start!</p>
+              <p className="mt-8 md:text-base text-sm  text-gray-300">Create a quiz game with your preferred selections. Get Started!</p>
             </div>
 
         </div>

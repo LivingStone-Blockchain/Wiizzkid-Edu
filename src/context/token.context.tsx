@@ -1,4 +1,4 @@
-import { createContext, FC, useMemo, useState } from "react";
+import { createContext, FC, useEffect, useMemo, useState } from "react";
 import { BigNumber, utils } from "ethers";
 import {
   useProvider,
@@ -85,7 +85,7 @@ const TokenProvider: FC<any> = ({ children }) => {
     // Keeps track of the ether balance in the contract
     const [etherBalanceContract, setEtherBalanceContract] =
       useState(zero);
-    // stBalance is the amount of `ST` tokens help by the users account
+    // stBalance is the amount of `ST` tokens held by the users account
     const [stBalance, setSTBalance] = useState(zero);
     // `lpBalance` is the amount of LP tokens held by the users account
     const [lpBalance, setLPBalance] = useState(zero);
@@ -152,13 +152,23 @@ const TokenProvider: FC<any> = ({ children }) => {
     }
   };
 
+
+  useEffect(() => {
+    if (isConnected) {
+      getAmounts();
+    }
+}, [isConnected]);
+
+
+
+
   const _swapTokens = async () => {
     if (swapAmount === "") {
-       return toast.error('Input cannot be empty!', {duration:3000});
+       return toast.error('Input cannot be empty!', {duration:4000});
     }
 
     if (Number(swapAmount) === 0 || Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
-        return toast.error('Insufficient funds!', {duration:3000});
+        return toast.error('Insufficient funds!', {duration:4000});
     }
 
     try {
@@ -177,7 +187,7 @@ const TokenProvider: FC<any> = ({ children }) => {
         // Get all the updated amounts after the swap
         await getAmounts();
         setSwapAmount("");
-        toast.success('Swap successful', {duration: 3000})
+        toast.success('Swap successful', {duration: 5000})
         setTimeout(() => {
             navigate('/dashboard-home');
         }, 3000)

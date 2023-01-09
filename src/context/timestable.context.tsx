@@ -92,7 +92,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
     const [gameMode, setGameMode] = useState<string>(GameModes.london);
     const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false);
     const [start, setStart] = useState<boolean>(false);
-    const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.5 });
+    const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.3 });
     const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>();
       //get user details from userContext
     const { user } = useContext(UserContext) as UserContextType;
@@ -107,10 +107,10 @@ const TimestableProvider: FC<any> = ({ children }) => {
         play();
         }
         else if ( pathname === '/timestable' && start) {
-        sound.fade(0.5, 0, 9000)
+        sound.fade(0.3, 0, 9000)
         }
         else if ( pathname === '/') {
-            sound?.fade(0.5, 0, 4000);
+           stop();
           }
         else return;
     }, [showSplashScreen, start, pathname]);
@@ -152,14 +152,18 @@ const TimestableProvider: FC<any> = ({ children }) => {
         setTimeout(() => {
             toast.dismiss();
             setLoading(false);
+            navigate('/timestable', { replace: true });
         }, 4000)
 
-        navigate('/timestable', { replace: true });
     };
 
 
 
     const handleSubmission = async () => {
+        if(gameDuration < 2) {
+            return toast.error("1 minute not allowed", {duration: 3000})
+        }
+
         const payload = {
             difficulty,
             game_mode: gameMode,
@@ -171,7 +175,6 @@ const TimestableProvider: FC<any> = ({ children }) => {
          
     try {
         await service.createGame(payload).then((res) => {
-            console.log(res);
           setGameDetails(res);
         });
       } catch (error) {
