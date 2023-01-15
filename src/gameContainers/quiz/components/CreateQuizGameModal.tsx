@@ -7,7 +7,7 @@ import {
   FaCheckCircle,
   FaTimes,
 } from "react-icons/fa";
-import { successImg } from "../assets/images";
+import { successImg, beijing } from "../assets/images";
 import Button from "./button/Button";
 import FormGroup from "./forms/FormGroup";
 import Input from "./forms/Input";
@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { utils } from "ethers";
+
 
 
 interface CreateQuizGameModalType {
@@ -30,24 +31,38 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 }) => {
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated } = useContext(QuizContext) as QuizContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
   const {stBalance }= useContext(TokenContext) as TokenContextType;
   const stoneBalance = Number(utils.formatEther(stBalance));
-
+  const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
  
 
 
-  //prevent unlogged user from accessing premium
+  //prevent unlogged user from accessing shanghai
   useEffect(() => {
-    if (stoneBalance < 100 && gameMode !== 'london') {
+    if (stoneBalance < 10 && gameMode === 'shanghai' ) {
       toast.dismiss('unlogged');
-      toast.error(`Buy Stone to play ${gameMode} mode!`, { duration: 3000, id: 'unlogged' });
+      toast.error(`Buy Stone to play Shanghai mode!`, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
         toast.dismiss('unlogged');
         setGameMode('london');
       }, 3000);
     }
+  
   },[gameMode, stoneBalance]);
+
+
+
+  //toast beijing message on click
+  useEffect(() => {
+    gameMode === 'beijing' 
+      ? setShowBeijingModal(true)
+      : setShowBeijingModal(false)
+      
+  }, [showBeijingModal, gameMode])
+
+
+
 
 
   //copy paste function
@@ -142,9 +157,40 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   }
 
 
+  if (showBeijingModal) {
+    return (
+      <section className={`relative w-full py-4`}>
+              <FaTimes
+                onClick={() => {setShowBeijingModal(false); setGameMode('london')}}
+                className="absolute top-2 right-2 text-tomato cursor-pointer md:text-xl text-lg"
+                />
+              <img src={beijing} className="w-24 mx-auto" alt="beijing" />
+
+              <article className="text-center mt-4">
+                <h1  className="text-2xl font-bold text-teal">
+                Contact us!
+                </h1>
+            </article>
+            
+            <p className="mt-8 text-gray-500 text-center space-x-5 my-3 md:text-base text-sm leading-relaxed">
+            This a B2B mode where organizations develop their own quiz templates for competitions and utilize them in our metaverse.
+            </p>
+
+            <Button
+                className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
+              onClick={() => {toast.dismiss(); setShowCreateGameModal(false); navigate('/about'); setGameMode('london')}}
+            >
+              Contact
+            </Button>
+                  
+        </section>
+    )
+  }
+
+
 
   return (
-    <section className="pb-4 w-full">
+    <section className={`pb-4 w-full ${showBeijingModal ? 'hidden' : 'block'}`}>
       <div className="mb-7 flex items-center justify-between">
         {screen === 2 ? (
           <Button type="button" className="text-navy" onClick={() => setScreen(1)} btnDefault>
@@ -163,7 +209,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       {screen !== 2 && (
         <article>
           <h1 className="md:text-2xl text-xl font-bold mb-3 text-navy">Create a new Wiizzkid<span className="text-tomato block">Revolution!</span></h1>
-          <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Start a Quiz Game</p>
+          <p className={`text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium ${gameMode === 'shanghai' && 'hidden'}`}>Start a Quiz Game</p>
         </article>
       )}
 
@@ -177,8 +223,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                <option value="beijing" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
-                <option value="shanghai" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                <option value="shanghai" className={`${stoneBalance < 10 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                <option value="beijing" className={`${stoneBalance < 10000 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
               </Select>
             </FormGroup>
 
@@ -220,7 +266,13 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                 <option value="hard">Hard</option>
               </Select>
             </FormGroup>
-
+           
+              {gameMode === "shanghai" && (
+                  <FormGroup>
+                  <Label>Token Amount</Label>
+                  <Input type="text"  value={tokenFee} onChange={(event) => setTokenFee(event.target.value)} placeholder={difficulty === "easy" ? "10 -50 STN" : difficulty === "medium" ? "100 -500 STN" : "> 500 STN" } min={10} max={9999999999} />
+                </FormGroup>
+              )}
           </div>
         )}
 
@@ -239,7 +291,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
                 <option value="1">1</option>
-                {stoneBalance > 100 && (
+                {gameMode !== "london" && (
                   <>
                     <option value="2">2</option>
                     <option value="3">3</option>

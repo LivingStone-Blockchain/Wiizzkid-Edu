@@ -1,9 +1,9 @@
-import React, { createContext, FC, useState, useEffect, useCallback } from "react";
-import { registerService, loginService, forgotPasswordService } from "../services";
+import React, { createContext, FC, useState, useEffect, useCallback, useContext } from "react";
+import { registerService, loginService, forgotPasswordService, refreshTokenService } from "../services";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -68,9 +68,6 @@ const UserProvider: FC<any> = ({ children }) => {
     const navigate = useNavigate();
 
 
-    
-
-
 
 
 
@@ -82,8 +79,14 @@ const UserProvider: FC<any> = ({ children }) => {
         if (loggedUSerJSON) {
             const recoveredUser = JSON.parse(loggedUSerJSON);
             setUser(recoveredUser);
+ 
         }
     }, []);
+
+
+
+ 
+
 
 
     //Handle signup

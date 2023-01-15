@@ -6,6 +6,7 @@ import useSound from 'use-sound';
 import categoryStrings from '../gameContainers/quiz/components/functions/categoryStringConveter';
 import { useLocation } from 'react-router-dom';
 import { UserContext, UserContextType } from './user.context';
+import useTokenRefresh from './../hooks/useTokenRefresh';
 
 
 
@@ -106,6 +107,8 @@ export interface QuizContextType {
   setTriviaFetch: React.Dispatch<React.SetStateAction<boolean>>,
   gameCreated: boolean,
   setGameCreated: React.Dispatch<React.SetStateAction<boolean>>,
+  tokenFee: string,
+  setTokenFee: React.Dispatch<React.SetStateAction<string>>,
   questionsLoader: boolean,
   setQuestionsLoader: React.Dispatch<React.SetStateAction<boolean>>,
   handleScreenTwo: () => void,
@@ -117,6 +120,7 @@ export interface QuizContextType {
   start: boolean,
   setStart: React.Dispatch<React.SetStateAction<boolean>>,
   user: userType | null,
+  refreshedUser:  userType | null,
 }
 
 
@@ -137,8 +141,9 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [timeOfStart, setTimeOfStart] = useState<any>();
   const [screen, setScreen] = useState(1);
   const [difficulty, setDifficulty] = useState<string>("easy");
-  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<number>(20);
+  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<number>(10);
   const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1);
+  const [tokenFee, setTokenFee] = useState<string>('');
   const [gameMode, setGameMode] = useState<string>(GameModes.london);
   const [gameDuration, setGameDuration] = useState<number>(5);
   const [score, setScore] = useState<number>(0);
@@ -157,6 +162,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
+  //token refresher
+  const { refreshedUser } = useTokenRefresh();
 
 
   //reset initial category value based game mode changes
@@ -229,7 +236,7 @@ useEffect(() => {
     stop();
   }
   else return;
-}, [showSplashScreen, start, pathname, triviaFetch, showCreateGameModal]);
+}, [showSplashScreen, start, pathname]);
 
 
 
@@ -269,10 +276,6 @@ useEffect(() => {
 
 
 
-
-
-  
-
   //function create game form 2
   const handleInstructionScreen = async () => {
 
@@ -284,20 +287,24 @@ useEffect(() => {
       game_duration: gameDuration,
       category: Number(category),
       creator: user!.id,
+      stone_token_fee: Number(tokenFee)
     }
+   
     
     //persist only logged user data to backend
     try {
       user?.tokens
-      ? await service.createGame(payload).then((res) => {
+      ? await service.createGame(payload, refreshedUser.tokens.access).then((res) => {
         setGameDetails(res); 
       })
       : setGameDetails(payload);
     } catch (error) {
       console.log(error);
     }
-  }
 
+    setTokenFee('');
+  }
+ 
 
 
   // function to start a game:
@@ -323,7 +330,7 @@ useEffect(() => {
 
   return (
     <QuizContext.Provider
-      value={{ dataType, quizData, triviaData, setTriviaData, questionsLoader, setQuestionsLoader, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user, gameCreated, setGameCreated, showCreateGameModal, setShowCreateGameModal, recentGames, setRecentGames}}
+      value={{ dataType, quizData, triviaData, setTriviaData, questionsLoader, setQuestionsLoader, setQuizData, start, setStart, score, setScore, addAnswer, timeOfStart, triviaFetch, setTriviaFetch, startGame, selectedOption, setSelectedOption, screen, setScreen, category, setCategory, difficulty, setDifficulty, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, showSplashScreen, setShowSplashScreen, handleScreenTwo, handleInstructionScreen, submitTimeRef, gameDetails, setGameDetails, user, gameCreated, setGameCreated, showCreateGameModal, setShowCreateGameModal, recentGames, setRecentGames, tokenFee, setTokenFee, refreshedUser}}
     >
       {children}
     </QuizContext.Provider>

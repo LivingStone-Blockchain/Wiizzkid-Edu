@@ -4,3 +4,4 @@ export { default as vrgirl } from './girl-vr.png';
 export { default as pcboy } from './boy-pc.png';
 export { default as logo } from './wiizzkid-logo.png';
 export { default as ninja } from './ninja.png';
+export { default as wiizzkidVideo } from './wiizzkid.mp4';

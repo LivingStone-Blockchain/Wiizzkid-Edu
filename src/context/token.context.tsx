@@ -1,4 +1,4 @@
-import { createContext, FC, useEffect, useMemo, useState } from "react";
+import { createContext, FC, useEffect, useMemo, useState, useContext } from "react";
 import { BigNumber, utils } from "ethers";
 import {
   useProvider,
@@ -15,7 +15,7 @@ import {
   DEX_ADDRESS,
   TOKEN_ABI,
   TOKEN_ADDRESS,
-} from  './../components/dashboard/components/exchange/constants/constants.js';
+} from './../components/dashboard/components/exchange/constants/constants.js';
 
 import {
   addLiquidity,
@@ -37,89 +37,108 @@ import {
 } from "./../components/dashboard/components/exchange/DEX-components/swap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
+import { UserContext, UserContextType } from './user.context';
+import {userUpdateService } from "../services";
+import useTokenRefresh from './../hooks/useTokenRefresh';
 
 
 
 export interface TokenContextType {
-     isConnected: any,
-     getAmounts: () => Promise<void>,
-     _getAmountOfTokensReceivedFromSwap: (_swapAmount: number) => Promise<void>, 
-      _swapTokens:  () => void, 
-      _getTokensAfterRemove: (_removeLPTokens: any) => Promise<void>, 
-      _addLiquidity:  () => void, 
-      _removeLiquidity: () => void, 
-      stBalance: BigNumber,
-      ethBalance: BigNumber,
-      lpBalance: BigNumber,
-      reservedST: BigNumber,
-      setAddEther: React.Dispatch<React.SetStateAction<BigNumber>>
-      setAddSTTokens: React.Dispatch<React.SetStateAction<BigNumber>>
-      etherBalanceContract: BigNumber,
-      addSTTokens: BigNumber,
-      setRemoveLPTokens:  React.Dispatch<React.SetStateAction<string>>,
-      removeST: BigNumber,
-      removeEther: BigNumber,
-      zero: BigNumber,
-      setSwapAmount: React.Dispatch<React.SetStateAction<string>>,
-      swapAmount: string,
-      ethSelected: boolean,
-    setEthSelected: React.Dispatch<React.SetStateAction<boolean>>,
-    tokenToBeReceivedAfterSwap: BigNumber,
+  isConnected: any,
+  getAmounts: () => Promise<void>,
+  _getAmountOfTokensReceivedFromSwap: (_swapAmount: number) => Promise<void>,
+  _swapTokens: () => void,
+  _getTokensAfterRemove: (_removeLPTokens: any) => Promise<void>,
+  _addLiquidity: () => void,
+  _removeLiquidity: () => void,
+  stBalance: BigNumber,
+  ethBalance: BigNumber,
+  lpBalance: BigNumber,
+  reservedST: BigNumber,
+  setAddEther: React.Dispatch<React.SetStateAction<BigNumber>>
+  setAddSTTokens: React.Dispatch<React.SetStateAction<BigNumber>>
+  etherBalanceContract: BigNumber,
+  addSTTokens: BigNumber,
+  setRemoveLPTokens: React.Dispatch<React.SetStateAction<string>>,
+  removeST: BigNumber,
+  removeEther: BigNumber,
+  zero: BigNumber,
+  setSwapAmount: React.Dispatch<React.SetStateAction<string>>,
+  swapAmount: string,
+  ethSelected: boolean,
+  setEthSelected: React.Dispatch<React.SetStateAction<boolean>>,
+  tokenToBeReceivedAfterSwap: BigNumber,
 }
 
 export const TokenContext = createContext<TokenContextType | null>(null);
 
 
 const TokenProvider: FC<any> = ({ children }) => {
-    const { address } = useAccount();
-    const { data: signer } = useSigner({ chainId: goerli.id });
-    const provider = useProvider();
-  
-    const zero = BigNumber.from(0);
-    /** Variables to keep track of amount */
-    // `ethBalance` keeps track of the amount of Eth held by the user's account
-    const [ethBalance, setEtherBalance] = useState(zero);
-    // `reservedST` keeps track of the Stone tokens Reserve balance in the Exchange contract
-    const [reservedST, setReservedST] = useState(zero);
-    // Keeps track of the ether balance in the contract
-    const [etherBalanceContract, setEtherBalanceContract] =
-      useState(zero);
-    // stBalance is the amount of `ST` tokens held by the users account
-    const [stBalance, setSTBalance] = useState(zero);
-    // `lpBalance` is the amount of LP tokens held by the users account
-    const [lpBalance, setLPBalance] = useState(zero);
-    /** Variables to keep track of liquidity to be added or removed */
-    // addEther is the amount of Ether that the user wants to add to the liquidity
-    const [addEther, setAddEther] = useState(zero);
-    // addSTTokens keeps track of the amount of ST tokens that the user wants to add to the liquidity
-    // in case when there is no initial liquidity and after liquidity gets added it keeps track of the
-    // ST tokens that the user can add given a certain amount of ether
-    const [addSTTokens, setAddSTTokens] = useState(zero);
-    // removeEther is the amount of `Ether` that would be sent back to the user based on a certain number of `LP` tokens
-    const [removeEther, setRemoveEther] = useState(zero);
-    // removeST is the amount of Stone tokens that would be sent back to the user based on a certain number of `LP` tokens
-    // that he wants to withdraw
-    const [removeST, setRemoveST] = useState(zero);
-    // amount of LP tokens that the user wants to remove from liquidity
-    const [removeLPTokens, setRemoveLPTokens] = useState("0");
-    /** Variables to keep track of swap functionality */
-    // Amount that the user wants to swap
-    const [swapAmount, setSwapAmount] = useState("");
-    // This keeps track of the number of tokens that the user would receive after a swap completes
-    const [tokenToBeReceivedAfterSwap, settokenToBeReceivedAfterSwap] =
-      useState(zero);
-    // Keeps track of whether  `Eth` or `Stone` token is selected. If `Eth` is selected it means that the user
-    // wants to swap some `Eth` for some `Stone` tokens and vice versa if `Eth` is not selected
-    const [ethSelected, setEthSelected] = useState(true);
-    //web3 wallet
-    const { connector: isConnected } = useAccount();
-    const navigate = useNavigate();
+  const { address } = useAccount();
+  const { data: signer } = useSigner({ chainId: goerli.id });
+  const provider = useProvider();
+
+  const zero = BigNumber.from(0);
+  /** Variables to keep track of amount */
+  // `ethBalance` keeps track of the amount of Eth held by the user's account
+  const [ethBalance, setEtherBalance] = useState(zero);
+  // `reservedST` keeps track of the Stone tokens Reserve balance in the Exchange contract
+  const [reservedST, setReservedST] = useState(zero);
+  // Keeps track of the ether balance in the contract
+  const [etherBalanceContract, setEtherBalanceContract] =
+    useState(zero);
+  // stBalance is the amount of `ST` tokens held by the users account
+  const [stBalance, setSTBalance] = useState(zero);
+  // `lpBalance` is the amount of LP tokens held by the users account
+  const [lpBalance, setLPBalance] = useState(zero);
+  /** Variables to keep track of liquidity to be added or removed */
+  // addEther is the amount of Ether that the user wants to add to the liquidity
+  const [addEther, setAddEther] = useState(zero);
+  // addSTTokens keeps track of the amount of ST tokens that the user wants to add to the liquidity
+  // in case when there is no initial liquidity and after liquidity gets added it keeps track of the
+  // ST tokens that the user can add given a certain amount of ether
+  const [addSTTokens, setAddSTTokens] = useState(zero);
+  // removeEther is the amount of `Ether` that would be sent back to the user based on a certain number of `LP` tokens
+  const [removeEther, setRemoveEther] = useState(zero);
+  // removeST is the amount of Stone tokens that would be sent back to the user based on a certain number of `LP` tokens
+  // that he wants to withdraw
+  const [removeST, setRemoveST] = useState(zero);
+  // amount of LP tokens that the user wants to remove from liquidity
+  const [removeLPTokens, setRemoveLPTokens] = useState("0");
+  /** Variables to keep track of swap functionality */
+  // Amount that the user wants to swap
+  const [swapAmount, setSwapAmount] = useState("");
+  // This keeps track of the number of tokens that the user would receive after a swap completes
+  const [tokenToBeReceivedAfterSwap, settokenToBeReceivedAfterSwap] =
+    useState(zero);
+  // Keeps track of whether  `Eth` or `Stone` token is selected. If `Eth` is selected it means that the user
+  // wants to swap some `Eth` for some `Stone` tokens and vice versa if `Eth` is not selected
+  const [ethSelected, setEthSelected] = useState(true);
+  //web3 wallet
+  const { connector: isConnected } = useAccount();
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext) as UserContextType;
+  const { refreshedUser } = useTokenRefresh();
+
+
+    //update token balance on backend
+    useEffect(() => {
+      if (!user) {
+        return;
+      }
+    
+      const payload = {
+        stone_token: Number(utils.formatEther(stBalance)),
+      }
+      const updateStoneBalance = async () => {
+        await userUpdateService.stoneUpdate(payload, user.id, refreshedUser.tokens.access);
+      }
+      updateStoneBalance();
+    }, [user, stBalance])
+    
 
 
 
-
-      
   const getAmounts = async () => {
     try {
 
@@ -157,18 +176,18 @@ const TokenProvider: FC<any> = ({ children }) => {
     if (isConnected) {
       getAmounts();
     }
-}, [isConnected]);
+  }, [isConnected]);
 
 
 
 
   const _swapTokens = async () => {
     if (swapAmount === "") {
-       return toast.error('Input cannot be empty!', {duration:4000});
+      return toast.error('Input cannot be empty!', { duration: 4000 });
     }
 
     if (Number(swapAmount) === 0 || Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
-        return toast.error('Insufficient funds!', {duration:4000});
+      return toast.error('Insufficient funds!', { duration: 4000 });
     }
 
     try {
@@ -187,9 +206,9 @@ const TokenProvider: FC<any> = ({ children }) => {
         // Get all the updated amounts after the swap
         await getAmounts();
         setSwapAmount("");
-        toast.success('Swap successful', {duration: 5000})
+        toast.success('Swap successful', { duration: 5000 })
         setTimeout(() => {
-            navigate('/dashboard-home');
+          navigate('/dashboard-home');
         }, 3000)
       }
     } catch (err) {
@@ -198,7 +217,7 @@ const TokenProvider: FC<any> = ({ children }) => {
     }
   };
 
-  const _getAmountOfTokensReceivedFromSwap = async (_swapAmount:number) => {
+  const _getAmountOfTokensReceivedFromSwap = async (_swapAmount: number) => {
     try {
       // Convert the amount entered by the user to a BigNumber using the `parseEther` library from `ethers.js`
       const _swapAmountWEI = utils.parseEther(_swapAmount.toString());
@@ -282,7 +301,7 @@ const TokenProvider: FC<any> = ({ children }) => {
    * of LP tokens from the contract
    */
 
-  const _getTokensAfterRemove = async (_removeLPTokens:any) => {
+  const _getTokensAfterRemove = async (_removeLPTokens: any) => {
     try {
       // Convert the LP tokens entered by the user to a BigNumber
       const removeLPTokenWei = utils.parseEther(_removeLPTokens);
@@ -310,68 +329,68 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
   const value = useMemo(
-    () => ({ 
-        isConnected, 
-        getAmounts,
-        _getAmountOfTokensReceivedFromSwap, 
-        _swapTokens,  
-        _getTokensAfterRemove, 
-        _addLiquidity, 
-        _removeLiquidity, 
-        stBalance,
-        ethBalance,
-        lpBalance, 
-        reservedST,
-        setAddEther,
-        setAddSTTokens,
-        etherBalanceContract,
-        addSTTokens,
-        setRemoveLPTokens,
-        removeST,
-        removeEther,
-        zero,
-        swapAmount,
-        setSwapAmount,
-        ethSelected,
-        setEthSelected,
-        tokenToBeReceivedAfterSwap
+    () => ({
+      isConnected,
+      getAmounts,
+      _getAmountOfTokensReceivedFromSwap,
+      _swapTokens,
+      _getTokensAfterRemove,
+      _addLiquidity,
+      _removeLiquidity,
+      stBalance,
+      ethBalance,
+      lpBalance,
+      reservedST,
+      setAddEther,
+      setAddSTTokens,
+      etherBalanceContract,
+      addSTTokens,
+      setRemoveLPTokens,
+      removeST,
+      removeEther,
+      zero,
+      swapAmount,
+      setSwapAmount,
+      ethSelected,
+      setEthSelected,
+      tokenToBeReceivedAfterSwap
     }),
     [
-        isConnected, 
-        getAmounts,
-        _getAmountOfTokensReceivedFromSwap, 
-        _swapTokens,  
-        _getTokensAfterRemove, 
-        _addLiquidity, 
-        _removeLiquidity, 
-        stBalance,
-        ethBalance,
-        lpBalance,
-        reservedST,
-        setAddEther,
-        setAddSTTokens,
-        etherBalanceContract,
-        addSTTokens,
-        setRemoveLPTokens,
-        removeST,
-        removeEther,
-        zero,
-        swapAmount,
-        setSwapAmount,
-        ethSelected,
-        setEthSelected,
-        tokenToBeReceivedAfterSwap
+      isConnected,
+      getAmounts,
+      _getAmountOfTokensReceivedFromSwap,
+      _swapTokens,
+      _getTokensAfterRemove,
+      _addLiquidity,
+      _removeLiquidity,
+      stBalance,
+      ethBalance,
+      lpBalance,
+      reservedST,
+      setAddEther,
+      setAddSTTokens,
+      etherBalanceContract,
+      addSTTokens,
+      setRemoveLPTokens,
+      removeST,
+      removeEther,
+      zero,
+      swapAmount,
+      setSwapAmount,
+      ethSelected,
+      setEthSelected,
+      tokenToBeReceivedAfterSwap
     ]
   )
 
 
-    return (
-        <TokenContext.Provider 
-            value={value}
-        >
-            {children}
-        </TokenContext.Provider>
-    )
+  return (
+    <TokenContext.Provider
+      value={value}
+    >
+      {children}
+    </TokenContext.Provider>
+  )
 }
 
 export default TokenProvider;

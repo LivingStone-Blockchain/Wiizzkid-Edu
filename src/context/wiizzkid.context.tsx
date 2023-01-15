@@ -1,9 +1,12 @@
-import { createContext, FC, useState, useEffect } from "react";
+import { createContext, FC, useState, useEffect, useMemo } from "react";
+
 
 
 export interface WiizzkidContextType {
     value: number,
     setValue: React.Dispatch<React.SetStateAction<number>>,
+    openVideo: boolean,
+    setOpenVideo: React.Dispatch<React.SetStateAction<boolean>>, 
 }
 
 export const WiizzkidContext = createContext<WiizzkidContextType | null>(null);
@@ -11,6 +14,7 @@ export const WiizzkidContext = createContext<WiizzkidContextType | null>(null);
 
 const WiizzkidProvider: FC<any> = ({ children }) => {
     const [value, setValue] = useState<number>(0);
+    const [openVideo, setOpenVideo] = useState<boolean>(false);
 
 
     //create color carousel;
@@ -25,10 +29,23 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
     })
 
 
+    const values = useMemo(
+        () => ({ 
+            value, 
+            setValue,
+            openVideo,
+            setOpenVideo
+        }),
+        [
+            value, 
+            setValue,
+            openVideo,
+            setOpenVideo
+        ])
 
     return (
         <WiizzkidContext.Provider 
-            value={{ value, setValue }}
+            value={values }
         >
             {children}
         </WiizzkidContext.Provider>

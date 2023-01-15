@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect, useContext} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing, BlogDetails, ResetPassword } from "./pages";
 import { Header, Footer, BackToTop, Preloader, UserRoute } from './components/index'
@@ -9,12 +9,15 @@ import 'aos/dist/aos.css';
 import { Toaster } from 'react-hot-toast';
 import QuizApp from "./gameContainers/quiz/QuizApp";
 import { TimestablePlay } from "./gameContainers/timestable/pages";
+import { WiizzkidContext, WiizzkidContextType } from './context/wiizzkid.context';
 import TimestableApp  from './gameContainers/timestable/TimestableApp';
-
+import ModalVideo from 'react-modal-video';
+import { wiizzkidVideo } from './assets/header/index';
+import './../node_modules/react-modal-video/css/modal-video.css';
 
 
 function App() {
-
+  const { openVideo, setOpenVideo } = useContext(WiizzkidContext) as WiizzkidContextType;
   useEffect(() => {
     AOS.init();
   }, []);
@@ -27,6 +30,7 @@ function App() {
     <Toaster />
     <Preloader  homeLoader={true} />
    <Header />
+   <ModalVideo channel='custom' isOpen={openVideo} url={wiizzkidVideo} onClose={() => setOpenVideo(false)} />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />

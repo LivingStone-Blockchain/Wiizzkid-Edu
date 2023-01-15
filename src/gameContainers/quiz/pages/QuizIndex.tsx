@@ -13,7 +13,6 @@ import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 
 
-
 const QuizIndex = () => {
   const navigate = useNavigate();
   const { setScreen, showCreateGameModal, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
@@ -100,7 +99,6 @@ const QuizIndex = () => {
           </div>
         </div>
       </section>
-
       <QuickPlay handleDisplayCreateGameModal = {handleDisplayCreateGameModal}/>
       <History />
     </>

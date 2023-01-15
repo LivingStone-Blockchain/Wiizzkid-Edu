@@ -25,7 +25,7 @@ const About = () => {
       		<div className="sm:flex items-center sm:space-x-8 md:py-20 py-16">
 			<div data-aos="fade-right" className="sm:w-1/2 relative">
 				<div className="bg-tomato rounded-full absolute w-12 h-12 z-0 -left-4 -top-3 animate-pulse"></div>
-				<h1 className="font-semibold text-2xl relative z-50 text-darken lg:pr-10">Step into the future today and make it happen, <span className="text-tomato">the future is now.</span></h1>
+				<h1 className="font-semibold text-2xl relative z-50 text-navy lg:pr-10">Step into the future today and make it happen, <span className="text-tomato">the future is now.</span></h1>
 				<p className="py-5 lg:pr-32 md:text-base text-sm md:leading-7 leading-7 text-gray-500">We want to change the methodologies of teaching across the world using the blockchain technology while kids learn in a fun and exiting way.</p>
 				<p className="pt-0 pb-5 lg:pr-32 md:text-base text-sm md:leading-7 leading-7 text-gray-500">You can play in 3 different modes(London, Shanghai and Beijing).The London mode is the easiest while the Beijing is the hardest.You would be able to accumulate points as you play the game which can then be converted to Stones.</p>
 			</div>

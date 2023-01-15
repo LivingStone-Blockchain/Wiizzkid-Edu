@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { number } from 'yup';
+
 
 const baseUrl = 'https://wiizkidapi.herokuapp.com';
 
@@ -32,8 +32,14 @@ const getAll = async () => {
 }
 
 
-const createGame = async (gameDetails: gameDetailsType) => {
-    const response = await axios.post(`${baseUrl}/quiz/game/`, gameDetails)
+const createGame = async (gameDetails: gameDetailsType, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+    
+    const response = await axios.post(`${baseUrl}/quiz/game/`, gameDetails, config)
     return response.data;
 }
 

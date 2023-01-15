@@ -3,7 +3,6 @@ import { eduImg, rocket, geography, general, custom, basket, soccer } from '../a
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import toast from "react-hot-toast";
 import CreateQuizGameModal from './../components/CreateQuizGameModal'
-import categoryStrings from './functions/categoryStringConveter';
 import service from '../services/services';
 
 
@@ -59,7 +58,7 @@ const quickPlayData: quickPlayType[] = [
 
 
 const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
-  const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee, refreshedUser } = useContext(QuizContext) as QuizContextType;
 
 
   const handleQuickPlay = async (id: number) => {
@@ -72,6 +71,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
     setTotalAllowedQuestions(10);
     setTotalAllowedPlayers(1);
     setGameDuration(5);
+    setTokenFee("0");
 
 
     setShowCreateGameModal(true);
@@ -101,13 +101,14 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
       game_duration: 5,
       category: Number(data?.category),
       creator: user!.id,
+      stone_token_fee: Number(tokenFee)
     }
 
     
     //persist only logged user data to backend
     try {
       user?.tokens
-      ? await service.createGame(payload).then((res) => {
+      ? await service.createGame(payload, refreshedUser!.tokens.access).then((res) => {
         setGameDetails(res); 
       })
       : setGameDetails(payload);
