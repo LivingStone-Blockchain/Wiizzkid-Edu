@@ -40,7 +40,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                             style={window.innerWidth > 767 ? { backgroundColor: `${colorDeep}`, boxShadow: `${shadow}` } : { backgroundColor: `${colorDeep}`, boxShadow: `${mobileShadow}` }}
                         />
 
-                        <div className="flex items-center justify-center space-x-3 mt-7 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"  onClick={() => setOpenVideo(true)}>
+                        <div className="hidden items-center justify-center space-x-3 mt-7 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"  onClick={() => setOpenVideo(true)}>
                             <button className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
                                 <svg className="w-5 h-5 ml-2" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M22.5751 12.8097C23.2212 13.1983 23.2212 14.135 22.5751 14.5236L1.51538 27.1891C0.848878 27.5899 5.91205e-07 27.1099 6.25202e-07 26.3321L1.73245e-06 1.00123C1.76645e-06 0.223477 0.848877 -0.256572 1.51538 0.14427L22.5751 12.8097Z" style={{ fill: `${colorDeep}` }} />

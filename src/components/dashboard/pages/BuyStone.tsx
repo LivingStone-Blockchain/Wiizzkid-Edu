@@ -80,7 +80,7 @@ const BuyStone = () => {
                 </div>
               </CardBody>
             </Card>
-            {open === id && <div data-aos="fade-up" data-aos-delay="100" className='absolute z-[100] left-0 right-0 mx-0'>{children}</div>}
+            {open === id && <div data-aos="fade-up" data-aos-delay="100" className='absolute z-[40] left-0 right-0 mx-0'>{children}</div>}
           </div>
         ))}
       </div>

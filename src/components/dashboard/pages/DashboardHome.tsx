@@ -13,7 +13,7 @@ import { Preloader } from './../../index';
 
 const DashboardHome = () => {
   const { user, recentGames } = useContext(QuizContext) as QuizContextType;
-  const { stBalance } = useContext(TokenContext) as TokenContextType;
+  const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
 
   //returns data for a year
   const currentYear = new Date().getFullYear();
@@ -61,7 +61,7 @@ const DashboardHome = () => {
               />
               <InfoCard
                 title="STN Balance"
-                value={Number(utils.formatEther(stBalance)).toFixed(2)}
+                value={Number(utils.formatEther(balanceOfStoneTokens)).toFixed(2)}
                 img={balance}
               />
               <InfoCard

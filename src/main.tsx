@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <React.StrictMode>
         <BrowserRouter>
         <WagmiConfig client={Client}>
-         <RainbowKitProvider chains={chains}>
+         <RainbowKitProvider chains={chains} initialChain={chain.goerli}>
           <UserProvider>
           <QuizProvider>
           <TimestableProvider>

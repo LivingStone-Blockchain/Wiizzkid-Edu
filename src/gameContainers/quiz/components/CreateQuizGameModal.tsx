@@ -32,8 +32,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
   const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
-  const {stBalance }= useContext(TokenContext) as TokenContextType;
-  const stoneBalance = Number(utils.formatEther(stBalance));
+  const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
+  const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
   const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
  
 
@@ -173,7 +173,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             </article>
             
             <p className="mt-8 text-gray-500 text-center space-x-5 my-3 md:text-base text-sm leading-relaxed">
-            This a B2B mode where organizations develop their own quiz templates for competitions and utilize them in our metaverse.
+            This a B2B mode where organizations or schools develop their own learning platform or quiz templates in our metaverse.
             </p>
 
             <Button
