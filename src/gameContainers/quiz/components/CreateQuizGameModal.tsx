@@ -102,7 +102,10 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const handleStartGame = () => {
     setGameCreated(false);
     toast.dismiss();
-    navigate('/quiz', { replace: true });
+    gameMode === "london" 
+      ?   navigate('/quiz', { replace: true })
+      :   navigate(`/quiz?code=${gameDetails?.invite_code}`);
+
     gameMode === "london" 
       ? setTriviaFetch(true)
       : setTriviaFetch(false);
