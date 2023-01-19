@@ -38,11 +38,12 @@
 
 
 
-.animation-pulsating {
-  animation: pulse 2s infinite;
+.animation-pulse {
+  animation: pulsate 2s infinite;
+  -webkit-animation: pulsate 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulsate {
   0% {
       transform: scale(0.8);
       box-shadow: 0 0 0 0 #FF3939;

@@ -104,7 +104,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     toast.dismiss();
     gameMode === "london" 
       ?   navigate('/quiz', { replace: true })
-      :   navigate(`/quiz?code=${gameDetails?.invite_code}`);
+      :   navigate(`/quiz?code=${gameDetails?.invite_code}`, { replace: true });
 
     gameMode === "london" 
       ? setTriviaFetch(true)
@@ -131,7 +131,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             </span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative">
-            <span ref={textRef} onClick={handleCopyClick}>{`https://wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
+            <span ref={textRef} onClick={handleCopyClick}>{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
             <span className="text-xs font-bold animate-pulse text-teal absolute top-5 right-10">copy</span>
           </p>
           <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">

@@ -52,7 +52,9 @@ function App() {
       <Route path="/roadmap" element={<Roadmap />} />
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
       <Route path="/user/password-reset/:uidb64/:token" element={<ResetPassword />} />
-      {gameMode === "london" ? <Route path="/quiz" element={<QuizPlay />} /> : <Route path="/quiz?code=:joinGameCode" element={<QuizPlay />} />}
+      {/*Different routes to same page */}
+      <Route path="/quiz" element={<QuizPlay />} /> 
+      <Route path="/quiz?code=:joinGameCode" element={<QuizPlay />} /> 
       <Route path="/quiz-home/*" element={<QuizApp />}/>
       <Route path="/timestable" element={<TimestablePlay />} />
       <Route path="/timestable-home/*" element={<TimestableApp />}/>

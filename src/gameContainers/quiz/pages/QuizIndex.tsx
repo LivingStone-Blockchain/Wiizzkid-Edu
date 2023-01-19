@@ -41,8 +41,6 @@ const QuizIndex = () => {
       await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => setJoinDetails(res));
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {
-      console.log(error.response.data.error);
-      console.log(error);
       toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});
     }
 

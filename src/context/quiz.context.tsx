@@ -91,22 +91,14 @@ export interface QuizContextType {
   timeOfStart: any
   startGame: (date: any) => void
   quizData: questionsData[] | undefined
-  setQuizData: React.Dispatch<
-    React.SetStateAction<questionsData[] | undefined>
-  >
+  setQuizData: React.Dispatch<React.SetStateAction<questionsData[] | undefined>>
   triviaData: questionsData[] | undefined
-  setTriviaData: React.Dispatch<
-    React.SetStateAction<questionsData[] | undefined>
-  >
+  setTriviaData: React.Dispatch<React.SetStateAction<questionsData[] | undefined>>
   dataType: questionsData[] | undefined
   recentGames: RecentGamesData | undefined
-  setRecentGames: React.Dispatch<
-    React.SetStateAction<RecentGamesData | undefined>
-  >
+  setRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
   selectedOption: number | string
-  setSelectedOption: React.Dispatch<
-    React.SetStateAction<number | string>
-  >
+  setSelectedOption: React.Dispatch<React.SetStateAction<number | string>>
   addAnswer: (payload: { questionId: string; option: string }) => void
   score: number
   setScore: React.Dispatch<React.SetStateAction<number>>
@@ -117,9 +109,7 @@ export interface QuizContextType {
   difficulty: string
   setDifficulty: React.Dispatch<React.SetStateAction<string>>
   totalAllowedQuestions: number
-  setTotalAllowedQuestions: React.Dispatch<
-    React.SetStateAction<number>
-  >
+  setTotalAllowedQuestions: React.Dispatch<React.SetStateAction<number>>
   totalAllowedPlayers: number
   setTotalAllowedPlayers: React.Dispatch<React.SetStateAction<number>>
   gameMode: string
@@ -127,9 +117,7 @@ export interface QuizContextType {
   gameDuration: number
   setGameDuration: React.Dispatch<React.SetStateAction<number>>
   gameDetails: returnedDataType | undefined
-  setGameDetails: React.Dispatch<
-    React.SetStateAction<returnedDataType | undefined>
-  >
+  setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>
   triviaFetch: boolean
   setTriviaFetch: React.Dispatch<React.SetStateAction<boolean>>
   gameCreated: boolean
@@ -143,13 +131,9 @@ export interface QuizContextType {
   showSplashScreen: boolean
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>
   showCreateGameModal: boolean
-  setShowCreateGameModal: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
+  setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
   joinDetails: JoinDetailsType | undefined
-  setJoinDetails: React.Dispatch<
-    React.SetStateAction<JoinDetailsType | undefined>
-  >
+  setJoinDetails: React.Dispatch<React.SetStateAction<JoinDetailsType | undefined>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
