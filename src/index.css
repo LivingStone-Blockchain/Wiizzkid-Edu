@@ -38,6 +38,29 @@
 
 
 
+.animation-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+      transform: scale(0.8);
+      box-shadow: 0 0 0 0 #FF3939;
+  }
+
+  70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 60px rgba(229, 62, 62, 0);
+  }
+
+  100% {
+      transform: scale(0.8);
+  }
+}
+
+
+
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

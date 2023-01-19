@@ -3,34 +3,53 @@ import { girlNavy } from './../../../assets/modes/index';
 import QuickPlay from "../components/QuickPlay";
 import History from "../components/History";
 import { FaAngleRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import CreateQuizGameModal from "../components/CreateQuizGameModal";
 import Overlay from "../components/Overlay";
 import Button from "../components/button/Button";
+import { useNavigate } from 'react-router-dom';
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
+import service from "../services/services";
+import useTokenRefresh from "../../../hooks/useTokenRefresh";
+
 
 
 const QuizIndex = () => {
+  const { setScreen, showCreateGameModal, setShowCreateGameModal, user, setJoinDetails } = useContext(QuizContext) as QuizContextType;
+  const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
-  const { setScreen, showCreateGameModal, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
-  const [quizGameCode, setQuizGameCode] = useState<string>("");
+  const { refreshedUser } = useTokenRefresh();
 
-
-
-
-  const handlePlayQuizGame = (e: any) => {
+  
+   
+  //join a game with code
+  const handlePlayQuizGame = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!quizGameCode) {
-      toast.error("Please enter a quiz game code!");
-      return;
+    if (!joinGameCode) {
+     return toast.error(<span className="text-sm">Please enter a quiz game code!</span>);
     }
 
-    navigate(`/quiz?code=${quizGameCode}`);
+    if (!user) {
+    return toast.error(<span className="text-sm">Login to use code!</span>, {duration: 4000});
+    }
+
+
+    try {
+      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => setJoinDetails(res));
+      navigate(`/quiz?code=${joinGameCode}`);
+    } catch (error: any) {
+      console.log(error.response.data.error);
+      console.log(error);
+      toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000})
+    }
+
+    setJoinGameCode('');
   };
+
+
 
 
   const handleDisplayCreateGameModal = () => {
@@ -77,8 +96,8 @@ const QuizIndex = () => {
             >
 
               <input
-                value={quizGameCode}
-                onChange={(e) => setQuizGameCode(e.target.value)}
+                value={joinGameCode}
+                onChange={(e) => setJoinGameCode(e.target.value)}
                 type="text"
                 placeholder="Ex. c19090"
                 className="flex-initial w-full first-letter:rounded-full py-3 placeholder:text-sm placeholder:text-gray-400 text-sm pl-5 bg-transparent border-2 border-white rounded-full" />

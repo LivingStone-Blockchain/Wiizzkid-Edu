@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import QuizApp from "./gameContainers/quiz/QuizApp";
 import { TimestablePlay } from "./gameContainers/timestable/pages";
 import { WiizzkidContext, WiizzkidContextType } from './context/wiizzkid.context';
+import { QuizContext, QuizContextType } from './context/quiz.context';
 import TimestableApp  from './gameContainers/timestable/TimestableApp';
 import ModalVideo from 'react-modal-video';
 import { wiizzkidVideo } from './assets/header/index';
@@ -18,6 +19,7 @@ import './../node_modules/react-modal-video/css/modal-video.css';
 
 function App() {
   const { openVideo, setOpenVideo } = useContext(WiizzkidContext) as WiizzkidContextType;
+  const { gameMode } = useContext(QuizContext) as QuizContextType; 
   useEffect(() => {
     AOS.init();
   }, []);
@@ -50,7 +52,7 @@ function App() {
       <Route path="/roadmap" element={<Roadmap />} />
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
       <Route path="/user/password-reset/:uidb64/:token" element={<ResetPassword />} />
-      <Route path="/quiz" element={<QuizPlay />} />
+      {gameMode === "london" ? <Route path="/quiz" element={<QuizPlay />} /> : <Route path="/quiz?code=:joinGameCode" element={<QuizPlay />} />}
       <Route path="/quiz-home/*" element={<QuizApp />}/>
       <Route path="/timestable" element={<TimestablePlay />} />
       <Route path="/timestable-home/*" element={<TimestableApp />}/>

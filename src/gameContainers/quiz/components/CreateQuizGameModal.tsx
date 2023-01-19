@@ -38,11 +38,12 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
  
 
 
-  //prevent unlogged user from accessing shanghai
+  
   useEffect(() => {
+    //prevent user with low balance from accessing shanghai
     if (stoneBalance < 10 && gameMode === 'shanghai' ) {
       toast.dismiss('unlogged');
-      toast.error(`Buy Stone to play Shanghai mode!`, { duration: 3000, id: 'unlogged' });
+      toast.error(<span  className="text-sm">Buy Stone to play Shanghai mode!</span>, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
         toast.dismiss('unlogged');
         setGameMode('london');
@@ -50,6 +51,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     }
   
   },[gameMode, stoneBalance]);
+
+
 
 
 
@@ -125,7 +128,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             </span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative">
-            <span ref={textRef} onClick={handleCopyClick}>{`https://game.wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
+            <span ref={textRef} onClick={handleCopyClick}>{`https://wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
             <span className="text-xs font-bold animate-pulse text-teal absolute top-5 right-10">copy</span>
           </p>
           <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">

@@ -30,8 +30,8 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 }) => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const { gameCreated, setGameCreated, gameDuration, setGameDuration, gameMode, setGameMode, difficulty, setDifficulty, handlePlayTimestable , handleSubmission,  totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails } = useContext(TimestableContext) as TimestableContextType;
-  const {stBalance }= useContext(TokenContext) as TokenContextType;
-  const stoneBalance = Number(utils.formatEther(stBalance));
+  const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
+  const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
 
 
    //prevent unlogged user from accessing premium
@@ -45,6 +45,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
       }, 3000);
     }
   },[gameMode, stoneBalance]);
+
 
 
 

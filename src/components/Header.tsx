@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/effect-fade";
-import { Autoplay, EffectFade } from "swiper";
+import {  EffectFade } from "swiper";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { girl, pcboy, vrgirl, logo, ninja } from "../assets/header/index";
 import { FaTimes } from 'react-icons/fa';

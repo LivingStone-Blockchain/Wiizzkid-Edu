@@ -25,7 +25,6 @@ type ScoreDetailsType = {
 
 
 
-
 const getAll = async () => {
     const response = await axios.get(`${baseUrl}/quiz/questions/?format=json`);
     return response.data;
@@ -43,6 +42,17 @@ const createGame = async (gameDetails: gameDetailsType, token:string) => {
     return response.data;
 }
 
+const joinGame = async (invite_code: string, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+    
+    const response = await axios.post(`${baseUrl}/quiz/games/${invite_code}/join`, {invite_code}, config)
+    return response.data;
+}
+
 const scoreResult = async (scoreDetails: ScoreDetailsType) => {
     const response = await axios.post(`${baseUrl}/quiz/scoreboard/`, scoreDetails);
     return response.data;
@@ -54,5 +64,5 @@ const recentResults = async (id:string ) => {
 }
 
 
-const service = { getAll, createGame, scoreResult, recentResults };
+const service = { getAll, createGame, scoreResult, recentResults, joinGame };
 export default service;
