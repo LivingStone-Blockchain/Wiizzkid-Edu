@@ -89,12 +89,6 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     e.preventDefault();
 
     toast.loading("Creating quiz game...", { duration: 3000, id: "loading" });
-
-    setTimeout(() => {
-      toast.dismiss("loading");
-       setGameCreated(true);
-      toast.success("Quiz game created successfully!");
-    }, 4000);
   };
 
 

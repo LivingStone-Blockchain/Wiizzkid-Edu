@@ -40,6 +40,7 @@ type returnedDataType = {
   game_mode: string
   game_duration: number
   category: number
+  current_players?: number
 }
 
 type RecentGamesData = {
@@ -227,6 +228,9 @@ const QuizProvider: FC<any> = ({ children }) => {
     fetchQuestion()
   }, [triviaFetch])
 
+
+
+
   //fetch data from main database
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -246,6 +250,8 @@ const QuizProvider: FC<any> = ({ children }) => {
     fetchQuestion()
   }, [triviaFetch])
 
+
+
   //return data based on request
   const dataType = triviaFetch ? triviaData : quizData
 
@@ -259,6 +265,9 @@ const QuizProvider: FC<any> = ({ children }) => {
       stop()
     } else return
   }, [showSplashScreen, start, pathname])
+
+
+
 
   //function create game form 1
   const handleScreenTwo = () => {
@@ -332,6 +341,8 @@ const QuizProvider: FC<any> = ({ children }) => {
     fetchRecentGames()
   }, [userId, pathname])
 
+
+
   //function create game form 2
   const handleInstructionScreen = async () => {
     const payload = {
@@ -354,6 +365,13 @@ const QuizProvider: FC<any> = ({ children }) => {
               setGameDetails(res)
             })
         : setGameDetails(payload)
+
+        setTimeout(() => {
+          toast.dismiss("loading");
+           setGameCreated(true);
+          toast.success("Quiz game created successfully!");
+        }, 3000);
+
     } catch (error) {
       console.log(error)
     }
