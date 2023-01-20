@@ -57,7 +57,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   //sort and filter restructured based on api url's returned data
   let sortedMapped_questions = triviaFetch 
     ? mapped_questions
-    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(category)).toLowerCase()  && (data.difficulty).toLowerCase() === difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, totalAllowedQuestions);
+    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase()  && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
 
 
 
@@ -157,7 +157,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             onClick={quitGame}
           />
 
-        <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(category))[0].toUpperCase()}${categoryStrings(Number(category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
+        <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
               <FaQuestionCircle className="text-2xl cursor-pointer text-navy"/>   

@@ -149,39 +149,24 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [timeOfStart, setTimeOfStart] = useState<any>()
   const [screen, setScreen] = useState(1)
   const [difficulty, setDifficulty] = useState<string>("easy")
-  const [totalAllowedQuestions, setTotalAllowedQuestions] =
-    useState<number>(10)
-  const [totalAllowedPlayers, setTotalAllowedPlayers] =
-    useState<number>(1)
+  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<number>(10)
+  const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1)
   const [tokenFee, setTokenFee] = useState<string>("")
   const [gameMode, setGameMode] = useState<string>(GameModes.london)
   const [gameDuration, setGameDuration] = useState<number>(5)
   const [score, setScore] = useState<number>(0)
-  const [recentGames, setRecentGames] = useState<
-    RecentGamesData | undefined
-  >()
-  const [quizData, setQuizData] = useState<
-    questionsData[] | undefined
-  >()
-  const [triviaData, setTriviaData] = useState<
-    questionsData[] | undefined
-  >()
+  const [recentGames, setRecentGames] = useState<RecentGamesData | undefined>()
+  const [quizData, setQuizData] = useState<questionsData[] | undefined>()
+  const [triviaData, setTriviaData] = useState<questionsData[] | undefined>()
   const [gameCreated, setGameCreated] = useState<boolean>(false)
-  const [questionsLoader, setQuestionsLoader] =
-    useState<boolean>(false)
+  const [questionsLoader, setQuestionsLoader] = useState<boolean>(false)
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false)
-  const [showSplashScreen, setShowSplashScreen] =
-    useState<boolean>(true)
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
   const [start, setStart] = useState<boolean>(false)
-  const [play, { stop, sound }] = useSound(needForSpeedMusic, {
-    volume: 0.2,
-  })
+  const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.2 })
   const [category, setCategory] = useState<string>("")
-  const [gameDetails, setGameDetails] = useState<
-    returnedDataType | undefined
-  >()
-  const [showCreateGameModal, setShowCreateGameModal] =
-    useState<boolean>(false)
+  const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
+  const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const { pathname } = useLocation()
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType
@@ -195,9 +180,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [gameMode])
 
   //fetch data from endpoint
-  let triviaUrl = `https://the-trivia-api.com/api/questions?categories=${categoryStrings(
-    Number(category)
-  )}&limit=${totalAllowedQuestions}&difficulty=${difficulty}`
+  let triviaUrl = `https://the-trivia-api.com/api/questions?categories=${categoryStrings(Number(category))}&limit=${totalAllowedQuestions}&difficulty=${difficulty}`
 
   useEffect(() => {
     const fetchQuestion = async () => {

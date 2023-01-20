@@ -16,7 +16,7 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, category, difficulty, totalAllowedQuestions, gameDuration, gameMode, gameDetails } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, gameDetails } = useContext(QuizContext) as QuizContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -67,7 +67,7 @@ export default function QuizPlay() {
 
 
 
-if (gameMode === "london") {
+if (gameDetails?.game_mode === "london") {
     return (
       <main>
       <Overlay loading={loading} />
@@ -86,12 +86,12 @@ if (gameMode === "london") {
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
               <article className="text-gray-700">
-            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-tomato">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
+            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(gameDetails.category))[0]).toUpperCase()}${categoryStrings(Number(gameDetails.category)).slice(1)} Quiz`} <span className="text-tomato">{` (${gameDetails.difficulty[0].toUpperCase()}${gameDetails.difficulty.slice(1)})`}</span></h1>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
-              There are <span className="font-bold">{totalAllowedQuestions}</span> multiple choice questions. Each question has one
-              point. Attempt to answer all the questions within <span className="font-bold">{gameDuration}</span>  minutes.
+              There are <span className="font-bold">{gameDetails.total_questions}</span> multiple choice questions. Each question has one
+              point. Attempt to answer all the questions within <span className="font-bold">{gameDetails.game_duration}</span>  minutes.
             </p>
 
             <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
@@ -147,12 +147,12 @@ if (gameMode === "london") {
           ? (
             <>
               <article className="text-gray-700">
-            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-tomato">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
+            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(gameDetails?.category))[0]).toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)} Quiz`} <span className="text-tomato">{` (${gameDetails?.difficulty[0].toUpperCase()}${gameDetails?.difficulty.slice(1)})`}</span></h1>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
-              There are <span className="font-bold">{totalAllowedQuestions}</span> multiple choice questions. Each question has one
-              point. Attempt to answer all the questions within <span className="font-bold">{gameDuration}</span>  minutes.
+              There are <span className="font-bold">{gameDetails?.total_questions}</span> multiple choice questions. Each question has one
+              point. Attempt to answer all the questions within <span className="font-bold">{gameDetails?.game_duration}</span>  minutes.
             </p>
 
             <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
