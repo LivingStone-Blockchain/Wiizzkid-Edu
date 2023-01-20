@@ -17,7 +17,7 @@ import useTokenRefresh from "../../../hooks/useTokenRefresh";
 
 
 const QuizIndex = () => {
-  const { setScreen, showCreateGameModal, setShowCreateGameModal, user, setJoinDetails } = useContext(QuizContext) as QuizContextType;
+  const { setScreen, showCreateGameModal, setShowCreateGameModal, user, setGameDetails } = useContext(QuizContext) as QuizContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
   const { refreshedUser } = useTokenRefresh();
@@ -38,7 +38,7 @@ const QuizIndex = () => {
 
 
     try {
-      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => setJoinDetails(res));
+      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res)});
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {
       toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});

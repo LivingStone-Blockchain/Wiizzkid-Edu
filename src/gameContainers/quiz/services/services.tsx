@@ -63,6 +63,11 @@ const recentResults = async (id:string ) => {
     return response.data;
 }
 
+const playersTracker = async (gameId: string) => {
+    const response = await axios.get(`${baseUrl}/quiz/game/${gameId}/players/`);
+    return response.data;
+}
 
-const service = { getAll, createGame, scoreResult, recentResults, joinGame };
+
+const service = { getAll, createGame, scoreResult, recentResults, joinGame, playersTracker };
 export default service;

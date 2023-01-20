@@ -87,7 +87,6 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
     toast.loading("Creating quiz game...", { duration: 3000, id: "loading" });
   };
 

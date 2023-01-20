@@ -41,6 +41,8 @@ type returnedDataType = {
   game_duration: number
   category: number
   current_players?: number
+  stone_token_fee?: number
+  players?: number[]
 }
 
 type RecentGamesData = {
@@ -77,15 +79,7 @@ type userType = {
   player_code: string
 }
 
-//game details on successful joining
-type JoinDetailsType = {
-  message: string
-  game_detail: {
-    stone_token_fee: number
-    total_players: number
-    current_players: number
-  }
-}
+
 
 export interface QuizContextType {
   submitTimeRef: any
@@ -133,8 +127,6 @@ export interface QuizContextType {
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>
   showCreateGameModal: boolean
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
-  joinDetails: JoinDetailsType | undefined
-  setJoinDetails: React.Dispatch<React.SetStateAction<JoinDetailsType | undefined>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -190,9 +182,6 @@ const QuizProvider: FC<any> = ({ children }) => {
   >()
   const [showCreateGameModal, setShowCreateGameModal] =
     useState<boolean>(false)
-  const [joinDetails, setJoinDetails] = useState<
-    JoinDetailsType | undefined
-  >()
   const { pathname } = useLocation()
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType
@@ -343,6 +332,9 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+
+
+
   //function create game form 2
   const handleInstructionScreen = async () => {
     const payload = {
@@ -451,8 +443,6 @@ const QuizProvider: FC<any> = ({ children }) => {
         tokenFee,
         setTokenFee,
         refreshedUser,
-        joinDetails,
-        setJoinDetails,
       }}
     >
       {children}

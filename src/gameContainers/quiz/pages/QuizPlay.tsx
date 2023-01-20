@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa";
 import { eduImg } from "../assets/images";
@@ -7,13 +7,35 @@ import categoryStrings from "../components/functions/categoryStringConveter";
 import Overlay from "../components/Overlay";
 import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
+import service from "../services/services";
+
+
+type PlayerTrackerType = {
+  total_players: number,
+  current_players: number
+}
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, category, difficulty, totalAllowedQuestions, gameDuration, gameDetails, joinDetails } = useContext(QuizContext) as QuizContextType;
-
-
-
+  const { startGame, setScore, start, setStart, category, difficulty, totalAllowedQuestions, gameDuration, gameMode, gameDetails } = useContext(QuizContext) as QuizContextType;
+  const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+
+
+  useEffect(() => {
+    if (gameDetails?.current_players !==  gameDetails?.total_players) {
+
+      const intervalId = setInterval(async () => {
+      try {
+        await service.playersTracker(gameDetails?.id!).then(res => setPlayerTracker(res));
+      } catch (error) {
+        
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+    }
+  }, [gameDetails]);
+
 
 
   const handleStartGame = () => {
@@ -41,11 +63,15 @@ export default function QuizPlay() {
 
 
 
-  if (gameDetails) {
+
+
+
+
+if (gameMode === "london") {
     return (
       <main>
       <Overlay loading={loading} />
-      {/* game modal containing quiz questions: */}
+   
       <QuizGame showModal={start} />
 
       <section
@@ -59,9 +85,6 @@ export default function QuizPlay() {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {gameDetails?.current_players ===  gameDetails?.total_players
-          ? (
-            <>
               <article className="text-gray-700">
             <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(category))[0]).toUpperCase()}${categoryStrings(Number(category)).slice(1)} Quiz`} <span className="text-tomato">{` (${difficulty[0].toUpperCase()}${difficulty.slice(1)})`}</span></h1>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
@@ -89,25 +112,17 @@ export default function QuizPlay() {
           >
             Start Quiz <FaArrowRight className="ml-3" />
           </Button>
-            </>
-          ) : (
-            <article className="text-gray-700 space-y-12">
-            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium text-center">{"Successfully joined the game!"}</p>
-
-            <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
-              <p>Waiting for</p> 
-              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{gameDetails.total_players -  gameDetails.current_players!}</p>
-              <p> more  {gameDetails.total_players -  gameDetails.current_players! === 1 ? "player" : "players"}...</p>
-            </div>
-            </article>
-          )}
-        </div>
+          </div>
       </section>
     </main>
     )
   }
 
+ 
 
+
+
+ 
 
 
 
@@ -128,7 +143,7 @@ export default function QuizPlay() {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {(joinDetails?.game_detail.current_players === joinDetails?.game_detail.total_players) 
+          {(playerTracker?.current_players === playerTracker?.total_players) 
           ? (
             <>
               <article className="text-gray-700">
@@ -161,12 +176,12 @@ export default function QuizPlay() {
             </>
           ) : (
             <article className="text-gray-700 space-y-12">
-            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium text-center">{`${joinDetails?.message}!`}</p>
+            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium text-center">Successfully joined the game!</p>
 
             <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
               <p>Waiting for</p> 
-              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{joinDetails!.game_detail.total_players - joinDetails!.game_detail.current_players}</p>
-              <p> more  {(joinDetails!.game_detail.total_players - joinDetails!.game_detail.current_players === 1) ? "player" : "players"}...</p>
+              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players}</p>
+              <p> more  {(playerTracker!.total_players - playerTracker!.current_players === 1) ? "player" : "players"}...</p>
             </div>
             </article>
           )}
@@ -175,5 +190,3 @@ export default function QuizPlay() {
     </main>
   );
 }
-
-

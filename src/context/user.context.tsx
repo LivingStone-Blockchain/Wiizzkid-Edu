@@ -79,7 +79,7 @@ const UserProvider: FC<any> = ({ children }) => {
         if (loggedUSerJSON) {
             const recoveredUser = JSON.parse(loggedUSerJSON);
             setUser(recoveredUser);
- 
+
         }
     }, []);
 
