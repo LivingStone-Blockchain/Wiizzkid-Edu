@@ -182,7 +182,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             id={current_question?.id}
             tags={current_question?.tags}
             type={current_question?.type}
-            page={`${current_page + 1}/${totalAllowedQuestions}`}
+            page={`${current_page + 1}/${gameDetails?.total_questions}`}
           />
           )}
         </main>
