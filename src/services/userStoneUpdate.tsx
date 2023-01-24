@@ -3,6 +3,7 @@ import axios from 'axios';
 
 type credentialsType = {
     stone_token: number,
+    wallet_address: string
 }
 
 

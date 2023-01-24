@@ -16,6 +16,7 @@ import news from './news.png';
 import culture from './unity.png'
 import successImg from './success.png';
 import beijing from './beijing.png';
+import trophy from './trophy.png'
 
 
-export { beijing, successImg, win ,low, custom, culture, church, news, mosque, basket, soccer, music, movies, eduImg, rocket, geography, general, gameOver };
+export { beijing, successImg, win ,low, custom, culture, church, news, mosque, basket, soccer, music, movies, eduImg, rocket, geography, general, gameOver, trophy };

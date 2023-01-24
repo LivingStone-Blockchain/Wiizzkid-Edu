@@ -19,8 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import SkeletonLoader from "../SkeletonLoader";
 
 
-
-type QuizGameTypes =  {
+type QuizGameTypes = {
   showModal: true | false;
 }
 
@@ -28,10 +27,10 @@ type QuizGameTypes =  {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { dataType, questionsLoader, score, setStart, timeOfStart, category, gameMode, difficulty, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { dataType, questionsLoader, score, setStart, timeOfStart, totalAllowedPlayers, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, showLeaderBoard } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<any>([]);
   const [current_question, setCurrentQuestion] = useState<any>({});
   const [current_page, setCurrentPage] = useState<number>(0);
@@ -40,11 +39,11 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
- 
+
   // restructure fetched data
   const mapped_questions = dataType?.map((question) => {
     return {
-      category: typeof(question.category) === "number" ? categoryStrings(question.category) : question.category,
+      category: typeof (question.category) === "number" ? categoryStrings(question.category) : question.category,
       question: question.question,
       options: [question.correctAnswer, ...question.incorrectAnswers].sort(() => Math.random() - 0.5), //sorted for randomization
       difficulty: question.difficulty,
@@ -55,9 +54,9 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
   //sort and filter restructured based on api url's returned data
-  let sortedMapped_questions = triviaFetch 
+  let sortedMapped_questions = triviaFetch
     ? mapped_questions
-    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase()  && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
+    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase() && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
 
 
 
@@ -70,7 +69,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     return;
   }, [dataType]);
-  
+
 
 
   const handleGoToNextQuestion = () => {
@@ -101,7 +100,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     toast.dismiss();
     //if time elapses, auto submit and toast game over
-    submitTimeArray[0] === "0" && submitTimeArray[1].includes("0") ?  gameOverToast() :  toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
+    submitTimeArray[0] === "0" && submitTimeArray[1].includes("0") ? gameOverToast() : toast.loading("Submitting, please wait...", { duration: 5000, id: "completed" });
 
 
     //send to backend
@@ -111,23 +110,25 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       score,
       submit_time: submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]), //convert say mm:ss to seconds. Highest time wins if score is tied.
     };
-    
-    
+
+
     //send payload to backend for registered users...
     try {
-     user &&  await service.scoreResult(payload);
+      user && await service.scoreResult(payload);
     } catch (error) {
       console.log(error);
     }
 
-    
+
     setTimeout(() => {
       toast.dismiss("completed");
-      quizCompletedToast(score, totalAllowedQuestions, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, navigate);
+      quizCompletedToast(score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate);
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);
   };
+
+
 
 
   const handleFinalSubmit = (e: any) => {
@@ -142,7 +143,9 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     return null;
   }
 
+
  
+
 
   return (
     <section className="fixed top-0 bottom-0 right-0 left-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition">
@@ -157,17 +160,17 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             onClick={quitGame}
           />
 
-        <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
+          <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
-              <FaQuestionCircle className="text-2xl cursor-pointer text-navy"/>   
-                <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
-                    <div className="max-w-xs flex-col items-center">
-                    <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)"}}></div>
-                        <div className="w-52 rounded bg-navy font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Make sure to answer this question before proceeding to the next.</div>                
-                    </div>
-                </div>
+            <FaQuestionCircle className="text-2xl cursor-pointer text-navy" />
+            <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
+              <div className="max-w-xs flex-col items-center">
+                <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{ clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)" }}></div>
+                <div className="w-52 rounded bg-navy font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Make sure to answer this question before proceeding to the next.</div>
+              </div>
             </div>
+          </div>
         </nav>
 
         <main className="py-10">
@@ -175,15 +178,15 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             <SkeletonLoader />
           ) : (
             <QuizQuestionCard
-            question={current_question?.question}
-            category={current_question?.category}
-            options={current_question?.options}
-            difficulty={current_question?.difficulty}
-            id={current_question?.id}
-            tags={current_question?.tags}
-            type={current_question?.type}
-            page={`${current_page + 1}/${gameDetails?.total_questions}`}
-          />
+              question={current_question?.question}
+              category={current_question?.category}
+              options={current_question?.options}
+              difficulty={current_question?.difficulty}
+              id={current_question?.id}
+              tags={current_question?.tags}
+              type={current_question?.type}
+              page={`${current_page + 1}/${gameDetails?.total_questions}`}
+            />
           )}
         </main>
 
@@ -199,7 +202,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             )}
           </span>
 
-          {selectedOption && current_page + 1 === questions.length? (
+          {selectedOption && current_page + 1 === questions.length ? (
             <form onSubmit={handleFinalSubmit}>
               <ActionButton className="bg-[#ffe1e1]" disabled={loading}>
                 {loading ? <span ref={submitText}>Submitting</span> : "Submit Game"}

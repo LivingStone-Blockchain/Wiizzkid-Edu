@@ -63,11 +63,20 @@ const recentResults = async (id:string ) => {
     return response.data;
 }
 
+//tracks joiner in real time
 const playersTracker = async (gameId: string) => {
     const response = await axios.get(`${baseUrl}/quiz/game/${gameId}/players/`);
     return response.data;
 }
 
 
-const service = { getAll, createGame, scoreResult, recentResults, joinGame, playersTracker };
+const leaderBoard = async (gameId: string) => {
+    const response = await axios.get(`${baseUrl}/quiz/result/${gameId}`);
+    return response.data;
+}
+
+
+
+
+const service = { getAll, createGame, scoreResult, recentResults, joinGame, playersTracker, leaderBoard };
 export default service;

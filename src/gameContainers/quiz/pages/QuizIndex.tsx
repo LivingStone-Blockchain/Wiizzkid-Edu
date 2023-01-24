@@ -15,12 +15,12 @@ import service from "../services/services";
 import useTokenRefresh from "../../../hooks/useTokenRefresh";
 
 
-
 const QuizIndex = () => {
   const { setScreen, showCreateGameModal, setShowCreateGameModal, user, setGameDetails } = useContext(QuizContext) as QuizContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
   const { refreshedUser } = useTokenRefresh();
+
 
   
    

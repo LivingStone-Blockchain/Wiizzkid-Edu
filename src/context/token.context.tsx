@@ -67,20 +67,26 @@ const TokenProvider: FC<any> = ({ children }) => {
   const { refreshedUser } = useTokenRefresh();
 
 
+
     //update token balance on backend
     useEffect(() => {
       if (!user) {
         return;
       }
-    
+
+      if (!address) {
+        return;
+      }
+
       const payload = {
         stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+        wallet_address: address,
       }
       const updateStoneBalance = async () => {
         await userUpdateService.stoneUpdate(payload, user.id, refreshedUser.tokens.access);
       }
       updateStoneBalance();
-    }, [user, balanceOfStoneTokens])
+    }, [user, balanceOfStoneTokens, address])
     
 
 

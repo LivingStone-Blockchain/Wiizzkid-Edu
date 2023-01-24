@@ -16,6 +16,9 @@ import { useLocation } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import useTokenRefresh from "./../hooks/useTokenRefresh"
 import { toast } from "react-hot-toast"
+import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
+
+
 
 type questionsData = {
   category: number
@@ -127,6 +130,8 @@ export interface QuizContextType {
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>
   showCreateGameModal: boolean
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
+  showLeaderBoard: boolean
+  setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -167,6 +172,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [category, setCategory] = useState<string>("")
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
+  const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   const { pathname } = useLocation()
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType
@@ -224,6 +230,8 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+
+
   //return data based on request
   const dataType = triviaFetch ? triviaData : quizData
 
@@ -238,6 +246,24 @@ const QuizProvider: FC<any> = ({ children }) => {
     } else return
   }, [showSplashScreen, start, pathname])
 
+
+
+  //show leader board with results
+  useEffect(() => {
+    if (showLeaderBoard) {
+      toast.dismiss();
+  
+      toast(
+        <LeaderBoard
+          setStart={setStart}
+          setTriviaFetch={setTriviaFetch}
+          setShowLeaderBoard={setShowLeaderBoard}
+        />,
+        { duration: Infinity, className: "w-full" }
+      );
+    }
+  
+  }, [showLeaderBoard])
 
 
 
@@ -335,17 +361,17 @@ const QuizProvider: FC<any> = ({ children }) => {
     try {
       user?.tokens
         ? await service
-            .createGame(payload, refreshedUser.tokens.access)
-            .then((res) => {
-              setGameDetails(res)
-            })
+          .createGame(payload, refreshedUser.tokens.access)
+          .then((res) => {
+            setGameDetails(res)
+          })
         : setGameDetails(payload)
 
-        setTimeout(() => {
-          toast.dismiss("loading");
-           setGameCreated(true);
-          toast.success("Quiz game created successfully!");
-        }, 3000);
+      setTimeout(() => {
+        toast.dismiss("loading");
+        setGameCreated(true);
+        toast.success("Quiz game created successfully!");
+      }, 3000);
 
     } catch (error) {
       console.log(error)
@@ -421,6 +447,8 @@ const QuizProvider: FC<any> = ({ children }) => {
         setGameCreated,
         showCreateGameModal,
         setShowCreateGameModal,
+        showLeaderBoard,
+        setShowLeaderBoard,
         recentGames,
         setRecentGames,
         tokenFee,
