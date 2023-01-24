@@ -27,7 +27,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { dataType, questionsLoader, score, setStart, timeOfStart, totalAllowedPlayers, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, showLeaderBoard } = useContext(QuizContext) as QuizContextType;
+  const { dataType, questionsLoader, score, setStart, timeOfStart, totalAllowedPlayers, totalAllowedQuestions, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     setTimeout(() => {
       toast.dismiss("completed");
-      quizCompletedToast(score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate);
+      quizCompletedToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate);
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);

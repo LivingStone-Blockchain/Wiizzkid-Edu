@@ -40,7 +40,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
       try {
         await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res));
       } catch (error) {
-
+        console.log(error);
       }
     }
 
