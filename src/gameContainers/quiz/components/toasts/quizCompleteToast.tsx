@@ -8,6 +8,7 @@ import { NavigateFunction } from "react-router-dom";
 
 const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalAllowedPlayers: number, timeDiffCalculator: string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction) => {
 
+
   toast(
     () => (
       <section className="w-full py-4">

@@ -32,20 +32,19 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
 
 
   useEffect(() => {
-    if (!showLeaderBoard) {
-      return;
-    }
+    if (gameDetails?.total_players !== scoreBoard?.length) {
 
-    const fetchBoard = async () => {
+    const intervalId = setInterval(async () => {
       try {
         await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res));
       } catch (error) {
-        console.log(error);
-      }
-    }
 
-    fetchBoard();
-  }, [showLeaderBoard]);
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }
+    }, [showLeaderBoard]);
 
   return (
       <section className="max-w-sm mx-auto pb-4 rounded-md w-full">
@@ -54,12 +53,17 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
             <img src={trophy} className="w-10 mx-auto" alt="trophy" />
             <p className="text-2xl font-bold text-teal">Leader Board!</p>
           </div>
-          <p className="text-white space-x-5 my-1 md:text-base text-sm leading-relaxed">
-            Total players: {gameDetails?.total_players}
-          </p>
+          <div className='flex items-center justify-around my-1'>
+            <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
+              Total players: {gameDetails?.total_players}
+            </p>
+            <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
+              Duration: {gameDetails?.game_duration}
+            </p>
+          </div>
         </article>
 
-        <div className="overflow-x-auto relative text-center rounded">
+          <div className="overflow-x-auto relative text-center rounded">
           <table className="w-full text-sm text-left mt-2">
             <thead className="text-xs text-white bg-navy border-gray-700 rounded">
               <tr>
@@ -87,7 +91,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
                     <span className="font-medium text-navy text-xs">{full_name.split(' ')[0]}</span>
                   </td>
                   <td className="py-2 px-1">
-                    <span className="font-medium text-navy text-xs">{submit_time}</span>
+                    <span className="font-medium text-navy text-xs">{(gameDetails?.game_duration! * 60) - submit_time}</span>
                   </td>
                   <td className="py-2 px-1">
                     <span className="font-medium text-navy text-xs">{score}</span>
@@ -96,7 +100,13 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
               ))}
             </tbody>
           </table>
+          {gameDetails?.total_players === scoreBoard?.length ? 
+          (<div className='font-medium text-navy text-xs my-1 text-center'>Waiting for other players...</div>
+          ):(
+            <div className='font-medium text-navy text-xs my-1 text-center'>Board complete!</div>
+          )}
         </div>
+        
 
         <Button
           className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
