@@ -53,7 +53,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
             <img src={trophy} className="w-10 mx-auto" alt="trophy" />
             <p className="text-2xl font-bold text-teal">Leader Board!</p>
           </div>
-          <div className='flex items-center justify-around my-1'>
+          <div className='flex items-center justify-between m-2 w-full'>
             <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
               Total players: {gameDetails?.total_players}
             </p>
@@ -101,7 +101,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
             </tbody>
           </table>
           {gameDetails?.total_players !== scoreBoard?.length &&
-          (<div className='font-semibold text-navy text-xs my-1 text-center animate-pulse'>Waiting for other players...</div>
+          (<div className='font-medium text-navy text-xs my-1 text-center animate-pulse'>Waiting for other players...</div>
           )}
         </div>
         
