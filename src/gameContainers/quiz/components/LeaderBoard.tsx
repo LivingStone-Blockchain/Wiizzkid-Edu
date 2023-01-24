@@ -100,10 +100,8 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
               ))}
             </tbody>
           </table>
-          {gameDetails?.total_players === scoreBoard?.length ? 
-          (<div className='font-medium text-navy text-xs my-1 text-center'>Waiting for other players...</div>
-          ):(
-            <div className='font-medium text-navy text-xs my-1 text-center'>Board complete!</div>
+          {gameDetails?.total_players !== scoreBoard?.length &&
+          (<div className='font-semibold text-navy text-xs my-1 text-center animate-pulse'>Waiting for other players...</div>
           )}
         </div>
         
