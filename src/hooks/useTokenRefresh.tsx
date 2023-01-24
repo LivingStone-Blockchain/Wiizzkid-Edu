@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { refreshTokenService } from '../services';
+import { toast } from 'react-hot-toast';
 
 
 
@@ -34,7 +35,7 @@ const useTokenRefresh = () => {
             );
             setRefreshedUser(refreshedUser);
           } catch (error) {
-            console.error(error);
+            toast.error(<span className="text-sm">Session expired. Please login!</span>, { duration: 5000 });
           }
         }, 60000); // Refresh the token every 60 seconds
     
