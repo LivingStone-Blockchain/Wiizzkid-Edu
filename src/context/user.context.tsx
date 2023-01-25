@@ -4,7 +4,7 @@ import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-
+import SessionExpireWarning from "../components/SessionExpireWarning";
 
 
 type registerFormikType = {
@@ -44,6 +44,8 @@ export interface UserContextType {
     setReferralToggle: React.Dispatch<React.SetStateAction<boolean>>,
     loginLoader: boolean,
     setLoginLoader: React.Dispatch<React.SetStateAction<boolean>>,
+    refreshTokenError: boolean,
+    setRefreshTokenError: React.Dispatch<React.SetStateAction<boolean>>,
     user: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
@@ -65,6 +67,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null);
+    const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const navigate = useNavigate();
 
 
@@ -85,7 +88,21 @@ const UserProvider: FC<any> = ({ children }) => {
 
 
 
- 
+    
+    //Pop warning on session expiration
+    useEffect(() => {
+        if (refreshTokenError) {
+            toast.dismiss();
+  
+            toast(
+            <SessionExpireWarning 
+                setRefreshTokenError={setRefreshTokenError}
+            />
+            ,
+            { duration: Infinity, className: "w-full" }
+        );
+        }
+    }, [refreshTokenError])
 
 
 
@@ -229,7 +246,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError }}>
             {children}
         </UserContext.Provider>
     )

@@ -7,10 +7,11 @@ import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Toaster } from 'react-hot-toast';
+import {Overlay} from "./components/index";
 import QuizApp from "./gameContainers/quiz/QuizApp";
 import { TimestablePlay } from "./gameContainers/timestable/pages";
 import { WiizzkidContext, WiizzkidContextType } from './context/wiizzkid.context';
-import { QuizContext, QuizContextType } from './context/quiz.context';
+import { UserContext, UserContextType } from './context/user.context';
 import TimestableApp  from './gameContainers/timestable/TimestableApp';
 import ModalVideo from 'react-modal-video';
 import { wiizzkidVideo } from './assets/header/index';
@@ -19,7 +20,7 @@ import './../node_modules/react-modal-video/css/modal-video.css';
 
 function App() {
   const { openVideo, setOpenVideo } = useContext(WiizzkidContext) as WiizzkidContextType;
-  const { gameMode } = useContext(QuizContext) as QuizContextType; 
+  const { refreshTokenError } = useContext(UserContext) as UserContextType; 
   useEffect(() => {
     AOS.init();
   }, []);
@@ -31,6 +32,7 @@ function App() {
    <div className="antialiased">
     <Toaster />
     <Preloader  homeLoader={true} />
+    <Overlay loading={refreshTokenError}/>
    <Header />
    <ModalVideo channel='custom' isOpen={openVideo} url={wiizzkidVideo} onClose={() => setOpenVideo(false)} />
     <Routes>

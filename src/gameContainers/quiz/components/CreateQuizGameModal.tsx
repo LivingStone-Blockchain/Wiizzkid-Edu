@@ -43,7 +43,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     //prevent user with low balance from accessing shanghai
     if (stoneBalance < 10 && gameMode === 'shanghai' ) {
       toast.dismiss('unlogged');
-      toast.error(<span  className="text-sm">Buy Stone to play Shanghai mode!</span>, { duration: 3000, id: 'unlogged' });
+      toast.error(<span className="text-sm">Buy Stone to play Shanghai mode!</span>, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
         toast.dismiss('unlogged');
         setGameMode('london');
@@ -85,7 +85,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     return;
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     toast.loading("Creating quiz game...", { duration: 3000, id: "loading" });
   };
@@ -231,25 +231,28 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               <Label>Select a category</Label>
               <Select
                 value={category}
-                onChange={(e: any) => setCategory(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
               >
                 {gameMode === "london" ? (
                   <>
-                    <option value="7">Science</option>
-                    <option value="8">General Knowledge</option>
-                    <option value="9">Sport & Leisure</option>
-                    <option value="10">Geography</option>
-                    <option value="11">Society & Culture</option>
+                    <option value="9">Science</option>
+                    <option value="10">General Knowledge</option>
+                    <option value="11">Geography</option>
+                    <option value="12">Sport & Leisure</option>
+                    <option value="13">Society & Culture</option>
                     
                   </>
                 ) : (
                   <>
-                    <option value="1">Football</option>
-                    <option value="2">Current Affairs</option>
-                    <option value="3">Nollywood</option>
-                    <option value="4">Music</option>
-                    <option value="5">Gossip/Gist</option>
-                    <option value="6">Religion</option>
+                    
+                    <option value="1">Science</option>
+                    <option value="2">Football</option>
+                    <option value="3">Current Affairs</option>
+                    <option value="4">Geography</option>
+                    <option value="5">Nollywood</option>
+                    <option value="6">Music</option>
+                    <option value="7">Religion:Christianity</option>
+                    <option value="8">Religion:Islam</option>
                   </>
                 )}
               </Select>
@@ -258,7 +261,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               <Label>Difficulty Level</Label>
               <Select
                 value={difficulty}
-                onChange={(e: any) => setDifficulty(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDifficulty(e.target.value)}
               >
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -287,7 +290,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               <Label>Total Allowed Players</Label>
               <Select
                 value={totalAllowedPlayers}
-                onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTotalAllowedPlayers(Number(e.target.value))}
               >
                <option value="1">1</option>
                 {gameMode === "shanghai" && (

@@ -148,9 +148,7 @@ export const QuizContext = createContext<QuizContextType | null>(null)
 
 const QuizProvider: FC<any> = ({ children }) => {
   const submitTimeRef = useRef<HTMLSpanElement>(null)
-  const [selectedOption, setSelectedOption] = useState<
-    string | number
-  >("")
+  const [selectedOption, setSelectedOption] = useState<string | number>("")
   const [timeOfStart, setTimeOfStart] = useState<any>()
   const [screen, setScreen] = useState(1)
   const [difficulty, setDifficulty] = useState<string>("easy")
@@ -181,7 +179,7 @@ const QuizProvider: FC<any> = ({ children }) => {
 
   //reset initial category value based game mode changes
   useEffect(() => {
-    let categoryInitialVal = gameMode === "london" ? "7" : "1"
+    let categoryInitialVal = gameMode === "london" ? "9" : "1"
     setCategory(categoryInitialVal)
   }, [gameMode])
 

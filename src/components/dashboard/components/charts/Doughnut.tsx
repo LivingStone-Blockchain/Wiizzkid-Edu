@@ -34,7 +34,7 @@ const DoughnutChart = () => {
         datasets: [{
           label: 'Games per mode',
           data: modeCount,
-          backgroundColor: ['#0694a2', '#ff3939', '#e0b00d'],
+          backgroundColor: ['#0694a2', '#e0b00d', '#ff3939'],
           borderColor: ['#252641'], 
           cutout: '80%',
           radius: 100,

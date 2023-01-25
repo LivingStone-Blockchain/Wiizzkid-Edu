@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { refreshTokenService } from '../services';
-import { toast } from 'react-hot-toast';
-
+import { UserContext, UserContextType } from './../context/user.context'
 
 
 
 
 const useTokenRefresh = () => {
     const [refreshedUser, setRefreshedUser] = useState<any>(JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!));
-
+    const { setRefreshTokenError } = useContext(UserContext) as UserContextType; 
     
     useEffect(() => {
              
@@ -35,7 +34,7 @@ const useTokenRefresh = () => {
             );
             setRefreshedUser(refreshedUser);
           } catch (error) {
-            toast.error(<span className="text-sm">Session expired. Please login!</span>, { duration: 5000 });
+            setRefreshTokenError(true)
           }
         }, 60000); // Refresh the token every 60 seconds
     
