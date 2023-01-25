@@ -97,6 +97,7 @@ const UserProvider: FC<any> = ({ children }) => {
             toast(
             <SessionExpireWarning 
                 setRefreshTokenError={setRefreshTokenError}
+                handleLogout={handleLogout}
             />
             ,
             { duration: Infinity, className: "w-full" }

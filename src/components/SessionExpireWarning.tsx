@@ -2,15 +2,16 @@ import React, {FC} from 'react'
 import warning from './../assets/general/warning.png';
 import Button from './Button';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+
 
 
 type SessionExpireType = {
     setRefreshTokenError: (value: React.SetStateAction<boolean>) => void
+    handleLogout: () => void,
 }
 
-const SessionExpireWarning: FC<SessionExpireType> = ({setRefreshTokenError}) => {
-    const navigate = useNavigate();
+const SessionExpireWarning: FC<SessionExpireType> = ({setRefreshTokenError, handleLogout}) => {
+
   
     return (
       <>
@@ -28,7 +29,7 @@ const SessionExpireWarning: FC<SessionExpireType> = ({setRefreshTokenError}) => 
             <Button 
                 children="Log in"
                 className='flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3 mt-4 text-white transition text-center'
-                onClick={() => {toast.dismiss(); navigate('/login'); setRefreshTokenError(false)}}
+                onClick={() => {toast.dismiss(); handleLogout; setRefreshTokenError(false)}}
             />
         </section>
       </>
