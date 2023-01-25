@@ -180,7 +180,7 @@ if (gameDetails?.game_mode === "london") {
 
             <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
               <p>Waiting for</p> 
-              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players}</p>
+              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players === -1 ? 1 : playerTracker!.total_players - playerTracker!.current_players}</p>
               <p> more  {(playerTracker!.total_players - playerTracker!.current_players === 1) ? "player" : "players"}...</p>
             </div>
             </article>
