@@ -63,7 +63,7 @@ const TimestableCard = () => {
     if (gameCompleted) {
       toast.dismiss();
       toast(
-        <GameCompletedToast score={score} gameDuration={gameDuration} totalAllowedPlayers={totalAllowedPlayers} totalAttempted={currentPage} navigate={navigate} setStart={setStart} setGameCompleted={setGameCompleted} setShowCreateGameModal={setShowCreateGameModal} setShowLeaderBoard={setShowLeaderBoard} />,
+        <GameCompletedToast score={score} gameDuration={gameDuration} totalAllowedPlayers={gameDetails?.total_players!} totalAttempted={currentPage} navigate={navigate} setStart={setStart} setGameCompleted={setGameCompleted} setShowCreateGameModal={setShowCreateGameModal} setShowLeaderBoard={setShowLeaderBoard} />,
         { duration: Infinity, className: "w-full" }
       )
 

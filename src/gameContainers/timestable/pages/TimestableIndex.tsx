@@ -42,7 +42,7 @@ export default function TimestableIndex() {
 
     try {
       await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res)});
-      navigate(`/quiz?code=${joinGameCode}`);
+      navigate(`/timestable?code=${joinGameCode}`);
     } catch (error: any) {
       toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});
     }
@@ -99,9 +99,10 @@ export default function TimestableIndex() {
              onSubmit={handlePlayQuizGame}
               className="flex flex-row space-x-3 my-8 justify-start w-full"
             >
-
               <input
-                type="text"
+                  value={joinGameCode}
+                  onChange={(e) => setJoinGameCode(e.target.value)}
+                  type="text"
                 placeholder="Ex. c19090"
                 className="flex-initial w-full first-letter:rounded-full py-3 placeholder:text-sm placeholder:text-gray-400 text-sm pl-5 bg-transparent border-2 border-white rounded-full" />
               <Button

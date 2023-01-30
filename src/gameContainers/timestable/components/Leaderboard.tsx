@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, FC } from 'react';
 import { trophy2 } from "../assets/images/index";
 import Button from "./button/Button";
 import service from '../services/services';
-import { QuizContext, QuizContextType } from "../../../context/quiz.context";
+import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
 import { FaCrown } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -25,7 +25,7 @@ type LeaderBoardData = {
 
 
 const LeaderBoard = ({ setStart, setGameCompleted, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard } = useContext(QuizContext) as QuizContextType;
+  const { gameDetails, showLeaderBoard } = useContext(TimestableContext) as TimestableContextType;
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const navigate = useNavigate();
 
@@ -74,10 +74,10 @@ const LeaderBoard = ({ setStart, setGameCompleted, setShowLeaderBoard }: LeaderB
                   Name
                 </th>
                 <th scope="col" className="py-3 px-1 font-medium">
-                  Time(s)
+                  Score
                 </th>
                 <th scope="col" className="py-3 px-1 font-medium">
-                  Score
+                  Attempts
                 </th>
               </tr>
             </thead>
@@ -91,10 +91,10 @@ const LeaderBoard = ({ setStart, setGameCompleted, setShowLeaderBoard }: LeaderB
                     <span className="font-medium text-navy text-xs">{full_name.split(' ')[0]}</span>
                   </td>
                   <td className="py-2 px-1">
-                    <span className="font-medium text-navy text-xs">{total_attempted}</span>
+                    <span className="font-medium text-navy text-xs">{score}</span>
                   </td>
                   <td className="py-2 px-1">
-                    <span className="font-medium text-navy text-xs">{score}</span>
+                    <span className="font-medium text-navy text-xs">{total_attempted}</span>
                   </td>
                 </tr>
               ))}

@@ -100,7 +100,7 @@ if (gameDetails?.game_mode === "london") {
 
           <Button
             onClick={handleStartGame}
-            className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
+            className="flex justify-center items-center gap-2 md:w-48 w-40 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
           >
             Start Quiz <FaArrowRight className="ml-3" />
           </Button>
@@ -161,7 +161,7 @@ if (gameDetails?.game_mode === "london") {
 
           <Button
             onClick={handleStartGame}
-            className={`flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center ${playerTracker?.current_players === playerTracker?.total_players ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            className={`flex justify-center items-center gap-2 md:w-48 w-40 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center ${playerTracker?.current_players === playerTracker?.total_players ? 'pointer-events-auto' : 'pointer-events-none'}`}
           >
             Start Quiz <FaArrowRight className="ml-3" />
           </Button>
