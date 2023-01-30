@@ -83,7 +83,10 @@ const TokenProvider: FC<any> = ({ children }) => {
         wallet_address: address,
       }
       const updateStoneBalance = async () => {
-        await userUpdateService.stoneUpdate(payload, user.id, refreshedUser.tokens.access);
+        try {
+          await userUpdateService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
+        } catch (error) {
+        }
       }
       updateStoneBalance();
     }, [user, balanceOfStoneTokens, address])

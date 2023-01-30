@@ -77,14 +77,14 @@ const UserProvider: FC<any> = ({ children }) => {
 
 
     //login users automatically
-    useEffect(() => {
+    /*useEffect(() => {
         const loggedUSerJSON = window.localStorage.getItem('loggedWiizzikidUser');
         if (loggedUSerJSON) {
             const recoveredUser = JSON.parse(loggedUSerJSON);
             setUser(recoveredUser);
 
         }
-    }, []);
+    }, []);*/
 
 
 
@@ -190,6 +190,7 @@ const UserProvider: FC<any> = ({ children }) => {
             //navigate('/', { replace: true });
             navigate(-1);
             setIsLoading(false);
+            setRefreshTokenError(false)
         } catch (error) {
             setIsLoading(false);
             toast.error("Login failed!", { duration: 5000, id: "login" });

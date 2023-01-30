@@ -4,16 +4,55 @@ import {
 } from "../assets/images";
 import Overlay from "../components/Overlay";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import Button from "../components/button/Button";
 import CreateTimestable from "../components/CreateTimestable";
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
+import service from "../services/services";
+import useTokenRefresh from "../../../hooks/useTokenRefresh";
+import QuickPlay from "../components/Quickplay";
+import History from "../components/History";
+
 
 
 export default function TimestableIndex() {
-  const {setScore, showCreateGameModal, setShowCreateGameModal, gameCreated} = useContext(TimestableContext) as TimestableContextType;
+  const {setScore, showCreateGameModal, setShowCreateGameModal, gameCreated, user, setGameDetails} = useContext(TimestableContext) as TimestableContextType;
+  const [joinGameCode, setJoinGameCode] = useState<string>("");
+  const navigate = useNavigate();
+  const { refreshedUser } = useTokenRefresh();
+
+
+
+
+   //join a game with code
+   const handlePlayQuizGame = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!joinGameCode) {
+     return toast.error(<span className="text-sm">Please enter a quiz game code!</span>);
+    }
+
+    if (!user) {
+    return toast.error(<span className="text-sm">Login to use code!</span>, {duration: 4000});
+    }
+
+
+    try {
+      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res)});
+      navigate(`/quiz?code=${joinGameCode}`);
+    } catch (error: any) {
+      toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});
+    }
+
+    setJoinGameCode('');
+  };
+
+
+
+
 
   const handleDisplayCreateGameModal = () => {
     setShowCreateGameModal(true);
@@ -56,8 +95,8 @@ export default function TimestableIndex() {
             <h2 className="font-bold tracking-wide md:text-base text-sm">Enter your quiz code</h2>
             <p className="text-sm">To play with your friends</p>
 
-            <form
-             
+            <form 
+             onSubmit={handlePlayQuizGame}
               className="flex flex-row space-x-3 my-8 justify-start w-full"
             >
 
@@ -82,47 +121,9 @@ export default function TimestableIndex() {
           </div>
         </div>
       </section>
-
-     
+      <QuickPlay handleDisplayCreateGameModal = {handleDisplayCreateGameModal}/>
+      <History />
     </>
   );
 }
 
-
-{/*
-
- <div className="bg-gradient-to-r from-orange-600 via-red-500 to-yellow-600 opacity-95">
-        <nav className="w-full text-white h-40">
-          <section className="flex justify-between items-center max-w-3xl mx-auto p-6">
-            <article className="text-sm">
-              <h1 className="text-2xl font-bold tracking-wide">Let's play</h1>
-              <p>...join the Wiizkid revolution</p>
-            </article>
-
-            <div className="bg-white rounded-full w-8 h-8 text-gray-700 flex">
-              <span className="m-auto">DE</span>
-            </div>
-          </section>
-        </nav>
-
-        <section
-          className="-my-8 pb-40 p-6 max-w-3xl mx-auto text-sm bg-stone-800 rounded-tl-3xl rounded-tr-3xl"
-          style={{
-            backgroundImage: `url(${home})`,
-            backgroundSize: "cover",
-          }}
-        >
-          <div className="p-6 -my-12 shadow-2xl bg-white rounded w-full h-full">
-            <h2 className="font-bold tracking-wide">Wiizzkid Timestable</h2>
-            <p>Text your Maths Skill</p>
-
-            <p
-              onClick={handleDisplayCreateGameModal}
-              className="mt-8 text-xs cursor-pointer capitalize font-semibold text-gray-600 flex items-center"
-            >
-              Start Timestable <FaAngleRight className="ml-1" />
-            </p>
-          </div>
-        </section>
-      </div>
-*/}

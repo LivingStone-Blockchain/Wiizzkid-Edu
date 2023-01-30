@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { Route, Routes } from "react-router-dom";
-import { TimestableIndex } from './pages/index';
+import  TimestableIndex  from './pages/TimestableIndex';
 import { Toaster } from 'react-hot-toast';
 import Overlay from "./components/Overlay";
 import { TimestableContext, TimestableContextType } from '../../context/timestable.context';

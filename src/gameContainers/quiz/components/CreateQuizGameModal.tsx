@@ -20,6 +20,7 @@ import { utils } from "ethers";
 
 
 
+
 interface CreateQuizGameModalType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -31,7 +32,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 }) => {
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee, user } = useContext(QuizContext) as QuizContextType;
   const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
   const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
   const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
@@ -57,10 +58,20 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
 
   //toast beijing message on click
+  //go to login if user isn't logged in while trying to use shanghai
   useEffect(() => {
     gameMode === 'beijing' 
       ? setShowBeijingModal(true)
       : setShowBeijingModal(false)
+
+    if (gameMode === "shanghai" && !user) {
+      toast.loading(<span className="text-sm">Not logged in! Redirecting you to sign in.</span>, { duration: 3000, id: 'unlogged' })
+      setTimeout(() => {
+        toast.dismiss();
+        setShowCreateGameModal(false);
+        navigate('/login')
+      }, 3000)
+    }
       
   }, [showBeijingModal, gameMode])
 
@@ -235,24 +246,26 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               >
                 {gameMode === "london" ? (
                   <>
-                    <option value="9">Science</option>
-                    <option value="10">General Knowledge</option>
-                    <option value="11">Geography</option>
-                    <option value="12">Sport & Leisure</option>
-                    <option value="13">Society & Culture</option>
+                    <option value="13">Science</option>
+                    <option value="14">General Knowledge</option>
+                    <option value="15">Geography</option>
+                    <option value="16">Sport & Leisure</option>
+                    <option value="17">Society & Culture</option>
                     
                   </>
                 ) : (
                   <>
                     
-                    <option value="1">Science</option>
-                    <option value="2">Football</option>
-                    <option value="3">Current Affairs</option>
-                    <option value="4">Geography</option>
-                    <option value="5">Nollywood</option>
-                    <option value="6">Music</option>
-                    <option value="7">Religion:Christianity</option>
-                    <option value="8">Religion:Islam</option>
+                    <option value="1">Football</option>
+                    <option value="2">Current Affairs</option>
+                    <option value="4">Music</option>
+                    <option value="6">Religion</option>
+                    <option value="7">Science</option>
+                    <option value="8">General Knowledge</option>
+                    <option value="9">Sport & Leisure</option>
+                    <option value="10">Geography</option>
+                    <option value="11">Society & Culture</option>
+                    <option value="12">Mathematics</option>
                   </>
                 )}
               </Select>
@@ -298,6 +311,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
                   </>
                 )}
               </Select>

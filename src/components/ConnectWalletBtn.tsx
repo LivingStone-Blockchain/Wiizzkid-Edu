@@ -1,7 +1,5 @@
 import React, { FC, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-// import { useConnect } from 'wagmi';
-// import { InjectedConnector } from '@wagmi/core';
 import Button from './Button'
 
 

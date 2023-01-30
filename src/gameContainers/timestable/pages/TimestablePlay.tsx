@@ -1,59 +1,184 @@
-import { FC, useContext, useEffect, useState, useRef } from 'react'
-import {
-  FaArrowRight,
-  FaClock,
-  FaQuestionCircle,
-  FaTimes,
-} from "react-icons/fa";
-import { TimestableGame } from '../components/index';
-import Overlay from './../components/Overlay';
-import { TimestableContext, TimestableContextType } from '../../../context/timestable.context';
-import { useNavigate } from 'react-router-dom';
-import quizEndGameToast from '../components/toasts/quitGameToast';
+import { useContext, useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { FaArrowRight } from "react-icons/fa";
+import { learner } from "../assets/images";
+import { Button } from "../../../components";
+
+import Overlay from "../components/Overlay";
+import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
+import service from "../services/services";
+import TimestableGame  from "../components/timestable-game/TimestableGame";
 
 
-const TimestablePlay = () => {
-  const navigate = useNavigate();
-  const {start, setLoading, loading, setShowCreateGameModal } = useContext(TimestableContext) as TimestableContextType;
-
-  const quitGame = () => {
-    setLoading(true);
-    quizEndGameToast(setLoading, navigate, setShowCreateGameModal);
-    return;
-  };
-
-  return (
-    <section className="fixed top-0 bottom-0 right-0 left-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition">
-      <Overlay loading={loading || !start && true}/>
-      <div className="max-w-xl mx-auto opacity-90">
-        <nav className="flex justify-between items-center">
-          <FaTimes
-            className="text-2xl cursor-pointer text-navy"
-            onClick={quitGame}
-          />
-
-          <h1 className="text-xl font-bold text-navy">Times<span className="text-tomato">table</span></h1>
-
-          <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center z-50">
-            <FaQuestionCircle className="text-2xl cursor-pointer text-navy" />
-            <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
-              <div className="max-w-xs flex-col items-center">
-                <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{ clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)" }}></div>
-                <div className="w-52 rounded bg-navy font-medium p-2 text-xs text-center leading-relaxed shadow-lg">Answer as many questions as possible in selected time.</div>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <main className="py-10">
-          <TimestableGame />
-        </main>
-        <footer className="fixed bottom-0 right-0 left-0 w-full shadow p-4 flex items-center justify-between">
-          <p className='text-navy opacity-80 text-xs mx-auto'>Wiizzkid &copy; {new Date().getFullYear()}</p>
-        </footer>
-      </div>
-    </section>
-
-  )
+type PlayerTrackerType = {
+  total_players: number,
+  current_players: number
 }
 
-export default TimestablePlay
+export default function QuizPlay() {
+  const { setScore, start, setStart, gameDetails } = useContext(TimestableContext) as TimestableContextType;
+  const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+
+  useEffect(() => {
+    if (gameDetails?.current_players !==  gameDetails?.total_players) {
+
+      const intervalId = setInterval(async () => {
+      try {
+        await service.playersTracker(gameDetails?.id!).then(res => setPlayerTracker(res));
+      } catch (error) {
+        
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+    }
+  }, [gameDetails]);
+
+
+
+
+  const handleStartGame = () => {
+
+    setLoading(true);
+    toast.loading("Preparing to start game...", { duration: 3000, id: "prepping" });
+
+    setScore(0);
+
+    setTimeout(() => {
+      toast.dismiss("prepping");
+      setLoading(false);
+      setStart(true);
+      toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin", duration: 3000 });
+    }, 3000)
+
+  };
+
+
+
+
+
+if (gameDetails?.game_mode === "london") {
+    return (
+      <main>
+      <Overlay loading={loading} />
+   
+      <TimestableGame showModal={start} />
+
+      <section
+        className="flex w-full h-full min-h-screen p-6 "
+        style={{
+          backgroundImage: `url(${learner})`,
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
+
+        <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
+              <article className="text-gray-700">
+            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">Timestable<span className="text-tomato">{` (${gameDetails.difficulty[0].toUpperCase()}${gameDetails.difficulty.slice(1)})`}</span></h1>
+            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Instructions:</p>
+
+            <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
+              This is Mathematical timestable game. Each question has one
+              point. Attempt to answer as many questions as possible before the selected <span className="font-bold">{gameDetails.game_duration}</span>  minutes timespan elapses.
+            </p>
+
+            <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+              Your game score will be calculated based on how many questions you
+              answered correctly and the winner will be the player with the
+              highest score and quickest to submit.
+            </p>
+
+            <p className="font-bold mt-8 text-navy">
+              <span className="text-xl">Ready</span> to join the Wiizkid
+              revolution? Proceed.
+            </p>
+          </article>
+
+          <Button
+            onClick={handleStartGame}
+            className="flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
+          >
+            Start Quiz <FaArrowRight className="ml-3" />
+          </Button>
+          </div>
+      </section>
+    </main>
+    )
+  }
+
+ 
+
+
+
+ 
+
+
+
+  return (
+    <main>
+      <Overlay loading={loading} />
+      {/* game modal containing quiz questions: */}
+      <TimestableGame showModal={start} />
+
+      <section
+        className="flex w-full h-full min-h-screen p-6 "
+        style={{
+          backgroundImage: `url(${learner})`,
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
+
+        <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
+          {(playerTracker?.current_players === playerTracker?.total_players) 
+          ? (
+            <>
+              <article className="text-gray-700">
+            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">Timestable<span className="text-tomato">{` (${gameDetails?.difficulty[0].toUpperCase()}${gameDetails?.difficulty.slice(1)})`}</span></h1>
+            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Instructions:</p>
+
+            <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
+              This is a Mathematical timestable game. Each question has one
+              point. Attempt to answer as many questions as possible before the selected <span className="font-bold">{gameDetails?.game_duration}</span>  minutes timespan elapses.
+            </p>
+
+            <p className="mb-2 text-gray-600 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+              Your game score will be calculated based on how many questions you
+              answered correctly and the winner will be the player with the
+              highest score and quickest to submit.
+            </p>
+
+            <p className="font-bold mt-8 text-navy">
+              <span className="text-xl">Ready</span> to join the Wiizkid
+              revolution? Proceed.
+            </p>
+          </article>
+
+          <Button
+            onClick={handleStartGame}
+            className={`flex justify-center items-center gap-2 md:w-48 w-36 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center ${playerTracker?.current_players === playerTracker?.total_players ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          >
+            Start Quiz <FaArrowRight className="ml-3" />
+          </Button>
+            </>
+          ) : (
+            <article className="text-gray-700 space-y-12">
+            <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium text-center">Successfully joined the game!</p>
+
+            <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
+              <p>Waiting for</p> 
+              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players === -1 ? 1 : playerTracker!.total_players - playerTracker!.current_players}</p>
+              <p> more  {(playerTracker!.total_players - playerTracker!.current_players === 1) ? "player" : "players"}...</p>
+            </div>
+            </article>
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}

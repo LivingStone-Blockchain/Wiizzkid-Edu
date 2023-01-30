@@ -1,10 +1,13 @@
 import React, {FC, useState, useContext} from 'react';
 import { QuizContext, QuizContextType } from '../../../../context/quiz.context';
+import { WiizzkidContext, WiizzkidContextType } from '../../../../context/wiizzkid.context';
+import {TimestableContext,TimestableContextType } from '../../../../context/timestable.context';
 import { ChartLegend, ChartCard } from '../Cards';
 import { lineLegends } from './chartData';
 import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { apiChartData } from '../../data/chartData';
+import { apiChartData as quizApiChartData } from '../../data/quizChartData';
+import { apiChartData as timestableApiChartData} from '../../data/timeTableChartData';
 import { monthLengthIdentifier } from './monthIdentifier';
 
 
@@ -14,9 +17,18 @@ Chart.register(...registerables);
 
 
 const LineChart = () => {
-    const { user, recentGames } = useContext(QuizContext) as QuizContextType;
+  const { quizRecentGames } = useContext(QuizContext) as QuizContextType;
+  const { timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
+  const { dashBoardMode } = useContext(WiizzkidContext) as WiizzkidContextType;
+
+  const currentYear = new Date().getFullYear();
+
+  //returns data for a year
+  const dataPerYear =  dashBoardMode 
+  ?  timestableApiChartData(timestableRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === currentYear) 
+  :  quizApiChartData(quizRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === currentYear); 
     
-    const dataPerYear =   apiChartData(recentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); //returns data for a year
+
     const months = dataPerYear.map((item) => new Date(item.created_at).toString().split(' ')[1]); // returns month of each game played for a year
     const uniqueMonths = new Set(months); //returns unique months
     const counts = [];

@@ -13,7 +13,7 @@ const Footer = () => {
 
 
   //render based on location
-    if (location.pathname !== "/" && location.pathname !== "/pricing"  && location.pathname !== "/about"  && location.pathname !== "/roadmap" && location.pathname !== "/quiz-home" && !location.pathname.includes("blogs/")) {
+    if (location.pathname !== "/" && location.pathname !== "/pricing"  && location.pathname !== "/about"  && location.pathname !== "/roadmap" && location.pathname !== "/quiz-home" && location.pathname !== "/timestable-home" && !location.pathname.includes("blogs/")) {
       return null;
   }
 

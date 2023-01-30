@@ -4,7 +4,7 @@ export const lineLegends = [
 
 export const doughnutLegends = [
   { title: 'London', color: 'bg-teal' },
-  { title: 'Shanghai', color: 'bg-tomato' },
-  { title: 'Beijing', color: 'bg-golden' },
+  { title: 'Shanghai', color: 'bg-golden' },
+  { title: 'Beijing', color: 'bg-tomato' },
 ]
 

@@ -9,12 +9,16 @@ type gameCompletedProps = {
   score:number, 
   gameDuration: number, 
   totalAttempted: number, 
+  totalAllowedPlayers: number,
   navigate: NavigateFunction,
+  setStart:React.Dispatch<React.SetStateAction<boolean>>,
+  setGameCompleted:React.Dispatch<React.SetStateAction<boolean>>,
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>,
+  setShowLeaderBoard:  React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 
-const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, totalAttempted, navigate, setShowCreateGameModal }) => {
+const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, totalAllowedPlayers, totalAttempted, navigate, setStart, setShowCreateGameModal, setGameCompleted, setShowLeaderBoard }) => {
  
   return (
               <section className="w-full py-4">
@@ -48,12 +52,21 @@ const GameCompletedToast: FC<gameCompletedProps> = ({ score, gameDuration, total
                     <p className="mt-8 font-semibold" >You can do better!</p>
                   )}
     
-      
+              {totalAllowedPlayers === 1 ? (
                 <Button
-                   className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-                  onClick={() => {toast.dismiss(); navigate('/timestable-home'); setShowCreateGameModal(false)}}
-                  children="Back Home"
-                />
+                  className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
+                  onClick={() => { toast.dismiss(); setStart(false); setGameCompleted(false); setShowCreateGameModal(false); navigate('/timestable-home') }}
+                >
+                  Back home
+                </Button>
+              ) : (
+                <Button
+                  className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
+                  onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setShowLeaderBoard(true);}}
+                >
+                  See Board
+                </Button>
+              )}
               </article>
             </section>
          )

@@ -1,10 +1,13 @@
 import React, {FC, useState, useContext} from 'react';
 import { QuizContext, QuizContextType } from '../../../../context/quiz.context';
+import { WiizzkidContext, WiizzkidContextType } from '../../../../context/wiizzkid.context';
+import {TimestableContext,TimestableContextType } from '../../../../context/timestable.context';
 import { ChartLegend, ChartCard } from '../Cards';
 import { doughnutLegends } from './chartData';
 import { Chart, registerables } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { apiChartData } from '../../data/chartData';
+import { apiChartData as quizApiChartData } from '../../data/quizChartData';
+import { apiChartData as timestableApiChartData} from '../../data/timeTableChartData';
 
 
 //element registration
@@ -13,9 +16,18 @@ Chart.register(...registerables);
 
 
 const DoughnutChart = () => {
-    const { user, recentGames } = useContext(QuizContext) as QuizContextType;
-    
-    const dataPerYear =   apiChartData(recentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); //returns data for a year
+    const { quizRecentGames } = useContext(QuizContext) as QuizContextType;
+    const { timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
+    const { dashBoardMode } = useContext(WiizzkidContext) as WiizzkidContextType;
+
+
+    const currentYear = new Date().getFullYear();
+
+    //returns data for a year
+    const dataPerYear =  dashBoardMode 
+    ?  timestableApiChartData(timestableRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === currentYear) 
+    :  quizApiChartData(quizRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === currentYear); 
+
     const gameModeType = dataPerYear.map((item) => item.game_mode); // returns month of each game played for a year
     const uniqueGameModes = new Set(gameModeType);
     const counts = [];
@@ -34,7 +46,7 @@ const DoughnutChart = () => {
         datasets: [{
           label: 'Games per mode',
           data: modeCount,
-          backgroundColor: ['#0694a2', '#e0b00d', '#ff3939'],
+          backgroundColor: dashBoardMode ? ['#0694a2', '#e0b00d', '#ff3939'] :  ['#0694a2', '#ff3939', '#e0b00d'],
           borderColor: ['#252641'], 
           cutout: '80%',
           radius: 100,

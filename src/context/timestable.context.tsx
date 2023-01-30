@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   useContext,
+  useMemo,
 } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import toast from "react-hot-toast"
@@ -11,6 +12,10 @@ import service from "../gameContainers/timestable/services/services"
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios"
 import useSound from "use-sound"
 import { UserContext, UserContextType } from "./user.context"
+import useTokenRefresh from "./../hooks/useTokenRefresh"
+import LeaderBoard from '../gameContainers/timestable/components/Leaderboard'
+
+
 
 type numData = {
   num: number
@@ -18,14 +23,41 @@ type numData = {
 
 //expected object key types from backend
 type returnedDataType = {
-  id: string
+  id?: string
   invite_code?: string
   difficulty: string
   total_players: number
   game_mode: string
   game_duration: number
   creator: number
+  current_players?: number
+  stone_token_fee?: number
 }
+
+
+
+
+type RecentGamesData = {
+  games: {
+    total_players: number
+    game_mode: string
+    game_duration: number
+    created_at: string
+    difficulty: string
+    id: number
+    creator: number
+    invite_code: string
+  }[]
+  scores: {
+    player_id: number
+    game_id: string
+    score: number
+    total_attempted: number
+  }[]
+}
+
+
+
 
 type userType = {
   email: string
@@ -55,29 +87,29 @@ export interface TimestableContextType {
   showSplashScreen: boolean
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>
   showCreateGameModal: boolean
-  setShowCreateGameModal: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
+  setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
   gameDetails: returnedDataType | undefined
-  setGameDetails: React.Dispatch<
-    React.SetStateAction<returnedDataType | undefined>
-  >
+  setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>
   gameDuration: number
   setGameDuration: React.Dispatch<React.SetStateAction<number>>
+  timestableRecentGames: RecentGamesData | undefined
+  setTimestableRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
+  gameCompleted: boolean
+  setGameCompleted: React.Dispatch<React.SetStateAction<boolean>>
   totalAllowedPlayers: number
   setTotalAllowedPlayers: React.Dispatch<React.SetStateAction<number>>
-  handleDigit: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void
-  handleDelete: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void
+  showLeaderBoard: boolean
+  setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
+  tokenFee: string
+  setTokenFee: React.Dispatch<React.SetStateAction<string>>
+  handleDigit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   scoreTracker: (correctAnswer: number) => void
-  handlePlayTimestable: () => void
   handleSubmission: () => void
   user: userType | null
+  refreshedUser: userType | null
 }
 
 enum GameModes {
@@ -96,24 +128,25 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const [gameCreated, setGameCreated] = useState<boolean>(false)
   const [difficulty, setDifficulty] = useState<string>("easy")
   const [gameDuration, setGameDuration] = useState<number>(2)
-  const [showSplashScreen, setShowSplashScreen] =
-    useState<boolean>(true)
-  const [totalAllowedPlayers, setTotalAllowedPlayers] =
-    useState<number>(1)
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
+  const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1)
+  const [tokenFee, setTokenFee] = useState<string>("")
   const [gameMode, setGameMode] = useState<string>(GameModes.london)
-  const [showCreateGameModal, setShowCreateGameModal] =
-    useState<boolean>(false)
+  const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const [start, setStart] = useState<boolean>(false)
-  const [play, { stop, sound }] = useSound(needForSpeedMusic, {
-    volume: 0.3,
-  })
-  const [gameDetails, setGameDetails] = useState<
-    returnedDataType | undefined
-  >()
+  const [gameCompleted, setGameCompleted] = useState<boolean>(false)
+  const [play, { stop, sound }] = useSound(needForSpeedMusic, {volume: 0.3,})
+  const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
+  const [timestableRecentGames, setTimestableRecentGames] = useState<RecentGamesData | undefined>()
+  const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType
   const navigate = useNavigate()
   const { pathname } = useLocation()
+    //token refresher
+    const { refreshedUser } = useTokenRefresh()
+
+
 
   //fade into oblivion on game start
   useEffect(() => {
@@ -153,31 +186,93 @@ const TimestableProvider: FC<any> = ({ children }) => {
     })
   }
 
+
+
   //track result
   const scoreTracker = (correctAnswer: number) => {
     Number(correctAnswer) === digit.num && setScore(score + 1)
   }
 
-  //initiate game
-  const handlePlayTimestable = () => {
-    toast.dismiss("showModal")
-    setGameCreated(false)
-    setStart(true)
-    toast.loading("Preparing to start quiz...", {
-      duration: 4000,
-      id: "prepping",
-    })
-    setLoading(true)
-    setTimeout(() => {
-      toast.dismiss()
-      setLoading(false)
-      navigate("/timestable", { replace: true })
-    }, 4000)
-  }
+
+
+
+
+
+  const userId = useMemo(() => {
+    return user?.id.toString()
+  }, [user])
+
+  //fetch recent games played
+  useEffect(() => {
+    const fetchRecentGames = async () => {
+      if (userId !== undefined) {
+        try {
+          await service.recentResults(userId).then((res) => {
+            setTimestableRecentGames(res)
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+
+    fetchRecentGames()
+  }, [userId, pathname])
+
+
+
+
+
+ 
+  //show leader board with results
+  useEffect(() => {
+    if (showLeaderBoard) {
+      toast.dismiss();
+  
+      toast(
+        <LeaderBoard
+          setStart={setStart}
+          setGameCompleted={setGameCompleted}
+          setShowLeaderBoard={setShowLeaderBoard}
+        />,
+        { duration: Infinity, className: "w-full" }
+      );
+    }
+  
+  }, [showLeaderBoard])
+
+
+
+
 
   const handleSubmission = async () => {
     if (gameDuration < 2) {
       return toast.error("1 minute not allowed", { duration: 3000 })
+    }
+
+     //alert user if token is insufficient based on difficulty
+     if (gameMode === "shanghai" && difficulty === "easy" && Number(tokenFee) <= 9) {
+        toast.error(<span className="text-sm">Insufficient token!</span>,{ duration: 3000, id: "low" })
+        setTimeout(() => {
+          toast.dismiss("low")
+        }, 3000)
+        return
+      }
+    if (gameMode === "shanghai" && difficulty === "medium" && Number(tokenFee) <= 99) {
+        toast.dismiss("low")
+        toast.error(<span className="text-sm">Insufficient token!</span>,{ duration: 3000, id: "low" })
+        setTimeout(() => {
+          toast.dismiss("low")
+        }, 3000)
+        return
+    }
+    if (gameMode === "shanghai" && difficulty === "hard" && Number(tokenFee) <= 499) {
+        toast.dismiss("low")
+        toast.error(<span className="text-sm">Insufficient token!</span>,{ duration: 3000, id: "low" })
+        setTimeout(() => {
+          toast.dismiss("low")
+        }, 3000)
+        return
     }
 
     const payload = {
@@ -186,17 +281,31 @@ const TimestableProvider: FC<any> = ({ children }) => {
       game_duration: gameDuration,
       total_players: Number(totalAllowedPlayers),
       creator: user!.id,
+      stone_token_fee: Number(tokenFee),
     }
 
     try {
-      await service.createGame(payload).then((res) => {
-        setGameDetails(res)
-      })
+      user?.tokens
+        ? await service
+          .createGame(payload, refreshedUser.tokens.access)
+          .then((res) => {
+            setGameDetails(res)
+          })
+        : setGameDetails(payload)
+
+        setTimeout(() => {
+          toast.dismiss("loading");
+          toast.success("Game created successfully!", {id: 'success'});
+          setGameCreated(true);
+        }, 4000);
+      
     } catch (error) {
       console.log(error)
     }
   }
 
+
+ 
   return (
     <TimestableContext.Provider
       value={{
@@ -207,7 +316,6 @@ const TimestableProvider: FC<any> = ({ children }) => {
         score,
         setScore,
         scoreTracker,
-        handlePlayTimestable,
         loading,
         setLoading,
         gameCreated,
@@ -222,6 +330,8 @@ const TimestableProvider: FC<any> = ({ children }) => {
         setShowSplashScreen,
         showCreateGameModal,
         setShowCreateGameModal,
+        gameCompleted, 
+        setGameCompleted,
         start,
         setStart,
         handleSubmission,
@@ -229,7 +339,14 @@ const TimestableProvider: FC<any> = ({ children }) => {
         setTotalAllowedPlayers,
         gameDetails,
         setGameDetails,
+        tokenFee,
+        setTokenFee,
         user,
+        timestableRecentGames, 
+        setTimestableRecentGames,
+        showLeaderBoard, 
+        setShowLeaderBoard,
+        refreshedUser
       }}
     >
       {children}

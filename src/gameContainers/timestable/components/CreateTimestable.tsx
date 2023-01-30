@@ -7,7 +7,7 @@ import {
   FaCheckCircle,
   FaTimes,
 } from "react-icons/fa";
-import { success } from "../assets/images";
+import { success, beijing } from "../assets/images";
 import { Button } from './button/index';
 import FormGroup from "./forms/FormGroup";
 import Input from "./forms/Input";
@@ -16,7 +16,7 @@ import Select from "./forms/Select";
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { utils } from "ethers";
-
+import { useNavigate } from "react-router-dom";
 
 
 type CreateTimestableType =  {
@@ -29,22 +29,49 @@ const CreateTimestable: FC<CreateTimestableType> = ({
   setShowCreateGameModal,
 }) => {
   const textRef = useRef<HTMLParagraphElement>(null);
-  const { gameCreated, setGameCreated, gameDuration, setGameDuration, gameMode, setGameMode, difficulty, setDifficulty, handlePlayTimestable , handleSubmission,  totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails } = useContext(TimestableContext) as TimestableContextType;
+  const { setStart, setLoading, gameCreated, setGameCreated, gameDuration, setGameDuration, gameMode, setGameMode, difficulty, setDifficulty , handleSubmission,  totalAllowedPlayers, setTotalAllowedPlayers, gameDetails, setGameDetails, user, tokenFee, setTokenFee } = useContext(TimestableContext) as TimestableContextType;
   const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
   const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
+  const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
+  const navigate = useNavigate();
+
 
 
    //prevent unlogged user from accessing premium
    useEffect(() => {
-    if (stoneBalance < 100 && gameMode !== 'london') {
+    if (stoneBalance < 10 && gameMode === 'shanghai') {
       toast.dismiss('unlogged');
-      toast.error(`Buy Stone to play ${gameMode} mode!`, { duration: 3000, id: 'unlogged' });
+      toast.error(<span className="text-sm">Buy Stone to play Shanghai mode!</span>, { duration: 3000, id: 'unlogged' });
       setTimeout(() => {
         toast.dismiss('unlogged');
         setGameMode('london');
       }, 3000);
     }
   },[gameMode, stoneBalance]);
+
+
+
+
+  
+
+  //toast beijing message on click
+  //go to login if user isn't logged in while trying to use shanghai
+  useEffect(() => {
+    gameMode === 'beijing' 
+      ? setShowBeijingModal(true)
+      : setShowBeijingModal(false)
+
+    if (gameMode === "shanghai" && !user) {
+      toast.loading(<span className="text-sm">Not logged in! Redirecting you to sign in.</span>, { duration: 3000, id: 'unlogged' })
+      setTimeout(() => {
+        toast.dismiss();
+        setShowCreateGameModal(false);
+        navigate('/login')
+      }, 3000)
+    }
+      
+  }, [showBeijingModal, gameMode])
+
 
 
 
@@ -68,18 +95,40 @@ const CreateTimestable: FC<CreateTimestableType> = ({
   };
 
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    toast.loading("Creating game...", { duration: 3000, id: "loading" });
-   
+       //alert user if token is insufficient based on difficulty
+       if (gameMode === "shanghai" && difficulty === "easy" && Number(tokenFee) <= 9) {
+        return;
+      }
+      if (gameMode === "shanghai" && difficulty === "medium" && Number(tokenFee) <= 99) {
+          toast.dismiss("low")
+          return;
+      }
+      if (gameMode === "shanghai" && difficulty === "hard" && Number(tokenFee) <= 499) {
+          toast.dismiss("low")
+          return;
+      }
 
-    setTimeout(() => {
-      toast.dismiss("loading");
-      toast.success("Game created successfully!");
-      setGameCreated(true);
-    }, 4000);
+
+    toast.loading("Creating game...", { duration: 3000, id: "loading" });
+
   };
+
+  
+
+ //initiate game
+  const handleStartGame = () => {
+    setGameCreated(false)
+    toast.dismiss()
+
+    gameMode === "london" 
+    ?   navigate('/timestable', { replace: true })
+    :   navigate(`/timestable?code=${gameDetails?.invite_code}`, { replace: true });
+  }
+  
+
 
 
 
@@ -102,7 +151,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
             </span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative">
-            <span ref={textRef} onClick={handleCopyClick}>{`https://game.wiizkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
+            <span ref={textRef} onClick={handleCopyClick}>{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
             <span className="text-xs font-bold animate-pulse text-teal absolute top-5 right-10">copy</span>
           </p>
           <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
@@ -124,7 +173,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 
           <Button
             children="Play Timestable"
-            onClick={handlePlayTimestable}
+            onClick={handleStartGame}
             className="mt-14 flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
           />
         </article>
@@ -132,8 +181,42 @@ const CreateTimestable: FC<CreateTimestableType> = ({
     );
   }
 
+
+
+
+  
+  if (showBeijingModal) {
+    return (
+      <section className={`relative w-full py-4`}>
+              <FaTimes
+                onClick={() => {setShowBeijingModal(false); setGameMode('london')}}
+                className="absolute top-2 right-2 text-tomato cursor-pointer md:text-xl text-lg"
+                />
+              <img src={beijing} className="w-24 mx-auto" alt="beijing" />
+
+              <article className="text-center mt-4">
+                <h1  className="text-2xl font-bold text-teal">
+                Contact us!
+                </h1>
+            </article>
+            
+            <p className="mt-8 text-gray-500 text-center space-x-5 my-3 md:text-base text-sm leading-relaxed">
+            This a B2B mode where organizations or schools develop their own learning platform or quiz templates in our metaverse.
+            </p>
+
+            <Button
+                className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
+              onClick={() => {toast.dismiss(); setShowCreateGameModal(false); navigate('/about'); setGameMode('london')}}
+            >
+              Contact
+            </Button>
+                  
+        </section>
+    )
+  }
+
   return (
-    <section className="pb-4 w-full">
+    <section className={`pb-4 w-full ${showBeijingModal ? 'hidden' : 'block'}`}>
          <div className="mb-7 flex items-center justify-end">
         <FaTimes
           onClick={handleCloseModal}
@@ -142,7 +225,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
       </div>
        
         <article className="relative">
-          <h1 className="md:text-2xl text-xl font-bold mb-3 text-navy">Wiizzkid <span className="text-tomato">Revolution!</span></h1>
+          <h1 className={`md:text-2xl text-xl font-bold mb-3 text-navy ${gameMode === 'shanghai' && 'hidden'}`}>Wiizzkid <span className="text-tomato">Revolution!</span></h1>
           <p className="hidden text-gray-700 space-x-5 my-2 md:text-lg text-base leading-relaxed font-medium">Start Timestable</p>
         </article>
 
@@ -155,8 +238,8 @@ const CreateTimestable: FC<CreateTimestableType> = ({
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
                 <option value="london">London Mode</option>
-                  <option value="beijing" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
-                <option value="shanghai" className={`${stoneBalance < 100 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                  <option value="shanghai" className={`${stoneBalance < 10 ? 'text-gray-500' : ''}`}>Shanghai Mode</option>
+                <option value="beijing" className={`${stoneBalance < 10000 ? 'text-gray-500' : ''}`}>Beijing Mode</option>
               </Select>
             </FormGroup>
             <FormGroup>
@@ -174,26 +257,28 @@ const CreateTimestable: FC<CreateTimestableType> = ({
                 <option value="hard">Hard</option>
               </Select>
             </FormGroup>
+
+            {gameMode === "shanghai" && (
+                  <FormGroup>
+                  <Label>Token Amount</Label>
+                  <Input type="text"  value={tokenFee} onChange={(event) => setTokenFee(event.target.value)} placeholder={difficulty === "easy" ? "10 -50 STN" : difficulty === "medium" ? "100 -500 STN" : "> 500 STN" } min={10} max={9999999999} />
+                </FormGroup>
+              )}
+
             <FormGroup>
               <Label>Total Allowed Players</Label>
               <Select
                 value={totalAllowedPlayers}
                 onChange={(e: any) => setTotalAllowedPlayers(e.target.value)}
               >
-                <option value="1">1</option>
-                {stoneBalance > 100 && (
+                 <option value="1">1</option>
+                {gameMode === "shanghai" && (
                   <>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
                   </>
                 )}
               </Select>

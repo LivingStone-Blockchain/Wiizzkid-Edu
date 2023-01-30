@@ -96,7 +96,7 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
               />
             </svg>
-            <span className={`text-sm leading-relaxed font-medium`}>Quizzes</span>
+            <span className={`text-sm leading-relaxed font-medium`}>Games</span>
           </Link>
         </li>
         <li>
@@ -122,7 +122,7 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
                 d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
               />
             </svg>
-            <span className={`text-sm leading-relaxed font-medium`}>Quiz History</span>
+            <span className={`text-sm leading-relaxed font-medium`}>Game History</span>
           </Link>
         </li>
         <li>

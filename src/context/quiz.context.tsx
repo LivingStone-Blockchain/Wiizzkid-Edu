@@ -93,8 +93,8 @@ export interface QuizContextType {
   triviaData: questionsData[] | undefined
   setTriviaData: React.Dispatch<React.SetStateAction<questionsData[] | undefined>>
   dataType: questionsData[] | undefined
-  recentGames: RecentGamesData | undefined
-  setRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
+  quizRecentGames: RecentGamesData | undefined
+  setQuizRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
   selectedOption: number | string
   setSelectedOption: React.Dispatch<React.SetStateAction<number | string>>
   addAnswer: (payload: { questionId: string; option: string }) => void
@@ -158,7 +158,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [gameMode, setGameMode] = useState<string>(GameModes.london)
   const [gameDuration, setGameDuration] = useState<number>(5)
   const [score, setScore] = useState<number>(0)
-  const [recentGames, setRecentGames] = useState<RecentGamesData | undefined>()
+  const [quizRecentGames, setQuizRecentGames] = useState<RecentGamesData | undefined>()
   const [quizData, setQuizData] = useState<questionsData[] | undefined>()
   const [triviaData, setTriviaData] = useState<questionsData[] | undefined>()
   const [gameCreated, setGameCreated] = useState<boolean>(false)
@@ -179,7 +179,7 @@ const QuizProvider: FC<any> = ({ children }) => {
 
   //reset initial category value based game mode changes
   useEffect(() => {
-    let categoryInitialVal = gameMode === "london" ? "9" : "1"
+    let categoryInitialVal = gameMode === "london" ? "13" : "1"
     setCategory(categoryInitialVal)
   }, [gameMode])
 
@@ -291,7 +291,7 @@ const QuizProvider: FC<any> = ({ children }) => {
       toast.dismiss("low")
       toast.error(
         <span className="text-sm">Insufficient token!</span>,
-        { duration: 30000, id: "low" }
+        { duration: 3000, id: "low" }
       )
       setTimeout(() => {
         toast.dismiss("low")
@@ -306,7 +306,7 @@ const QuizProvider: FC<any> = ({ children }) => {
       toast.dismiss("low")
       toast.error(
         <span className="text-sm">Insufficient token!</span>,
-        { duration: 30000, id: "low" }
+        { duration: 3000, id: "low" }
       )
       setTimeout(() => {
         toast.dismiss("low")
@@ -315,6 +315,9 @@ const QuizProvider: FC<any> = ({ children }) => {
     }
     setScreen(2)
   }
+
+
+
 
   const userId = useMemo(() => {
     return user?.id.toString()
@@ -326,7 +329,7 @@ const QuizProvider: FC<any> = ({ children }) => {
       if (userId !== undefined) {
         try {
           await service.recentResults(userId).then((res) => {
-            setRecentGames(res)
+            setQuizRecentGames(res)
           })
         } catch (error) {
           console.log(error)
@@ -447,8 +450,8 @@ const QuizProvider: FC<any> = ({ children }) => {
         setShowCreateGameModal,
         showLeaderBoard,
         setShowLeaderBoard,
-        recentGames,
-        setRecentGames,
+        quizRecentGames,
+        setQuizRecentGames,
         tokenFee,
         setTokenFee,
         refreshedUser,

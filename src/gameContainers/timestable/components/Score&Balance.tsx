@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { QuizContext, QuizContextType } from '../../../context/quiz.context';
-import { apiChartData } from '../../../components/dashboard/data/chartData';
+import { TimestableContext, TimestableContextType } from '../../../context/timestable.context';
+import { apiChartData } from '../../../components/dashboard/data/timeTableChartData';
 import { TokenContext, TokenContextType } from '../../../context/token.context';
 import { utils } from 'ethers';
 
@@ -11,16 +11,17 @@ type BoardDataType = {
 }
 
 const ScoreBalance = () => {
-    const { recentGames } = useContext(QuizContext) as QuizContextType;
+    const { timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
     const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+
+  
 
     
   //returns data for a year
-  const dataPerYear =   apiChartData(recentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
+  const dataPerYear =   apiChartData(timestableRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
   //latestScore
   const scoreData =   dataPerYear?.map((item) => item.score);
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
-
 
     const boardData: BoardDataType[] = [
         {

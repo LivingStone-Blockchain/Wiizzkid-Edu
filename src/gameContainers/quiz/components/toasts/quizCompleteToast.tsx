@@ -43,7 +43,7 @@ const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalA
           {totalAllowedPlayers === 1 ? (
             <Button
               className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-              onClick={() => { setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home') }}
+              onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home') }}
             >
               Back home
             </Button>

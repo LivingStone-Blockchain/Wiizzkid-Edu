@@ -36,7 +36,7 @@ const Quizzes = () => {
     const navigate = useNavigate();
     return (
         <div className="flex flex-col gap-8 items-start justify-start">
-            <p className='font-medium text-navy'>Quizzes</p>
+            <p className='font-medium text-navy'>Games</p>
             <div  data-aos="fade-up" data-aos-delay="200" className="grid gap-6 w-full mb-8 md:grid-cols-2">
                 {quizData.map(({ img, title, text, buttonText, destination }) => (
                     <Card key={title}>

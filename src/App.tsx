@@ -9,7 +9,7 @@ import 'aos/dist/aos.css';
 import { Toaster } from 'react-hot-toast';
 import {Overlay} from "./components/index";
 import QuizApp from "./gameContainers/quiz/QuizApp";
-import { TimestablePlay } from "./gameContainers/timestable/pages";
+import TimestablePlay from "./gameContainers/timestable/pages/TimestablePlay";
 import { WiizzkidContext, WiizzkidContextType } from './context/wiizzkid.context';
 import { UserContext, UserContextType } from './context/user.context';
 import TimestableApp  from './gameContainers/timestable/TimestableApp';
@@ -58,7 +58,9 @@ function App() {
       <Route path="/quiz" element={<QuizPlay />} /> 
       <Route path="/quiz?code=:joinGameCode" element={<QuizPlay />} /> 
       <Route path="/quiz-home/*" element={<QuizApp />}/>
+
       <Route path="/timestable" element={<TimestablePlay />} />
+      <Route path="/timestable?code=:joinGameCode" element={<TimestablePlay />} /> 
       <Route path="/timestable-home/*" element={<TimestableApp />}/>
       <Route path="*" element={<NotFound />}/>
     </Routes>

@@ -1,12 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Screen } from './index';
-import { GameButton, ButtonBox } from './button/index';
-import { TimestableContext, TimestableContextType } from '../../../context/timestable.context';
-import { timestableMock } from "../data/questionBank";
-import { Countdown } from './index';
-import GameCompletedToast from './toasts/GameCompletedToast';
+import { Screen } from '../index';
+import { GameButton, ButtonBox } from '../button/index';
+import { TimestableContext, TimestableContextType } from '../../../../context/timestable.context';
+import { timestableMock } from "../../data/questionBank";
+import { Countdown } from '../index';
+import GameCompletedToast from '../toasts/GameCompletedToast';
 import { toast } from 'react-hot-toast';
+import service from '../../services/services';
+
+
+
 type timestableData = {
   title: string,
   correctAnswer: number,
@@ -16,8 +20,8 @@ type timestableData = {
 
 
 
-const TimestableGame = () => {
-  const { handleDigit, handleDelete, digit, setDigit, scoreTracker, difficulty, gameDuration, score, start, setStart, setShowCreateGameModal } = useContext(TimestableContext) as TimestableContextType;
+const TimestableCard = () => {
+  const { handleDigit, handleDelete, digit, setDigit, scoreTracker, difficulty, gameDuration, totalAllowedPlayers, score, user, gameDetails, setStart, setShowCreateGameModal, gameCompleted, setGameCompleted, setShowLeaderBoard } = useContext(TimestableContext) as TimestableContextType;
   const [questions, setQuestions] = useState<timestableData[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<timestableData | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -50,22 +54,40 @@ const TimestableGame = () => {
 
     //collate scores
     scoreTracker(currentQuestion!.correctAnswer);
-
   }
-
 
 
 
   useEffect(() => {
     //dismiss first to avoid duplicates
-    if (!start) {
+    if (gameCompleted) {
       toast.dismiss();
       toast(
-        <GameCompletedToast score={score} gameDuration={gameDuration} totalAttempted={currentPage} navigate={navigate} setShowCreateGameModal={setShowCreateGameModal} />,
+        <GameCompletedToast score={score} gameDuration={gameDuration} totalAllowedPlayers={totalAllowedPlayers} totalAttempted={currentPage} navigate={navigate} setStart={setStart} setGameCompleted={setGameCompleted} setShowCreateGameModal={setShowCreateGameModal} setShowLeaderBoard={setShowLeaderBoard} />,
         { duration: Infinity, className: "w-full" }
       )
+
+
+        //send to backend
+        const payload = {
+          player_id: user!.id,
+          game_id: gameDetails!.id,
+          score,
+          total_attempted: currentPage
+        };
+
+
+        //send payload to backend for registered users...
+       (async () => {
+        try {
+          user && await service.scoreResult(payload);
+        } catch (error) {
+          console.log(error);
+        }
+       })();
+
     }
-  }, [start])
+  }, [gameCompleted])
 
 
   return (
@@ -77,7 +99,7 @@ const TimestableGame = () => {
       />
       <Screen
         className='bg-gradient-to-b from-gray-800 to-gray-700 text-right'
-        children={<Countdown duration={gameDuration} setStart={setStart} />}
+        children={<Countdown duration={gameDuration} setGameCompleted={setGameCompleted}/>}
         value={digit.num}
         timer={true}
       />
@@ -107,5 +129,5 @@ const TimestableGame = () => {
   )
 }
 
-export default TimestableGame;
+export default TimestableCard;
 
