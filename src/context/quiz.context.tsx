@@ -179,7 +179,7 @@ const QuizProvider: FC<any> = ({ children }) => {
 
   //reset initial category value based game mode changes
   useEffect(() => {
-    let categoryInitialVal = gameMode === "london" ? "13" : "1"
+    let categoryInitialVal = gameMode === "london" ? "9" : "1"
     setCategory(categoryInitialVal)
   }, [gameMode])
 

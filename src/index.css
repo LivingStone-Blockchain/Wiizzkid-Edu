@@ -59,6 +59,15 @@
   }
 }
 
+.animate-ball {
+  animation: balling 0.5s linear infinite alternate;
+  -webkit-animation: balling 0.5s linear infinite alternate;
+}
+
+@keyframes balling {
+  from { transform: translateX(-50%) scale(0.5); }
+  to { tranform: translateX(-50%) scale(1); }
+}
 
 
 
@@ -82,6 +91,14 @@ span.lazy-load-image-background > img {
 /*Moving marquee fog thickness*/
 div.marquee-container > div.overlay::before, div.overlay::after {
   --gradient-width:80px;
+}
+
+
+/*for roadmap card positioning*/
+@media (max-width: 48em) {
+ .justifying {
+  justify-content: flex-end !important;
+ }
 }
 
 

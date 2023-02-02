@@ -246,12 +246,11 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               >
                 {gameMode === "london" ? (
                   <>
+                    <option value="9">Sport & Leisure</option>
+                    <option value="11">Society & Culture</option>
                     <option value="13">Science</option>
                     <option value="14">General Knowledge</option>
                     <option value="15">Geography</option>
-                    <option value="16">Sport & Leisure</option>
-                    <option value="17">Society & Culture</option>
-                    
                   </>
                 ) : (
                   <>
@@ -262,9 +261,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                     <option value="6">Religion</option>
                     <option value="7">Science</option>
                     <option value="8">General Knowledge</option>
-                    <option value="9">Sport & Leisure</option>
                     <option value="10">Geography</option>
-                    <option value="11">Society & Culture</option>
                     <option value="12">Mathematics</option>
                   </>
                 )}

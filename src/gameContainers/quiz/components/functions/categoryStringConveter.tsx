@@ -31,10 +31,6 @@ const categoryStrings = (category: number) => {
             return 'general_knowledge';
         case 15:
             return 'geography';
-        case 16:
-            return 'sport_and_leisure';
-        case 17:
-            return 'society_and_culture';
         default:
             return "";
     }
