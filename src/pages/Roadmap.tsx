@@ -175,7 +175,23 @@ const Roadmap = () => {
    <>
     <Banner title="Roadmap"/>
      <section className="min-h-screen w-screen relative  bg-slate-50">
-      <div className="w-full flex justify-center items-center p-5"><img src={!observer ? Year2022 : Year2023} alt="year" className="w-full h-auto max-w-[100px]" /></div>
+     
+     <div  className={`w-full h-full flex justify-center items-center my-10`}>
+            <div className={`md:w-2/5 w-[80%]  h-fit p-4 border-[3px] border-navy border-solid rounded-tr-[50px] rounded-bl-[50px]`}>
+              <p className={`flex items-center justify-center h-fit bg-tealLighter text-navy p-4 relative border border-navy border-solid rounded-tr-[40px] rounded-bl-[40px]`}>
+                <span className='block text-sm md:text-base text-navy font-normal first-letter:text-4xl md:first-letter:text-6xl first-letter:font-bold first-letter:text-navy first-letter:mr-3 first-letter:float-left'>Wiizzkid's Roadmap is dynamic, regular upgrades and additions will occur in tandem with the expansion of our project. The release dates shown in the following roadmap are presently the most precise estimates available, although they could all change based on how work progresses.</span>
+              </p>
+            </div>
+      </div>
+      
+      <div className="w-full relative top-6 flex md:justify-center justify-start items-center p-5">
+        <p className='block text-3xl md:text-4xl capitalize text-navy font-bold'>
+          <span className="inline-block" style={{transform: "translate(2px, 10px) rotate(-10deg)"}}>2</span>
+          <span className="inline-block" style={{transform: "transform: translate(1px, 8px) rotate(-5deg)"}}>0</span>
+          <span className="inline-block" style={{transform: "transform: translate(-1px, 8px) rotate(5deg)"}}>2</span>
+          <span className="inline-block" style={{transform: "translate(-2px, 10px) rotate(10deg)"}}>{!observer ? '2' : '3'}</span>
+        </p>
+      </div>
       {!observer ? (
         <div className={`lg:w-[70%] md:w-[80%] w-[90%] h-fit mx-auto my-0 flex justify-center items-center relative`}>
         <div className="flex justify-center items-center"> 
