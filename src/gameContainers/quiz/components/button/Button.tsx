@@ -7,6 +7,7 @@ interface ButtonProps {
   className?: string;
   type?: "button" | "submit";
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const Button: FC<ButtonProps> = ({
   type,
   children,
   style,
+  disabled
 }) => {
 
   if (btnDefault) {
@@ -37,6 +39,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
       className={`${className} rounded-full transform transition hover:scale-110 duration-300 ease-in-out z-60`}
       style={style}
+      disabled={disabled}
     >
       {children}
     </button>

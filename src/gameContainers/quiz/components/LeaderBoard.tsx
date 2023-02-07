@@ -13,7 +13,8 @@ type ScoreBoardType = {
   game_id: string,
   score: number,
   submit_time: number,
-  full_name: string
+  full_name: string,
+  winnings: number
 }[]
 
 
@@ -28,6 +29,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
   const { gameDetails, showLeaderBoard } = useContext(QuizContext) as QuizContextType;
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const navigate = useNavigate();
+
 
 
 
@@ -79,10 +81,13 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
                 <th scope="col" className="py-3 px-1 font-medium">
                   Score
                 </th>
+                <th scope="col" className="py-3 px-1 font-medium">
+                  Winning
+                </th>
               </tr>
             </thead>
             <tbody>
-              {scoreBoard?.map(({ full_name, submit_time, score }, index) => (
+              {scoreBoard?.map(({ full_name, submit_time, score, winnings }, index) => (
                 <tr className="bg-white border-b border-gray-200" key={full_name}>
                   <td className="py-2 px-1">
                     <span className={`${index === 0 ? 'text-[#fe9d1b]' : 'text-gray-400'}`}><FaCrown /></span>
@@ -95,6 +100,9 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
                   </td>
                   <td className="py-2 px-1">
                     <span className="font-medium text-navy text-xs">{score}</span>
+                  </td>
+                  <td className="py-2 px-1">
+                    <span className="font-medium text-navy text-xs">{winnings}</span>
                   </td>
                 </tr>
               ))}

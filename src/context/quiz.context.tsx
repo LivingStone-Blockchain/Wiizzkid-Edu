@@ -14,10 +14,10 @@ import useSound from "use-sound"
 import categoryStrings from "../gameContainers/quiz/components/functions/categoryStringConveter"
 import { useLocation } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
+import { TokenContext, TokenContextType } from "./token.context"
 import useTokenRefresh from "./../hooks/useTokenRefresh"
 import { toast } from "react-hot-toast"
 import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
-
 
 
 type questionsData = {
@@ -173,9 +173,12 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   const { pathname } = useLocation()
   //get user details from userContext
-  const { user } = useContext(UserContext) as UserContextType
+  const { user } = useContext(UserContext) as UserContextType;
+  //get createGame to deduct token on game creation
+  const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
+
   //token refresher
-  const { refreshedUser } = useTokenRefresh()
+  const { refreshedUser } = useTokenRefresh();
 
   //reset initial category value based game mode changes
   useEffect(() => {
@@ -344,7 +347,6 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
-
   //function create game form 2
   const handleInstructionScreen = async () => {
     const payload = {
@@ -365,8 +367,11 @@ const QuizProvider: FC<any> = ({ children }) => {
           .createGame(payload, refreshedUser.tokens.access)
           .then((res) => {
             setGameDetails(res)
+            //deduct game stone token fee from smart contract
+            deductTokenOnGameCreate(Number(tokenFee));
           })
         : setGameDetails(payload)
+
 
       setTimeout(() => {
         toast.dismiss("loading");

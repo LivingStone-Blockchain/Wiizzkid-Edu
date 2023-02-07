@@ -95,7 +95,7 @@ div.marquee-container > div.overlay::before, div.overlay::after {
 
 
 /*for roadmap card positioning*/
-@media (max-width: 48em) {
+@media (max-width: 640px) {
  .justifying {
   justify-content: flex-end !important;
  }

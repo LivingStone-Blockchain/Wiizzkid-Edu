@@ -8,7 +8,7 @@ import {
   useContract,
 } from "wagmi";
 import { goerli } from "wagmi/chains";
-import {TOKEN_ABI, TOKEN_ADDRESS} from "./../components/dashboard/components/exchange/constants/constants";
+import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/dashboard/components/exchange/constants/constants";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
@@ -21,6 +21,7 @@ export interface TokenContextType {
   isConnected: any,
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
+  deductTokenOnGameCreate: (tokenFee: number) => Promise<void>,
   getTotalTokensMinted: () => Promise<void>,
   getTotalEth: () => Promise<void>,
   getOwner: () => Promise<void>,
@@ -38,6 +39,7 @@ export interface TokenContextType {
   setIsOwner: React.Dispatch<React.SetStateAction<boolean>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  
 }
 
 export const TokenContext = createContext<TokenContextType | null>(null);
@@ -102,7 +104,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   }
 
   try {
-    // Create an instace of token contract
+    // Create an instance of token contract
     const tokenContract = new Contract(
       TOKEN_ADDRESS,
       TOKEN_ABI,
@@ -241,6 +243,39 @@ const getTotalEth = async () => {
     }
   };
 
+
+
+  //Deducting token fee on game creation
+  const deductTokenOnGameCreate = async (tokenFee: number) => {
+    const gameContract = new Contract(
+        GAME_ADDRESS,
+        GAME_ABI,
+        signer!
+      );
+      const tokenContract = new Contract(
+        TOKEN_ADDRESS,
+        TOKEN_ABI,
+        signer!
+      );
+      
+      setLoading(true);
+      const amount = utils.parseEther(tokenFee.toString())
+
+      try {
+        const tx = await tokenContract.approve(GAME_ADDRESS, amount)
+        await tx.wait();
+
+        const txx = await gameContract.createGame(amount)
+        await txx.wait();
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+}
+
+
+
+
   useEffect(() => {
     if(!isConnected) {
       return;
@@ -250,7 +285,7 @@ const getTotalEth = async () => {
     getBalanceOfStoneTokens();
     getTotalEth();
     getOwner();
-}, [isConnected]);
+}, [isConnected, balanceOfStoneTokens]);
 
 
 
@@ -279,7 +314,8 @@ const getTotalEth = async () => {
       getTotalTokensMinted, 
       getTotalEth,
       getOwner, 
-      withdrawCoins, 
+      withdrawCoins,
+      deductTokenOnGameCreate, 
     }),
     [
       isConnected,
@@ -302,6 +338,7 @@ const getTotalEth = async () => {
       getTotalEth,
       getOwner, 
       withdrawCoins,
+      deductTokenOnGameCreate,
     ]
   )
 

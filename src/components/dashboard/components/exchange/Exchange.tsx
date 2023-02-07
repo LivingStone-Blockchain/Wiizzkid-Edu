@@ -3,7 +3,7 @@ import { TokenContext, TokenContextType } from '../../../../context/token.contex
 import  {CardBody, Card}  from '../../components/Cards';
 import Button from '../../../Button';
 import { FaTimes } from 'react-icons/fa';
-import { BigNumber, utils } from "ethers";
+import { utils } from "ethers";
 
 
 
@@ -12,8 +12,6 @@ import { BigNumber, utils } from "ethers";
 const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number| null>) => void}) => {
 
   const { 
-    isConnected,
-    zero,
     loading,
     balanceOfStoneTokens,
     tokenAmount,

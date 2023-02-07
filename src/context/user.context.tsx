@@ -77,14 +77,14 @@ const UserProvider: FC<any> = ({ children }) => {
 
 
     //login users automatically
-    /*useEffect(() => {
+    useEffect(() => {
         const loggedUSerJSON = window.localStorage.getItem('loggedWiizzikidUser');
         if (loggedUSerJSON) {
             const recoveredUser = JSON.parse(loggedUSerJSON);
             setUser(recoveredUser);
 
         }
-    }, []);*/
+    }, []);
 
 
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { Paypal, Exchange, Coingate } from '../components/index';
-import { paypal, coingate, crypto } from '../../../assets/dashboard/index';
+import { Paypal, Exchange, Stripe } from '../components/index';
+import { paypal, card, crypto } from '../../../assets/dashboard/index';
 import { CardBody, Card } from '../components/Cards';
 import { TokenContext, TokenContextType } from './../../../context/token.context';
 
@@ -43,11 +43,11 @@ const BuyStone = () => {
     },
     {
       id: 3,
-      title: "Payment Gateway",
-      text: "Get your Eth from Coingate",
-      img: coingate,
+      title: "Card Payment",
+      text: "Buy with your debit card",
+      img: card,
       className: 'bg-tealLighter',
-      children: <Coingate setOpen={setOpen}/>
+      children: <Stripe setOpen={setOpen}/>
     }
   ]
 

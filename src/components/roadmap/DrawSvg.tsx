@@ -62,8 +62,8 @@ const DrawSvg = () => {
 
   return (
     <>
-      <div className="absolute top-6 lg:left-1/2 left-4 transform -translate-x-1/2 w-6 h-6 bg-navy rounded-full animate-ball border-2 border-teal" ref={ballRef}></div>
-      <div  className="absolute top-16 lg:left-1/2 left-4 transform -translate-x-1/2 w-full h-full overflow-hidden" ref={ref}>
+      <div className="absolute top-6 md:left-1/2 left-4 transform -translate-x-1/2 w-6 h-6 bg-navy rounded-full animate-ball border-2 border-teal" ref={ballRef}></div>
+      <div  className="absolute top-16 md:left-1/2 left-4 transform -translate-x-1/2 w-full h-full overflow-hidden" ref={ref}>
         <Vector />
       </div>
     </>

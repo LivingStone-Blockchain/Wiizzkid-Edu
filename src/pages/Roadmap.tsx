@@ -177,7 +177,7 @@ const Roadmap = () => {
      <section className="min-h-screen w-screen relative  bg-slate-50">
      
      <div  className={`w-full h-full flex justify-center items-center my-10`}>
-            <div className={`md:w-2/5 w-[80%]  h-fit p-4 border-[3px] border-navy border-solid rounded-tr-[50px] rounded-bl-[50px]`}>
+            <div className={`lg:w-2/5 w-[80%]  h-fit p-4 border-[3px] border-navy border-solid rounded-tr-[50px] rounded-bl-[50px]`}>
               <p className={`flex items-center justify-center h-fit bg-tealLighter text-navy p-4 relative border border-navy border-solid rounded-tr-[40px] rounded-bl-[40px]`}>
                 <span className='block text-sm md:text-base text-navy font-normal first-letter:text-4xl md:first-letter:text-6xl first-letter:font-bold first-letter:text-navy first-letter:mr-3 first-letter:float-left'>Wiizzkid's Roadmap is dynamic, regular upgrades and additions will occur in tandem with the expansion of our project. The release dates shown in the following roadmap are presently the most precise estimates available, although they could all change based on how work progresses.</span>
               </p>

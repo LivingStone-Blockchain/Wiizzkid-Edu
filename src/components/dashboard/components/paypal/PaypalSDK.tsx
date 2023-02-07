@@ -50,7 +50,7 @@ const PaypalSDK: FC<PaypalSDKProps> = ({amount, setSuccess, isLoading}) => {
       const onApprove = (data: any, actions: any) => {
         return actions.order.capture().then((details: any) => {
           const name = details.payer.name.given_name;
-          toast.success(`Transaction with order ID ${orderID} completed by ${name}`, {duration: 5000});
+          toast.success(`Transaction completed completed by ${name}`, {duration: 5000});
           setSuccess(true)
         });
       };
@@ -66,7 +66,7 @@ const PaypalSDK: FC<PaypalSDKProps> = ({amount, setSuccess, isLoading}) => {
                         <div>
                             <p className="mb-2 text-sm font-normal text-gray-600">Stone equivalent: {Number(amount)/0.001}<span className="text-xs">STN</span></p>
                         </div>
-                        <PayPalScriptProvider options={{ "client-id": import.meta.env.VITE_PAYPAL_CLIENTID }}>
+                        <PayPalScriptProvider options={{ "client-id": import.meta.env.VITE_PAYPAL_CLIENTID, 'disable-funding': 'card' }}>
                             <PayPalButtons  
                             style={{ layout: "vertical", shape: "pill" }}
                             createOrder={createOrder}

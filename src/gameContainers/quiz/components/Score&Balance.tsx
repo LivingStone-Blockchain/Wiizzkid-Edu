@@ -28,6 +28,10 @@ const ScoreBalance = () => {
           value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
         },
         {
+          title: "Winnings",
+          value: 5,
+        },
+        {
           title: "Score",
           value: latestScore,
         }
@@ -35,7 +39,7 @@ const ScoreBalance = () => {
 
   return (
     <div className='absolute md:bottom-5 bottom-[14px] lg:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
-           <div className={`bg-gray-100 border-4 text-center flex w-[120px] md:w-[160px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-tealLight`}>
+           <div className={`bg-gray-100 border-4 text-center flex w-[170px] md:w-[240px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-tealLight`}>
             {boardData.map((item) => (
               <div className="col-4" key={item.title}>
               <div className={`text-tealLight md:text-base text-sm bg-gray-200 md:p-2 p-[2px] font-semibold border-x border-gray-300`}>
