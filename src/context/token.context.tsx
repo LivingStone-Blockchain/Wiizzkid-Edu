@@ -22,6 +22,7 @@ export interface TokenContextType {
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
   deductTokenOnGameCreate: (tokenFee: number) => Promise<void>,
+  withdrawWinnings: (winnings: number) => Promise<void>,
   getTotalTokensMinted: () => Promise<void>,
   getTotalEth: () => Promise<void>,
   getOwner: () => Promise<void>,
@@ -39,7 +40,8 @@ export interface TokenContextType {
   setIsOwner: React.Dispatch<React.SetStateAction<boolean>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  
+  firstApproval: boolean,
+  setFirstApproval: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export const TokenContext = createContext<TokenContextType | null>(null);
@@ -63,6 +65,8 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [tokensMinted, setTokensMinted] = useState<BigNumber>(zero);
   // isOwner gets the owner of the contract through the signed address
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  //confirm transactions for fee deduction
+  const [firstApproval, setFirstApproval] = useState<boolean>(false);
  
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
@@ -83,6 +87,7 @@ const TokenProvider: FC<any> = ({ children }) => {
       const payload = {
         stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
         wallet_address: address,
+        stone_token_winnings: user.stone_token_winnings
       }
       const updateStoneBalance = async () => {
         try {
@@ -259,11 +264,15 @@ const getTotalEth = async () => {
       );
       
       setLoading(true);
+      setFirstApproval(true);
       const amount = utils.parseEther(tokenFee.toString())
 
       try {
         const tx = await tokenContract.approve(GAME_ADDRESS, amount)
         await tx.wait();
+        setTimeout(() => {
+          setFirstApproval(false);
+        }, 3000);
 
         const txx = await gameContract.createGame(amount)
         await txx.wait();
@@ -271,6 +280,37 @@ const getTotalEth = async () => {
       } catch (error) {
         console.error(error);
       }
+}
+
+
+//withdraw winnings
+const withdrawWinnings = async (winning: number) => {
+  setLoading(true);
+
+  const gameContract = new Contract(
+    GAME_ADDRESS,
+    GAME_ABI,
+    signer!
+    );
+
+    const winningAmount = utils.parseEther(winning.toString())
+
+    try {
+      const  tx = await gameContract.withdrawWins(winningAmount) 
+      await tx.wait();
+      
+      //reset winnings on backend
+      const payload = {
+        stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+        wallet_address: address!,
+        stone_token_winnings: 0,
+      }
+      await userUpdateService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
+
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
 }
 
 
@@ -316,6 +356,9 @@ const getTotalEth = async () => {
       getOwner, 
       withdrawCoins,
       deductTokenOnGameCreate, 
+      firstApproval,
+      setFirstApproval,
+      withdrawWinnings 
     }),
     [
       isConnected,
@@ -339,6 +382,9 @@ const getTotalEth = async () => {
       getOwner, 
       withdrawCoins,
       deductTokenOnGameCreate,
+      firstApproval,
+      setFirstApproval,
+      withdrawWinnings 
     ]
   )
 

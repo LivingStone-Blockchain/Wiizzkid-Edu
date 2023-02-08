@@ -3,7 +3,7 @@ import { QuizContext, QuizContextType } from '../../../../context/quiz.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
-import { referral, score, balance, average } from '../../../../assets/dashboard';
+import { referral, score, balance, average, trophy } from '../../../../assets/dashboard';
 import { toast } from 'react-hot-toast';
 import { apiChartData } from '../../data/quizChartData';
 import { utils } from "ethers";
@@ -53,6 +53,11 @@ const QuizDb = () => {
               title="STN Balance"
               value={Number(utils.formatEther(balanceOfStoneTokens)).toFixed(2)}
               img={balance}
+            />
+             <InfoCard
+              title="Winnings"
+              value={user!.stone_token_winnings}
+              img={trophy}
             />
             <InfoCard
               title="Latest Score"

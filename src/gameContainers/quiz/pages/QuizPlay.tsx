@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaCheck } from "react-icons/fa";
 import { eduImg } from "../assets/images";
 import  Button from "./../components/button/Button";
 import categoryStrings from "../components/functions/categoryStringConveter";
 import Overlay from "../components/Overlay";
 import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
-import { TokenContext, TokenContextType } from "../../../context/token.context"
+import { TokenContext, TokenContextType } from "../../../context/token.context";
 import service from "../services/services";
 
 
@@ -18,7 +18,7 @@ type PlayerTrackerType = {
 
 export default function QuizPlay() {
   const { startGame, setScore, start, setStart, gameDetails } = useContext(QuizContext) as QuizContextType;
-  const { loading } = useContext(TokenContext) as TokenContextType;
+  const { loading, firstApproval } = useContext(TokenContext) as TokenContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
 
@@ -182,7 +182,7 @@ if (gameDetails?.game_mode === "london") {
                     <span className={`relative flex items-center justify-center md:text-base text-sm font-semibold ${loading ? " text-gray-200" : " text-white"}`}>{loading ? "Processing Fee" : `Start Quiz`}{!loading && <FaArrowRight className="ml-3" />}</span>
               </Button> 
 
-              {loading && <p className="text-xs animate-pulse text-navy italic">Please wait...</p>}
+              {loading ? <p className="text-xs animate-pulse text-navy italic">{firstApproval ? "Confirm Transaction in Metamask" : "One more confirmation. Please wait..."}</p> : <p className="text-xs animate-pulse text-teal italic flex items-center justify-center gap-3"><span>Transaction Completed</span> <FaCheck /></p>}
             </div>
 
             </>

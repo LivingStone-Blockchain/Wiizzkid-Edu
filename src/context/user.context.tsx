@@ -27,6 +27,7 @@ type userType = {
     full_name: string,
     stone_token: number,
     player_code: string,
+    stone_token_winnings: number
 }
 
 export interface UserContextType {
@@ -73,9 +74,6 @@ const UserProvider: FC<any> = ({ children }) => {
 
 
 
-
-
-
     //login users automatically
     useEffect(() => {
         const loggedUSerJSON = window.localStorage.getItem('loggedWiizzikidUser');
@@ -85,6 +83,8 @@ const UserProvider: FC<any> = ({ children }) => {
 
         }
     }, []);
+
+    
 
 
 
@@ -106,6 +106,8 @@ const UserProvider: FC<any> = ({ children }) => {
     }, [refreshTokenError])
 
 
+    console.log(user)
+  
 
     //Handle signup
     const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormikType>({

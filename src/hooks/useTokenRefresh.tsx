@@ -7,16 +7,13 @@ import { UserContext, UserContextType } from './../context/user.context'
 
 const useTokenRefresh = () => {
     const [refreshedUser, setRefreshedUser] = useState<any>(JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!));
-    const { setRefreshTokenError, setUser } = useContext(UserContext) as UserContextType; 
+    const { setRefreshTokenError } = useContext(UserContext) as UserContextType; 
     
     useEffect(() => {
              
         if (!refreshedUser) {
             return;
           }
-
-        //log in automatically
-        setUser(refreshedUser);
 
         //constantly reach endpoint for new token if expired
         const intervalId = setInterval(async () => {
@@ -29,7 +26,6 @@ const useTokenRefresh = () => {
             
             // Update access token key-value pair in the object
             refreshedUser.tokens.access = newAccessToken?.access;
-
 
 
             // Save the updated object back to localStorage

@@ -11,7 +11,7 @@ type BoardDataType = {
 }
 
 const ScoreBalance = () => {
-    const { quizRecentGames } = useContext(QuizContext) as QuizContextType;
+    const { quizRecentGames, user } = useContext(QuizContext) as QuizContextType;
     const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
 
     
@@ -22,6 +22,7 @@ const ScoreBalance = () => {
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
 
 
+
     const boardData: BoardDataType[] = [
         {
           title: "Balance",
@@ -29,7 +30,7 @@ const ScoreBalance = () => {
         },
         {
           title: "Winnings",
-          value: 5,
+          value: user?.stone_token_winnings,
         },
         {
           title: "Score",
