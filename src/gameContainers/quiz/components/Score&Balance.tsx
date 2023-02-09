@@ -31,7 +31,7 @@ const ScoreBalance = () => {
         },
         {
           title: "Winnings",
-          value: userDetail?.stone_token_winnings?.toFixed(1),
+          value: userDetail?.stone_token_winnings === (null || undefined) ? 0 : userDetail?.stone_token_winnings?.toFixed(1),
         },
         {
           title: "Score",
