@@ -12,7 +12,7 @@ import { Preloader } from './../../../index';
 
 const QuizDb = () => {
     const { user, quizRecentGames } = useContext(QuizContext) as QuizContextType;
-    const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+    const { balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
 
       //returns data for a year
   const currentYear = new Date().getFullYear();
@@ -56,7 +56,7 @@ const QuizDb = () => {
             />
              <InfoCard
               title="Winnings"
-              value={user!.stone_token_winnings}
+              value={userDetail?.stone_token_winnings!.toFixed(2)}
               img={trophy}
             />
             <InfoCard
@@ -78,4 +78,4 @@ const QuizDb = () => {
   )
 }
 
-export default QuizDb
+export default QuizDb;

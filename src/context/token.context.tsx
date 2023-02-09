@@ -12,8 +12,23 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
-import {userUpdateService } from "../services";
+import {userDetailsService } from "../services";
 import useTokenRefresh from './../hooks/useTokenRefresh';
+
+
+type userType = {
+  id: number,
+  email: string,
+  tokens: {
+      access: string,
+      refresh: string,
+  },
+  full_name: string,
+  stone_token: number,
+  player_code: string,
+  stone_token_winnings?: number,
+  wallet_address?: string
+}
 
 
 
@@ -42,6 +57,8 @@ export interface TokenContextType {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   firstApproval: boolean,
   setFirstApproval: React.Dispatch<React.SetStateAction<boolean>>,
+  userDetail: userType | null,
+  setUserDetail: React.Dispatch<React.SetStateAction<userType | null>>,
 }
 
 export const TokenContext = createContext<TokenContextType | null>(null);
@@ -67,14 +84,29 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
- 
+  const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
   const { refreshedUser } = useTokenRefresh();
 
 
 
-    //update token balance on backend
+
+
+
+      //Retrieve user details
+      useEffect(() => {
+        if (!user) {
+            return;
+        };
+
+        userDetailsService.getUser(user?.id, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
+    }, [user]);
+  
+
+
+
+    //update token balance, wallet address and winnings on backend
     useEffect(() => {
       if (!user) {
         return;
@@ -87,11 +119,11 @@ const TokenProvider: FC<any> = ({ children }) => {
       const payload = {
         stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
         wallet_address: address,
-        stone_token_winnings: user.stone_token_winnings
+        stone_token_winnings: userDetail?.stone_token_winnings!
       }
       const updateStoneBalance = async () => {
         try {
-          await userUpdateService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
+          await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
         } catch (error) {
         }
       }
@@ -305,7 +337,7 @@ const withdrawWinnings = async (winning: number) => {
         wallet_address: address!,
         stone_token_winnings: 0,
       }
-      await userUpdateService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
+      await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
 
       setLoading(false);
     } catch (error) {
@@ -358,7 +390,9 @@ const withdrawWinnings = async (winning: number) => {
       deductTokenOnGameCreate, 
       firstApproval,
       setFirstApproval,
-      withdrawWinnings 
+      withdrawWinnings,
+      userDetail, 
+      setUserDetail
     }),
     [
       isConnected,
@@ -384,7 +418,9 @@ const withdrawWinnings = async (winning: number) => {
       deductTokenOnGameCreate,
       firstApproval,
       setFirstApproval,
-      withdrawWinnings 
+      withdrawWinnings,
+      userDetail, 
+      setUserDetail
     ]
   )
 

@@ -1,5 +1,5 @@
 import React, { createContext, FC, useState, useEffect, useCallback, useContext } from "react";
-import { registerService, loginService, forgotPasswordService, refreshTokenService } from "../services";
+import { registerService, loginService, forgotPasswordService, userDetailsService } from "../services";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
@@ -27,7 +27,8 @@ type userType = {
     full_name: string,
     stone_token: number,
     player_code: string,
-    stone_token_winnings: number
+    stone_token_winnings?: number,
+    wallet_address?: string
 }
 
 export interface UserContextType {
@@ -67,7 +68,7 @@ const UserProvider: FC<any> = ({ children }) => {
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState<string>('');
     const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
-    const [user, setUser] = useState<userType | null>(null);
+    const [user, setUser] = useState<userType | null>(null); //for login details
     const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -83,6 +84,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
         }
     }, []);
+
 
     
 
@@ -106,7 +108,6 @@ const UserProvider: FC<any> = ({ children }) => {
     }, [refreshTokenError])
 
 
-    console.log(user)
   
 
     //Handle signup
