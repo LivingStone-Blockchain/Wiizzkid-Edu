@@ -114,7 +114,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
     //update token balance, wallet address and winnings on backend
-    /*useEffect(() => {
+    useEffect(() => {
       if (!user) {
         return;
       }
@@ -135,7 +135,7 @@ const TokenProvider: FC<any> = ({ children }) => {
         }
       }
       updateStoneBalance();
-    }, [balanceOfStoneTokens, userDetail?.stone_token_winnings!])*/
+    }, [balanceOfStoneTokens, userDetail?.stone_token_winnings!])
     
 
 
