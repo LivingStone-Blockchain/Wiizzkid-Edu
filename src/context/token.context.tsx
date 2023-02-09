@@ -96,13 +96,20 @@ const TokenProvider: FC<any> = ({ children }) => {
 
       //Retrieve user details
       useEffect(() => {
-        if (!user) {
-            return;
-        };
 
-        userDetailsService.getUser(user?.id, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
-    }, [user]);
-  
+        const intervalId = setInterval(async() => {
+          try {
+            await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
+          } catch (error) {
+    
+          }
+        }, 2000);
+
+        return () => clearInterval(intervalId);
+        
+
+        //userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
+    }, [user])
 
 
 
@@ -128,7 +135,7 @@ const TokenProvider: FC<any> = ({ children }) => {
         }
       }
       updateStoneBalance();
-    }, [user, balanceOfStoneTokens, address])
+    }, [balanceOfStoneTokens, userDetail?.stone_token_winnings!])
     
 
 
@@ -330,7 +337,8 @@ const withdrawWinnings = async (winning: number) => {
     try {
       const  tx = await gameContract.withdrawWins(winningAmount) 
       await tx.wait();
-      
+
+      toast.success('Withdrawal success', { duration: 5000 })    
       //reset winnings on backend
       const payload = {
         stone_token: Number(utils.formatEther(balanceOfStoneTokens)),

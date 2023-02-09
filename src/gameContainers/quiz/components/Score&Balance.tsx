@@ -23,6 +23,7 @@ const ScoreBalance = () => {
 
 
 
+
     const boardData: BoardDataType[] = [
         {
           title: "Balance",

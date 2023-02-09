@@ -9,7 +9,7 @@ import Button from '../../../components/Button';
 
 const DashboardHome = () => {
   const { dashBoardMode, setDashBoardMode } = useContext(WiizzkidContext) as WiizzkidContextType;
-  const { loading, withdrawWinnings } = useContext(TokenContext) as TokenContextType;
+  const { loading, withdrawWinnings, userDetail } = useContext(TokenContext) as TokenContextType;
   const { user } = useContext(QuizContext) as QuizContextType;
 
 
@@ -23,8 +23,8 @@ const DashboardHome = () => {
 
           <Button 
             type='button'
-            onClick={() => withdrawWinnings(user?.stone_token_winnings!)}
-            className={`relative rounded-xl flex-initial ${loading ? 'sm:w-64 w-40' : 'sm:w-56 w-40'} text-white sm:mx-0 text-sm font-semibold px-5 py-3 bg-teal  ${loading ? "bg-[#37385e] cursor-not-allowed pointer-events-none" : "bg-navy cursor-pointer pointer-events-auto"} ${user?.stone_token_winnings! === 0 && 'invisible'}`}
+            onClick={() => withdrawWinnings(userDetail?.stone_token_winnings!)}
+            className={`relative rounded-xl flex-initial flex justify-center items-center ${loading ? 'sm:w-64 w-40' : 'sm:w-56 w-40'} text-white sm:mx-0 text-sm font-semibold px-5 py-3 bg-teal  ${loading ? "bg-[#37385e] cursor-not-allowed pointer-events-none" : "bg-navy cursor-pointer pointer-events-auto"} ${userDetail?.stone_token_winnings! === 0 && 'invisible'}`}
           >
             <span className="flex h-3 w-3 absolute -top-[3px] -right-[3px]">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75"></span>

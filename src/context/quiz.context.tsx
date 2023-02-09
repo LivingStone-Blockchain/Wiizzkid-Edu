@@ -81,7 +81,7 @@ type userType = {
   id: number
   player_code: string
   stone_token_winnings?: number
-  wallet_address?: string
+   wallet_address?: string
 }
 
 
