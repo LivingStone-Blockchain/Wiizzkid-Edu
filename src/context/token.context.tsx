@@ -33,6 +33,7 @@ type userType = {
 
 
 export interface TokenContextType {
+  address: any,
   isConnected: any,
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
@@ -113,29 +114,6 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-    //update token balance, wallet address and winnings on backend
-    useEffect(() => {
-      if (!user) {
-        return;
-      }
-
-      if (!address) {
-        return;
-      }
-
-      const payload = {
-        stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
-        wallet_address: address,
-        stone_token_winnings: userDetail?.stone_token_winnings!
-      }
-      const updateStoneBalance = async () => {
-        try {
-          await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
-        } catch (error) {
-        }
-      }
-      updateStoneBalance();
-    }, [balanceOfStoneTokens, userDetail?.stone_token_winnings!])
     
 
 
@@ -338,18 +316,19 @@ const withdrawWinnings = async (winning: number) => {
       const  tx = await gameContract.withdrawWins(winningAmount) 
       await tx.wait();
 
-      toast.success('Withdrawal success', { duration: 5000 })    
-      //reset winnings on backend
-      const payload = {
-        stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
-        wallet_address: address!,
-        stone_token_winnings: 0,
-      }
-      await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
-
+      toast.success('Withdrawal success', { duration: 5000 })  
       setLoading(false);
-    } catch (error) {
-      console.error(error);
+    } catch (error) {}
+
+
+    if(!loading) {
+        //reset winnings on backend
+        const payload = {
+          stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+          wallet_address: address!,
+          stone_token_winnings: 0,
+        }
+        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
     }
 }
 
@@ -375,6 +354,7 @@ const withdrawWinnings = async (winning: number) => {
 
   const value = useMemo(
     () => ({
+      address,
       isConnected,
       zero,
       loading,
@@ -403,6 +383,7 @@ const withdrawWinnings = async (winning: number) => {
       setUserDetail
     }),
     [
+      address,
       isConnected,
       zero,
       loading,

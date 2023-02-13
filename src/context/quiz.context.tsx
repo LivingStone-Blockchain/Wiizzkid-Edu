@@ -16,6 +16,8 @@ import { useLocation } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
 import useTokenRefresh from "./../hooks/useTokenRefresh"
+import {userDetailsService } from "../services";
+import { utils } from "ethers";
 import { toast } from "react-hot-toast"
 import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
 
@@ -85,6 +87,16 @@ type userType = {
 }
 
 
+type ScoreBoardType = {
+  player_id: number,
+  game_id: string,
+  score: number,
+  submit_time: number,
+  full_name: string,
+  winnings: number
+}[]
+
+
 
 export interface QuizContextType {
   submitTimeRef: any
@@ -134,6 +146,8 @@ export interface QuizContextType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
   showLeaderBoard: boolean
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
+  scoreBoard: ScoreBoardType | undefined
+  setScoreBoard: React.Dispatch<React.SetStateAction<ScoreBoardType | undefined>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -172,12 +186,13 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [category, setCategory] = useState<string>("")
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
+  const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   const { pathname } = useLocation()
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
+  const { deductTokenOnGameCreate, address, balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
 
   //token refresher
   const { refreshedUser } = useTokenRefresh();
@@ -408,6 +423,41 @@ const QuizProvider: FC<any> = ({ children }) => {
     }
   }
 
+
+
+
+
+  const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id);
+  //update token balance, wallet address and winnings on backend
+  useEffect(() => {
+    
+    if (!user) {
+      return;
+    }
+
+    if (!address) {
+      return;
+    }
+
+ 
+
+    const payload = {
+      stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+      wallet_address: address,
+      stone_token_winnings: stoneWinning?.winnings,
+    }
+    const updateStoneBalance = async () => {
+      try {
+        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
+      } catch (error) {
+      }
+    }
+    updateStoneBalance();
+  }, [balanceOfStoneTokens, stoneWinning]);
+
+
+
+
   return (
     <QuizContext.Provider
       value={{
@@ -457,6 +507,8 @@ const QuizProvider: FC<any> = ({ children }) => {
         setShowCreateGameModal,
         showLeaderBoard,
         setShowLeaderBoard,
+        scoreBoard,
+        setScoreBoard,
         quizRecentGames,
         setQuizRecentGames,
         tokenFee,

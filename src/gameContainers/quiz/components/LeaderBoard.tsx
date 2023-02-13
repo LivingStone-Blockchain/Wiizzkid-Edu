@@ -8,15 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 
-type ScoreBoardType = {
-  player_id: number,
-  game_id: string,
-  score: number,
-  submit_time: number,
-  full_name: string,
-  winnings: number
-}[]
-
 
 type LeaderBoardData = {
   setStart: (value: React.SetStateAction<boolean>) => void,
@@ -26,8 +17,7 @@ type LeaderBoardData = {
 
 
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard } = useContext(QuizContext) as QuizContextType;
-  const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
+  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, } = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
 
@@ -47,6 +37,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
     return () => clearInterval(intervalId);
   }
     }, [showLeaderBoard]);
+
 
   return (
       <section className="max-w-sm mx-auto pb-4 rounded-md w-full">

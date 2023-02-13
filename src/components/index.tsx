@@ -20,3 +20,4 @@ export { default as Hero } from './Hero';
 export { default as Contact } from './Contact';
 export { default as Share } from './share/Share';
 export { default as BlogBuilder } from './blog/BlogBuilder';
+export { default as BuyInstruction } from './BuyInstruction';

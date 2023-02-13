@@ -11,7 +11,7 @@ const Features = () => {
 			<p className="leading-relaxed text-gray-500 lg:text-base text-sm">The possibilities are beyond your imagination. Explore the library.</p>
 		</div>
     <div data-aos="fade-up" data-aos-delay="100" 
-      className="mt-16 grid divide-x divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
+      className="mt-16 grid divide-x divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
     >
       <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 hover:bg-tomatoLighter">
         <div className="relative space-y-8 py-12 p-8">

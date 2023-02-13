@@ -4,7 +4,7 @@ import axios from 'axios';
 type credentialsType = {
     stone_token: number,
     wallet_address: string,
-    stone_token_winnings: number
+    stone_token_winnings?: number | undefined
 }
 
 
