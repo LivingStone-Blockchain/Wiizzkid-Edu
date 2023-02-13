@@ -427,7 +427,9 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
-  const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id);
+  //only fetch winning if all scores are ready on leader board
+  const stoneWinning = gameDetails?.total_players === scoreBoard?.length && scoreBoard?.find(player => player.player_id === user?.id)?.winnings;
+  
   //update token balance, wallet address and winnings on backend
   useEffect(() => {
     
@@ -440,11 +442,10 @@ const QuizProvider: FC<any> = ({ children }) => {
     }
 
  
-
     const payload = {
       stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
       wallet_address: address,
-      stone_token_winnings: stoneWinning?.winnings,
+      stone_token_winnings: stoneWinning,
     }
     const updateStoneBalance = async () => {
       try {
@@ -452,8 +453,10 @@ const QuizProvider: FC<any> = ({ children }) => {
       } catch (error) {
       }
     }
+    console.log(stoneWinning)
     updateStoneBalance();
   }, [balanceOfStoneTokens, stoneWinning]);
+
 
 
 
