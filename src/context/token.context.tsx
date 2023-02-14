@@ -352,71 +352,40 @@ const withdrawWinnings = async (winning: number) => {
 
 
 
-  const value = useMemo(
-    () => ({
-      address,
-      isConnected,
-      zero,
-      loading,
-      setLoading,
-      balanceOfStoneTokens,
-      setBalanceOfStoneTokens,
-      tokenAmount,
-      setTokenAmount,
-      ETH,
-      setETH,
-      tokensMinted,
-      setTokensMinted,
-      isOwner,
-      setIsOwner,
-      getBalanceOfStoneTokens, 
-      mintStoneToken, 
-      getTotalTokensMinted, 
-      getTotalEth,
-      getOwner, 
-      withdrawCoins,
-      deductTokenOnGameCreate, 
-      firstApproval,
-      setFirstApproval,
-      withdrawWinnings,
-      userDetail, 
-      setUserDetail
-    }),
-    [
-      address,
-      isConnected,
-      zero,
-      loading,
-      setLoading,
-      balanceOfStoneTokens,
-      setBalanceOfStoneTokens,
-      tokenAmount,
-      setTokenAmount,
-      ETH,
-      setETH,
-      tokensMinted,
-      setTokensMinted,
-      isOwner,
-      setIsOwner,
-      getBalanceOfStoneTokens, 
-      mintStoneToken, 
-      getTotalTokensMinted, 
-      getTotalEth,
-      getOwner, 
-      withdrawCoins,
-      deductTokenOnGameCreate,
-      firstApproval,
-      setFirstApproval,
-      withdrawWinnings,
-      userDetail, 
-      setUserDetail
-    ]
-  )
+
 
 
   return (
     <TokenContext.Provider
-      value={value}
+      value={{
+        address,
+        isConnected,
+        zero,
+        loading,
+        setLoading,
+        balanceOfStoneTokens,
+        setBalanceOfStoneTokens,
+        tokenAmount,
+        setTokenAmount,
+        ETH,
+        setETH,
+        tokensMinted,
+        setTokensMinted,
+        isOwner,
+        setIsOwner,
+        getBalanceOfStoneTokens, 
+        mintStoneToken, 
+        getTotalTokensMinted, 
+        getTotalEth,
+        getOwner, 
+        withdrawCoins,
+        deductTokenOnGameCreate, 
+        firstApproval,
+        setFirstApproval,
+        withdrawWinnings,
+        userDetail, 
+        setUserDetail
+      }}
     >
       {children}
     </TokenContext.Provider>

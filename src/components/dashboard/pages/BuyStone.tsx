@@ -27,27 +27,27 @@ const BuyStone = () => {
   const buyStoneData: BuyStoneDataType[] = [
     {
       id: 1,
-      title: "Crypto",
-      text: "Buy Stone token with Eth",
+      title: "Swap",
+      text: "Buy STN with Eth",
       img: crypto,
       className: 'bg-tomatoLighter',
       children: <Exchange setOpen={setOpen} />
     },
     {
       id: 2,
-      title: "Fiat",
-      text: "Buy in your local currency",
-      img: paypal,
+      title: "Card Payment",
+      text: "Buy STN with credit card",
+      img: card,
       className: 'bg-goldenLighter',
-      children: <Paypal setOpen={setOpen} />
+      children: <Stripe setOpen={setOpen}/>
     },
     {
       id: 3,
-      title: "Card Payment",
-      text: "Buy with your debit card",
-      img: card,
+      title: "Fiat",
+      text: "Buy in your local currency",
+      img: paypal,
       className: 'bg-tealLighter',
-      children: <Stripe setOpen={setOpen}/>
+      children: <Paypal setOpen={setOpen} />
     }
   ]
 

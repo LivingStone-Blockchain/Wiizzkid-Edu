@@ -427,8 +427,10 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Number(utils.formatEther(balanceOfStoneTokens))]); 
+ // console.log(balanceOfStoneTokens)
   //only fetch winning if all scores are ready on leader board
-  const stoneWinning = gameDetails?.total_players === scoreBoard?.length && scoreBoard?.find(player => player.player_id === user?.id)?.winnings;
+  const stoneWinning = useMemo(() => scoreBoard?.find(player => player.player_id === user?.id)?.winnings, [scoreBoard?.find(player => player.player_id === user?.id)?.winnings]); 
   
   //update token balance, wallet address and winnings on backend
   useEffect(() => {
@@ -440,6 +442,8 @@ const QuizProvider: FC<any> = ({ children }) => {
     if (!address) {
       return;
     }
+
+  
 
  
     const payload = {
@@ -453,9 +457,9 @@ const QuizProvider: FC<any> = ({ children }) => {
       } catch (error) {
       }
     }
-    console.log(stoneWinning)
+    console.log(payload.stone_token_winnings)
     updateStoneBalance();
-  }, [balanceOfStoneTokens, stoneWinning]);
+  }, [stoneWinning]);
 
 
 
