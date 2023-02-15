@@ -15,7 +15,7 @@ const Metaverse = () => {
         <LazyLoadImage 
                 src={vrStudent} 
                 placeholderSrc={vrStudentPlaceholder}
-                effect="blur"
+                effect="opacity"
                 alt="boy on VR"
                 className="relative z-50 w-full h-auto lg:max-w-[450px]"
             />

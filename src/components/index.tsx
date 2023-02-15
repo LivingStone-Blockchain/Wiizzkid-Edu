@@ -21,3 +21,4 @@ export { default as Contact } from './Contact';
 export { default as Share } from './share/Share';
 export { default as BlogBuilder } from './blog/BlogBuilder';
 export { default as BuyInstruction } from './BuyInstruction';
+export { default as Players } from './Players';

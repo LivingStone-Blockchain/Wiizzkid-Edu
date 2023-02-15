@@ -1,80 +1,71 @@
 import React from 'react'
-import { duo, single, multi, graduate } from '../assets/mode';
 import { Link } from 'react-router-dom';
+import { FaGraduationCap, FaImage,  } from 'react-icons/fa';
+import {  MdGeneratingTokens } from 'react-icons/md';
+import { vr } from "../assets/header/index";
+
 
 const Features = () => {
   return (
 
-  <div className="m-auto text-gray-500">
-    <div data-aos="flip-up" className="max-w-xl mx-auto text-center mt-24">
-			<h1 className="font-bold text-navy my-3 md:text-3xl text-2xl">All-In-One <span className="text-tomato">Learning Space.</span></h1>
-			<p className="leading-relaxed text-gray-500 lg:text-base text-sm">The possibilities are beyond your imagination. Explore the library.</p>
+  <div className="m-auto text-gray-500 mt-24">
+     <div data-aos="flip-up" className="text-center max-w-screen-lg mx-auto">
+			<h1 className="md:text-3xl text-2xl font-bold mb-4 text-navy">Who are <span className="text-tomato">The Wiizzkids?</span></h1>
+			<p className="text-gray-500 md:text-base text-sm leading-relaxed">Wiizzkid is a comprehensive learning platform that combines cutting-edge blockchain technologies with innovative features to provide a unique and engaging educational experience for students and educators alike.</p>
 		</div>
     <div data-aos="fade-up" data-aos-delay="100" 
       className="mt-16 grid divide-x divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
     >
       <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 hover:bg-tomatoLighter">
         <div className="relative space-y-8 py-12 p-8">
-          <img
-            src={single}
-            className="w-14"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
+          <div className="w-16 h-16 flex items-center justify-center gap-4 rounded-full bg-tomatoLighter group-hover:bg-white">  
+            <FaGraduationCap className="w-6 h-6 m-auto text-tomato" />
+          </div>
 
           <div className="space-y-2">
             <h5
               className="font-medium transition group-hover:text-primary md:text-xl text-lg text-navy"
             >
-              Single player
+              Hybrid Education
             </h5>
             <p className="text-gray-500 md:text-base text-sm leading-relaxed">
-              Learning becomes a lot easier when you have fun practicing and sharpening your skills.
+            Learn from anywhere, at any time, and on any device. Whether you're a student looking to enhance your knowledge and skills, or an educator seeking to reach more students and provide a personalized learning experience, Wiizzkid has something to offer.
             </p>
           </div>
         </div>
       </div>
       <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 hover:bg-goldenLighter">
         <div className="relative space-y-8 py-12 p-8">
-          <img
-            src={duo}
-            className="w-14"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
+        <div className="w-16 h-16 flex items-center justify-center gap-4 rounded-full bg-goldenLighter group-hover:bg-white">  
+                <MdGeneratingTokens className="w-6 h-6 m-auto text-golden" />
+              </div>
 
           <div className="space-y-2">
             <h5
               className="font-medium md:text-xl text-lg mb-3  text-navy transition group-hover:text-primary"
             >
-              Two players
+              Learn to Earn
             </h5>
             <p className="text-gray-500 md:text-base text-sm leading-relaxed">
-            Play with another player to earn some crypto coins. You will need speed, knowledge and accuracy to win.
+            Wiizzkid incentivize students to learn by rewarding them with tokens that can be redeemed for various benefits, such as discounts on future quizzes, exclusive content, or even real-world prizes.
             </p>
           </div>
         </div>
       </div>
       <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 hover:bg-tealLighter">
         <div className="relative space-y-8 py-12 p-8">
-          <img
-            src={multi}
-            className="w-14"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
+        <div className="w-16 h-16 flex items-center justify-center gap-4 rounded-full bg-tealLighter group-hover:bg-white">  
+          <FaImage className="w-6 h-6 m-auto text-teal" />      
+        </div>
 
           <div className="space-y-2">
             <h5
               className="font-medium md:text-xl text-lg mb-3 text-navy transition group-hover:text-primary"
             >
-              Multiple players
+              NFT Special
             </h5>
             <p className="text-gray-500 md:text-base text-sm leading-relaxed">
-            Play with a group of friends/class to win the challenge. The team with the highest average wins.
+            By owning an NFT related to a specific topic, students can gain access to exclusive content and insights that can help them learn more about the topic before taking the quiz, ensuring a more comprehensive and effective learning experience.
             </p>
           </div>
           
@@ -86,22 +77,18 @@ const Features = () => {
         <div
           className="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white"
         >
-          <img
-             src={graduate}
-            className="w-14"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
+          <div className="w-16 h-16 flex items-center justify-center gap-4 rounded-full bg-white">  
+            <img className='bg-navy bg-opacity-80 rounded-lg h-auto w-full max-w-[27px] p-1' src={vr} alt="vr" style={{ transform: "scaleX(-1)" }} /> 
+            </div>
 
           <div className="space-y-2">
             <h5
               className="font-medium md:text-xl text-lg mb-3 text-navy transition group-hover:text-primary"
             >
-              More on Wiizzkids
+              AR-powered Metaverse
             </h5>
             <p className="text-gray-500 md:text-base text-sm leading-relaxed">
-              Take a deeper dive into the Wiizzkid universe and learn more about the platform.
+            Wiizzkid is developing an AR-powered education world on the metaverse, which will allow students to explore and interact with educational content in a fun and engaging way.
             </p>
           </div>
           <Link to="/about" className="flex items-center justify-between group-hover:text-text-navy">

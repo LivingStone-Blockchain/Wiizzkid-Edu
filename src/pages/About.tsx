@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Banner, GameModes, Contact } from '../components';
+import { Banner, Players, Contact } from '../components';
 import { classroom} from '../assets/about';
 
 
@@ -37,7 +37,7 @@ const About = () => {
 		</div>
       </div>
 
-	  <GameModes />
+	  <Players />
 	  <Contact />
     </>
   )

@@ -1,5 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { card, usdt, coin } from './../assets/buyInstruction/index';
+import { FaLink } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { UserContext, UserContextType } from '../context/user.context';
+
 
 type PanelPropsType = {
     id: number,
@@ -42,9 +46,13 @@ const PanelData: PanelPropsType[] = [
 
 
 const BuyInstruction = () => {
+    const { user } = useContext(UserContext) as UserContextType;
     const [activeCardDesktop, setActiveCardDesktop] = useState<number>(0);
     const [activeCardMobile, setActiveCardMobile] = useState<number>(0);
+    const [color, setColor] = useState<boolean>(false);
+    const navigate = useNavigate();
 
+    
    const handleDesktopClick = (index: number) => {
         setActiveCardDesktop(index)
    };
@@ -88,8 +96,8 @@ const BuyInstruction = () => {
         
                         <div  className={`flex flex-col items-start justify-center gap-5 bg-white h-full m-6 ${activeCardDesktop === index && 'lg:grow-[4] max-w-full'}`}>
                             <h1 className="font-bold uppercase -mt-2 text-lg" style={{color: `${colorDeep}`}}>{title}</h1>
-                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle}</p>
-                            <img className="w-80" src={img} alt={title} />
+                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle} <FaLink onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
+                            <img className="w-80 rounded-xl" src={img} alt={title} loading="eager" />
                         </div>
                      </div>
                    ) : (
@@ -133,7 +141,7 @@ const BuyInstruction = () => {
         
                         <div  className={`flex flex-col items-start justify-center gap-5 bg-white h-full m-6 ${activeCardMobile === id && 'lg:grow-[4] max-w-full'}`}>
                             <h1 className="font-bold uppercase -mt-2 text-lg" style={{color: `${colorDeep}`}}>{title}</h1>
-                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle}</p>
+                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle}  <FaLink onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
                             <img className="w-72 hidden" src={img} alt={title} />
                         </div>
                      </div>
