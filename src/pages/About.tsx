@@ -13,15 +13,13 @@ const About = () => {
 		  });
 	}, [])
 	
-
-	
   return (
     <>
         <Banner 
             title='The Wiizzkids...'
         />
 
-		<div className='container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-500'>
+		<div className='container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-500' id="step">
       		<div className="sm:flex items-center sm:space-x-8 md:py-20 py-16">
 			<div data-aos="fade-right" className="sm:w-1/2 relative">
 				<div className="bg-tomato rounded-full absolute w-12 h-12 z-0 -left-4 -top-3 animate-pulse"></div>

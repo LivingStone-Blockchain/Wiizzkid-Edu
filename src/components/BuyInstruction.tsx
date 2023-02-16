@@ -71,6 +71,9 @@ const BuyInstruction = () => {
 			<p className="leading-relaxed text-gray-500 lg:text-base text-sm">To link your wallet to the platform, first make sure a MetaMask wallet is loaded on your browser. When making a purchase on a mobile device, we advise utilizing Trust Wallet and connecting via the built-in browser.</p>
 	    </div>
 
+
+        
+
         {/*render accordion based on device size*/}
         {window.innerWidth > 768 ? (
             <div className="m-auto text-gray-500 mt-16">
@@ -97,7 +100,7 @@ const BuyInstruction = () => {
                         <div  className={`flex flex-col items-start justify-center gap-5 bg-white h-full m-6 ${activeCardDesktop === index && 'lg:grow-[4] max-w-full'}`}>
                             <h1 className="font-bold uppercase -mt-2 text-lg" style={{color: `${colorDeep}`}}>{title}</h1>
                             <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle} <FaLink onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
-                            <img className="w-80 rounded-xl" src={img} alt={title} loading="eager" />
+                            <img className="rounded-xl" src={img} alt={title} loading="eager" width="320" height="180" />
                         </div>
                      </div>
                    ) : (
@@ -122,7 +125,7 @@ const BuyInstruction = () => {
             <div data-aos="fade-up" data-aos-delay="100" className="flex items-center justify-center my-16">
             <div className="flex flex-col gap-3 w-full h-full">
                 {PanelData.map(({title, subtitle, img, id, colorDeep, colorLight}) => (
-                    <div key={id}  onClick={() => handleMobileClick(id)} className={`${activeCardMobile === id && 'lg:grow-[5] md:grow-[1] max-w-full'} duration-700 ease-in-out relative flex-grow overflow-hidden rounded-2xl transition-all border border-gray-200`}>
+                    <div key={id}  onClick={() => handleMobileClick(id)} className={`transition-all duration-700 ease-in-out ${activeCardMobile === id ? 'sm:h-[240px] h-[280px]' : 'h-[70px]'} relative overflow-hidden rounded-2xl border border-gray-200`}>
                    
                  
                    {activeCardMobile === id ? (

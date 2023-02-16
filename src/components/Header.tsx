@@ -323,6 +323,7 @@ const Header = () => {
                         tagline={tagline}
                         setDropdownOpen={setDropdownOpen}
                         img={img}
+                        user={user!}
                     />
 
                 </SwiperSlide>

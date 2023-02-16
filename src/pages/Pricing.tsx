@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { FiCheck } from 'react-icons/fi';
 import Button from '../components/Button';
 import { Banner } from './../components/index';
@@ -9,6 +9,15 @@ import { UserContext, UserContextType } from '../context/user.context';
 const Pricing = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
+  
+
+  useEffect(() => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		  });
+	}, [])
+	
 
   const handleDashboardRouting = () => {
     if (!user) {

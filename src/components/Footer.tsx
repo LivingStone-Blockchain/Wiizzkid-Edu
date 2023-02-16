@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
 import logo from './../assets/header/wiizzkid-logo.png';
 import { MdLocationPin, MdCall, MdEmail } from 'react-icons/md';
@@ -10,6 +10,7 @@ const Footer = () => {
   const { value } = useContext(WiizzkidContext) as WiizzkidContextType;
   const colors = ['#ff5d5d', '#e0b00d', '#37b9b2'];
   const location = useLocation();
+  const navigate = useNavigate();
 
 
   //render based on location
@@ -89,16 +90,16 @@ const Footer = () => {
          <h6 className="text-lg font-medium text-white">Quick Links</h6>
          <ul className="mt-4 mb-5 md:mb-0 list-inside space-y-4 text-gray-400 text-sm">
            <li>
-             <a href="#" className={`transition hover:text-tealLight`}>Wiizzkid Quiz</a>
+             <a href="#quiz" className={`transition hover:text-tealLight`}>Wiizzkid Quiz</a>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-tealLight`}>Wiizzkid Metaverse</a>
+             <a href="#metaverse" className={`transition hover:text-tealLight`}>Wiizzkid Metaverse</a>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-tealLight`}>Roadmap</a>
+             <Link to="/roadmap" className={`transition hover:text-tealLight`}>Roadmap</Link>
            </li>
            <li>
-             <a href="#" className={`transition hover:text-tealLight`}>Blog</a>
+             <a href="#blog" className={`transition hover:text-tealLight`}>Blog</a>
            </li>
          </ul>
        </div>
@@ -112,15 +113,15 @@ const Footer = () => {
              <a href="#" className="transition hover:text-tealLight">Privacy Policy</a>
            </li>
            <li>
-             <a href="#" className="transition hover:text-tealLight">Latest News</a>
+             <a href="#blog" className="transition hover:text-tealLight">Latest News</a>
            </li>
            <li>
-             <a href="#" className="transition hover:text-tealLight">Pricing</a>
+             <Link to='/pricing' className="transition hover:text-tealLight">Pricing</Link>
            </li>
          </ul>
        </div>
        <div>
-         <h6 className="text-lg font-medium text-white">Contact us</h6>
+         <h6 className="text-lg font-medium text-white cursor-pointer" onClick={() => navigate('/about')}>Contact us</h6>
          <ul className="mt-4 list-inside space-y-4 text-gray-400 text-sm">
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdLocationPin /></span>

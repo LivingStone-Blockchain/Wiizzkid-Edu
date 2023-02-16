@@ -32,7 +32,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 }) => {
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
-  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee, user } = useContext(QuizContext) as QuizContextType;
+  const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee, user, setTryLondon } = useContext(QuizContext) as QuizContextType;
   const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
   const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
   const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
@@ -92,6 +92,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
   const handleCloseModal = () => {
     setShowCreateGameModal(false);
+    setTryLondon(false);
     toast.dismiss();
     return;
   };
@@ -127,7 +128,18 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             Quiz Game Created!
           </h1>
       
-      {gameMode !== 'london' ? (
+      {(gameMode !== 'london' && totalAllowedPlayers === 1) ? (
+          <>
+             <p className="mt-8">
+              <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
+                Single Player
+              </span>
+            </p>
+             <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+              Game codes/links can be generated and shared in multiplayer mode!
+            </p>
+          </>
+        ) : (gameMode !== 'london' && totalAllowedPlayers > 1) ? (
         <>
         <p className="mt-8">
             <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">

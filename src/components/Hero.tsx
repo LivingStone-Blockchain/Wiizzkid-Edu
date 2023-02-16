@@ -2,10 +2,11 @@ import React, { FC, useContext } from 'react';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { AiFillCalculator } from 'react-icons/ai';
-import { FaGamepad } from 'react-icons/fa';
+import { FaGamepad, FaQuestion } from 'react-icons/fa';
 import { GiMonkey } from 'react-icons/gi';
 import { vr } from "../assets/header/index";
 import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
+import { QuizContext, QuizContextType } from '../context/quiz.context';
 
 
 
@@ -18,12 +19,14 @@ type HeroProps = {
     tagline: string,
     setDropdownOpen: (value: React.SetStateAction<boolean>) => void,
     img: string,
+    user: Record<string, unknown>,
 }
 
 
-const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobileShadow, tagline, img, setDropdownOpen }) => {
+const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobileShadow, tagline, img, setDropdownOpen, user }) => {
     const navigate = useNavigate();
     const { setOpenVideo } = useContext(WiizzkidContext) as WiizzkidContextType;
+    const {  handleTryLondonMode } = useContext(QuizContext) as QuizContextType;
 
 
     return (
@@ -39,6 +42,16 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                             onClick={() => navigate('/pricing')}
                             style={window.innerWidth > 767 ? { backgroundColor: `${colorDeep}`, boxShadow: `${shadow}` } : { backgroundColor: `${colorDeep}`, boxShadow: `${mobileShadow}` }}
                         />
+                        {!user && (
+                            <div className="flex items-center justify-center space-x-3 mt-7 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
+                             <span className="cursor-pointer">London</span>
+                            <button onClick={handleTryLondonMode} className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
+                                <FaQuestion className="w-5 h-5 floating" style={{ fill: `${colorDeep}`, transform: "translate(-2px, -2px) rotate(-10deg)" }}/>
+                            </button>
+                            <span className="cursor-pointer">Try me</span>
+                        </div>
+                        )}
+                        
 
                         <div className="hidden items-center justify-center space-x-3 mt-7 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"  onClick={() => setOpenVideo(true)}>
                             <button className="bg-white w-14 h-14 rounded-full flex items-center justify-center">

@@ -4,7 +4,6 @@ import QuickPlay from "../components/QuickPlay";
 import History from "../components/History";
 import { FaAngleRight } from "react-icons/fa";
 import toast from "react-hot-toast";
-import CreateQuizGameModal from "../components/CreateQuizGameModal";
 import Overlay from "../components/Overlay";
 import Button from "../components/button/Button";
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +16,7 @@ import useTokenRefresh from "../../../hooks/useTokenRefresh";
 
 
 const QuizIndex = () => {
-  const { setScreen, showCreateGameModal, setShowCreateGameModal, user, setGameDetails, gameDetails } = useContext(QuizContext) as QuizContextType;
+  const { showCreateGameModal, user, setGameDetails, handleDisplayCreateGameModal } = useContext(QuizContext) as QuizContextType;
   //get createGame to deduct token on game creation
   const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
@@ -54,15 +53,7 @@ const QuizIndex = () => {
 
 
 
-  const handleDisplayCreateGameModal = () => {
-    setShowCreateGameModal(true);
-    setScreen(1);
 
-    toast(
-      <CreateQuizGameModal setShowCreateGameModal={setShowCreateGameModal} />,
-      { duration: Infinity, className: "w-full" }
-    );
-  };
 
   return (
     <>

@@ -12,7 +12,7 @@ import axios from "axios"
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios"
 import useSound from "use-sound"
 import categoryStrings from "../gameContainers/quiz/components/functions/categoryStringConveter"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
 import useTokenRefresh from "./../hooks/useTokenRefresh"
@@ -20,6 +20,8 @@ import {userDetailsService } from "../services";
 import { utils } from "ethers";
 import { toast } from "react-hot-toast"
 import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
+import CreateQuizGameModal from "../gameContainers/quiz/components/CreateQuizGameModal";
+
 
 
 type questionsData = {
@@ -140,10 +142,14 @@ export interface QuizContextType {
   setQuestionsLoader: React.Dispatch<React.SetStateAction<boolean>>
   handleScreenTwo: () => void
   handleInstructionScreen: () => void
+  handleDisplayCreateGameModal: () => void
+  handleTryLondonMode: () => void
   showSplashScreen: boolean
   setShowSplashScreen: React.Dispatch<React.SetStateAction<boolean>>
   showCreateGameModal: boolean
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
+  tryLondon: boolean
+  setTryLondon: React.Dispatch<React.SetStateAction<boolean>>
   showLeaderBoard: boolean
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   scoreBoard: ScoreBoardType | undefined
@@ -181,6 +187,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [questionsLoader, setQuestionsLoader] = useState<boolean>(false)
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false)
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
+  const [tryLondon, setTryLondon] = useState<boolean>(false)
   const [start, setStart] = useState<boolean>(false)
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.2 })
   const [category, setCategory] = useState<string>("")
@@ -188,7 +195,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
@@ -285,53 +293,59 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+
+  
+//Load create quiz modal automatically
+useEffect(() => {
+  if (tryLondon) {
+    setShowCreateGameModal(true);
+    setScreen(1);
+  
+    toast(
+      <CreateQuizGameModal setShowCreateGameModal={setShowCreateGameModal} />,
+      { duration: Infinity, className: "w-full" }
+    );
+  }
+}, [tryLondon])
+
+
+
+
   //function create game form 1
   const handleScreenTwo = () => {
     //alert user if token is insufficient based on difficulty
-    if (
-      gameMode === "shanghai" &&
-      difficulty === "easy" &&
-      Number(tokenFee) <= 9
-    ) {
-      toast.dismiss("low")
-      toast.error(
-        <span className="text-sm">Insufficient token!</span>,
-        { duration: 3000, id: "low" }
-      )
-      setTimeout(() => {
+    if (gameMode === "shanghai" && difficulty === "easy" && Number(tokenFee) <= 9) {
         toast.dismiss("low")
-        setScreen(1)
-      }, 3000)
+        toast.error(
+          <span className="text-sm">Insufficient token!</span>,
+          { duration: 3000, id: "low" }
+        )
+        setTimeout(() => {
+          toast.dismiss("low")
+          setScreen(1)
+        }, 3000)
     }
-    if (
-      gameMode === "shanghai" &&
-      difficulty === "medium" &&
-      Number(tokenFee) <= 99
-    ) {
-      toast.dismiss("low")
-      toast.error(
-        <span className="text-sm">Insufficient token!</span>,
-        { duration: 3000, id: "low" }
-      )
-      setTimeout(() => {
+    if (gameMode === "shanghai" && difficulty === "medium" && Number(tokenFee) <= 99) {
         toast.dismiss("low")
-        setScreen(1)
-      }, 3000)
+        toast.error(
+          <span className="text-sm">Insufficient token!</span>,
+          { duration: 3000, id: "low" }
+        )
+        setTimeout(() => {
+          toast.dismiss("low")
+          setScreen(1)
+        }, 3000)
     }
-    if (
-      gameMode === "shanghai" &&
-      difficulty === "hard" &&
-      Number(tokenFee) <= 499
-    ) {
-      toast.dismiss("low")
-      toast.error(
-        <span className="text-sm">Insufficient token!</span>,
-        { duration: 3000, id: "low" }
-      )
-      setTimeout(() => {
+    if (gameMode === "shanghai" && difficulty === "hard" && Number(tokenFee) <= 499) {
         toast.dismiss("low")
-        setScreen(1)
-      }, 3000)
+        toast.error(
+          <span className="text-sm">Insufficient token!</span>,
+          { duration: 3000, id: "low" }
+        )
+        setTimeout(() => {
+          toast.dismiss("low")
+          setScreen(1)
+        }, 3000)
     }
     setScreen(2)
   }
@@ -362,6 +376,29 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+
+
+//handle start Quiz button on game homepage and initialize pop-up
+const handleDisplayCreateGameModal = () => {
+  setShowCreateGameModal(true);
+  setScreen(1);
+
+  toast(
+    <CreateQuizGameModal setShowCreateGameModal={setShowCreateGameModal} />,
+    { duration: Infinity, className: "w-full" }
+  );
+};
+
+
+
+
+//handle London mode from main Landing page
+const handleTryLondonMode = () => {
+  navigate('/quiz-home');
+  setShowSplashScreen(false);
+
+  setTimeout(() => { setTryLondon(true)}, 1000)
+}
 
 
   //function create game form 2
@@ -400,7 +437,8 @@ const QuizProvider: FC<any> = ({ children }) => {
       console.log(error)
     }
 
-    setTokenFee("")
+    setTokenFee("");
+    setTryLondon(false);
   }
 
   // function to start a game:
@@ -504,6 +542,10 @@ const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Numb
         setShowSplashScreen,
         handleScreenTwo,
         handleInstructionScreen,
+        handleDisplayCreateGameModal,
+        handleTryLondonMode,
+        tryLondon, 
+        setTryLondon,
         submitTimeRef,
         gameDetails,
         setGameDetails,

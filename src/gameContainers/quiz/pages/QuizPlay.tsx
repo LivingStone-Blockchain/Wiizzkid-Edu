@@ -148,7 +148,10 @@ if (gameDetails?.game_mode === "london") {
           ? (
             <>
               <article className="text-gray-700">
-            <h1 className="md:text-2xl text-xl font-bold mb-4 text-navy">{`${(categoryStrings(Number(gameDetails?.category))[0]).toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)} Quiz`} <span className="text-tomato">{` (${gameDetails?.difficulty[0].toUpperCase()}${gameDetails?.difficulty.slice(1)})`}</span></h1>
+              <div className="flex justify-between items-center mb-4">
+              <h1 className="md:text-2xl text-xl font-bold text-navy">{`${(categoryStrings(Number(gameDetails?.category))[0]).toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)} Quiz`} <span className="text-tomato">{` (${gameDetails?.difficulty[0].toUpperCase()}${gameDetails?.difficulty.slice(1)})`}</span></h1>
+              <p className="font-bold text-navy">Fee: {gameDetails?.stone_token_fee} STN</p>
+              </div>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">
@@ -161,6 +164,7 @@ if (gameDetails?.game_mode === "london") {
               answered correctly and the winner will be the player with the
               highest score and quickest to submit.
             </p>
+
 
             <p className="font-bold mt-8 text-navy">
               <span className="text-xl">Ready</span> to join the Wiizkid
