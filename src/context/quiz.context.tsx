@@ -200,7 +200,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   //get user details from userContext
   const { user } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const { deductTokenOnGameCreate, address, balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+  const { deductTokenOnGameCreate, address, balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
 
   //token refresher
   const { refreshedUser } = useTokenRefresh();
@@ -474,7 +474,7 @@ const handleTryLondonMode = () => {
 
 
 
-const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Number(utils.formatEther(balanceOfStoneTokens))]); 
+//const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Number(utils.formatEther(balanceOfStoneTokens))]); 
  // console.log(balanceOfStoneTokens)
   //only fetch winning if all scores are ready on leader board
   const stoneWinning = useMemo(() => scoreBoard?.find(player => player.player_id === user?.id)?.winnings, [scoreBoard?.find(player => player.player_id === user?.id)?.winnings]); 
@@ -496,7 +496,7 @@ const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Numb
     const payload = {
       stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
       wallet_address: address,
-      stone_token_winnings: stoneWinning,
+      stone_token_winnings: userDetail?.stone_token_winnings! + stoneWinning!,
     }
     const updateStoneBalance = async () => {
       try {
@@ -504,7 +504,7 @@ const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Numb
       } catch (error) {
       }
     }
-    console.log(payload.stone_token_winnings)
+    //console.log(payload.stone_token_winnings)
     updateStoneBalance();
   }, [stoneWinning]);
 
