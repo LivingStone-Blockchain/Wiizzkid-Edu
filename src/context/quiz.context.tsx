@@ -403,7 +403,7 @@ const handleTryLondonMode = () => {
 
   //function create game form 2
   const handleInstructionScreen = async () => {
-    const payload = user ? {
+    const userPayload = user && {
       difficulty,
       total_questions: totalAllowedQuestions,
       total_players: Number(totalAllowedPlayers),
@@ -412,7 +412,9 @@ const handleTryLondonMode = () => {
       category: Number(category),
       creator: user.id,
       stone_token_fee: Number(tokenFee),
-    } : {
+    }
+
+    const nonUserPayload = {
       difficulty,
       total_questions: totalAllowedQuestions,
       total_players: Number(totalAllowedPlayers),
@@ -425,13 +427,13 @@ const handleTryLondonMode = () => {
     try {
       user?.tokens
         ? await service
-          .createGame(payload, refreshedUser.tokens.access)
+          .createGame(userPayload!, refreshedUser.tokens.access)
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract if its not london
-            gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee));
+           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee));
           })
-        : setGameDetails(payload)
+        : setGameDetails(nonUserPayload)
 
 
       setTimeout(() => {
