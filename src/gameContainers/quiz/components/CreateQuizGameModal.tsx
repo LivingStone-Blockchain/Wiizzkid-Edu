@@ -65,12 +65,11 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       : setShowBeijingModal(false)
 
     if (gameMode === "shanghai" && !user) {
-      toast.loading(<span className="text-sm">Not logged in! Redirecting you to sign in.</span>, { duration: 3000, id: 'unlogged' })
+      toast.error(<span className="text-sm">Only signed in users can play Shanghai</span>, { duration: 3000, id: 'unlogged' })
       setTimeout(() => {
-        toast.dismiss();
-        setShowCreateGameModal(false);
-        navigate('/login')
-      }, 3000)
+        toast.dismiss('unlogged');
+        setGameMode('london');
+      }, 3000);
     }
       
   }, [showBeijingModal, gameMode])

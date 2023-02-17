@@ -49,8 +49,6 @@ export default function QuizPlay() {
     setScore(0);
 
 
-    // send username & email to backend and return JWT
-    // store JWT in localStorage
 
     setTimeout(() => {
       toast.dismiss("prepping");
