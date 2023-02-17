@@ -21,9 +21,8 @@ const ScoreBalance = () => {
   const scoreData =   dataPerYear?.map((item) => item.score);
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
 
-
   
- 
+
 
 
 
