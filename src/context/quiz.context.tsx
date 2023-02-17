@@ -475,10 +475,10 @@ const handleTryLondonMode = () => {
 
 
 //const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Number(utils.formatEther(balanceOfStoneTokens))]); 
- // console.log(balanceOfStoneTokens)
+
   //only fetch winning if all scores are ready on leader board
-  const stoneWinning = useMemo(() => scoreBoard?.find(player => player.player_id === user?.id)?.winnings, [scoreBoard?.find(player => player.player_id === user?.id)?.winnings]); 
-  
+  const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id)?.winnings;
+
   //update token balance, wallet address and winnings on backend
   useEffect(() => {
     
@@ -500,13 +500,14 @@ const handleTryLondonMode = () => {
     }
     const updateStoneBalance = async () => {
       try {
+        showLeaderBoard &&
         await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
       } catch (error) {
       }
     }
-    //console.log(payload.stone_token_winnings)
+
     updateStoneBalance();
-  }, [stoneWinning]);
+  }, [stoneWinning, showLeaderBoard]);
 
 
 

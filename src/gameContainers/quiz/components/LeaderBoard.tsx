@@ -93,7 +93,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
                     <span className="font-medium text-navy text-xs">{score}</span>
                   </td>
                   <td className="py-2 px-1">
-                    <span className="font-medium text-navy text-xs">{winnings} ST</span>
+                    <span className="font-medium text-navy text-xs">{winnings.toFixed(1)} ST</span>
                   </td>
                 </tr>
               ))}
