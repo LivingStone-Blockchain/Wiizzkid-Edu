@@ -17,14 +17,14 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, gameDetails, user } = useContext(QuizContext) as QuizContextType;
   const { loading, firstApproval } = useContext(TokenContext) as TokenContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
 
 
   useEffect(() => {
-    if (gameDetails?.current_players !==  gameDetails?.total_players) {
+    if (gameDetails?.current_players !==  gameDetails?.total_players && user) {
 
       const intervalId = setInterval(async () => {
       try {

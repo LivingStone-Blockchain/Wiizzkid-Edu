@@ -17,10 +17,10 @@ type LeaderBoardData = {
 
 
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, } = useContext(QuizContext) as QuizContextType;
+  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
-
+console.log(start, gameDetails?.total_players !== scoreBoard?.length, gameDetails?.total_players, scoreBoard?.length)
 
 
   useEffect(() => {
@@ -36,7 +36,10 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
 
     return () => clearInterval(intervalId);
   }
-    }, [showLeaderBoard]);
+  else {
+    return;
+  }
+    }, [showLeaderBoard, start]);
 
 
   return (
@@ -105,8 +108,8 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
         
 
         <Button
-          className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home') }}
+          className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${gameDetails?.total_players !== scoreBoard?.length ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
+          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0) }}
         >
           Back home
         </Button>

@@ -11,6 +11,7 @@ import timeDiffCalculator from "../functions/timeDifference";
 import quizCompletedToast from "../toasts/quizCompleteToast";
 import quizEndGameToast from "../toasts/quitGameToast";
 import gameOverToast from "../toasts/gameOverToast";
+import RegisterPromptToast from "../toasts/registerPromptToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
 import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
@@ -105,7 +106,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     //send to backend
     const payload = {
-      player_id: user!.id,
+      player_id: user ? user!.id : undefined,
       game_id: gameDetails!.id,
       score,
       submit_time: submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]), //convert say mm:ss to seconds. Highest time wins if score is tied.
@@ -114,7 +115,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     //send payload to backend for registered users...
     try {
-      user && await service.scoreResult(payload);
+      user && await service.scoreResult(payload!);
     } catch (error) {
       console.log(error);
     }
@@ -122,13 +123,28 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     setTimeout(() => {
       toast.dismiss("completed");
-      quizCompletedToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate);
+      user 
+      ? quizCompletedToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate)
+      :''//: RegisterPromptToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate); 
       submitText.current.innerText = "Submitted";
       return;
     }, 5000);
   };
 
+  /*
+   score={5}
+              totalAllowedQuestions={5}
+              totalAllowedPlayers={5}
+              timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
+              setStart={setStart}
+              setTriviaFetch={setTriviaFetch}
+              setShowLeaderBoard={setShowLeaderBoard}
+              setShowCreateGameModal={setShowCreateGameModal}
+              navigate={navigate}
+  */
 
+  //setShowCreateGameModal, setShowLeaderBoard, navigate); 
+  //user && <RegisterPromptToast />
 
 
   const handleFinalSubmit = (e: any) => {

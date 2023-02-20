@@ -11,7 +11,7 @@ type BoardDataType = {
 }
 
 const ScoreBalance = () => {
-    const { quizRecentGames, scoreBoard, user } = useContext(QuizContext) as QuizContextType;
+    const { quizRecentGames, scoreBoard, user, score } = useContext(QuizContext) as QuizContextType;
     const { balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
 
     
@@ -21,12 +21,10 @@ const ScoreBalance = () => {
   const scoreData =   dataPerYear?.map((item) => item.score);
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
 
-  
 
 
 
-
-    const boardData: BoardDataType[] = [
+    const userBoardData: BoardDataType[] = [
         {
           title: "Balance",
           value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
@@ -41,9 +39,24 @@ const ScoreBalance = () => {
         }
       ] 
 
+
+       const nonUserBoardData: BoardDataType[] = [
+        {
+          title: "Balance",
+          value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
+        },
+        {
+          title: "Score",
+          value: score,
+        }
+      ] 
+
+      //render board based on roles
+      const boardData = user ? userBoardData : nonUserBoardData;
+
   return (
     <div className='absolute md:bottom-5 bottom-[14px] lg:right-16 right-4 mx-auto text-white flex gap-4 items-center justify-center md:text-base text-sm'> 
-           <div className={`bg-gray-100 border-4 text-center flex w-[170px] md:w-[240px] p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-tealLight`}>
+           <div className={`bg-gray-100 border-4 text-center flex ${user ? 'w-[170px] md:w-[240px]' : 'w-[120px] md:w-[160px]'} p-1 md:p-2 items-center justify-center shadow-lg rounded-md border-tealLight`}>
             {boardData.map((item) => (
               <div className="col-4" key={item.title}>
               <div className={`text-tealLight md:text-base text-sm bg-gray-200 md:p-2 p-[2px] font-semibold border-x border-gray-300`}>
