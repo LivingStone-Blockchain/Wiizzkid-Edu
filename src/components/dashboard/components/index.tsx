@@ -9,4 +9,4 @@ export { default as Paypal } from "./paypal/Paypal";
 export { default as Exchange } from './exchange/Exchange';
 export { default as TimestableDb } from './homepage/TimestableDb';
 export { default as QuizDb } from './homepage/QuizDb';
-export { default as Stripe } from './stripe/Checkout';
+export { default as Stripe } from './stripe/Stripe';

@@ -73,6 +73,7 @@ if (gameDetails?.game_mode === "london") {
       <Overlay loading={loader} /> 
       <QuizGame showModal={start} />
 
+
       <section
         className="flex w-full h-full min-h-screen p-6 "
         style={{
@@ -130,7 +131,7 @@ if (gameDetails?.game_mode === "london") {
       <Overlay loading={loader} />
      {/* game modal containing quiz questions: */}
       <QuizGame showModal={start} />
-
+     
       <section
         className="flex w-full h-full min-h-screen p-6 "
         style={{
@@ -148,7 +149,7 @@ if (gameDetails?.game_mode === "london") {
               <article className="text-gray-700">
               <div className="flex justify-between items-center mb-4">
               <h1 className="md:text-2xl text-xl font-bold text-navy">{`${(categoryStrings(Number(gameDetails?.category))[0]).toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)} Quiz`} <span className="text-tomato">{` (${gameDetails?.difficulty[0].toUpperCase()}${gameDetails?.difficulty.slice(1)})`}</span></h1>
-              <p className="font-bold text-navy">Fee: {gameDetails?.stone_token_fee} STN</p>
+              <p className="font-bold text-navy">Token: {gameDetails?.stone_token_fee} STN</p>
               </div>
             <p className="text-gray-700 space-x-5 my-3 md:text-lg text-base leading-relaxed font-medium">Quiz Instructions:</p>
 

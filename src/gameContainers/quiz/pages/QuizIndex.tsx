@@ -13,7 +13,7 @@ import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
 import useTokenRefresh from "../../../hooks/useTokenRefresh";
-import RegisterPromptToast from "../components/toasts/registerPromptToast";
+
 
 
 const QuizIndex = () => {
@@ -65,7 +65,6 @@ const QuizIndex = () => {
         title="Wiizzkid Quiz"
         children={<ScoreBalance />}
       />
-      {/*<RegisterPromptToast />*/}
       <section className="md:mt-20 mt-16">
         <div className="w-full text-white mb-24 container px-4 lg:px-8 mx-auto max-w-screen-xl">
           <div className="flex justify-between items-center max-w-full mx-auto">

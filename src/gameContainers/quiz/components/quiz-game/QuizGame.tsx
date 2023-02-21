@@ -11,7 +11,7 @@ import timeDiffCalculator from "../functions/timeDifference";
 import quizCompletedToast from "../toasts/quizCompleteToast";
 import quizEndGameToast from "../toasts/quitGameToast";
 import gameOverToast from "../toasts/gameOverToast";
-import RegisterPromptToast from "../toasts/registerPromptToast";
+import RegisterPromptToast from "../toasts/RegisterPromptToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
 import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
@@ -36,7 +36,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   const [current_question, setCurrentQuestion] = useState<any>({});
   const [current_page, setCurrentPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [showRegisterPrompt, setShowRegisterPrompt] = useState<boolean>(false);
 
 
 
@@ -123,28 +123,17 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
     setTimeout(() => {
       toast.dismiss("completed");
+      //show different boards to users and non users
       user 
       ? quizCompletedToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate)
-      :''//: RegisterPromptToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate); 
+      : setShowRegisterPrompt(true);
       submitText.current.innerText = "Submitted";
+      
       return;
     }, 5000);
   };
 
-  /*
-   score={5}
-              totalAllowedQuestions={5}
-              totalAllowedPlayers={5}
-              timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
-              setStart={setStart}
-              setTriviaFetch={setTriviaFetch}
-              setShowLeaderBoard={setShowLeaderBoard}
-              setShowCreateGameModal={setShowCreateGameModal}
-              navigate={navigate}
-  */
 
-  //setShowCreateGameModal, setShowLeaderBoard, navigate); 
-  //user && <RegisterPromptToast />
 
 
   const handleFinalSubmit = (e: any) => {
@@ -160,13 +149,24 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   }
 
 
- 
 
 
   return (
     <section className="fixed top-0 bottom-0 right-0 left-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition">
       {loading && (
         <div className="bg-black opacity-50 fixed top-0 bottom-0 z-50 w-full h-full left-0 right-0"></div>
+      )}
+      {showRegisterPrompt && (
+         <RegisterPromptToast 
+         score={score}
+         timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
+         setStart={setStart}
+         setTriviaFetch={setTriviaFetch}
+         setShowCreateGameModal={setShowCreateGameModal}
+         navigate={navigate}
+         showRegisterPrompt={showRegisterPrompt}
+         setShowRegisterPrompt={setShowRegisterPrompt}
+     />
       )}
 
       <div className="max-w-xl mx-auto opacity-90">

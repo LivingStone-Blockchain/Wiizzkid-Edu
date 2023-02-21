@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { FaTimes } from 'react-icons/fa';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { CardBody, Card } from '../../components/Cards';
 import CheckoutForm from './CheckoutForm';
+import { stripeService } from '../../../../services';
 
 
 
@@ -16,22 +14,30 @@ type clientSecretDetailsType = {
 } 
 
 
-const Checkout = ({ setOpen }: { setOpen: (value: React.SetStateAction<number | null>) => void }) => {
-  const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
+type CheckoutPropType = {
+  amount: number
+}
+
+//put out to avoid recreating stripe onto avoid recreating the Stripe object on every render.
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
+
+const Checkout:FC<CheckoutPropType> = ({amount}) => {
   const [clientSecretSettings, setClientSecretSettings] = useState<clientSecretDetailsType>({
     clientSecret: "",
     loading: true,
   });
 
 
-
+  const payload = {
+    amount: amount
+  }
 
   useEffect(() => {
     async function createPaymentIntent() {
-      const response = await axios.post("/api/create-payment-intent", {});
+     const response = await stripeService.stripe(payload)
 
       setClientSecretSettings({
-        clientSecret: response.data.client_secret,
+        clientSecret: response.client_secret, //ask for variable
         loading: false,
       });
     }
@@ -40,10 +46,10 @@ const Checkout = ({ setOpen }: { setOpen: (value: React.SetStateAction<number | 
 
 
 
+
+
+
   return (
-    <Card>
-    <CardBody className='flex flex-col items-center justify-center gap-12 bg-goldenLighter relative'>
-      <p className='p-2 rounded-full absolute top-2 right-2 bg-[#e9d9de] cursor-pointer' onClick={() => setOpen(null)}><FaTimes className='w-3 h-3 font-light' /></p>
       <div className="flex flex-row gap-2 items-center justify-center mt-3 w-full mx-auto">
         {!clientSecretSettings.loading ? (
           <h1>Loading ...</h1>
@@ -59,8 +65,6 @@ const Checkout = ({ setOpen }: { setOpen: (value: React.SetStateAction<number | 
           </Elements>
         )}
       </div>
-    </CardBody>
-  </Card>
   )
 }
 

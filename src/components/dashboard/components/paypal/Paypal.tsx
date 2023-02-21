@@ -53,7 +53,7 @@ const Paypal = ({setOpen}: {setOpen: (value: React.SetStateAction<number | null>
           <div className="space-y-1 flex flex-col gap-4">
             {showInput ? ( 
                 <>
-                    <label htmlFor="email" className='text-[#252641] text-sm'>Amount</label>
+                    <label className='text-[#252641] text-sm'>Amount</label>
                     <input
                         type="text"
                         placeholder="Enter Amount"

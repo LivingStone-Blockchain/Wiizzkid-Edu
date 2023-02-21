@@ -31,13 +31,8 @@ const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalA
           <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
             {`Completion Time: ${timeDiffCalculator} mins.`}
           </p>
-
-
-          {(score / totalAllowedQuestions) >= 0.5 ? (
-            <p className="mt-8 font-semibold" >Well done!</p>
-          ) : (
-            <p className="mt-8 font-semibold" >You can do better!</p>
-          )}
+        
+            <p className="mt-8 font-semibold" >{(score / totalAllowedQuestions) >= 0.5 ? 'Well done!' : 'You can do better!'}</p>
 
 
           {totalAllowedPlayers === 1 ? (

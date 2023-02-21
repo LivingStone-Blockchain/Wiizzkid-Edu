@@ -4,3 +4,4 @@ export { default as forgotPasswordService } from './forgotPassword';
 export { default as resetPasswordService } from './resetPassword';
 export { default as userDetailsService } from './userDetails';
 export { default as refreshTokenService } from './refreshToken';
+export {default as stripeService} from './stripe';
