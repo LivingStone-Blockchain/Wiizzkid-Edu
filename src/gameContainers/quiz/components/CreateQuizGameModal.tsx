@@ -304,7 +304,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
             <FormGroup>
               <Label>Total Allowed Questions</Label>
-              <Input type="number" value={totalAllowedQuestions} onChange={(event) => setTotalAllowedQuestions(Number(event.target.value))} placeholder="Maximum of 20 questions" min={5} max={20} />
+              <Input type="Number" value={totalAllowedQuestions} onChange={(event) => setTotalAllowedQuestions(Number(event.target.value))} placeholder="Maximum of 20 questions" min={5} max={20} />
             </FormGroup>
 
             <FormGroup>
@@ -330,7 +330,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
             <FormGroup>
               <Label>Game Duration (In Minutes)</Label>
-              <Input type="number"  value={gameDuration} onChange={(event) => setGameDuration(Number(event.target.value))} placeholder="5" min={5} max={10} />
+              <Input type="Number"  value={gameDuration} onChange={(event) => setGameDuration(Number(event.target.value))} placeholder="5" min={5} max={10} />
             </FormGroup>
           </div>
         )}

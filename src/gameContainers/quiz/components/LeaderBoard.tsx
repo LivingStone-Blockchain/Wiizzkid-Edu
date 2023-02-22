@@ -20,11 +20,11 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
   const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
-//console.log(start, gameDetails?.total_players !== scoreBoard?.length, gameDetails?.total_players, scoreBoard?.length);
 
 
   useEffect(() => {
-    if (gameDetails?.total_players !== scoreBoard?.length) {
+    if (gameDetails?.total_players !== scoreBoard?.length && showLeaderBoard) {
+       
 
     const intervalId = setInterval(async () => {
       try {
@@ -39,7 +39,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
   else {
     return;
   }
-    }, [showLeaderBoard, start]);
+    }, [showLeaderBoard, gameDetails, scoreBoard]);
 
 
   return (

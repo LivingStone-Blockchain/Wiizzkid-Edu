@@ -255,6 +255,12 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [triviaFetch])
 
 
+  // Reset the scoreboard when a new game is completed
+  useEffect(() => {
+    if (!showLeaderBoard) {
+      setScoreBoard([]);
+    }
+  }, [showLeaderBoard])
 
 
 
