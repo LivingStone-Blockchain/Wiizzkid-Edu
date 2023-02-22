@@ -255,14 +255,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [triviaFetch])
 
 
-  // Reset the scoreboard when a new game is completed
-  useEffect(() => {
-    if (!showLeaderBoard) {
-      setScoreBoard([]);
-    }
-  }, [showLeaderBoard])
 
-
+ 
 
   //return data based on request
   const dataType = triviaFetch ? triviaData : quizData
@@ -293,6 +287,8 @@ const QuizProvider: FC<any> = ({ children }) => {
         />,
         { duration: Infinity, className: "w-full" }
       );
+    } else {
+      setScoreBoard([]);
     }
   
   }, [showLeaderBoard])
@@ -497,8 +493,6 @@ const handleTryLondonMode = () => {
     }
 
   
-
- 
     const payload = {
       stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
       wallet_address: address,
