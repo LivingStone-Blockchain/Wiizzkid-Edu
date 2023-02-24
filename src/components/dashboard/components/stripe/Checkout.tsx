@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from './CheckoutForm';
 import { stripeService } from '../../../../services';
-
+import Preloader from "../../../Preloader";
 
 
 
@@ -18,41 +18,55 @@ type CheckoutPropType = {
   amount: number
 }
 
-//put out to avoid recreating stripe onto avoid recreating the Stripe object on every render.
-const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
+
 
 const Checkout:FC<CheckoutPropType> = ({amount}) => {
+  const [stripePromise, setStripPromise] = useState<any>(null);
   const [clientSecretSettings, setClientSecretSettings] = useState<clientSecretDetailsType>({
     clientSecret: "",
-    loading: true,
+    loading: false,
   });
 
 
   const payload = {
-    amount: amount
+    amount,
   }
 
-  useEffect(() => {
-    async function createPaymentIntent() {
-     const response = await stripeService.stripe(payload)
 
-      setClientSecretSettings({
-        clientSecret: response.client_secret, //ask for variable
-        loading: false,
-      });
-    }
+        
+ useEffect(() => {
+  const fetchPublishableKey = async () => {
+   const response =  await stripeService.stripePublishableKey().then(res => res.publishable_key);
+
+   setStripPromise(loadStripe(response));
+  }
+  
+  fetchPublishableKey();
+}, [])
+
+
+  useEffect(() => {
+    const createPaymentIntent = async () => {
+     const response = await stripeService.stripeClient(payload).then(res => res.clientSecret)
+     setClientSecretSettings({
+      clientSecret: response,
+      loading: true,
+    });
+  }
+
+   
     createPaymentIntent();
   }, []);
 
-
-
-
+  //4242 4242 4242 4242
+  //04 24
+  //424
 
 
   return (
       <div className="flex flex-row gap-2 items-center justify-center mt-3 w-full mx-auto">
         {!clientSecretSettings.loading ? (
-          <h1>Loading ...</h1>
+            <Preloader dashboardLoader={true} />
         ) : (
           <Elements
             stripe={stripePromise}

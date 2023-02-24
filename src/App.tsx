@@ -1,9 +1,12 @@
 import React,{useEffect, useContext} from "react";
 import { Route, Routes } from "react-router-dom";
+//react modal styling
+import './../node_modules/react-modal-video/css/modal-video.css';
 import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing, BlogDetails, ResetPassword } from "./pages";
 import { Header, Footer, BackToTop, Preloader, UserRoute } from './components/index'
 import { DashboardHome, BuyStone, Quizzes, QuizHistory, WiizzkidMetaverse } from "./components/dashboard/pages/index";
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
+import StripeCompletion from "./components/dashboard/components/stripe/StripeCompletion";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Toaster } from 'react-hot-toast';
@@ -15,7 +18,7 @@ import { UserContext, UserContextType } from './context/user.context';
 import TimestableApp  from './gameContainers/timestable/TimestableApp';
 import ModalVideo from 'react-modal-video';
 import { wiizzkidVideo } from './assets/header/index';
-import './../node_modules/react-modal-video/css/modal-video.css';
+
 
 
 function App() {
@@ -52,6 +55,7 @@ function App() {
       <Route path="/about" element={<About />}/>
       <Route path="/blogs/:id" element={<BlogDetails />}/>
       <Route path="/roadmap" element={<Roadmap />} />
+      <Route path="/dashboard/buy-token/completion" element={<StripeCompletion />}/>
       <Route path="/user/email-verify/:token" element={<RegistrationVerify />} />
       <Route path="/user/password-reset/:uidb64/:token" element={<ResetPassword />} />
       {/*Different routes to same page */}
