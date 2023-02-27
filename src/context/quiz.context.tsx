@@ -239,12 +239,25 @@ const QuizProvider: FC<any> = ({ children }) => {
   useEffect(() => {
     const fetchQuestion = async () => {
       setQuestionsLoader(true)
+      
 
       try {
-        await service.getAll(refreshedUser.tokens.access).then((res) => {
-          setQuizData(res)
-          setQuestionsLoader(false)
-        })
+        let currentPage = 1;
+        let hasNextPage = true;
+        let returnedData:any = [];
+        
+        while(hasNextPage) {
+          //fetch all data across all pages and push all into quizData array
+          const {results, next, count} =  await service.getAll(currentPage);
+          returnedData.push(...results);
+          
+         
+          hasNextPage = (next !== null);
+          currentPage += 1;
+
+          returnedData.length === count && setQuizData(returnedData);
+          setQuestionsLoader(false);
+        }
       } catch (error) {
         console.log(error)
         setQuestionsLoader(false)
@@ -255,8 +268,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [triviaFetch])
 
 
+  console.log(quizData)
 
- 
 
   //return data based on request
   const dataType = triviaFetch ? triviaData : quizData

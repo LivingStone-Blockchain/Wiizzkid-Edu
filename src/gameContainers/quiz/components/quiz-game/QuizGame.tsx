@@ -53,6 +53,9 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   })
 
 
+
+
+
   //sort and filter restructured based on api url's returned data
   let sortedMapped_questions = triviaFetch
     ? mapped_questions
