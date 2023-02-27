@@ -241,7 +241,7 @@ const QuizProvider: FC<any> = ({ children }) => {
       setQuestionsLoader(true)
 
       try {
-        await service.getAll().then((res) => {
+        await service.getAll(refreshedUser.tokens.access).then((res) => {
           setQuizData(res)
           setQuestionsLoader(false)
         })

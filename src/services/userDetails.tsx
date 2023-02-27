@@ -10,8 +10,6 @@ type credentialsType = {
 
 const baseUrl = import.meta.env.VITE_HOST_BASE_URL;
 
-
-
 const getUser = async (id: number, token:string) => {
     const config = {
         headers: { 

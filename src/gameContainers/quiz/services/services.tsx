@@ -25,8 +25,13 @@ type ScoreDetailsType = {
 
 
 
-const getAll = async () => {
-    const response = await axios.get(`${baseUrl}/quiz/questions/?format=json`);
+const getAll = async (token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+    const response = await axios.get(`${baseUrl}/quiz/questions/?format=json`, config);
     return response.data;
 }
 

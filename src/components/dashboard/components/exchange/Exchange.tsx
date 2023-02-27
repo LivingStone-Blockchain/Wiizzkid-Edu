@@ -31,7 +31,7 @@ const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number | nul
   }, [isConnected]);
 
 
-  console.log(swapAmount)
+ //console.log(swapAmount)
 
 
 const Render = () => {
