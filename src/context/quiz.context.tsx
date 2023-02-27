@@ -268,7 +268,6 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [triviaFetch])
 
 
-  console.log(quizData)
 
 
   //return data based on request
