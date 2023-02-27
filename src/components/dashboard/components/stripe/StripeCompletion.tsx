@@ -2,7 +2,7 @@ import React from 'react'
 
 const StripeCompletion = () => {
   return (
-    <div>Payment Completed</div>
+    <div>Payment Completed!</div>
   )
 }
 

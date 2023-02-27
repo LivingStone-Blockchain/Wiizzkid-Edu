@@ -1,98 +1,239 @@
 import {useContext, useState, useEffect} from 'react'
-import { TokenContext, TokenContextType } from '../../../../context/token.context';
+import { ExchangeContext, ExchangeContextType } from '../../../../context/exchange.context';
 import  {CardBody, Card}  from '../../components/Cards';
 import Button from '../../../Button';
 import { FaTimes } from 'react-icons/fa';
-import { utils } from "ethers";
+import { BigNumber, utils } from "ethers";
 
-
-
-
-
-const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number| null>) => void}) => {
-
-  const { 
-    loading,
-    balanceOfStoneTokens,
-    tokenAmount,
-    setTokenAmount,
-    ETH,
-    tokensMinted,
-    isOwner,
-    withdrawCoins, 
-    mintStoneToken, 
-  } = useContext(TokenContext) as TokenContextType;
+import {
+  calculateST,
+} from "./DEX-components/addLiquidity";
 
 
 
 
 
 
-  const render = () =>{
+
+const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number | null>) => void}) => {
+  const [liquidityTab, setLiquidityTab] = useState(false); 
+  const { isConnected, getAmounts, zero, _getAmountOfTokensReceivedFromSwap, _swapTokens, _getTokensAfterRemove, _addLiquidity, _removeLiquidity, stBalance, ethBalance, lpBalance, reservedST, setAddEther, setAddSTTokens, etherBalanceContract, addSTTokens, removeST, removeEther, setRemoveLPTokens,   swapAmount, setSwapAmount, ethSelected, setEthSelected, tokenToBeReceivedAfterSwap} = useContext(ExchangeContext) as ExchangeContextType;
+
+
+
+
+
+
+  useEffect(() => {
+    if (isConnected) {
+      getAmounts();
+    }
+  }, [isConnected]);
+
+
+  console.log(swapAmount)
+
+
+const Render = () => {
+  if (liquidityTab) {
     return (
-      <div className='flex flex-col gap-4 justify-center items-center mt-7 mb-10 w-full'>
-        <input
-          type="Number"
-          min="0" max="10000" step="0.01"
-          placeholder="Stone..."
-          value={tokenAmount}
-          // BigNumber.from converts the `e.target.value` to a BigNumber
-          onChange={(e) => setTokenAmount(Number(e.target.value))}
-          className="flex-initial sm:w-64 w-48 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
-        />
-    
-      <Button 
-        type='button'
-        onClick={() => mintStoneToken(tokenAmount)}
-        className={`flex-initial sm:w-64 w-48 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3 ${loading ? "cursor-not-allowed bg-[#37385e]" : "cursor-pointer bg-navy"}`}
-      >
-         {loading && (<svg role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
-              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
-            </svg>)}
-            <span className={`relative md:text-base text-s font-semibold ${loading ? " text-gray-200" : " text-white"}`}>{loading ? "Processing" : "Mint Tokens"}</span>
-      </Button>  
-      </div>
-    )
+      <>
+         <div className='flex  flex-col justify-center items-center gap-2 w-full'>
+              <p className="text-lg font-medium text-navy text-center">You have {utils.formatEther(stBalance)} Stone Tokens</p>
+              <p className="text-sm font-normal text-gray-600">You have {utils.formatEther(ethBalance)} Ether</p>
+              <p className="mb-2 text-sm font-normal text-gray-600 hidden">You have {utils.formatEther(lpBalance)} Stone LP Tokens</p>
+          </div>
+
+
+        <div>
+          {/* If reserved ST is zero, render the state for liquidity zero where we ask the user
+          how much initial liquidity he wants to add else just render the state where liquidity is not zero and
+          we calculate based on the `Eth` amount specified by the user how much `ST` tokens can be added */}
+          {utils.parseEther(reservedST.toString()).eq(zero) ? (
+            <div className='flex flex-col gap-5 justify-center items-center my-7 w-full'>
+              <div className='flex flex-col md:flex-row gap-3 justify-center md:justify-start items-center w-full'>
+            <input
+               type="number"
+               placeholder="Amount of Ether"
+               onChange={(e) => setAddEther(BigNumber.from(
+                 utils.parseEther(e.target.value || "0")
+               ))}
+              className="flex-initial w-54 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+            />
+             <input
+                type="number"
+                placeholder="Amount of Stone tokens"
+                onChange={(e) =>
+                  setAddSTTokens(
+                    BigNumber.from(
+                      utils.parseEther(e.target.value || "0")
+                    )
+                  )}
+              className="flex-initial w-54 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+            />
+            </div>
+            <Button 
+                children='Add'
+                type='button'
+                onClick={_addLiquidity}
+                className='flex-initial md:w-64 w-36 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            /> 
+            </div>
+          ) : (
+            <div className='flex flex-col gap-3 justify-center items-center mt-7 mb-10 w-full'>
+              <input
+                type="number"
+                placeholder="Amount of Ether"
+                onChange={async (e) => {
+                  setAddEther(BigNumber.from(
+                    utils.parseEther(e.target.value || "0")
+                  ));
+                  // calculate the number of ST tokens that
+                  // can be added given  `e.target.value` amount of Eth
+                  const _addSTTokens = await calculateST(
+                    e.target.value || "0",
+                    Number(etherBalanceContract),
+                    Number(reservedST)
+                  );
+                  setAddSTTokens(_addSTTokens);
+                }}
+                className="flex-initial w-54 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+              />
+
+                {/* Convert the BigNumber to string using the formatEther function from ethers.js */}
+
+              <p className="text-sm font-normal text-gray-600">
+                {`You will need ${utils.formatEther(addSTTokens)} Stone Tokens`}
+              </p>
+
+              <Button 
+                children='Add'
+                type='button'
+                onClick={_addLiquidity}
+                className='flex-initial md:w-64 w-36 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            />  
+            </div>
+          )}
+
+          {/* REMOVE LIQUIDITY */}
+
+          <div className='flex  flex-col justify-center items-center gap-2 w-full mb-3'>
+            <input
+              type="number"
+              placeholder="Amount of LP Tokens"
+              onChange={async (e) => {
+                setRemoveLPTokens(e.target.value || "0");
+                // Calculate the amount of Ether and ST tokens that the user would receive
+                // After he removes `e.target.value` amount of `LP` tokens
+                await _getTokensAfterRemove(e.target.value || "0");
+              }}
+              className="flex-initial w-54 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+            />
+            <p className="mb-2 text-sm font-normal text-gray-600">
+              {/* Convert the BigNumber to string using the formatEther function from ethers.js */}
+              {`You will get ${utils.formatEther(removeST)} Stone
+            Tokens and ${utils.formatEther(removeEther)} Eth`}
+            </p>
+            <Button 
+                children='Remove'
+                type='button'
+                onClick={_removeLiquidity}
+                className='flex-initial md:w-64 w-36 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            /> 
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className='flex  flex-col justify-center items-center gap-2 w-full'>
+              <p className="text-lg font-medium text-navy text-center"> {Number(utils.formatEther(reservedST)).toFixed(6)} Stone Tokens Available</p>
+              <p className="mb-2 text-sm font-normal text-gray-600 hidden"> {utils.formatEther(etherBalanceContract)} Ether in the Contract</p>
+          </div>
+        <div className='flex flex-col md:flex-row gap-3 justify-center md:justify-start items-center my-7 w-full'>
+          <input
+            type="number"
+            placeholder="Amount"
+            min="0" max="10000" step="0.01"
+            value={swapAmount}
+            onChange={async (e) => {
+              setSwapAmount(e.target.value);
+              // Calculate the amount of tokens user would receive after the swap
+              await _getAmountOfTokensReceivedFromSwap(
+                Number(e.target.value || "0")
+              );
+            }}
+            className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+          />
+          <select
+            className='bg-navy bg-opacity-10 flex-initial w-36 text-navy mx-auto sm:mx-0 font-lg px-5 py-3 text-sm rounded-sm'
+            name="dropdown"
+            id="dropdown"
+            onChange={async () => {
+              setEthSelected(!ethSelected);
+              // Initialize the values back to zero
+              await _getAmountOfTokensReceivedFromSwap(0);
+              setSwapAmount("");
+            }}
+          >
+            <option className="text-sm font-normal text-gray-600" value="eth">Ethereum</option>
+            <option className="text-sm font-normal text-gray-600" value="stoneToken">Stone Token</option>
+          </select>
+        </div>
+        
+        <div className='flex  flex-col justify-center items-center gap-2 w-full mb-3'>
+              <p className="mb-2 text-sm font-normal text-gray-600">
+                  {/* Convert the BigNumber to string using the formatEther function from ethers.js */}
+                {ethSelected
+                  ? `You will get ${Number(utils.formatEther(
+                      tokenToBeReceivedAfterSwap
+                  )).toFixed(6)} Stone Tokens`
+                  : `You will get ${Number(utils.formatEther(
+                      tokenToBeReceivedAfterSwap
+                    )).toFixed(6)} Eth`}
+              </p>
+              <Button 
+                children='Swap'
+                type='button'
+                onClick={_swapTokens}
+                className='flex-initial md:w-64 w-36 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            />  
+          </div>
+        </>
+    );
   }
-
-
-
+};
 
   
   return (
         <Card>
           <CardBody className='flex flex-col items-center justify-center gap-12 bg-tomatoLighter relative'>
           <p className='p-2 rounded-full absolute top-2 right-2 bg-[#e9d9de] cursor-pointer' onClick={() => setOpen(null)}><FaTimes  className='w-3 h-3 font-light'/></p>
-          <div className='flex  flex-col justify-center items-center gap-2 w-full'>
-              <p className="text-lg font-medium text-navy text-center">You have {Number(utils.formatEther(ETH)).toFixed(2)} ETH</p>
-              <p className="text-sm font-normal text-gray-600">You have {utils.formatEther(balanceOfStoneTokens)} Stone Tokens</p>
-              <p className="mb-2 text-sm font-normal text-gray-600 hidden">  Overall {utils.formatEther(tokensMinted)}/500,000 have been minted</p>
-              {render()}
-              <p className="text-xs font-normal text-gray-600"><span className='text-tomato text-sm'>*</span> Enter number of Stone tokens</p>
-          </div> 
-
-          {isOwner ? (
-              <div>
-                  {loading ? <button   className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'>Loading...</button> : 
-                  
-                   <Button 
-                   children='Withdraw Coins'
-                   type='button'
-                   onClick={withdrawCoins}
-                   className='flex-initial md:w-64 w-36 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
-                       />  
-                  }
-              </div> ) : ("")
-          }
-     
+          <div className="flex flex-row gap-2 items-center justify-center mt-3 w-full mx-auto">
+            <Button 
+                children='Swap'
+                type='button'
+                onClick={() => {
+                  setLiquidityTab(false);
+                }}
+                className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            />              
+            <Button 
+                children='Liquidity'
+                type='button'
+                onClick={() => {
+                  setLiquidityTab(true);
+                }}
+                className='flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 text-sm font-semibold px-5 py-3  bg-[#252641]'
+            />
+          </div>
+          <div className="text-center"><Render /></div>
         </CardBody>
       </Card>
   )
 
   
 };
-
-
 
 export default Exchange;

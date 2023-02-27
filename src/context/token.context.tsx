@@ -8,7 +8,7 @@ import {
   useContract,
 } from "wagmi";
 import { goerli } from "wagmi/chains";
-import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/dashboard/components/exchange/constants/constants";
+import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/dashboard/components/payWithEth/constants/constants";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';

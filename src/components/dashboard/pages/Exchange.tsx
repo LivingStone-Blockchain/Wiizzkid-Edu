@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { Paypal, Stripe, PayWithEth } from '../components/index';
-import { paypal, card, crypto } from '../../../assets/dashboard/index';
+import { ExchangeLayout } from '../components/index';;
+import { exchange } from '../../../assets/dashboard/index';
 import { CardBody, Card } from '../components/Cards';
 import { TokenContext, TokenContextType } from './../../../context/token.context';
 
@@ -18,7 +18,7 @@ type BuyStoneDataType = {
 
 
 
-const BuyStone = () => {
+const Exchange = () => {
   const { isConnected } = useContext(TokenContext) as TokenContextType;
   const [open, setOpen] = useState<number | null>(null);
 
@@ -27,28 +27,12 @@ const BuyStone = () => {
   const buyStoneData: BuyStoneDataType[] = [
     {
       id: 1,
-      title: "Coin Payment",
-      text: "Buy STN with Eth",
-      img: crypto,
+      title: "Exchange",
+      text: "Swap STN for Eth",
+      img: exchange,
       className: 'bg-tomatoLighter',
-      children: <PayWithEth setOpen={setOpen} />
+      children: <ExchangeLayout setOpen={setOpen} />
     },
-    {
-      id: 2,
-      title: "Card Payment",
-      text: "Buy STN with credit card",
-      img: card,
-      className: 'bg-goldenLighter',
-      children: <Stripe setOpen={setOpen}/>
-    },
-    {
-      id: 3,
-      title: "Fiat",
-      text: "Buy in your local currency",
-      img: paypal,
-      className: 'bg-tealLighter',
-      children: <Paypal setOpen={setOpen} />
-    }
   ]
 
   
@@ -67,7 +51,7 @@ const BuyStone = () => {
 
   return (
     <div className="flex flex-col gap-8 items-start justify-start">
-      <p className='font-medium text-navy'>Buy Stone Token</p>
+      <p className='font-medium text-navy'>Exchange</p>
       <div data-aos="fade-up" data-aos-delay="100" className="grid gap-6 w-full mb-8 md:grid-cols-3 relative">
         {buyStoneData.map(({ id, img, title, text, className, children }) => (
           <div key={id}>
@@ -88,6 +72,6 @@ const BuyStone = () => {
   )
 }
 
-export default BuyStone;
+export default Exchange;
 
 

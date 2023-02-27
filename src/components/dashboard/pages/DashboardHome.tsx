@@ -12,19 +12,19 @@ const DashboardHome = () => {
   const { loading, withdrawWinnings, userDetail } = useContext(TokenContext) as TokenContextType;
   const { user } = useContext(QuizContext) as QuizContextType;
 
-
+//data-aos="fade-up" data-aos-delay="200"
   return (
     <div  className="flex flex-col items-start justify-start">
       <CTA
         message='Welcome back to your Wiizzkid space'
         name={user!.full_name.split(' ')[0]}
       />
-      <div  data-aos="fade-up" data-aos-delay="200" className="flex items-center justify-between my-3 w-full">
+      <div   className={`flex items-center justify-between my-3 w-full ${window.innerWidth < 380 && 'flex-col gap-5'}`}>
 
           <Button 
             type='button'
             onClick={() => withdrawWinnings(userDetail?.stone_token_winnings!)}
-            className={`relative rounded-xl flex-initial flex justify-center items-center ${loading ? 'sm:w-64 w-40' : 'sm:w-56 w-40'} text-white sm:mx-0 text-sm font-semibold px-5 py-3 bg-teal  ${loading ? "bg-[#37385e] cursor-not-allowed pointer-events-none" : "bg-navy cursor-pointer pointer-events-auto"} ${userDetail?.stone_token_winnings! === 0 && 'invisible'}`}
+            className={`relative rounded-xl flex-initial flex justify-center items-center text-white sm:mx-0 text-sm font-semibold px-5 py-3 bg-teal  ${loading ? "bg-[#37385e] cursor-not-allowed pointer-events-none" : "bg-navy cursor-pointer pointer-events-auto"} ${userDetail?.stone_token_winnings! === 0 && 'invisible'}  ${window.innerWidth < 380 && 'w-full'}`}
           >
             <span className="flex h-3 w-3 absolute -top-[3px] -right-[3px]">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75"></span>
@@ -38,12 +38,12 @@ const DashboardHome = () => {
       </Button> 
         
         <Button 
-            children={dashBoardMode ? "See Quiz Data" : "See Timestable Data"}
+            children={dashBoardMode ? "Quiz Data" : "Timestable Data"}
             type='button'
             onClick={() => {
               setDashBoardMode(!dashBoardMode);
             }}
-            className={`rounded-xl flex-initial sm:w-48 ${user?.stone_token_winnings! === 0 ? '' : 'w-40'} text-white sm:mx-0 text-sm font-semibold px-5 py-3  bg-navy`}
+            className={`rounded-xl flex-initial  text-white sm:mx-0 text-sm font-semibold px-5 py-3  bg-navy  ${window.innerWidth < 380 && 'w-full'}`}
         />       
           </div>
       {dashBoardMode ? (

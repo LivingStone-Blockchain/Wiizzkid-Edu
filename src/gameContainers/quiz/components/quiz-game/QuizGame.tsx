@@ -40,7 +40,6 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
-
   // restructure fetched data
   const mapped_questions = dataType?.map((question) => {
     return {

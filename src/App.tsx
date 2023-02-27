@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import './../node_modules/react-modal-video/css/modal-video.css';
 import { Home, Login, Register, ForgotPassword, Dashboard, About, RegisterNotification, Roadmap, RegistrationVerify, NotFound, Pricing, BlogDetails, ResetPassword } from "./pages";
 import { Header, Footer, BackToTop, Preloader, UserRoute } from './components/index'
-import { DashboardHome, BuyStone, Quizzes, QuizHistory, WiizzkidMetaverse } from "./components/dashboard/pages/index";
+import { DashboardHome, BuyStone, Quizzes, QuizHistory, WiizzkidMetaverse, Exchange } from "./components/dashboard/pages/index";
 import QuizPlay from "./gameContainers/quiz/pages/QuizPlay";
 import StripeCompletion from "./components/dashboard/components/stripe/StripeCompletion";
 import AOS from 'aos';
@@ -47,6 +47,7 @@ function App() {
       <Route element={<UserRoute children={<Dashboard />} />}>
         <Route path='/dashboard-home' element={<DashboardHome />} />
         <Route path="/dashboard/buy-token" element={<BuyStone />} />
+        <Route path="/dashboard/exchange" element={<Exchange />} />
         <Route path="/dashboard/quizzes" element={<Quizzes />} />
         <Route path="/dashboard/quiz-history" element={<QuizHistory />} />
         <Route path="/dashboard/wiizzkid-metaverse" element={<WiizzkidMetaverse />} />

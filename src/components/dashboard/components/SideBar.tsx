@@ -175,6 +175,35 @@ const SideBar:FC<SideBarProps> = ({open, setOpen, userFullName, handleLogout}) =
             <span className="text-sm leading-relaxed font-medium " onClick={() => setOpen(false)}>Buy Stone</span>
           </Link>
         </li>
+
+        <li>
+          <Link
+            to='/dashboard/exchange'
+            onClick={() => setOpen(false)}
+            className={`relative group flex items-center space-x-4 rounded-xl px-4 py-3 ${pathname.includes('/dashboard/exchange') ? 'bg-navy text-white' : 'text-gray-600'}`}
+          >
+            <svg
+             xmlns="http://www.w3.org/2000/svg"
+             className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+             >
+              <g fill="#252641">
+                <path 
+                    className={`fill-current text-gray-300 group-hover:text-[#98cfcc] ${pathname.includes('/dashboard/exchange') ? 'text-[#98cfcc]' : 'text-gray-300'}`}
+                  d="m7.81 2h8.37c3.65 0 5.82 2.17 5.82 5.81v8.37c0 3.64-2.17 5.81-5.81 5.81h-8.38c-3.64.01-5.81-2.16-5.81-5.8v-8.38c0-3.64 2.17-5.81 5.81-5.81z"/>
+                <path 
+                   className={`fill-current text-gray-600 group-hover:text-teal ${pathname.includes('/dashboard/exchange') ? 'text-[#26a8a1]' : 'text-gray-600'}`}
+                  d="m17.69 13.4798c-.08-.18-.22-.33-.41-.41-.09-.04-.19-.06-.29-.06h-9.99c-.41 0-.75.34-.75.75s.34.75.75.75h8.19l-1.67 1.67c-.29.29-.29.77 0 1.06.15.15.34.22.53.22s.38-.07.53-.22l2.95-2.95c.07-.07.12-.15.16-.24.08-.19.08-.39 0-.57z"/>
+                <path 
+                   className={`fill-current text-gray-600 group-hover:text-teal ${pathname.includes('/dashboard/exchange') ? 'text-[#26a8a1]' : 'text-gray-600'}`}
+                  d="m6.31 10.52c.08.18.22.33.41.41.09.04.18.06.28.06h10c.41 0 .75-.34.75-.75 0-.41002-.34-.75002-.75-.75002h-8.19l1.67-1.67c.29-.29.29-.77 0-1.06s-.77-.29-1.06 0l-2.95 2.95c-.07.07-.12.15-.16.24-.08.19002-.08.39002 0 .57002z"/>
+              </g>
+            </svg>
+            <span className="text-sm leading-relaxed font-medium " onClick={() => setOpen(false)}>Exchange</span>
+          </Link>
+        </li>
+
         <li>
           <Link
             to='/'

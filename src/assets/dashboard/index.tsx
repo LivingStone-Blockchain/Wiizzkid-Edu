@@ -9,3 +9,4 @@ export { default as crypto } from './crypto.png';
 export { default as card } from './card.png';
 export { default as paypal} from './paypal.png';
 export { default as trophy } from './trophy.png';
+export { default as exchange} from './coingate.png';
