@@ -1,5 +1,5 @@
 import { Contract } from "ethers";
-import {DEX_ABI, DEX_ADDRESS, EXCHANGE_ABI, EXCHANGE_ADDRESS } from "../constants/constants";
+import {DEX_ABI, DEX_ADDRESS, TOKEN_ABI, TOKEN_ADDRESS } from "../constants/constants";
 
 /*
     getAmountOfTokensReceivedFromSwap:  Returns the number of Eth/Stone tokens that can be received 
@@ -58,8 +58,8 @@ export const swapTokens = async (
     signer
   );
   const tokenContract = new Contract(
-    EXCHANGE_ADDRESS,
-    EXCHANGE_ABI,
+    TOKEN_ADDRESS,
+    TOKEN_ABI,
     signer
   );
   let tx;

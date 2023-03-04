@@ -39,7 +39,7 @@ const useTokenRefresh = () => {
         }, 60000); // Refresh the token every 60 seconds
     
         return () => clearInterval(intervalId);
-      }, []); 
+      }, [refreshedUser]); 
 
       return { refreshedUser };
     }

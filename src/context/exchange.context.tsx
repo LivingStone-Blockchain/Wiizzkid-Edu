@@ -1,4 +1,4 @@
-import { createContext, FC, useMemo, useState } from "react";
+import { createContext, FC, useEffect, useMemo, useState } from "react";
 import { BigNumber, utils } from "ethers";
 import {
   useProvider,
@@ -8,13 +8,6 @@ import {
   useContract,
 } from "wagmi";
 import { goerli } from "wagmi/chains";
-import {
-    DEX_ABI,
-    DEX_ADDRESS,
-    EXCHANGE_ABI,
-    EXCHANGE_ADDRESS,
-  } from  '../components/dashboard/components/exchange/constants/constants.js';
-
 import {
   addLiquidity,
   calculateST,
@@ -116,8 +109,6 @@ const ExchangeProvider: FC<any> = ({ children }) => {
 
 
 
-
-      
   const getAmounts = async () => {
     try {
 
@@ -149,6 +140,15 @@ const ExchangeProvider: FC<any> = ({ children }) => {
       console.error(err);
     }
   };
+
+  //update all getAmount function states
+  useEffect(() => {
+    if (isConnected) {
+      getAmounts();
+    }
+  }, [isConnected]);
+
+
 
   const _swapTokens = async () => {
     if (swapAmount === "") {
@@ -291,6 +291,7 @@ const ExchangeProvider: FC<any> = ({ children }) => {
       console.error(err);
     }
   };
+
 
 
 

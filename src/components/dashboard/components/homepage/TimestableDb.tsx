@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import {TimestableContext,TimestableContextType } from '../../../../context/timestable.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
+import { ExchangeContext, ExchangeContextType } from '../../../../context/exchange.context';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
 import { referral, score, balance, average } from '../../../../assets/dashboard';
@@ -12,7 +13,7 @@ import { Preloader } from './../../../index';
 
 const TimestableDb = () => {
     const { user, timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
-    const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
 
       //returns data for a year
   const currentYear = new Date().getFullYear();
@@ -51,7 +52,7 @@ const TimestableDb = () => {
             />
             <InfoCard
               title="STN Balance"
-              value={Number(utils.formatEther(balanceOfStoneTokens)).toFixed(2)}
+              value={Number(utils.formatEther(stBalance)).toFixed(2)}
               img={balance}
             />
             <InfoCard

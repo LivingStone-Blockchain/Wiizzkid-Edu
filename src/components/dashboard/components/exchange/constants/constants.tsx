@@ -1,7 +1,7 @@
 export const DEX_ADDRESS =  "0x397131d775d9FAc3A7d8293F686AF1c366A0563F";
-export const EXCHANGE_ADDRESS = "0x64298f36361ba633B4765665d2572E59988CBcdf"
+export const TOKEN_ADDRESS = "0x64298f36361ba633B4765665d2572E59988CBcdf"
 
-export const EXCHANGE_ABI = [
+export const TOKEN_ABI = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",

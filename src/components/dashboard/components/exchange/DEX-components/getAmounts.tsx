@@ -1,5 +1,5 @@
 import { Contract } from "ethers";
-import {DEX_ABI, DEX_ADDRESS, EXCHANGE_ABI, EXCHANGE_ADDRESS } from "../constants/constants";
+import {DEX_ABI, DEX_ADDRESS, TOKEN_ABI, TOKEN_ADDRESS } from "../constants/constants";
 
 
   // const TokenContract = useContract({
@@ -44,8 +44,8 @@ export const getEtherBalance = async (provider:any, address:any, contract:boolea
 export const getSTBalance = async (provider:any, address:any) => {
   try {
     const tokenContract = new Contract(
-      EXCHANGE_ADDRESS,
-      EXCHANGE_ABI,
+      TOKEN_ADDRESS,
+      TOKEN_ABI,
       provider
     );
     const balanceOfStoneTokens = await tokenContract.balanceOf(address);

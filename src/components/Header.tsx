@@ -10,7 +10,7 @@ import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet
 import Button from './Button';
 import { ConnectWalletBtn, Hero } from './index';
 import { UserContext, UserContextType } from '../context/user.context';
-import { TokenContext, TokenContextType } from '../context/token.context';
+import { ExchangeContext, ExchangeContextType } from '../context/exchange.context';
 import { utils } from "ethers";
 
 
@@ -66,7 +66,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
     const { user, handleLogout } = useContext(UserContext) as UserContextType;
-    const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
    
 
     //prevent scroll when profile dropdown is clicked
@@ -156,7 +156,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(balanceOfStoneTokens)).toFixed(2)}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(stBalance)).toFixed(2)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -266,7 +266,7 @@ const Header = () => {
                                                                 <a
                                                                     className="border rounded-full py-2 px-4 text-xs font-normal text-gray-100 cursor-pointer"
                                                                 >
-                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(balanceOfStoneTokens)).toFixed(2)}</span> <span className="text-xs">STN</span>
+                                                                    Balance: <span className="text-xl font-semibold">{Number(utils.formatEther(stBalance)).toFixed(2)}</span> <span className="text-xs">STN</span>
                                                                 </a>
                                                             </div>
                                                         </div>
