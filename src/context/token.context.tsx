@@ -12,6 +12,7 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
+import { QuizContext, QuizContextType } from './quiz.context';
 import { ExchangeContext, ExchangeContextType } from './exchange.context';
 import {userDetailsService } from "../services";
 import useTokenRefresh from './../hooks/useTokenRefresh';
@@ -32,13 +33,29 @@ type userType = {
 }
 
 
+type deductTokenOnGameCreateType = {
+  id?: string
+  invite_code?: string
+  creator?: number
+  difficulty: string
+  total_questions: number
+  total_players: number
+  game_mode: string
+  game_duration: number
+  category: number
+  current_players?: number
+  stone_token_fee?: number
+  players?: number[]
+}
+
+
 
 export interface TokenContextType {
   address: any,
   isConnected: any,
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
-  deductTokenOnGameCreate: (tokenFee: number, gameId: string) => Promise<void>,
+  deductTokenOnGameCreate: (res: deductTokenOnGameCreateType) => Promise<void>,
   withdrawWinnings: (winnings: number) => Promise<void>,
   getTotalTokensMinted: () => Promise<void>,
   getTotalEth: () => Promise<void>,
@@ -89,6 +106,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
+  const {gameDetails} = useContext(QuizContext) as QuizContextType;
   const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
   const { refreshedUser } = useTokenRefresh();
 
@@ -270,7 +288,7 @@ const getTotalEth = async () => {
 
 
   //Deducting token fee on game creation
-  const deductTokenOnGameCreate = async (tokenFee: number, gameId:string) => {
+  const deductTokenOnGameCreate = async (res: deductTokenOnGameCreateType | any) => {
     const gameContract = new Contract(
         GAME_ADDRESS,
         GAME_ABI,
@@ -284,7 +302,7 @@ const getTotalEth = async () => {
       
       setLoading(true);
       setFirstApproval(true);
-      const amount = utils.parseEther(tokenFee.toString())
+      const amount = utils.parseEther(res?.stone_token_fee!.toString())
 
       try {
         const tx = await tokenContract.approve(GAME_ADDRESS, amount)
@@ -298,11 +316,9 @@ const getTotalEth = async () => {
         setLoading(false);
 
         //send player id to backend after successful deduction
-        const payload = {
-          player_id: user?.id
-        }
+        const payload = {...res, players: res?.players!.push(user?.id!)}
 
-        await userDetailsService.userUpdateOnTokenDeduction(payload, gameId, refreshedUser!.tokens!.access);
+        await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
       } catch (error) {
         console.error(error);
       }

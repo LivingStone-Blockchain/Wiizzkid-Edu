@@ -9,7 +9,18 @@ type credentialsType = {
 
 
 type userUpdateOnTokenDeductionType = {
-    player_id: number | undefined
+    id?: string
+    invite_code?: string
+    creator?: number
+    difficulty: string
+    total_questions: number
+    total_players: number
+    game_mode: string
+    game_duration: number
+    category: number
+    current_players?: number
+    stone_token_fee?: number
+    players?: number[]
 }
 
 
