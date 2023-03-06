@@ -297,7 +297,7 @@ const getTotalEth = async () => {
         await txx.wait();
         setLoading(false);
 
-        //send user id to backend
+        //send user id to backen
       } catch (error) {
         console.error(error);
       }
