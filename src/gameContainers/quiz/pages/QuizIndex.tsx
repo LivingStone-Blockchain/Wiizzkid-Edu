@@ -43,7 +43,7 @@ const QuizIndex = () => {
 
 
     try {
-      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res); deductTokenOnGameCreate(res.stone_token_fee)});
+      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res); deductTokenOnGameCreate(res.stone_token_fee, res.id)});
      
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {

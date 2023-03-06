@@ -444,8 +444,8 @@ const handleTryLondonMode = () => {
           .createGame(userPayload!, refreshedUser.tokens.access)
           .then((res) => {
             setGameDetails(res)
-            //deduct game stone token fee from smart contract if its not london
-           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee));
+            //deduct game stone token fee from smart contract for creator if its not london
+           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee), gameDetails?.id!);
           })
         : setGameDetails(nonUserPayload)
 

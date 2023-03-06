@@ -8,6 +8,12 @@ type credentialsType = {
 }
 
 
+type userUpdateOnTokenDeductionType = {
+    player_id: number | undefined
+}
+
+
+
 const baseUrl = import.meta.env.VITE_HOST_BASE_URL;
 
 const getUser = async (id: number, token:string) => {
@@ -36,5 +42,22 @@ const stoneUpdate = async (credentials: credentialsType, id: number, token:strin
     return response.data;
 }
 
-const userDetailsService = { stoneUpdate, getUser };
+
+
+
+const userUpdateOnTokenDeduction = async (credentials: userUpdateOnTokenDeductionType, gameId: string, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+
+    const response = await axios.patch(`${baseUrl}/quiz/games/${gameId}/`, credentials, config);
+    return response.data;
+}
+
+
+
+
+const userDetailsService = { stoneUpdate, getUser, userUpdateOnTokenDeduction };
 export default userDetailsService;

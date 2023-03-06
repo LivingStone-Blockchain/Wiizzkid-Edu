@@ -38,7 +38,7 @@ export interface TokenContextType {
   isConnected: any,
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
-  deductTokenOnGameCreate: (tokenFee: number) => Promise<void>,
+  deductTokenOnGameCreate: (tokenFee: number, gameId: string) => Promise<void>,
   withdrawWinnings: (winnings: number) => Promise<void>,
   getTotalTokensMinted: () => Promise<void>,
   getTotalEth: () => Promise<void>,
@@ -270,7 +270,7 @@ const getTotalEth = async () => {
 
 
   //Deducting token fee on game creation
-  const deductTokenOnGameCreate = async (tokenFee: number) => {
+  const deductTokenOnGameCreate = async (tokenFee: number, gameId:string) => {
     const gameContract = new Contract(
         GAME_ADDRESS,
         GAME_ABI,
@@ -297,7 +297,12 @@ const getTotalEth = async () => {
         await txx.wait();
         setLoading(false);
 
-        //send user id to backen
+        //send player id to backend after successful deduction
+        const payload = {
+          player_id: user?.id
+        }
+
+        await userDetailsService.userUpdateOnTokenDeduction(payload, gameId, refreshedUser!.tokens!.access);
       } catch (error) {
         console.error(error);
       }
