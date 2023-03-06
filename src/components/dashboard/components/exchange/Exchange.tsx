@@ -17,21 +17,12 @@ import {
 
 const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number | null>) => void}) => {
   const [liquidityTab, setLiquidityTab] = useState(false); 
-  const { isConnected, getAmounts, zero, _getAmountOfTokensReceivedFromSwap, _swapTokens, _getTokensAfterRemove, _addLiquidity, _removeLiquidity, stBalance, ethBalance, lpBalance, reservedST, setAddEther, setAddSTTokens, etherBalanceContract, addSTTokens, removeST, removeEther, setRemoveLPTokens,   swapAmount, setSwapAmount, ethSelected, setEthSelected, tokenToBeReceivedAfterSwap} = useContext(ExchangeContext) as ExchangeContextType;
+  const { zero, _getAmountOfTokensReceivedFromSwap, _swapTokens, _getTokensAfterRemove, _addLiquidity, _removeLiquidity, stBalance, ethBalance, lpBalance, reservedST, setAddEther, setAddSTTokens, etherBalanceContract, addSTTokens, removeST, removeEther, setRemoveLPTokens,   swapAmount, setSwapAmount, ethSelected, setEthSelected, tokenToBeReceivedAfterSwap} = useContext(ExchangeContext) as ExchangeContextType;
+  const [tokenSelected, setTokenSelected] = useState<string>("");
 
 
 
 
-
-
-  useEffect(() => {
-    if (isConnected) {
-      getAmounts();
-    }
-  }, [isConnected]);
-
-
- //console.log(swapAmount)
 
 
 const Render = () => {
@@ -152,34 +143,36 @@ const Render = () => {
               <p className="mb-2 text-sm font-normal text-gray-600 hidden"> {utils.formatEther(etherBalanceContract)} Ether in the Contract</p>
           </div>
         <div className='flex flex-col md:flex-row gap-3 justify-center md:justify-start items-center my-7 w-full'>
-          <input
+        <input
             type="number"
             placeholder="Amount"
-            min="0" max="10000" step="0.01"
-            value={swapAmount}
+            //min="0" max="10000" step="0.01"
             onChange={async (e) => {
-              setSwapAmount(e.target.value);
+              setSwapAmount(e.target.value || "");
               // Calculate the amount of tokens user would receive after the swap
               await _getAmountOfTokensReceivedFromSwap(
                 Number(e.target.value || "0")
               );
             }}
             className="flex-initial md:w-72 w-64 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
+            value={swapAmount}
           />
-          <select
-            className='bg-navy bg-opacity-10 flex-initial w-36 text-navy mx-auto sm:mx-0 font-lg px-5 py-3 text-sm rounded-sm'
-            name="dropdown"
-            id="dropdown"
-            onChange={async () => {
-              setEthSelected(!ethSelected);
-              // Initialize the values back to zero
-              await _getAmountOfTokensReceivedFromSwap(0);
-              setSwapAmount("");
-            }}
-          >
-            <option className="text-sm font-normal text-gray-600" value="eth">Ethereum</option>
-            <option className="text-sm font-normal text-gray-600" value="stoneToken">Stone Token</option>
-          </select>
+          <label>
+            <select
+              value={tokenSelected}
+              className='bg-navy bg-opacity-10 flex-initial w-36 text-navy mx-auto sm:mx-0 font-lg px-5 py-3 text-sm rounded-sm'
+              onChange={async (e) => {
+                setTokenSelected(e.target.value)
+                setEthSelected(!ethSelected);
+                // Initialize the values back to zero
+                await _getAmountOfTokensReceivedFromSwap(0);
+                setSwapAmount("");
+              }}
+            >
+              <option className="text-sm font-normal text-gray-600" value="eth">Ethereum</option>
+              <option className="text-sm font-normal text-gray-600" value="stoneToken">Stone Token</option>
+            </select>
+          </label>
         </div>
         
         <div className='flex  flex-col justify-center items-center gap-2 w-full mb-3'>

@@ -12,6 +12,7 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
+import { ExchangeContext, ExchangeContextType } from './exchange.context';
 import {userDetailsService } from "../services";
 import useTokenRefresh from './../hooks/useTokenRefresh';
 
@@ -88,6 +89,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
+  const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
   const { refreshedUser } = useTokenRefresh();
 
 
@@ -104,7 +106,7 @@ const TokenProvider: FC<any> = ({ children }) => {
           } catch (error) {
     
           }
-        }, 2000);
+        }, 30000);
 
         return () => clearInterval(intervalId);
         
@@ -294,6 +296,8 @@ const getTotalEth = async () => {
         const txx = await gameContract.createGame(amount)
         await txx.wait();
         setLoading(false);
+
+        //send user id to backend
       } catch (error) {
         console.error(error);
       }
@@ -324,7 +328,7 @@ const withdrawWinnings = async (winning: number) => {
     if(!loading) {
         //reset winnings on backend
         const payload = {
-          stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+          stone_token: Number(utils.formatEther(stBalance)),
           wallet_address: address!,
           stone_token_winnings: 0,
         }
@@ -333,59 +337,89 @@ const withdrawWinnings = async (winning: number) => {
 }
 
 
-
-
+  //update user wallet details on connect or balance change
   useEffect(() => {
-    if(!isConnected) {
-      return;
+    if(isConnected) {
+      getTotalTokensMinted();
+      getBalanceOfStoneTokens();
+      getTotalEth();
+      getOwner();
     }
 
-    getTotalTokensMinted();
-    getBalanceOfStoneTokens();
-    getTotalEth();
-    getOwner();
-}, [isConnected, balanceOfStoneTokens]);
+
+}, [balanceOfStoneTokens]);
 
 
 
 
 
 
-
+const value = useMemo(
+  () => ({
+  address,
+  isConnected,
+  zero,
+  loading,
+  setLoading,
+  balanceOfStoneTokens,
+  setBalanceOfStoneTokens,
+  tokenAmount,
+  setTokenAmount,
+  ETH,
+  setETH,
+  tokensMinted,
+  setTokensMinted,
+  isOwner,
+  setIsOwner,
+  getBalanceOfStoneTokens, 
+  mintStoneToken, 
+  getTotalTokensMinted, 
+  getTotalEth,
+  getOwner, 
+  withdrawCoins,
+  deductTokenOnGameCreate, 
+  firstApproval,
+  setFirstApproval,
+  withdrawWinnings,
+  userDetail, 
+  setUserDetail
+}),
+[
+  address,
+  isConnected,
+  zero,
+  loading,
+  setLoading,
+  balanceOfStoneTokens,
+  setBalanceOfStoneTokens,
+  tokenAmount,
+  setTokenAmount,
+  ETH,
+  setETH,
+  tokensMinted,
+  setTokensMinted,
+  isOwner,
+  setIsOwner,
+  getBalanceOfStoneTokens, 
+  mintStoneToken, 
+  getTotalTokensMinted, 
+  getTotalEth,
+  getOwner, 
+  withdrawCoins,
+  deductTokenOnGameCreate, 
+  firstApproval,
+  setFirstApproval,
+  withdrawWinnings,
+  userDetail, 
+  setUserDetail
+]
+)
 
 
 
   return (
     <TokenContext.Provider
-      value={{
-        address,
-        isConnected,
-        zero,
-        loading,
-        setLoading,
-        balanceOfStoneTokens,
-        setBalanceOfStoneTokens,
-        tokenAmount,
-        setTokenAmount,
-        ETH,
-        setETH,
-        tokensMinted,
-        setTokensMinted,
-        isOwner,
-        setIsOwner,
-        getBalanceOfStoneTokens, 
-        mintStoneToken, 
-        getTotalTokensMinted, 
-        getTotalEth,
-        getOwner, 
-        withdrawCoins,
-        deductTokenOnGameCreate, 
-        firstApproval,
-        setFirstApproval,
-        withdrawWinnings,
-        userDetail, 
-        setUserDetail
-      }}
+      value={value}
     >
       {children}
     </TokenContext.Provider>

@@ -141,17 +141,17 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         ) : (gameMode !== 'london' && totalAllowedPlayers > 1) ? (
         <>
         <p className="mt-8 relative">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy hover:bg-gray-300 cursor-grab" ref={textRef} onClick={handleCopyClick}>
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy hover:bg-gray-300">
               {gameDetails?.invite_code}
             </span>
-            <span className="text-xs font-bold animate-pulse text-teal absolute top-2 right-10">copy</span>
+            <span className="text-xs font-bold animate-pulse text-teal absolute top-2 right-10 cursor-grab"  ref={textRef} onClick={handleCopyClick}>copy</span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative hidden">
             <span >{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
             <span className="text-xs font-bold animate-pulse text-teal absolute top-3 right-15">copy</span>
           </p>
           <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
-            Copy and share your quiz code or link to your friends!
+            Copy and share your quiz code with friends!
           </p>
         </>
       ) : (

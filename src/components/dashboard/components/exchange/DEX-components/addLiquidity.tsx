@@ -1,5 +1,5 @@
 import { Contract, utils } from "ethers";
-import {DEX_ABI, DEX_ADDRESS, EXCHANGE_ABI, EXCHANGE_ADDRESS } from "../constants/constants";
+import {DEX_ABI, DEX_ADDRESS, TOKEN_ABI, TOKEN_ADDRESS } from "../constants/constants";
 
 /**
  * addLiquidity helps add liquidity to the exchange,
@@ -12,8 +12,8 @@ export const addLiquidity = async (signer:any, addStoneAmountWei:any, addEtherAm
   try {
     // create a new instance of the token contract
     const tokenContract = new Contract(
-      EXCHANGE_ADDRESS,
-      EXCHANGE_ABI,
+      TOKEN_ADDRESS,
+      TOKEN_ABI,
       signer
     );
     // create a new instance of the exchange contract

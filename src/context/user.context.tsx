@@ -1,5 +1,5 @@
 import React, { createContext, FC, useState, useEffect, useCallback, useContext } from "react";
-import { registerService, loginService, forgotPasswordService, userDetailsService } from "../services";
+import { registerService, loginService, forgotPasswordService } from "../services";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";

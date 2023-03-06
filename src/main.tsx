@@ -40,8 +40,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <WagmiConfig client={Client}>
          <RainbowKitProvider chains={chains} initialChain={chain.goerli}>
          <UserProvider>
+         <ExchangeProvider>
          <TokenProvider>
-          <ExchangeProvider>
           <QuizProvider>
           <TimestableProvider>
           <WiizzkidProvider>
@@ -49,8 +49,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </WiizzkidProvider>
           </TimestableProvider>
           </QuizProvider>
-          </ExchangeProvider>
           </TokenProvider>
+          </ExchangeProvider>  
           </UserProvider>
           </RainbowKitProvider>
           </WagmiConfig>

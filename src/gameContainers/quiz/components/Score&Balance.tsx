@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { QuizContext, QuizContextType } from '../../../context/quiz.context';
 import { apiChartData } from '../../../components/dashboard/data/quizChartData';
 import { TokenContext, TokenContextType } from '../../../context/token.context';
+import { ExchangeContext, ExchangeContextType } from '../../../context/exchange.context';
 import { utils } from 'ethers';
 
 
@@ -12,8 +13,8 @@ type BoardDataType = {
 
 const ScoreBalance = () => {
     const { quizRecentGames, scoreBoard, user, score } = useContext(QuizContext) as QuizContextType;
-    const { balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
-
+    const { userDetail } = useContext(TokenContext) as TokenContextType;
+    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
     
   //returns data for a year
   const dataPerYear =   apiChartData(quizRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
@@ -27,7 +28,7 @@ const ScoreBalance = () => {
     const userBoardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
+          value: Number(utils.formatEther(stBalance)).toFixed(1),
         },
         {
           title: "Winnings",
@@ -43,7 +44,7 @@ const ScoreBalance = () => {
        const nonUserBoardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
+          value: Number(utils.formatEther(stBalance)).toFixed(1),
         },
         {
           title: "Score",

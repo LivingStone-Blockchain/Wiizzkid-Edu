@@ -42,7 +42,7 @@
     "react-web-share": "^2.0.2",
     "swiper": "^8.4.4",
     "use-sound": "^4.0.1",
-    "wagmi": "^0.8.7",
+    "wagmi": "^0.8.8",
     "yup": "^0.32.11"
   },
   "devDependencies": {
