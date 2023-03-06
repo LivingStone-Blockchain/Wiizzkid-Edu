@@ -316,7 +316,7 @@ const getTotalEth = async () => {
         setLoading(false);
 
         //send player id to backend after successful deduction
-        const payload = {...res, players: res?.players!.push(user?.id!)}
+        const payload = {...res, players: res?.players!.push(user?.id!)};
 
         await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
       } catch (error) {
