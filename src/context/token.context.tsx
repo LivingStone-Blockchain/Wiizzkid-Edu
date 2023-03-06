@@ -296,6 +296,8 @@ const getTotalEth = async () => {
         const txx = await gameContract.createGame(amount)
         await txx.wait();
         setLoading(false);
+
+        //send user id to backend
       } catch (error) {
         console.error(error);
       }
