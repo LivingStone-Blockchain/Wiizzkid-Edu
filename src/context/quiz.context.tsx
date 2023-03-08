@@ -521,7 +521,7 @@ const handleTryLondonMode = () => {
     }
 
     updateStoneBalance();
-  }, [stoneWinning, showLeaderBoard]);
+  }, [stoneWinning, showLeaderBoard, address]);
 
 
 
