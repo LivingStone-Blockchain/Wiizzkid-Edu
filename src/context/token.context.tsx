@@ -302,7 +302,7 @@ const getTotalEth = async () => {
       
       setLoading(true);
       setFirstApproval(true);
-      const amount = utils.parseEther(res?.stone_token_fee!.toString())
+      const amount = utils.parseEther(res?.stone_token_fee!.toString());
 
       try {
         const tx = await tokenContract.approve(GAME_ADDRESS, amount);
