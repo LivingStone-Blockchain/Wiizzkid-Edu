@@ -311,7 +311,7 @@ const getTotalEth = async () => {
           setFirstApproval(false);
         }, 3000);
 
-        const txx = await gameContract.createGame(amount);
+        const txx = await gameContract.createGame(amount)
         await txx.wait();
 
          //send player id to backend after successful deduction
