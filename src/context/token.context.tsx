@@ -340,7 +340,7 @@ const withdrawWinnings = async (winning: number) => {
       const  tx = await gameContract.withdrawWins(winningAmount) 
       await tx.wait();
 
-      toast.success('Withdrawal success', { duration: 5000 })  
+      toast.success('Withdrawal success', { duration: 5000 });  
       setLoading(false);
     } catch (error) {}
 
