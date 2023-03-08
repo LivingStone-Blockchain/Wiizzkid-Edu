@@ -313,7 +313,7 @@ const getTotalEth = async () => {
         await txx.wait();
 
          //send player id to backend after successful deduction
-         const payload = {...res, players: res?.players!.push(user?.id!)};
+         const payload = {players: [user?.id!]};
 
          await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
 
