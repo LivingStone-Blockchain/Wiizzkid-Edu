@@ -305,7 +305,7 @@ const getTotalEth = async () => {
       const amount = utils.parseEther(res?.stone_token_fee!.toString())
 
       try {
-        const tx = await tokenContract.approve(GAME_ADDRESS, amount)
+        const tx = await tokenContract.approve(GAME_ADDRESS, amount);
         await tx.wait();
         setTimeout(() => {
           setFirstApproval(false);
@@ -313,12 +313,13 @@ const getTotalEth = async () => {
 
         const txx = await gameContract.createGame(amount);
         await txx.wait();
+
+         //send player id to backend after successful deduction
+         const payload = {...res, players: res?.players!.push(user?.id!)};
+
+         await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
+
         setLoading(false);
-
-        //send player id to backend after successful deduction
-        const payload = {...res, players: res?.players!.push(user?.id!)};
-
-        await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
       } catch (error) {
         console.error(error);
       }
