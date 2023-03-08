@@ -15,6 +15,7 @@ import categoryStrings from "../gameContainers/quiz/components/functions/categor
 import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
+import { ExchangeContext, ExchangeContextType } from "./exchange.context"
 import useTokenRefresh from "./../hooks/useTokenRefresh"
 import {userDetailsService } from "../services";
 import { utils } from "ethers";
@@ -201,6 +202,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { user } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
   const { deductTokenOnGameCreate, address, balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
+  const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
 
   //token refresher
   const { refreshedUser } = useTokenRefresh();
@@ -506,7 +508,7 @@ const handleTryLondonMode = () => {
 
   
     const payload = {
-      stone_token: Number(utils.formatEther(balanceOfStoneTokens)),
+      stone_token: Number(utils.formatEther(stBalance)),
       wallet_address: address,
       stone_token_winnings: userDetail?.stone_token_winnings! + stoneWinning!,
     }
