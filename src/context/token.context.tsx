@@ -12,7 +12,6 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
-import { QuizContext, QuizContextType } from './quiz.context';
 import { ExchangeContext, ExchangeContextType } from './exchange.context';
 import {userDetailsService } from "../services";
 import useTokenRefresh from './../hooks/useTokenRefresh';
@@ -106,7 +105,6 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as UserContextType;
-  const {gameDetails} = useContext(QuizContext) as QuizContextType;
   const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
   const { refreshedUser } = useTokenRefresh();
 
