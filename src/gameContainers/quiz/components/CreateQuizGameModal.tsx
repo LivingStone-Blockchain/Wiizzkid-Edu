@@ -15,7 +15,7 @@ import Label from "./forms/Label";
 import Select from "./forms/Select";
 import { useNavigate } from 'react-router-dom';
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
-import { TokenContext, TokenContextType } from "../../../context/token.context";
+import { ExchangeContext, ExchangeContextType } from '../../../context/exchange.context';
 import { utils } from "ethers";
 
 
@@ -33,8 +33,8 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   const navigate = useNavigate();
   const textRef = useRef<HTMLParagraphElement>(null);
   const { screen, setScreen, category, setCategory, difficulty, setDifficulty, gameDetails, setTriviaFetch, totalAllowedQuestions, setTotalAllowedQuestions, totalAllowedPlayers, setTotalAllowedPlayers, gameMode, setGameMode, gameDuration, setGameDuration, handleScreenTwo, handleInstructionScreen, gameCreated, setGameCreated, tokenFee, setTokenFee, user, setTryLondon } = useContext(QuizContext) as QuizContextType;
-  const {balanceOfStoneTokens }= useContext(TokenContext) as TokenContextType;
-  const stoneBalance = Number(utils.formatEther(balanceOfStoneTokens));
+  const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
+  const stoneBalance = Number(utils.formatEther(stBalance));
   const [showBeijingModal, setShowBeijingModal] = useState<boolean>(false);
  
 

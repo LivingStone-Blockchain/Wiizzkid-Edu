@@ -44,6 +44,7 @@ export interface ExchangeContextType {
       ethBalance: BigNumber,
       lpBalance: BigNumber,
       reservedST: BigNumber,
+      addEther: BigNumber,
       setAddEther: React.Dispatch<React.SetStateAction<BigNumber>>
       setAddSTTokens: React.Dispatch<React.SetStateAction<BigNumber>>
       etherBalanceContract: BigNumber,
@@ -311,6 +312,7 @@ const ExchangeProvider: FC<any> = ({ children }) => {
         ethBalance,
         lpBalance, 
         reservedST,
+        addEther,
         setAddEther,
         setAddSTTokens,
         etherBalanceContract,
@@ -337,6 +339,7 @@ const ExchangeProvider: FC<any> = ({ children }) => {
         ethBalance,
         lpBalance,
         reservedST,
+        addEther,
         setAddEther,
         setAddSTTokens,
         etherBalanceContract,
