@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const baseUrl = 'https://wiizkidapi.herokuapp.com';
+const baseUrl = import.meta.env.VITE_HOST_BASE_URL;
 
 
 
