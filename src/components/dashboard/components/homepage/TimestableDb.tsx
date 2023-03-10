@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import {TimestableContext,TimestableContextType } from '../../../../context/timestable.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
-import { ExchangeContext, ExchangeContextType } from '../../../../context/exchange.context';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
 import { referral, score, balance, average } from '../../../../assets/dashboard';
@@ -13,7 +12,7 @@ import { Preloader } from './../../../index';
 
 const TimestableDb = () => {
     const { user, timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
-    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
+    const { stBalance } = useContext(TokenContext) as TokenContextType;
 
       //returns data for a year
   const currentYear = new Date().getFullYear();

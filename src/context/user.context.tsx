@@ -1,10 +1,11 @@
 import React, { createContext, FC, useState, useEffect, useCallback, useContext } from "react";
-import { registerService, loginService, forgotPasswordService } from "../services";
+import { registerService, loginService, forgotPasswordService, userDetailsService } from "../services";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SessionExpireWarning from "../components/SessionExpireWarning";
+
 
 
 type registerFormikType = {
@@ -54,6 +55,8 @@ export interface UserContextType {
     handleLogin: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
     handleForgotPassword: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
     handleLogout: () => void,
+    userDetail: userType | null,
+    setUserDetail: React.Dispatch<React.SetStateAction<userType | null>>,
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -69,9 +72,16 @@ const UserProvider: FC<any> = ({ children }) => {
     const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null); //for login details
+    const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
     const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const navigate = useNavigate();
 
+
+
+
+
+
+  
 
 
 
@@ -190,7 +200,6 @@ const UserProvider: FC<any> = ({ children }) => {
             setUser(user);
             setEmailLogin('');
             setPasswordLogin('');
-            //navigate('/', { replace: true });
             navigate(-1);
             setIsLoading(false);
             setRefreshTokenError(false)
@@ -251,7 +260,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError, userDetail, setUserDetail }}>
             {children}
         </UserContext.Provider>
     )

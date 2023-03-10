@@ -47,5 +47,3 @@ const useTokenRefresh = () => {
     }
     
     export default useTokenRefresh;
-
-

@@ -10,7 +10,7 @@ import { MdOutlineLogout, MdOutlineSpaceDashboard, MdOutlineAccountBalanceWallet
 import Button from './Button';
 import { ConnectWalletBtn, Hero } from './index';
 import { UserContext, UserContextType } from '../context/user.context';
-import { ExchangeContext, ExchangeContextType } from '../context/exchange.context';
+import { TokenContext, TokenContextType } from '../context/token.context';
 import { utils } from "ethers";
 
 
@@ -66,7 +66,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState<boolean>(false);
     const { user, handleLogout } = useContext(UserContext) as UserContextType;
-    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
+    const { stBalance } = useContext(TokenContext) as TokenContextType;
    
 
     //prevent scroll when profile dropdown is clicked

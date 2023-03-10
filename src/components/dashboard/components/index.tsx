@@ -7,7 +7,7 @@ export { default as TableLayout } from './tables/TableLayout';
 export { default as Charts } from './charts/Charts';
 export { default as Paypal } from "./paypal/Paypal";
 export { default as ExchangeLayout } from './exchange/Exchange';
-export { default as PayWithEth } from './payWithEth/PayWithEth';
 export { default as TimestableDb } from './homepage/TimestableDb';
 export { default as QuizDb } from './homepage/QuizDb';
 export { default as Stripe } from './stripe/Stripe';
+export { default as PayWithEth } from './exchange/PayWithEth';
