@@ -9,7 +9,7 @@ import {
 } from "wagmi";
 import { goerli } from "wagmi/chains";
 import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/dashboard/components/payWithEth/constants/constants";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
 import { ExchangeContext, ExchangeContextType } from './exchange.context';
@@ -88,6 +88,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
+  const {pathname} = useLocation();
   const { user, setRefreshTokenError } = useContext(UserContext) as UserContextType;
   const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
   const { refreshedUser } = useTokenRefresh();
@@ -98,9 +99,12 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
   //Retrieve user details
+  const quizHome = location.pathname === "/quiz-home";
   useEffect(() => {
 
-    const intervalId = setInterval(async() => {
+    const getUserDetails = async () => {
+     if (quizHome) {
+      console.log("im home")
       try {
         await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
       } catch (error:any) {
@@ -108,11 +112,11 @@ const TokenProvider: FC<any> = ({ children }) => {
           setRefreshTokenError(true)
         }
       }
-    }, 86400000); //visit endpoint every 24hours
-
-    return () => clearInterval(intervalId);
+     }
+    }
     
-}, [user])
+    getUserDetails();
+}, [quizHome])
 
 
 
