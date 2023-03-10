@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { AiFillCalculator } from 'react-icons/ai';
@@ -27,6 +27,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
     const navigate = useNavigate();
     const { setOpenVideo } = useContext(WiizzkidContext) as WiizzkidContextType;
     const {  handleTryLondonMode } = useContext(QuizContext) as QuizContextType;
+    const [hover, setHover] = useState<boolean>(false);
 
 
     return (
@@ -35,7 +36,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                 <div className="flex flex-col w-full lg:w-6/12 justify-center lg:pt-24 items-start text-center lg:text-left mb-5 md:mb-0">
                     <h1 data-aos="fade-right" data-aos-once="true" className="my-4 text-4xl md:text-5xl lg:mx-0 mx-auto font-bold leading-tight text-navy">We are the <span style={{ color: `${colorDeep}` }}>{tagline}!</span></h1>
                     <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" className="leading-normal md:text-2xl text-lg mb-8 text-navy">{text}</p>
-                    <div className="w-full md:flex items-center justify-center lg:justify-start md:space-x-5">
+                    <div className="w-full flex sm:flex-row flex-col items-center justify-center lg:justify-start sm:space-x-5">
                         <Button
                             children="Buy Stone Token"
                             className='lg:mx-0 text-white text-xl font-bold py-4 px-9 focus:outline-none '
@@ -43,13 +44,13 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                             style={window.innerWidth > 767 ? { backgroundColor: `${colorDeep}`, boxShadow: `${shadow}` } : { backgroundColor: `${colorDeep}`, boxShadow: `${mobileShadow}` }}
                         />
 
-                            <div className="flex items-center justify-center space-x-3 mt-7 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
-                             <span className="cursor-pointer">Quiz</span>
-                            <button onClick={handleTryLondonMode} className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
-                                <FaQuestion className="w-5 h-5 floating" style={{ fill: `${colorDeep}`, transform: "translate(-2px, -2px) rotate(-10deg)" }}/>
-                            </button>
-                            <span className="cursor-pointer">Try me</span>
-                        </div>
+                            <div className="flex items-center z-[100] justify-center space-x-3 px-9 mt-7 sm:mt-0 rounded-full border-2 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"  onMouseEnter={() => (setHover(true))} onMouseLeave={() => setHover(false)} style={hover ?  { borderColor: `${colorDeep}`} : { borderColor: `transparent` }} >
+                                <span className="cursor-pointer">Quiz</span>
+                                <button onClick={handleTryLondonMode} className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
+                                    <FaQuestion className="w-5 h-5 floating" style={{ fill: `${colorDeep}`, transform: "translate(-2px, -2px) rotate(-10deg)" }}/>
+                                </button>
+                                <span className="cursor-pointer">Try me</span>
+                            </div>
                       
                         
 
@@ -72,19 +73,19 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
 
 
                     <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="absolute top-20 -left-6 sm:top-32 sm:left-10 md:top-40 md:left-16 lg:-left-0 lg:top-52 floating-4">
-                        <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center'>
+                        <a href='#quiz' className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer'>
                             <p className='bg-navy text-white rounded-md p-1 text-2xl'><AiFillCalculator /></p>
                             <p className='flex flex-col'>
                                 <span className='font-semibold text-gray-500 text-sm tracking-wide'>Multiply</span>
                                 <span className='text-xs text-gray-500 tracking-wide'>Timestable Wiizzkid</span>
                             </p>
-                        </div>
+                        </a>
                     </div>
 
 
 
                     <div data-aos="fade-up" data-aos-delay="400" data-aos-once="true" className="absolute top-20 right-10 sm:right-24 sm:top-28 md:top-36 md:right-32 lg:top-32 lg:right-16 floating sm:block hidden">
-                        <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center'>
+                        <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer'>
                             <p className='bg-[#f25471] bg-opacity-80 text-white rounded-md p-1 text-2xl'><GiMonkey /></p>
                             <p className='flex flex-col'>
                                 <span className='font-semibold text-gray-600 text-[13px] tracking-wide'>Wiizzkid NFT</span>
@@ -96,13 +97,13 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
 
 
                     <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="absolute bottom-20 md:bottom-48 lg:bottom-52 -right-6 lg:right-8 floating-4">
-                        <div className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center'>
+                        <a href='#quiz' className='bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer'>
                             <p className='bg-[#f88c3d] text-white rounded-md p-1 text-xl'><FaGamepad /></p>
                             <p className='flex flex-col'>
                                 <span className='font-semibold text-gray-600 text-[13px] tracking-wide'>Wiizzkid Quizzes</span>
                                 <span className='text-[11px] text-gray-600 tracking-wide font-medium'>Test your knowledge here</span>
                             </p>
-                        </div>
+                        </a>
                     </div>
 
                     <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="sm:flex hidden flex-col gap-3 justify-center items-center bg-white rounded-lg h-24 sm:h-28 py-3 px-4 absolute bottom-14 -left-4 sm:left-2 sm:bottom-20 lg:bottom-24 lg:-left-4 floating">
@@ -113,7 +114,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                                 <span className='text-[11px] text-gray-500 tracking-wide font-medium'>Into the future</span>
                             </p>
                         </div>
-                        <button className='lg:mx-0 bg-[#F25471] text-white text-[11px] font-sm rounded-full py-1.5 px-6 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out'>Join Now</button>
+                        <a href='#metaverse' className='lg:mx-0 bg-[#F25471] text-white text-[11px] font-sm rounded-full py-1.5 px-6 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out cursor-pointer'>Join Now</a>
                     </div>
 
                 </div>

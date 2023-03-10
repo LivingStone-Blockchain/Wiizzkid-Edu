@@ -22,10 +22,6 @@ const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number | nul
 
 
 
-const [trys, setTrys] = useState<string>('');
-console.log(trys)
-
-
 const Render = () => {
   if (liquidityTab) {
     return (
@@ -44,9 +40,8 @@ const Render = () => {
           {utils.parseEther(reservedST.toString()).eq(zero) ? (
             <div className='flex flex-col gap-5 justify-center items-center my-7 w-full'>
               <div className='flex flex-col md:flex-row gap-3 justify-center md:justify-start items-center w-full'>
-              <input type="text" value={trys} onChange={(e) => setTrys(e.target.value)} />
               <input
-                type="number"
+                type="text"
                 placeholder="Amount of Ether"
                 onChange={(e) => setAddEther(BigNumber.from(
                   utils.parseEther(e.target.value || "0")
@@ -54,7 +49,7 @@ const Render = () => {
                 className="flex-initial w-54 first-letter:rounded-full py-3 placeholder:text-sm text-sm pl-5 bg-transparent border-2 border-navy rounded-full"
               />
              <input
-                type="number"
+                type="Number"
                 placeholder="Amount of Stone tokens"
                 onChange={(e) =>
                   setAddSTTokens(

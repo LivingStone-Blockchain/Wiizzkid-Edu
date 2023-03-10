@@ -33,10 +33,12 @@ const useTokenRefresh = () => {
                 'loggedWiizzikidUser', JSON.stringify(refreshedUser)
             );
             setRefreshedUser(refreshedUser);
-          } catch (error) {
-            setRefreshTokenError(true)
+          } catch (error: any) {
+            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+              setRefreshTokenError(true)
+            }
           }
-        }, 60000); // Refresh the token every 60 seconds
+        }, 86400000); // Refresh the token every 24 hours
     
         return () => clearInterval(intervalId);
       }, [refreshedUser]); 

@@ -447,7 +447,8 @@ const handleTryLondonMode = () => {
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract for creator if its not london
-           gameMode !== 'london' && deductTokenOnGameCreate(gameDetails!);
+           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
+           
           })
         : setGameDetails(nonUserPayload)
 
@@ -489,8 +490,6 @@ const handleTryLondonMode = () => {
 
 
 
-
-//const bal = useMemo(() => Number(utils.formatEther(balanceOfStoneTokens)), [Number(utils.formatEther(balanceOfStoneTokens))]); 
 
   //only fetch winning if all scores are ready on leader board
   const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id)?.winnings;

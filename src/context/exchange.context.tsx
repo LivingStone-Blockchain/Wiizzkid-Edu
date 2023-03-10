@@ -8,24 +8,33 @@ import {
   useContract,
 } from "wagmi";
 import { goerli } from "wagmi/chains";
+
+
+import {
+  DEX_ABI,
+  DEX_ADDRESS,
+  TOKEN_ABI,
+  TOKEN_ADDRESS,
+} from  './../components/dashboard/components/exchange/constants/constants.js';
+
 import {
   addLiquidity,
   calculateST,
-} from "../components/dashboard/components/exchange/DEX-components/addLiquidity";
+} from "./../components/dashboard/components/exchange/DEX-components/addLiquidity";
 import {
   getSTBalance,
   getEtherBalance,
   getLPTokensBalance,
   getReserveOfST,
-} from "../components/dashboard/components/exchange/DEX-components/getAmounts";
+} from "./../components/dashboard/components/exchange/DEX-components/getAmounts";
 import {
   getTokensAfterRemove,
   removeLiquidity,
-} from "../components/dashboard/components/exchange/DEX-components/removeLiquidity";
+} from "./../components/dashboard/components/exchange/DEX-components/removeLiquidity";
 import {
   swapTokens,
   getAmountOfTokensReceivedFromSwap,
-} from "../components/dashboard/components/exchange/DEX-components/swap";
+} from "./../components/dashboard/components/exchange/DEX-components/swap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -44,7 +53,6 @@ export interface ExchangeContextType {
       ethBalance: BigNumber,
       lpBalance: BigNumber,
       reservedST: BigNumber,
-      addEther: BigNumber,
       setAddEther: React.Dispatch<React.SetStateAction<BigNumber>>
       setAddSTTokens: React.Dispatch<React.SetStateAction<BigNumber>>
       etherBalanceContract: BigNumber,
@@ -77,7 +85,7 @@ const ExchangeProvider: FC<any> = ({ children }) => {
     // Keeps track of the ether balance in the contract
     const [etherBalanceContract, setEtherBalanceContract] =
       useState(zero);
-    // stBalance is the amount of `ST` tokens help by the users account
+    // stBalance is the amount of `ST` tokens held by the users account
     const [stBalance, setSTBalance] = useState(zero);
     // `lpBalance` is the amount of LP tokens held by the users account
     const [lpBalance, setLPBalance] = useState(zero);
@@ -110,6 +118,8 @@ const ExchangeProvider: FC<any> = ({ children }) => {
 
 
 
+
+      
   const getAmounts = async () => {
     try {
 
@@ -142,22 +152,23 @@ const ExchangeProvider: FC<any> = ({ children }) => {
     }
   };
 
-  //update all getAmount function states
+
   useEffect(() => {
     if (isConnected) {
       getAmounts();
     }
-  }, [isConnected]);
+}, [isConnected]);
+
 
 
 
   const _swapTokens = async () => {
     if (swapAmount === "") {
-       return toast.error('Input cannot be empty!', {duration:3000});
+       return toast.error('Input cannot be empty!', {duration:4000});
     }
 
     if (Number(swapAmount) === 0 || Number(swapAmount) > Number(utils.formatEther(ethBalance))) {
-        return toast.error('Insufficient funds!', {duration:3000});
+        return toast.error('Insufficient funds!', {duration:4000});
     }
 
     try {
@@ -176,7 +187,7 @@ const ExchangeProvider: FC<any> = ({ children }) => {
         // Get all the updated amounts after the swap
         await getAmounts();
         setSwapAmount("");
-        toast.success('Swap successful', {duration: 3000})
+        toast.success('Swap successful', {duration: 5000})
         setTimeout(() => {
             navigate('/dashboard-home');
         }, 3000)
@@ -298,7 +309,6 @@ const ExchangeProvider: FC<any> = ({ children }) => {
 
 
 
-
   const value = useMemo(
     () => ({ 
         isConnected, 
@@ -312,7 +322,6 @@ const ExchangeProvider: FC<any> = ({ children }) => {
         ethBalance,
         lpBalance, 
         reservedST,
-        addEther,
         setAddEther,
         setAddSTTokens,
         etherBalanceContract,
@@ -339,7 +348,6 @@ const ExchangeProvider: FC<any> = ({ children }) => {
         ethBalance,
         lpBalance,
         reservedST,
-        addEther,
         setAddEther,
         setAddSTTokens,
         etherBalanceContract,

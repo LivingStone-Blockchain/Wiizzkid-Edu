@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 
+//VITE_HOST_BASE_URL=https://test-wiizzkid-api.onrender.com
+
+
 type credentialsType = {
     stone_token: number,
     wallet_address: string,

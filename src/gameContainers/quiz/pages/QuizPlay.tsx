@@ -119,9 +119,6 @@ if (gameDetails?.game_mode === "london") {
   }
 
  
-
-
-
  
 
 

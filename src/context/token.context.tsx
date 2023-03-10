@@ -32,29 +32,13 @@ type userType = {
 }
 
 
-type deductTokenOnGameCreateType = {
-  id?: string
-  invite_code?: string
-  creator?: number
-  difficulty: string
-  total_questions: number
-  total_players: number
-  game_mode: string
-  game_duration: number
-  category: number
-  current_players?: number
-  stone_token_fee?: number
-  players?: number[]
-}
-
-
 
 export interface TokenContextType {
   address: any,
   isConnected: any,
   getBalanceOfStoneTokens: () => Promise<void>,
   mintStoneToken: (amount: number) => Promise<number | string | undefined>,
-  deductTokenOnGameCreate: (res: deductTokenOnGameCreateType) => Promise<void>,
+  deductTokenOnGameCreate: (tokenFee: number, gameId: string) => Promise<void>,
   withdrawWinnings: (winnings: number) => Promise<void>,
   getTotalTokensMinted: () => Promise<void>,
   getTotalEth: () => Promise<void>,
@@ -104,7 +88,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
   const navigate = useNavigate();
-  const { user } = useContext(UserContext) as UserContextType;
+  const { user, setRefreshTokenError } = useContext(UserContext) as UserContextType;
   const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
   const { refreshedUser } = useTokenRefresh();
 
@@ -113,22 +97,22 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-      //Retrieve user details
-      useEffect(() => {
+  //Retrieve user details
+  useEffect(() => {
 
-        const intervalId = setInterval(async() => {
-          try {
-            await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
-          } catch (error) {
+    const intervalId = setInterval(async() => {
+      try {
+        await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
+      } catch (error:any) {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+          setRefreshTokenError(true)
+        }
+      }
+    }, 86400000); //visit endpoint every 24hours
+
+    return () => clearInterval(intervalId);
     
-          }
-        }, 30000);
-
-        return () => clearInterval(intervalId);
-        
-
-        //userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
-    }, [user])
+}, [user])
 
 
 
@@ -286,7 +270,7 @@ const getTotalEth = async () => {
 
 
   //Deducting token fee on game creation
-  const deductTokenOnGameCreate = async (res: deductTokenOnGameCreateType | any) => {
+  const deductTokenOnGameCreate = async (tokenFee: number, gameId: string) => {
     const gameContract = new Contract(
         GAME_ADDRESS,
         GAME_ABI,
@@ -297,10 +281,10 @@ const getTotalEth = async () => {
         TOKEN_ABI,
         signer!
       );
-      
+  
       setLoading(true);
       setFirstApproval(true);
-      const amount = utils.parseEther(res?.stone_token_fee!.toString());
+      const amount = utils.parseEther(tokenFee.toString())
 
       try {
         const tx = await tokenContract.approve(GAME_ADDRESS, amount);
@@ -312,12 +296,15 @@ const getTotalEth = async () => {
         const txx = await gameContract.createGame(amount)
         await txx.wait();
 
-         //send player id to backend after successful deduction
+        setLoading(false);
+
+        //send user count to backend once second metamask approval is completed
+         /*if (!loading) {
+          //send player id to backend after successful deduction
          const payload = {players: [user?.id!]};
 
-         await userDetailsService.userUpdateOnTokenDeduction(payload, res.id, refreshedUser!.tokens!.access);
-
-        setLoading(false);
+         await userDetailsService.userUpdateOnTokenDeduction(payload, gameId, refreshedUser!.tokens!.access);
+         }*/
       } catch (error) {
         console.error(error);
       }
