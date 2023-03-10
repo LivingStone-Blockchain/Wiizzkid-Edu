@@ -199,7 +199,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
-  const { user } = useContext(UserContext) as UserContextType;
+  const { user, setRefreshTokenError } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
   const { deductTokenOnGameCreate, address, balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
   const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
@@ -459,8 +459,10 @@ const handleTryLondonMode = () => {
         toast.success("Quiz game created successfully!");
       }, 3000);
 
-    } catch (error) {
-      console.log(error)
+    } catch (error:any) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        setRefreshTokenError(true)
+      }
     }
 
     setTokenFee("");
