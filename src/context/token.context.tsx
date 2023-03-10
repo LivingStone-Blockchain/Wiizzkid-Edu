@@ -95,16 +95,15 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-
+  
 
 
   //Retrieve user details
-  const quizHome = location.pathname === "/quiz-home";
+  const quizHome = pathname === "/quiz-home";
   useEffect(() => {
 
     const getUserDetails = async () => {
      if (quizHome) {
-      console.log("im home")
       try {
         await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
       } catch (error:any) {
