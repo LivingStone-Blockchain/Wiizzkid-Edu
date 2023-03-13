@@ -260,6 +260,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
   const _swapTokens = async () => {
+    
     if (swapAmount === "") {
        return toast.error('Input cannot be empty!', {duration:4000});
     }
