@@ -33,7 +33,7 @@ const SessionExpireWarning: FC<SessionExpireType> = ({setRefreshTokenError, hand
             <Button 
                 children="Log in"
                 className='flex justify-center items-center gap-2 md:w-64 w-36 md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3 mt-4 text-white transition text-center'
-                onClick={() => {toast.dismiss(); handleLogout(); setRefreshTokenError(false); refreshLoginPage}}
+                onClick={() => {toast.dismiss(); handleLogout(); setRefreshTokenError(false); refreshLoginPage()}}
             />
         </section>
       </>
