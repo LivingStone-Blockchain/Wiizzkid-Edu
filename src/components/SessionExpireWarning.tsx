@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 import warning from './../assets/general/warning.png';
 import Button from './Button';
 import { toast } from 'react-hot-toast';
-import { useLocation } from 'react-router-dom';
+
 
 
 type SessionExpireType = {
@@ -11,10 +11,12 @@ type SessionExpireType = {
 }
 
 const SessionExpireWarning: FC<SessionExpireType> = ({setRefreshTokenError, handleLogout}) => {
-    const {pathname} = useLocation();
 
+    //to avoid continual resurfacing of session expiration
     const refreshLoginPage = () => {
-        pathname === "/login" && window.location.reload();
+         setTimeout(() => {
+            window.location.reload();
+        }, 100)
     }
   
     return (
