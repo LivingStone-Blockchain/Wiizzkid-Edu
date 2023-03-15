@@ -12,7 +12,7 @@ type BoardDataType = {
 }
 
 const ScoreBalance = () => {
-    const { quizRecentGames, scoreBoard, user, score } = useContext(QuizContext) as QuizContextType;
+    const { quizRecentGames, user, score } = useContext(QuizContext) as QuizContextType;
     const { stBalance } = useContext(TokenContext) as TokenContextType;
     const { userDetail } = useContext(UserContext) as UserContextType;
     
@@ -32,7 +32,7 @@ const ScoreBalance = () => {
         },
         {
           title: "Winnings",
-          value: !userDetail?.stone_token_winnings! ? 0 :  userDetail?.stone_token_winnings?.toFixed(1),
+          value: !userDetail?.stone_token_winnings?.toFixed(1),
         },
         {
           title: "Score",
