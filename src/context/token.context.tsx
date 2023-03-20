@@ -454,6 +454,8 @@ const TokenProvider: FC<any> = ({ children }) => {
  */
   const mintStoneToken = async (amount:number) => {
 
+    console.log(Number(utils.formatEther(ETH)) === 0)
+
     if (Number(utils.formatEther(ETH)) === 0) {
       return toast.error(<span  className="text-sm">Insufficient funds!</span>, { duration: 4000 });
     }

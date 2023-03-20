@@ -200,7 +200,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   //get user details from userContext
   const { user, userDetail } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const {address, stBalance} = useContext(TokenContext) as TokenContextType;
+  const {address, stBalance, deductTokenOnGameCreate} = useContext(TokenContext) as TokenContextType;
   //token refresher
   const { refreshedUser } = useTokenRefresh();
 
@@ -444,7 +444,7 @@ const handleTryLondonMode = () => {
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract for creator if its not london
-           //gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
+           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
            
           })
         : setGameDetails(nonUserPayload)
