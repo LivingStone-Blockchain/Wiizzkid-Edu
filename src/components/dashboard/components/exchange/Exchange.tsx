@@ -129,9 +129,7 @@ const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number| null
     try {
       // Convert the amount entered by the user to a BigNumber using the `parseEther` library from `ethers.js`
       const swapAmountWei = utils.parseEther(swapAmount);
-      console.log(swapAmountWei)
-      console.log(swapAmountWei.eq(zero));
-      console.log(isConnected)
+      
       // Check if the user entered zero
       // We are here using the `eq` method from BigNumber class in `ethers.js`
       if (!swapAmountWei.eq(zero)) {
