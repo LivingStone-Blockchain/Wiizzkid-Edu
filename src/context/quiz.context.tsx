@@ -156,6 +156,8 @@ export interface QuizContextType {
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   scoreBoard: ScoreBoardType | undefined
   setScoreBoard: React.Dispatch<React.SetStateAction<ScoreBoardType | undefined>>
+  allSubmitted: number
+  setAllSubmitted: React.Dispatch<React.SetStateAction<number>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -188,6 +190,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [gameCreated, setGameCreated] = useState<boolean>(false)
   const [questionsLoader, setQuestionsLoader] = useState<boolean>(false)
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false)
+  const [allSubmitted, setAllSubmitted] = useState<number>(400)
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
   const [tryLondon, setTryLondon] = useState<boolean>(false)
   const [start, setStart] = useState<boolean>(false)
@@ -492,6 +495,22 @@ const handleTryLondonMode = () => {
 
 
 
+  //check if all players submitted
+  useEffect(() => {
+    if (allSubmitted !== 200) {
+
+      const intervalId = setInterval(async () => {
+      try {
+        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.status); console.log(res)});
+      } catch (error) {
+        
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+    }
+  }, [allSubmitted]);
+
 
 
 
@@ -511,7 +530,7 @@ const handleTryLondonMode = () => {
       stone_token: Number(utils.formatEther(stBalance)),
       wallet_address: address
     }
-    
+
     const updateStoneBalance = async () => {
       try {
         showLeaderBoard &&
@@ -537,6 +556,8 @@ const handleTryLondonMode = () => {
         questionsLoader,
         setQuestionsLoader,
         setQuizData,
+        allSubmitted,
+        setAllSubmitted,
         start,
         setStart,
         score,

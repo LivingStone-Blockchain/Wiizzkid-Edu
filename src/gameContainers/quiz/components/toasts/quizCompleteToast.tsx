@@ -6,7 +6,7 @@ import { NavigateFunction } from "react-router-dom";
 
 
 
-const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalAllowedPlayers: number, timeDiffCalculator: string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction) => {
+const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalAllowedPlayers: number, timeDiffCalculator: string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction, allSubmitted:number) => {
 
 
   toast(
@@ -44,10 +44,10 @@ const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalA
             </Button>
           ) : (
             <Button
-              className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
+              className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8  ${allSubmitted !== 200 ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
               onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setShowLeaderBoard(true);}}
             >
-              See Board
+              {allSubmitted === 200 ? 'See Board' : 'Loading Results...'}
             </Button>
           )}
         </article>
