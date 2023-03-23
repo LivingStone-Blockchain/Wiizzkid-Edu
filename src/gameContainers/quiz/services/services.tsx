@@ -73,7 +73,7 @@ const playersTracker = async (gameId: string) => {
 
 //checks all players submit
 const checkPlayersSubmit = async (gameId:string ) => {
-    const response = await axios.get(`${baseUrl}/check_submit/${gameId}/`);
+    const response = await axios.get(`${baseUrl}/quiz/check_submit/${gameId}/`);
     return response.data;
 }
 
