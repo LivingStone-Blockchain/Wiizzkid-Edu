@@ -96,7 +96,8 @@ type ScoreBoardType = {
   score: number,
   submit_time: number,
   full_name: string,
-  winnings: number
+  winnings: number,
+  wallet_address: string
 }[]
 
 
@@ -493,10 +494,8 @@ const handleTryLondonMode = () => {
 
 
 
-  //only fetch winning if all scores are ready on leader board
-  const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id)?.winnings;
 
-  //update token balance, wallet address and winnings on backend
+  //update token balance, wallet address on backend
   useEffect(() => {
     
     if (!user) {
@@ -510,9 +509,9 @@ const handleTryLondonMode = () => {
   
     const payload = {
       stone_token: Number(utils.formatEther(stBalance)),
-      wallet_address: address,
-      stone_token_winnings: userDetail?.stone_token_winnings! + stoneWinning!,
+      wallet_address: address
     }
+    
     const updateStoneBalance = async () => {
       try {
         showLeaderBoard &&
@@ -522,7 +521,7 @@ const handleTryLondonMode = () => {
     }
 
     updateStoneBalance();
-  }, [stoneWinning, showLeaderBoard, address]);
+  }, [showLeaderBoard, address]);
 
 
 

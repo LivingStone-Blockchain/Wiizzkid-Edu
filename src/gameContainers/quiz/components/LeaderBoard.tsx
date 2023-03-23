@@ -28,7 +28,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
 
     const intervalId = setInterval(async () => {
       try {
-        await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res));
+        await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res.winners));
       } catch (error) {
 
       }
@@ -41,7 +41,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
   }
     }, [showLeaderBoard, gameDetails, scoreBoard]);
 
-
+console.log(scoreBoard)
   return (
       <section className="max-w-sm mx-auto pb-4 rounded-md w-full">
         <article className="flex flex-col gap-3 text-center items-center justify-center p-3 bg-navy rounded">
