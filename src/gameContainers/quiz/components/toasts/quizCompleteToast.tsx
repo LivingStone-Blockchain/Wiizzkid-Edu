@@ -16,20 +16,21 @@ type CompletedPropsType = {
   setTriviaFetch: (value: React.SetStateAction<boolean>) => void, 
   setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, 
   allSubmitted: boolean,
+  submitted: boolean,
   setSubmitted: (value: React.SetStateAction<boolean>) => void,
   navigate: NavigateFunction, 
 }
 
 
 
-const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal,  allSubmitted, setSubmitted, navigate}) => {
+const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, submitted, allSubmitted, setSubmitted, navigate}) => {
 
-console.log(allSubmitted);
+
 
 
     return (
-      <section className={`flex items-center justify-center lg:w-4/5 w-[90%] z-[100] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform transition-all ease-in-out duration-700 rounded-lg`}>
-        <div className="h-full w-full mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+      <section className={`flex items-center justify-center w-full h-auto max-w-[360px] z-[100] fixed top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transform transition-all ease-in-out duration-700 rounded-lg ${submitted ? 'scale-[1]' : 'scale-0'}`}>
+        <div className="h-full w-full mx-auto overflow-hidden py-5 bg-white rounded-lg shadow-xl">
         {(score / totalAllowedQuestions) >= 0.5 ? (
           <img src={win} className="w-24 mx-auto" alt="win" />
         ) : (

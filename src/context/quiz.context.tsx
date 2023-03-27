@@ -152,6 +152,8 @@ export interface QuizContextType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
   tryLondon: boolean
   setTryLondon: React.Dispatch<React.SetStateAction<boolean>>
+  submitTime: number
+  setSubmitTime: React.Dispatch<React.SetStateAction<number>>
   showLeaderBoard: boolean
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   scoreBoard: ScoreBoardType | undefined
@@ -196,6 +198,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [allSubmitted, setAllSubmitted] = useState<boolean>(false) //multiplayer
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
   const [tryLondon, setTryLondon] = useState<boolean>(false)
+  const [submitTime, setSubmitTime] = useState<number>(0)
   const [start, setStart] = useState<boolean>(false)
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.2 })
   const [category, setCategory] = useState<string>("")
@@ -572,6 +575,8 @@ const handleTryLondonMode = () => {
         setSubmitted,
         allSubmitted,
         setAllSubmitted,
+        submitTime, 
+        setSubmitTime,
         start,
         setStart,
         score,

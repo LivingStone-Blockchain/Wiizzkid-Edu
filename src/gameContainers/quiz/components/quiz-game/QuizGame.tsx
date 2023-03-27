@@ -10,7 +10,7 @@ import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
 import quizEndGameToast from "../toasts/quitGameToast";
 import gameOverToast from "../toasts/gameOverToast";
-import QuizCompletedToast from "../toasts/quizCompleteToast";
+import QuizCompletedToast from "../toasts/QuizCompleteToast";
 import RegisterPromptToast from "../toasts/RegisterPromptToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { dataType, questionsLoader, score, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, allSubmitted, submitted, setSubmitted, setShowLeaderBoard } = useContext(QuizContext) as QuizContextType;
+  const { dataType, questionsLoader, score, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, allSubmitted, submitted, setSubmitted, submitTime, setSubmitTime } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -114,6 +114,9 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       submit_time: submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]), //convert say mm:ss to seconds. Highest time wins if score is tied.
     };
 
+    //store submission time
+    setSubmitTime( submitTimeArray[0] * 60 + (+submitTimeArray[1].split(' ')[0]))
+
 
     //send payload to backend for registered users...
     try {
@@ -162,7 +165,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       {showRegisterPrompt && (
          <RegisterPromptToast 
          score={score}
-         timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
+         timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
          setStart={setStart}
          setTriviaFetch={setTriviaFetch}
          setShowCreateGameModal={setShowCreateGameModal}
@@ -176,10 +179,11 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
         score={score}
         totalAllowedQuestions={gameDetails?.total_questions!}
         totalAllowedPlayers={gameDetails?.total_players!}
-        timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
+        timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
         setStart={setStart}
         setTriviaFetch={setTriviaFetch}
         setShowCreateGameModal={setShowCreateGameModal}
+        submitted={submitted}
         allSubmitted={allSubmitted}
         setSubmitted={setSubmitted}
         navigate={navigate}
