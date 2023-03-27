@@ -13,6 +13,7 @@ type LeaderBoardData = {
   setStart: (value: React.SetStateAction<boolean>) => void,
   setTriviaFetch: (value: React.SetStateAction<boolean>) => void,
   setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void,
+  setSubmitted: (value: React.SetStateAction<boolean>) => void,
 }
 
 
@@ -94,8 +95,6 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
               ))}
             </tbody>
           </table>
-          {scoreBoard?.length === 0 && ( <div className='hidden font-medium text-navy text-xs my-1 text-center animate-pulse'>Loading...</div> )}
-          {scoreBoard?.length !== 0 && gameDetails?.total_players !== scoreBoard?.length && (<div className='hidden font-medium text-navy text-xs my-1 text-center animate-pulse'>Waiting for other players...</div>)}
         </div>
         
 

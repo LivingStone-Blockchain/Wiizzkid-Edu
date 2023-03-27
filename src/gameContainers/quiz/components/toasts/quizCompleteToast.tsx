@@ -2,16 +2,34 @@ import { win, low } from "../../assets/images";
 import Button from "../button/Button";
 import toast from "react-hot-toast";
 import { NavigateFunction } from "react-router-dom";
+import { FC } from "react";
 
 
 
 
-const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalAllowedPlayers: number, timeDiffCalculator: string, setStart: (value: React.SetStateAction<boolean>) => void, setTriviaFetch: (value: React.SetStateAction<boolean>) => void, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction, allSubmitted:number) => {
+type CompletedPropsType = {
+  score: number, 
+  totalAllowedQuestions: number,
+  totalAllowedPlayers: number,
+  timeDiffCalculator: string, 
+  setStart: (value: React.SetStateAction<boolean>) => void, 
+  setTriviaFetch: (value: React.SetStateAction<boolean>) => void, 
+  setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void, 
+  allSubmitted: boolean,
+  setSubmitted: (value: React.SetStateAction<boolean>) => void,
+  navigate: NavigateFunction, 
+}
 
 
-  toast(
-    () => (
-      <section className="w-full py-4">
+
+const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal,  allSubmitted, setSubmitted, navigate}) => {
+
+console.log(allSubmitted);
+
+
+    return (
+      <section className={`flex items-center justify-center lg:w-4/5 w-[90%] z-[100] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform transition-all ease-in-out duration-700 rounded-lg`}>
+        <div className="h-full w-full mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
         {(score / totalAllowedQuestions) >= 0.5 ? (
           <img src={win} className="w-24 mx-auto" alt="win" />
         ) : (
@@ -44,17 +62,17 @@ const quizCompletedToast = (score: number, totalAllowedQuestions: number, totalA
             </Button>
           ) : (
             <Button
-              className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8  ${allSubmitted !== 200 ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
-              onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setShowLeaderBoard(true);}}
+              className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${allSubmitted ? 'cursor-pointer pointer-events-auto' : 'pointer-events-none cursor-not-allowed'}`}
+              onClick={() => { setShowCreateGameModal(false);  setSubmitted(false);}}
             >
-              {allSubmitted === 200 ? 'See Board' : 'Loading Results...'}
+            {allSubmitted ? "See Board" : "Loading results..."}
             </Button>
           )}
         </article>
+        </div>
       </section>
-    ),
-    { duration: Infinity }
-  )
+    )
+
 }
 
-export default quizCompletedToast;
+export default QuizCompletedToast;

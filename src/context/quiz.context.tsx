@@ -156,8 +156,10 @@ export interface QuizContextType {
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   scoreBoard: ScoreBoardType | undefined
   setScoreBoard: React.Dispatch<React.SetStateAction<ScoreBoardType | undefined>>
-  allSubmitted: number
-  setAllSubmitted: React.Dispatch<React.SetStateAction<number>>
+  submitted: boolean
+  setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
+  allSubmitted: boolean
+  setAllSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -190,7 +192,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [gameCreated, setGameCreated] = useState<boolean>(false)
   const [questionsLoader, setQuestionsLoader] = useState<boolean>(false)
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false)
-  const [allSubmitted, setAllSubmitted] = useState<number>(400)
+  const [submitted, setSubmitted] = useState<boolean>(false) ///single player
+  const [allSubmitted, setAllSubmitted] = useState<boolean>(false) //multiplayer
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
   const [tryLondon, setTryLondon] = useState<boolean>(false)
   const [start, setStart] = useState<boolean>(false)
@@ -290,7 +293,13 @@ const QuizProvider: FC<any> = ({ children }) => {
     } else return
   }, [showSplashScreen, start, pathname])
 
-
+//wait for others to submit to see board
+//if i click on see board(lemme return setshowleader state to this button), and allsubmittted is not true yet....console.log(loading)
+/*useEffect(() => {
+  submitted && allSubmitted && setShowLeaderBoard(true);
+  submitted && !allSubmitted && console.log("waiting");
+}, [allSubmitted, submitted])
+*/
 
   //show leader board with results
   useEffect(() => {
@@ -301,6 +310,7 @@ const QuizProvider: FC<any> = ({ children }) => {
         <LeaderBoard
           setStart={setStart}
           setTriviaFetch={setTriviaFetch}
+          setSubmitted={setSubmitted}
           setShowLeaderBoard={setShowLeaderBoard}
         />,
         { duration: Infinity, className: "w-full" }
@@ -312,6 +322,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [showLeaderBoard])
 
 
+console.log(allSubmitted)
 
 
   
@@ -497,19 +508,20 @@ const handleTryLondonMode = () => {
 
   //check if all players submitted
   useEffect(() => {
-    if (allSubmitted !== 200) {
+    if (submitted) {
 
       const intervalId = setInterval(async () => {
+        //if game is started check for submitting players
       try {
-        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.status); console.log(res)});
+        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.message), console.log(res.message)});
       } catch (error) {
-        
+        setAllSubmitted(false)
       }
     }, 2000);
 
     return () => clearInterval(intervalId);
     }
-  }, [allSubmitted]);
+  }, [submitted]);
 
 
 
@@ -556,6 +568,8 @@ const handleTryLondonMode = () => {
         questionsLoader,
         setQuestionsLoader,
         setQuizData,
+        submitted,
+        setSubmitted,
         allSubmitted,
         setAllSubmitted,
         start,

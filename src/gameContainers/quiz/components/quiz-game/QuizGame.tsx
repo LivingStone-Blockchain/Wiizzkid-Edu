@@ -8,9 +8,9 @@ import {
 import service from "../../services/services";
 import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
-import quizCompletedToast from "../toasts/quizCompleteToast";
 import quizEndGameToast from "../toasts/quitGameToast";
 import gameOverToast from "../toasts/gameOverToast";
+import QuizCompletedToast from "../toasts/quizCompleteToast";
 import RegisterPromptToast from "../toasts/RegisterPromptToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { dataType, questionsLoader, score, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, allSubmitted, setShowLeaderBoard } = useContext(QuizContext) as QuizContextType;
+  const { dataType, questionsLoader, score, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, allSubmitted, submitted, setSubmitted, setShowLeaderBoard } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -123,11 +123,12 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     }
 
 
+
     setTimeout(() => {
       toast.dismiss("completed");
       //show different boards to users and non users
       user 
-      ? quizCompletedToast(score, gameDetails?.total_questions!, gameDetails?.total_players!, timeDiffCalculator(gameDuration, payload.submit_time), setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, navigate, allSubmitted)
+      ? setSubmitted(true)
       : setShowRegisterPrompt(true);
       submitText.current.innerText = "Submitted";
       
@@ -170,7 +171,20 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
          setShowRegisterPrompt={setShowRegisterPrompt}
      />
       )}
-
+      {submitted && (
+        <QuizCompletedToast 
+        score={score}
+        totalAllowedQuestions={gameDetails?.total_questions!}
+        totalAllowedPlayers={gameDetails?.total_players!}
+        timeDiffCalculator={timeDiffCalculator(gameDuration, 235)}
+        setStart={setStart}
+        setTriviaFetch={setTriviaFetch}
+        setShowCreateGameModal={setShowCreateGameModal}
+        allSubmitted={allSubmitted}
+        setSubmitted={setSubmitted}
+        navigate={navigate}
+        />
+      )}
       <div className="max-w-xl mx-auto opacity-90">
         <nav className="flex justify-between items-center">
           <FaTimes
@@ -223,7 +237,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
           {selectedOption && current_page + 1 === questions.length ? (
             <form onSubmit={handleFinalSubmit}>
               <ActionButton className="bg-[#ffe1e1]" disabled={loading}>
-                {loading ? <span ref={submitText}>Submitting</span> : "Submit Game"}
+                {loading ? <span ref={submitText}>Submitting and waiting for others</span> : "Submit Game"}
               </ActionButton>
             </form>
           ) : (
@@ -237,7 +251,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   );
 };
 
-function ActionButton({
+const ActionButton = ({
   children,
   className,
   disabled,
@@ -247,7 +261,7 @@ function ActionButton({
   className?: string;
   disabled?: true | false;
   onClick?: () => void;
-}) {
+}) => {
   return (
     <button
       disabled={disabled}
