@@ -18,7 +18,7 @@ type LeaderBoardData = {
 
 
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted} = useContext(QuizContext) as QuizContextType;
+  const { gameDetails, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
 
