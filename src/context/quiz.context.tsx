@@ -314,6 +314,7 @@ const QuizProvider: FC<any> = ({ children }) => {
           setStart={setStart}
           setTriviaFetch={setTriviaFetch}
           setSubmitted={setSubmitted}
+          setAllSubmitted={setAllSubmitted}
           setShowLeaderBoard={setShowLeaderBoard}
         />,
         { duration: Infinity, className: "w-full" }
