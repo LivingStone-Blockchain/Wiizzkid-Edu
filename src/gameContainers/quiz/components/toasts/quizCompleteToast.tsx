@@ -18,7 +18,7 @@ type CompletedPropsType = {
   allSubmitted: boolean,
   submitted: boolean,
   setSubmitted: (value: React.SetStateAction<boolean>) => void,
-  navigate: NavigateFunction, 
+  navigate: NavigateFunction
 }
 
 
