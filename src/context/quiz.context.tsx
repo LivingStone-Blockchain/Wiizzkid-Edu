@@ -531,7 +531,7 @@ const handleTryLondonMode = () => {
 
 
   //update token balance, wallet address on backend
-  useEffect(() => {
+  /*useEffect(() => {
     
     if (!user) {
       return;
@@ -557,7 +557,7 @@ const handleTryLondonMode = () => {
 
     updateStoneBalance();
   }, [showLeaderBoard, address]);
-
+*/
 
 
 
