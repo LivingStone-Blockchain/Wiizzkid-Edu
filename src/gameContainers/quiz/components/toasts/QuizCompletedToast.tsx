@@ -19,12 +19,13 @@ type CompletedPropsType = {
   allSubmitted: boolean,
   submitted: boolean,
   setSubmitted: (value: React.SetStateAction<boolean>) => void,
+  setAllSubmitted: (value: React.SetStateAction<boolean>) => void,
   navigate: NavigateFunction
 }
 
 
 
-const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setSubmitted, navigate}) => {
+const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setAllSubmitted, setSubmitted, navigate}) => {
 
 
 
@@ -65,7 +66,7 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions
           ) : (
             <Button
               className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${allSubmitted ? 'cursor-pointer pointer-events-auto' : 'pointer-events-none cursor-not-allowed'}`}
-              onClick={() => { setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true);}}
+              onClick={() => { setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true); setAllSubmitted(false)}}
             >
             {allSubmitted ? "See Board" : "Loading results..."}
             </Button>

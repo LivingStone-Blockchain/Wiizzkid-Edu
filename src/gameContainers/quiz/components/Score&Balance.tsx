@@ -22,7 +22,7 @@ const ScoreBalance = () => {
   const scoreData =   dataPerYear?.map((item) => item.score);
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
 
-
+console.log(userDetail?.stone_token_winnings);
 
     const userBoardData: BoardDataType[] = [
         {
