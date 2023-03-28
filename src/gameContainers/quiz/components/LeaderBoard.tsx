@@ -20,22 +20,26 @@ type LeaderBoardData = {
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
   const { gameDetails, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
+  const [hasFetchedLeaderBoard, setHasFetchedLeaderBoard] = useState(false);
+
+
 
 
 
     useEffect(() => {
-      if (allSubmitted) {
+      if (allSubmitted && !hasFetchedLeaderBoard) {
         const fetchLeaderBoard = async () => {
           try {
             const res = await service.leaderBoard(gameDetails?.id!);
             setScoreBoard(res.winners);
+            setHasFetchedLeaderBoard(true);
           } catch (error) {
             console.log(error);
           }
         };
         fetchLeaderBoard();
       }
-    }, [allSubmitted])
+    }, [allSubmitted, hasFetchedLeaderBoard])
 
 
 
