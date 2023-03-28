@@ -76,4 +76,4 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions
 
 }
 
-export default QuizCompletedToast;
+export default  QuizCompletedToast;

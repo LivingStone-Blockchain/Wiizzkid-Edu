@@ -10,7 +10,7 @@ import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
 import quizEndGameToast from "../toasts/quitGameToast";
 import gameOverToast from "../toasts/gameOverToast";
-import QuizCompletedToast from "../toasts/QuizCompleteToast";
+import QuizCompletedToast from "./../toasts/QuizCompletedToast";
 import RegisterPromptToast from "../toasts/RegisterPromptToast";
 import QuizQuestionCard from "./QuizQuestionCard";
 import toast from "react-hot-toast";
