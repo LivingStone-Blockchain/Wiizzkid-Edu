@@ -511,7 +511,7 @@ const handleTryLondonMode = () => {
 
   //check if all players submitted
   useEffect(() => {
-    if (submitted) {
+    if (submitted && !allSubmitted) {
 
       const intervalId = setInterval(async () => {
         //if game is started check for submitting players
@@ -524,7 +524,7 @@ const handleTryLondonMode = () => {
 
     return () => clearInterval(intervalId);
     }
-  }, [submitted]);
+  }, [submitted, allSubmitted]);
 
 
 
