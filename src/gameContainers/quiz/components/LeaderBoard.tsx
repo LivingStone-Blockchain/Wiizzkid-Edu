@@ -14,26 +14,33 @@ type LeaderBoardData = {
   setTriviaFetch: (value: React.SetStateAction<boolean>) => void,
   setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void,
   setSubmitted: (value: React.SetStateAction<boolean>) => void,
+  setAllSubmitted: (value: React.SetStateAction<boolean>) => void,
 }
 
 
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted} = useContext(QuizContext) as QuizContextType;
+  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted, setAllSubmitted} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
+  const [visited, setVisited] = useState<boolean>(false);
 
 
 
-  useEffect(() => {
-    const fetchLeaderBoard = async () => {
-      try {
-        await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res.winners));
-      } catch (error) { 
-        console.log(error);
+    useEffect(() => {
+      if (allSubmitted && !visited) {
+        const fetchLeaderBoard = async () => {
+          try {
+            const res = await service.leaderBoard(gameDetails?.id!);
+            setScoreBoard(res.winners);
+            setVisited(true);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchLeaderBoard();
       }
-    }
-    
-    fetchLeaderBoard();
-    }, [showLeaderBoard, allSubmitted]);
+    }, [allSubmitted, visited]);
+
+
 
   return (
       <section className="max-w-sm mx-auto pb-4 rounded-md w-full">
@@ -100,7 +107,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
 
         <Button
           className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8`}
-          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0) }}
+          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0), setAllSubmitted(false), setVisited(false) }}
         >
           Back home
         </Button>
