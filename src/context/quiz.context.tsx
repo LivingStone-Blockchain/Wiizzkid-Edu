@@ -485,6 +485,7 @@ const handleTryLondonMode = () => {
     }
 
     setTokenFee("");
+    setScore(0)
     setTryLondon(false);
   }
 
@@ -504,7 +505,9 @@ const handleTryLondonMode = () => {
     )
 
     if (answer?.correctAnswer === payload.option) {
+      
       return setScore(score + 1)
+    
     }
   }
 

@@ -66,7 +66,7 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions
           ) : (
             <Button
               className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${allSubmitted ? 'cursor-pointer pointer-events-auto' : 'pointer-events-none cursor-not-allowed'}`}
-              onClick={() => { setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true)}}
+              onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true)}}
             >
             {allSubmitted ? "See Board" : "Loading results..."}
             </Button>

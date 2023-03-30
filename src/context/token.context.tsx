@@ -97,29 +97,28 @@ const TokenProvider: FC<any> = ({ children }) => {
 
   
 
-
   //Retrieve user details
   const quizHome = pathname === "/quiz-home";
   useEffect(() => {
-
-    const getUserDetails = async () => {
-     if (quizHome) {
-      try {
-        await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
-      } catch (error:any) {
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-          setRefreshTokenError(true)
+    if (user?.id && refreshedUser?.tokens?.access || quizHome) {
+      const getUserDetails = async () => {
+        try {
+          const res = await userDetailsService.getUser(user!.id, refreshedUser!.tokens!.access);
+          setUserDetail(res);
+          console.log(res);
+        } catch (error:any) {
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            setRefreshTokenError(true);
+          }
         }
-      }
-     }
+      };
+  
+      getUserDetails();
     }
-    
-    getUserDetails();
-}, [quizHome])
+  }, [user?.id, refreshedUser?.tokens?.access, quizHome]);
 
 
-
-    
+console.log(userDetail)
 
 
 
