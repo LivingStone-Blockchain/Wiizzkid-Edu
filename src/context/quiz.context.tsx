@@ -296,13 +296,8 @@ const QuizProvider: FC<any> = ({ children }) => {
     } else return
   }, [showSplashScreen, start, pathname])
 
-//wait for others to submit to see board
-//if i click on see board(lemme return setshowleader state to this button), and allsubmittted is not true yet....console.log(loading)
-/*useEffect(() => {
-  submitted && allSubmitted && setShowLeaderBoard(true);
-  submitted && !allSubmitted && console.log("waiting");
-}, [allSubmitted, submitted])
-*/
+
+  
 
   //show leader board with results
   useEffect(() => {
@@ -534,7 +529,7 @@ const handleTryLondonMode = () => {
 
 
   //update token balance, wallet address on backend
-  /*useEffect(() => {
+  useEffect(() => {
     
     if (!user) {
       return;
@@ -559,8 +554,7 @@ const handleTryLondonMode = () => {
     }
 
     updateStoneBalance();
-  }, [showLeaderBoard, address]);
-*/
+  }, [Number(utils.formatEther(stBalance))]);
 
 
 
