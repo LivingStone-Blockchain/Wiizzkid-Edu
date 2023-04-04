@@ -4,6 +4,7 @@ import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
+import { checkTokenExpiration } from "../services/checkTokenExpiration";
 import SessionExpireWarning from "../components/SessionExpireWarning";
 
 
@@ -86,8 +87,16 @@ const UserProvider: FC<any> = ({ children }) => {
     }, []);
 
 
-    
-
+    //check for access token expiration
+    useEffect(() => {
+        const refreshToken = async () => {
+          await checkTokenExpiration(setRefreshTokenError);
+        };
+      
+        const intervalId = setInterval(refreshToken, 3000); // check every 5 minutes
+      
+        return () => clearInterval(intervalId);
+      }, []);
 
 
     

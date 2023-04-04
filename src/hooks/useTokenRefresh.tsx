@@ -31,7 +31,7 @@ const useTokenRefresh = () => {
               refresh:  refreshedUser.tokens.refresh
           }
             const response  = await refreshTokenService.refreshToken(payload);
-      
+            console.log(response)
             if (response.ok) {
               const data = await response.json();
 
