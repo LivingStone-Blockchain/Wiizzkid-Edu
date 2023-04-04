@@ -32,7 +32,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
 import {userDetailsService } from "../services";
-import useTokenRefresh from './../hooks/useTokenRefresh';
+//import useTokenRefresh from './../hooks/useTokenRefresh';
 
 
 
@@ -170,7 +170,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const { user, setRefreshTokenError, setUserDetail } = useContext(UserContext) as UserContextType;
-  const { refreshedUser } = useTokenRefresh();
+  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
   const {pathname} = useLocation();
 
 

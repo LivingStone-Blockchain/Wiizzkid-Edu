@@ -12,7 +12,7 @@ import { TokenContext, TokenContextType } from "../../../context/token.context"
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
-import useTokenRefresh from "../../../hooks/useTokenRefresh";
+//import useTokenRefresh from "../../../hooks/useTokenRefresh";
 
 
 
@@ -22,8 +22,8 @@ const QuizIndex = () => {
   const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
-  const { refreshedUser } = useTokenRefresh();
-
+  //const { refreshedUser } = useTokenRefresh();
+  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
 
 
 

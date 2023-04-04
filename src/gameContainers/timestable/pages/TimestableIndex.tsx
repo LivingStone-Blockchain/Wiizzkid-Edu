@@ -12,7 +12,7 @@ import { TimestableContext, TimestableContextType } from "../../../context/times
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
-import useTokenRefresh from "../../../hooks/useTokenRefresh";
+//import useTokenRefresh from "../../../hooks/useTokenRefresh";
 import QuickPlay from "../components/Quickplay";
 import History from "../components/History";
 
@@ -22,8 +22,8 @@ export default function TimestableIndex() {
   const {setScore, showCreateGameModal, setShowCreateGameModal, gameCreated, user, setGameDetails} = useContext(TimestableContext) as TimestableContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
-  const { refreshedUser } = useTokenRefresh();
-
+  //const { refreshedUser } = useTokenRefresh();
+  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
 
 
 

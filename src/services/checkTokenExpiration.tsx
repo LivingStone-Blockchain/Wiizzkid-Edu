@@ -11,9 +11,11 @@ type DecodedToken =  {
 export const checkTokenExpiration = async (setRefreshError: (value: React.SetStateAction<boolean>) => void) => {
   const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
 
+
   if (refreshedUser) {
     const decodedToken = jwtDecode(refreshedUser.tokens.access) as DecodedToken;
     const currentTime = Date.now() / 1000;
+    
 
     if (decodedToken.exp < currentTime) {
         const payload = {
@@ -21,14 +23,14 @@ export const checkTokenExpiration = async (setRefreshError: (value: React.SetSta
         }
           const response  = await refreshTokenService.refreshToken(payload);
           console.log(response)
-          if (response.ok) {
-            const data = await response.json();
-console.log(data)
+          if (response.access) {
+            
               // Update access token key-value pair in the object
-            refreshedUser.tokens.access = data?.access;
+            refreshedUser.tokens.access = response?.access;
              // Save the updated object back to localStorage
-            window.localStorage.setItem('loggedWiizzikidUser', refreshedUser);
+            window.localStorage.setItem('loggedWiizzikidUser', JSON.stringify(refreshedUser));
       } else {
+        console.log("error")
         setRefreshError(true);
       }
     }

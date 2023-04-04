@@ -15,7 +15,7 @@ import categoryStrings from "../gameContainers/quiz/components/functions/categor
 import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
-import useTokenRefresh from "./../hooks/useTokenRefresh"
+//import useTokenRefresh from "./../hooks/useTokenRefresh"
 import {userDetailsService } from "../services";
 import { utils } from "ethers";
 import { toast } from "react-hot-toast"
@@ -202,8 +202,8 @@ const QuizProvider: FC<any> = ({ children }) => {
   //get createGame to deduct token on game creation
   const {address, stBalance, deductTokenOnGameCreate} = useContext(TokenContext) as TokenContextType;
   //token refresher
-  const { refreshedUser } = useTokenRefresh();
-
+  //const { refreshedUser } = useTokenRefresh();
+  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
   //reset initial category value based game mode changes
   useEffect(() => {
     let categoryInitialVal = gameMode === "london" ? "9" : "1"
