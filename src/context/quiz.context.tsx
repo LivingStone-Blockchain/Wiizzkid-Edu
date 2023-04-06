@@ -196,7 +196,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
-  const { user, userDetail, refreshedUser } = useContext(UserContext) as UserContextType;
+  const { user, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
   const {address, stBalance, deductTokenOnGameCreate} = useContext(TokenContext) as TokenContextType;
   //reset initial category value based game mode changes
