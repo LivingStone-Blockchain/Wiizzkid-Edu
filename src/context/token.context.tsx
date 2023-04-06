@@ -170,33 +170,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const { user, setRefreshTokenError, setUserDetail, refreshedUser } = useContext(UserContext) as UserContextType;
-  const {pathname} = useLocation();
 
-
-
-
-
-
-
-
-  //Retrieve user details
-  const quizHome = pathname === "/quiz-home";
-  useEffect(() => {
-    const getUserDetails = async () => {
-      if (quizHome && user && refreshedUser?.access) {
-        try {
-          const res = await userDetailsService.getUser(user?.id!, refreshedUser?.access);
-          setUserDetail(res);
-        } catch (error: any) {
-          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            setRefreshTokenError(true);
-          }
-        }
-      }
-    };
-      
-    getUserDetails();
-  }, [quizHome, user, refreshedUser]);
 
 
 

@@ -482,30 +482,26 @@ const handleTryLondonMode = () => {
 
 
 
-
-  
+  let balance = Number(utils.formatEther(stBalance))
   //update token balance, wallet address and winnings on backend
   useEffect(() => {
-    
-    if (!user || !address) {
-      return;
-    }
-  
+   
+
     const payload = {
-      stone_token: Number(utils.formatEther(stBalance)),
+      stone_token: balance,
       wallet_address: address,
     }
     const updateStoneBalance = async () => {
-      if (user && address && start) {
+      if (user || refreshedUser?.access || balance) {
         try {
-          await userDetailsService.stoneUpdate(payload, user.id, refreshedUser?.access!);
+          await userDetailsService.stoneUpdate(payload, user!.id, refreshedUser?.access!);
         } catch (error) {
         }
       }
     }
 
     updateStoneBalance();
-  }, [user, address, start]);
+  }, [user, refreshedUser?.access, balance]);
 
 
 

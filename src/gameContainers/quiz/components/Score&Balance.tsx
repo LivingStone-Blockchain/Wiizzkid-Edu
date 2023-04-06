@@ -24,15 +24,14 @@ const ScoreBalance = () => {
 
 
 
-
     const userBoardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: Number(utils.formatEther(stBalance)).toFixed(1),
+          value: userDetail?.stone_token === undefined ? 0 : userDetail.stone_token.toFixed(1),
         },
         {
           title: "Winnings",
-          value: !userDetail?.stone_token_winnings?.toFixed(1),
+          value: userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings?.toFixed(1),
         },
         {
           title: "Score",

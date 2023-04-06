@@ -84,15 +84,16 @@ const UserProvider: FC<any> = ({ children }) => {
     const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const [refreshedUser, setRefreshedUser] = useState<RefreshedUserTypes | undefined>();
     const navigate = useNavigate();
+    const {pathname} = useLocation();
 
 
 
-    //get user access tokens for endpoints visitations
+    //get user access tokens from local Storage for endpoints authorization 
     useEffect(() => {
         const intervalId = setInterval(() => {
           const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
           setRefreshedUser(refreshedUsertokens?.tokens);
-        }, 60000); // run every minute (60,000 milliseconds)
+        }, 6000); // run every minute (60,000 milliseconds)
       
         return () => clearInterval(intervalId);
       }, []);
@@ -144,7 +145,27 @@ const UserProvider: FC<any> = ({ children }) => {
     }, [refreshTokenError])
 
 
-  
+
+      //Retrieve user details
+  const quizHome = pathname === "/quiz-home";
+  useEffect(() => {
+    const getUserDetails = async () => {
+      if (quizHome && user && refreshedUser?.access) {
+        try {
+          const res = await userDetailsService.getUser(user?.id!, refreshedUser?.access);
+          setUserDetail(res);
+        } catch (error: any) {
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            setRefreshTokenError(true);
+          }
+        }
+      }
+    };
+      
+    getUserDetails();
+  }, [quizHome, user, refreshedUser]);
+
+ 
 
     //Handle signup
     const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormikType>({
