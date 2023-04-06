@@ -169,8 +169,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
-  const { user, setRefreshTokenError, setUserDetail } = useContext(UserContext) as UserContextType;
-  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
+  const { user, setRefreshTokenError, setUserDetail, refreshedUser } = useContext(UserContext) as UserContextType;
   const {pathname} = useLocation();
 
 
@@ -183,21 +182,21 @@ const TokenProvider: FC<any> = ({ children }) => {
   //Retrieve user details
   const quizHome = pathname === "/quiz-home";
   useEffect(() => {
-
     const getUserDetails = async () => {
-     if (quizHome) {
-      try {
-        await userDetailsService.getUser(user?.id!, refreshedUser!.tokens!.access).then(res => setUserDetail(res))
-      } catch (error:any) {
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-          setRefreshTokenError(true)
+      if (quizHome && user && refreshedUser?.access) {
+        try {
+          const res = await userDetailsService.getUser(user?.id!, refreshedUser?.access);
+          setUserDetail(res);
+        } catch (error: any) {
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            setRefreshTokenError(true);
+          }
         }
       }
-     }
-    }
-    
+    };
+      
     getUserDetails();
-}, [quizHome])
+  }, [quizHome, user, refreshedUser]);
 
 
 
@@ -642,7 +641,7 @@ const withdrawWinnings = async (winning: number) => {
           wallet_address: address!,
           stone_token_winnings: 0,
         }
-        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser!.tokens!.access);
+        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
     }
 }
 

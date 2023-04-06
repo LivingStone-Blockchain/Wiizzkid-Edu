@@ -16,13 +16,11 @@ export const checkTokenExpiration = async (setRefreshError: (value: React.SetSta
     const decodedToken = jwtDecode(refreshedUser.tokens.access) as DecodedToken;
     const currentTime = Date.now() / 1000;
     
-
     if (decodedToken.exp < currentTime) {
         const payload = {
             refresh:  refreshedUser.tokens.refresh
         }
           const response  = await refreshTokenService.refreshToken(payload);
-          console.log(response)
           if (response.access) {
             
               // Update access token key-value pair in the object

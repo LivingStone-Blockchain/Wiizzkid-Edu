@@ -32,6 +32,12 @@ type userType = {
     wallet_address?: string
 }
 
+type RefreshedUserTypes = {
+    refresh: string;
+    access: string;
+}
+
+
 export interface UserContextType {
     isLoading: boolean,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -49,6 +55,8 @@ export interface UserContextType {
     setLoginLoader: React.Dispatch<React.SetStateAction<boolean>>,
     refreshTokenError: boolean,
     setRefreshTokenError: React.Dispatch<React.SetStateAction<boolean>>,
+    refreshedUser: RefreshedUserTypes | undefined, 
+    setRefreshedUser: React.Dispatch<React.SetStateAction<RefreshedUserTypes | undefined>>,
     user: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
@@ -74,14 +82,20 @@ const UserProvider: FC<any> = ({ children }) => {
     const [user, setUser] = useState<userType | null>(null); //for login details
     const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
     const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
+    const [refreshedUser, setRefreshedUser] = useState<RefreshedUserTypes | undefined>();
     const navigate = useNavigate();
 
 
 
-
-
-
-  
+    //get user access tokens for endpoints visitations
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
+          setRefreshedUser(refreshedUsertokens?.tokens);
+        }, 60000); // run every minute (60,000 milliseconds)
+      
+        return () => clearInterval(intervalId);
+      }, []);
 
 
 
@@ -96,8 +110,6 @@ const UserProvider: FC<any> = ({ children }) => {
     }, []);
 
 
-    
-    console.log(refreshTokenError);
 
     
     //check for access token expiration
@@ -105,7 +117,7 @@ const UserProvider: FC<any> = ({ children }) => {
         const refreshToken = async () => {
           await checkTokenExpiration(setRefreshTokenError);
         };
-      
+        
         const intervalId = setInterval(refreshToken, 3000); // check every 5 minutes
       
         return () => clearInterval(intervalId);
@@ -274,7 +286,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError, userDetail, setUserDetail }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError, userDetail, setUserDetail,   refreshedUser,  setRefreshedUser }}>
             {children}
         </UserContext.Provider>
     )

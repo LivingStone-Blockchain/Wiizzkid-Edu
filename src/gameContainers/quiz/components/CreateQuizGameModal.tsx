@@ -85,7 +85,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     ? await navigator.clipboard.writeText(textRef.current!.innerText)
     : document.execCommand("copy", true, textRef.current?.innerText);
    
-    toast.success("Code copied successfully!");
+    toast.success("Details copied successfully!");
   }
 
 

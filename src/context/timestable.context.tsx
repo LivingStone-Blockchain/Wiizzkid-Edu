@@ -109,7 +109,6 @@ export interface TimestableContextType {
   scoreTracker: (correctAnswer: number) => void
   handleSubmission: () => void
   user: userType | null
-  refreshedUser: userType | null
 }
 
 enum GameModes {
@@ -140,12 +139,9 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const [timestableRecentGames, setTimestableRecentGames] = useState<RecentGamesData | undefined>()
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   //get user details from userContext
-  const { user } = useContext(UserContext) as UserContextType
+  const { user, refreshedUser } = useContext(UserContext) as UserContextType
   const navigate = useNavigate()
   const { pathname } = useLocation()
-    //token refresher
-    //const { refreshedUser } = useTokenRefresh()
-    const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
 
 
   //fade into oblivion on game start
@@ -287,7 +283,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
     try {
       user?.tokens
         ? await service
-          .createGame(payload, refreshedUser.tokens.access)
+          .createGame(payload, refreshedUser?.access!)
           .then((res) => {
             setGameDetails(res)
           })
@@ -346,7 +342,6 @@ const TimestableProvider: FC<any> = ({ children }) => {
         setTimestableRecentGames,
         showLeaderBoard, 
         setShowLeaderBoard,
-        refreshedUser
       }}
     >
       {children}

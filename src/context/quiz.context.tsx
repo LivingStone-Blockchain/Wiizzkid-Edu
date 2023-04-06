@@ -15,7 +15,6 @@ import categoryStrings from "../gameContainers/quiz/components/functions/categor
 import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
-//import useTokenRefresh from "./../hooks/useTokenRefresh"
 import {userDetailsService } from "../services";
 import { utils } from "ethers";
 import { toast } from "react-hot-toast"
@@ -157,7 +156,6 @@ export interface QuizContextType {
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
-  refreshedUser: userType | null
 }
 
 enum GameModes {
@@ -198,12 +196,9 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
-  const { user, userDetail } = useContext(UserContext) as UserContextType;
+  const { user, userDetail, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
   const {address, stBalance, deductTokenOnGameCreate} = useContext(TokenContext) as TokenContextType;
-  //token refresher
-  //const { refreshedUser } = useTokenRefresh();
-  const refreshedUser = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
   //reset initial category value based game mode changes
   useEffect(() => {
     let categoryInitialVal = gameMode === "london" ? "9" : "1"
@@ -440,7 +435,7 @@ const handleTryLondonMode = () => {
     try {
       user?.tokens
         ? await service
-          .createGame(userPayload!, refreshedUser.tokens.access)
+          .createGame(userPayload!, refreshedUser?.access!)
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract for creator if its not london
@@ -488,36 +483,29 @@ const handleTryLondonMode = () => {
 
 
 
-  //only fetch winning if all scores are ready on leader board
-  const stoneWinning = scoreBoard?.find(player => player.player_id === user?.id)?.winnings;
-
+  
   //update token balance, wallet address and winnings on backend
   useEffect(() => {
     
-    if (!user) {
+    if (!user || !address) {
       return;
     }
-
-    if (!address) {
-      return;
-    }
-
   
     const payload = {
       stone_token: Number(utils.formatEther(stBalance)),
       wallet_address: address,
-      stone_token_winnings: userDetail?.stone_token_winnings! + stoneWinning!,
     }
     const updateStoneBalance = async () => {
-      try {
-        showLeaderBoard &&
-        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
-      } catch (error) {
+      if (user && address && start) {
+        try {
+          await userDetailsService.stoneUpdate(payload, user.id, refreshedUser?.access!);
+        } catch (error) {
+        }
       }
     }
 
     updateStoneBalance();
-  }, [stoneWinning, showLeaderBoard, address]);
+  }, [user, address, start]);
 
 
 
@@ -580,8 +568,7 @@ const handleTryLondonMode = () => {
         quizRecentGames,
         setQuizRecentGames,
         tokenFee,
-        setTokenFee,
-        refreshedUser,
+        setTokenFee
       }}
     >
       {children}
