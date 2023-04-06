@@ -12,7 +12,6 @@ import service from "../gameContainers/timestable/services/services"
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios"
 import useSound from "use-sound"
 import { UserContext, UserContextType } from "./user.context"
-import useTokenRefresh from "./../hooks/useTokenRefresh"
 import LeaderBoard from '../gameContainers/timestable/components/Leaderboard'
 
 
@@ -109,7 +108,6 @@ export interface TimestableContextType {
   scoreTracker: (correctAnswer: number) => void
   handleSubmission: () => void
   user: userType | null
-  refreshedUser: userType | null
 }
 
 enum GameModes {
@@ -140,11 +138,10 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const [timestableRecentGames, setTimestableRecentGames] = useState<RecentGamesData | undefined>()
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   //get user details from userContext
-  const { user } = useContext(UserContext) as UserContextType
+  const { user, refreshedUser } = useContext(UserContext) as UserContextType
   const navigate = useNavigate()
   const { pathname } = useLocation()
-    //token refresher
-    const { refreshedUser } = useTokenRefresh()
+
 
 
 
@@ -287,7 +284,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
     try {
       user?.tokens
         ? await service
-          .createGame(payload, refreshedUser.tokens.access)
+          .createGame(payload, refreshedUser?.access!)
           .then((res) => {
             setGameDetails(res)
           })
@@ -345,8 +342,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
         timestableRecentGames, 
         setTimestableRecentGames,
         showLeaderBoard, 
-        setShowLeaderBoard,
-        refreshedUser
+        setShowLeaderBoard
       }}
     >
       {children}

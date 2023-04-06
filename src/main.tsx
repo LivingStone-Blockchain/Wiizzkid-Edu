@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { BrowserRouter } from "react-router-dom";
 import './index.css'
-import { WiizzkidProvider, UserProvider, QuizProvider, TimestableProvider, TokenProvider, ExchangeProvider } from './context';
+import { WiizzkidProvider, UserProvider, QuizProvider, TimestableProvider, TokenProvider } from './context';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { chain, configureChains, createClient, WagmiConfig, } from 'wagmi';
@@ -40,7 +40,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <WagmiConfig client={Client}>
          <RainbowKitProvider chains={chains} initialChain={chain.goerli}>
          <UserProvider>
-         <ExchangeProvider>
          <TokenProvider>
           <QuizProvider>
           <TimestableProvider>
@@ -50,7 +49,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </TimestableProvider>
           </QuizProvider>
           </TokenProvider>
-          </ExchangeProvider>  
           </UserProvider>
           </RainbowKitProvider>
           </WagmiConfig>

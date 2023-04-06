@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { QuizContext, QuizContextType } from '../../../context/quiz.context';
 import { apiChartData } from '../../../components/dashboard/data/quizChartData';
 import { TokenContext, TokenContextType } from '../../../context/token.context';
-import { ExchangeContext, ExchangeContextType } from '../../../context/exchange.context';
+import { UserContext, UserContextType } from '../../../context/user.context';
 import { utils } from 'ethers';
 
 
@@ -13,8 +13,8 @@ type BoardDataType = {
 
 const ScoreBalance = () => {
     const { quizRecentGames, scoreBoard, user, score } = useContext(QuizContext) as QuizContextType;
-    const { userDetail } = useContext(TokenContext) as TokenContextType;
-    const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
+    const {stBalance } = useContext(TokenContext) as TokenContextType;
+    const {  userDetail } = useContext(UserContext) as UserContextType;
     
   //returns data for a year
   const dataPerYear =   apiChartData(quizRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
@@ -22,21 +22,21 @@ const ScoreBalance = () => {
   const scoreData =   dataPerYear?.map((item) => item.score);
   const latestScore = scoreData?.length > 0 ? scoreData[scoreData?.length - 1] : 0;
 
-console.log(userDetail);
+
 
     const userBoardData: BoardDataType[] = [
-        {
-          title: "Balance",
-          value: Number(utils.formatEther(stBalance)).toFixed(1),
-        },
-        {
-          title: "Winnings",
-          value: userDetail?.stone_token_winnings! === undefined ? 0 :  userDetail?.stone_token_winnings?.toFixed(1),
-        },
-        {
-          title: "Score",
-          value: latestScore,
-        }
+      {
+        title: "Balance",
+        value: userDetail?.stone_token === undefined ? 0 : userDetail.stone_token.toFixed(1),
+      },
+      {
+        title: "Winnings",
+        value: userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings?.toFixed(1),
+      },
+      {
+        title: "Score",
+        value: latestScore,
+      }
       ] 
 
 

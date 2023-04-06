@@ -9,20 +9,22 @@ import Button from "../components/button/Button";
 import { useNavigate } from 'react-router-dom';
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context"
+import {UserContext, UserContextType} from '../../../context/user.context'
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
-import useTokenRefresh from "../../../hooks/useTokenRefresh";
+
 
 
 
 const QuizIndex = () => {
+  const { refreshedUser } = useContext(UserContext) as UserContextType
   const { showCreateGameModal, user, setGameDetails, handleDisplayCreateGameModal } = useContext(QuizContext) as QuizContextType;
   //get createGame to deduct token on game creation
   const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
-  const { refreshedUser } = useTokenRefresh();
+
 
 
 
@@ -43,7 +45,7 @@ const QuizIndex = () => {
 
 
     try {
-      await service.joinGame(joinGameCode, refreshedUser.tokens.access).then(res => {setGameDetails(res); deductTokenOnGameCreate(res.stone_token_fee, res.id)});
+      await service.joinGame(joinGameCode, refreshedUser?.access!).then(res => {setGameDetails(res); deductTokenOnGameCreate(res.stone_token_fee, res.id)});
      
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {

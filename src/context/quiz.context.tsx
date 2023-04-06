@@ -15,8 +15,6 @@ import categoryStrings from "../gameContainers/quiz/components/functions/categor
 import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
-import { ExchangeContext, ExchangeContextType } from "./exchange.context"
-import useTokenRefresh from "./../hooks/useTokenRefresh"
 import {userDetailsService } from "../services";
 import { utils } from "ethers";
 import { toast } from "react-hot-toast"
@@ -165,7 +163,6 @@ export interface QuizContextType {
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
-  refreshedUser: userType | null
 }
 
 enum GameModes {
@@ -209,13 +206,9 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
-  const { user, setRefreshTokenError } = useContext(UserContext) as UserContextType;
+  const { user, setRefreshTokenError, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const { deductTokenOnGameCreate, address, balanceOfStoneTokens, userDetail } = useContext(TokenContext) as TokenContextType;
-  const { stBalance } = useContext(ExchangeContext) as ExchangeContextType;
-
-  //token refresher
-  const { refreshedUser } = useTokenRefresh();
+  const { deductTokenOnGameCreate, address, stBalance } = useContext(TokenContext) as TokenContextType;
 
   //reset initial category value based game mode changes
   useEffect(() => {
@@ -320,8 +313,6 @@ const QuizProvider: FC<any> = ({ children }) => {
   
   }, [showLeaderBoard])
 
-
-console.log(allSubmitted)
 
 
   
@@ -457,7 +448,7 @@ const handleTryLondonMode = () => {
     try {
       user?.tokens
         ? await service
-          .createGame(userPayload!, refreshedUser.tokens.access)
+          .createGame(userPayload!, refreshedUser?.access!)
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract for creator if its not london
@@ -529,32 +520,25 @@ const handleTryLondonMode = () => {
 
 
   //update token balance, wallet address on backend
-  useEffect(() => {
-    
-    if (!user) {
-      return;
-    }
+let balance = Number(utils.formatEther(stBalance))
 
-    if (!address) {
-      return;
-    }
-
-  
-    const payload = {
-      stone_token: Number(utils.formatEther(stBalance)),
-      wallet_address: address
-    }
-
-    const updateStoneBalance = async () => {
+useEffect(() => {
+ 
+  const payload = {
+    stone_token: balance,
+    wallet_address: address,
+  }
+  const updateStoneBalance = async () => {
+    if (user || refreshedUser?.access || balance) {
       try {
-        showLeaderBoard &&
-        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser!.tokens!.access);
+        await userDetailsService.stoneUpdate(payload, user!.id, refreshedUser?.access!);
       } catch (error) {
       }
     }
+  }
 
-    updateStoneBalance();
-  }, [Number(utils.formatEther(stBalance))]);
+  updateStoneBalance();
+}, [user, refreshedUser?.access, balance]);
 
 
 
@@ -623,8 +607,7 @@ const handleTryLondonMode = () => {
         quizRecentGames,
         setQuizRecentGames,
         tokenFee,
-        setTokenFee,
-        refreshedUser,
+        setTokenFee
       }}
     >
       {children}

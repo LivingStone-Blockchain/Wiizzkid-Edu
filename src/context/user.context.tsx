@@ -1,9 +1,9 @@
 import React, { createContext, FC, useState, useEffect, useCallback, useContext } from "react";
-import { registerService, loginService, forgotPasswordService } from "../services";
+import { registerService, loginService, forgotPasswordService, userDetailsService } from "../services";
 import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration } from "../services/checkTokenExpiration";
 import SessionExpireWarning from "../components/SessionExpireWarning";
 
@@ -32,6 +32,16 @@ type userType = {
     wallet_address?: string
 }
 
+
+
+
+type RefreshedUserTypes = {
+    refresh: string;
+    access: string;
+}
+
+
+
 export interface UserContextType {
     isLoading: boolean,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -49,12 +59,16 @@ export interface UserContextType {
     setLoginLoader: React.Dispatch<React.SetStateAction<boolean>>,
     refreshTokenError: boolean,
     setRefreshTokenError: React.Dispatch<React.SetStateAction<boolean>>,
+    refreshedUser: RefreshedUserTypes | undefined, 
+    setRefreshedUser: React.Dispatch<React.SetStateAction<RefreshedUserTypes | undefined>>,
     user: userType | null,
     setUser: React.Dispatch<React.SetStateAction<userType | null>>,
     registerFormik: FormikProps<registerFormikType>,
     handleLogin: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
     handleForgotPassword: (event: React.FormEvent<HTMLFormElement>) => Promise<void>,
     handleLogout: () => void,
+    userDetail: userType | null,
+    setUserDetail: React.Dispatch<React.SetStateAction<userType | null>>,
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -70,8 +84,23 @@ const UserProvider: FC<any> = ({ children }) => {
     const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null); //for login details
+    const [userDetail, setUserDetail] = useState<userType | null>(null);
+    const [refreshedUser, setRefreshedUser] = useState<RefreshedUserTypes | undefined>();
     const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const navigate = useNavigate();
+    const {pathname} = useLocation();
+
+
+
+//get user access tokens from local Storage for endpoints authorization 
+useEffect(() => {
+    const intervalId = setInterval(() => {
+      const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
+      setRefreshedUser(refreshedUsertokens?.tokens);
+    }, 6000); // run every minute (60,000 milliseconds)
+  
+    return () => clearInterval(intervalId);
+  }, []);
 
 
 
@@ -87,16 +116,18 @@ const UserProvider: FC<any> = ({ children }) => {
     }, []);
 
 
+       
     //check for access token expiration
     useEffect(() => {
         const refreshToken = async () => {
           await checkTokenExpiration(setRefreshTokenError);
         };
-      
+        
         const intervalId = setInterval(refreshToken, 3000); // check every 5 minutes
       
         return () => clearInterval(intervalId);
       }, []);
+
 
 
     
@@ -115,6 +146,26 @@ const UserProvider: FC<any> = ({ children }) => {
         );
         }
     }, [refreshTokenError])
+
+
+        //Retrieve user details
+  const quizHome = pathname === "/quiz-home";
+  useEffect(() => {
+    const getUserDetails = async () => {
+      if (quizHome && user && refreshedUser?.access) {
+        try {
+          const res = await userDetailsService.getUser(user?.id!, refreshedUser?.access);
+          setUserDetail(res);
+        } catch (error: any) {
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            setRefreshTokenError(true);
+          }
+        }
+      }
+    };
+      
+    getUserDetails();
+  }, [quizHome, user, refreshedUser]);
 
 
   
@@ -260,7 +311,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError,  userDetail, setUserDetail,   refreshedUser,  setRefreshedUser }}>
             {children}
         </UserContext.Provider>
     )
