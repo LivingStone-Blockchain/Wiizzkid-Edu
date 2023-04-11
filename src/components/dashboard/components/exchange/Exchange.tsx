@@ -143,7 +143,6 @@ const Exchange = ({setOpen}: {setOpen: (value: React.SetStateAction<number| null
         // Get all the updated amounts after the swap
         await getAmounts();
         setLoading(false);
-        console.log("correct")
         toast.success('Swap successful', {duration: 5000})
         setTimeout(() => {
             navigate('/dashboard-home');

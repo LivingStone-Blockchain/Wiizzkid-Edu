@@ -506,7 +506,7 @@ const handleTryLondonMode = () => {
       const intervalId = setInterval(async () => {
         //if game is started check for submitting players
       try {
-        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.message), console.log(res.message)});
+        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.message)});
       } catch (error) {
         setAllSubmitted(false)
       }

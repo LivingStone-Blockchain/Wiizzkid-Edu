@@ -218,8 +218,7 @@ const TokenProvider: FC<any> = ({ children }) => {
     if (isConnected) {
       getAmounts();
     }
-}, [isConnected]);
-
+}, [isConnected, stBalance]);
 
 
 
@@ -621,7 +620,7 @@ const withdrawWinnings = async (winning: number) => {
     }
 
 //balanceOfStoneTokens should be part of dependencies when code is structured correctly
-}, [isConnected]);
+}, [isConnected, stBalance]);
 
 
 
