@@ -111,6 +111,8 @@ const TokenProvider: FC<any> = ({ children }) => {
     const { data: signer } = useSigner({ chainId: goerli.id });
     const provider = useProvider();
   
+
+    //exchange
     const zero = BigNumber.from(0);
     /** Variables to keep track of amount */
     // `ethBalance` keeps track of the amount of Eth held by the user's account
@@ -153,7 +155,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-
+  //ICO
   // loading is set to true when we are waiting for a transaction to get mined
   const [loading, setLoading] = useState<boolean>(false);
   // balanceOfStoneTokens keeps track of number of Stone tokens owned by an address
@@ -178,16 +180,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-      
+//exchange      
   const getAmounts = async () => {
     try {
 

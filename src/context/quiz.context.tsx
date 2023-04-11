@@ -521,7 +521,6 @@ const handleTryLondonMode = () => {
 
   //update token balance, wallet address on backend
 let balance = Number(utils.formatEther(stBalance))
-
 /*useEffect(() => {
  
   const payload = {
