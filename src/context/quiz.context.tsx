@@ -471,12 +471,12 @@ const handleTryLondonMode = () => {
     }
 
     setTokenFee("");
-    setScore(0)
     setTryLondon(false);
   }
 
   // function to start a game:
   const startGame = (date: any) => {
+    setScore(0) //set score to 0 before initializing
     setTimeOfStart(date)
     return
   }
@@ -522,14 +522,14 @@ const handleTryLondonMode = () => {
   //update token balance, wallet address on backend
 let balance = Number(utils.formatEther(stBalance))
 
-useEffect(() => {
+/*useEffect(() => {
  
   const payload = {
     stone_token: balance,
     wallet_address: address,
   }
   const updateStoneBalance = async () => {
-    if (user || refreshedUser?.access || balance) {
+    if (user || refreshedUser?.access || balance || submitted) {
       try {
         await userDetailsService.stoneUpdate(payload, user!.id, refreshedUser?.access!);
       } catch (error) {
@@ -538,7 +538,27 @@ useEffect(() => {
   }
 
   updateStoneBalance();
-}, [user, refreshedUser?.access, balance]);
+}, [user, refreshedUser?.access, balance, submitted]);
+*/
+
+useEffect(() => {
+  const payload = {
+    stone_token: balance,
+    wallet_address: address,
+  };
+
+  const updateStoneBalance = async () => {
+    if (user) {
+      try {
+        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser?.access!);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  updateStoneBalance();
+}, [user, stBalance, refreshedUser?.access, submitted]);
 
 
 
