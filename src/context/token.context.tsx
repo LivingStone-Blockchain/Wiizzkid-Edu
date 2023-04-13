@@ -169,6 +169,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
+  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
   const { user, refreshedUser } = useContext(UserContext) as UserContextType;
 
 
@@ -595,10 +596,11 @@ const withdrawWinnings = async (winning: number) => {
 
       toast.success('Withdrawal success', { duration: 5000 });  
       setLoading(false);
+      setIsWidthdrawal(true);
     } catch (error) {}
 
 
-    if(!loading) {
+    /*if(!loading) {
         //reset winnings on backend
         const payload = {
           stone_token: Number(utils.formatEther(stBalance)),
@@ -606,8 +608,35 @@ const withdrawWinnings = async (winning: number) => {
           stone_token_winnings: 0,
         }
         await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
-    }
+    }*/
 }
+
+
+//update winning on backend
+useEffect(() => {
+    //reset winnings on backend
+    const payload = {
+      stone_token: Number(utils.formatEther(stBalance)),
+      wallet_address: address!,
+      stone_token_winnings: 0,
+    }
+
+  const updateStoneBalance = async () => {
+    if (isWidthdrawal) {
+      try {
+        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+        setIsWidthdrawal(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  updateStoneBalance();
+}, [isWidthdrawal, stBalance, refreshedUser?.access]);
+
+
+
 
 
   //update user wallet details on connect or balance change

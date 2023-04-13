@@ -58,7 +58,6 @@ const DoughnutChart = () => {
 
       
   
-  
     return (
     <>
         <ChartCard title='Modes played'>

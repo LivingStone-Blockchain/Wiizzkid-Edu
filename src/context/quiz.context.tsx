@@ -521,24 +521,6 @@ const handleTryLondonMode = () => {
 
   //update token balance, wallet address on backend
 let balance = Number(utils.formatEther(stBalance))
-/*useEffect(() => {
- 
-  const payload = {
-    stone_token: balance,
-    wallet_address: address,
-  }
-  const updateStoneBalance = async () => {
-    if (user || refreshedUser?.access || balance || submitted) {
-      try {
-        await userDetailsService.stoneUpdate(payload, user!.id, refreshedUser?.access!);
-      } catch (error) {
-      }
-    }
-  }
-
-  updateStoneBalance();
-}, [user, refreshedUser?.access, balance, submitted]);
-*/
 
 useEffect(() => {
   const payload = {

@@ -58,7 +58,7 @@ const QuizDb = () => {
             />
              <InfoCard
               title="Winnings"
-              value={userDetail?.stone_token_winnings!.toFixed(2)}
+              value={userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings!.toFixed(2)}
               img={trophy}
             />
             <InfoCard
