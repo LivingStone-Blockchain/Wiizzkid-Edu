@@ -272,7 +272,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                     <option value="4">Music</option>
                     <option value="6">Religion</option>
                     <option value="7">Science</option>
-                    <option value="8">General Knowledge</option>
+                    <option value="8" className="hidden">General Knowledge</option>
                     <option value="10">Geography</option>
                     <option value="12">Mathematics</option>
                   </>
