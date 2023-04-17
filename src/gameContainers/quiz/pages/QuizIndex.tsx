@@ -45,7 +45,9 @@ const QuizIndex = () => {
 
 
     try {
-      await service.joinGame(joinGameCode, refreshedUser?.access!).then(res => {setGameDetails(res); deductTokenOnGameCreate(res.stone_token_fee, res.id)});
+      const response = await service.joinGame(joinGameCode, refreshedUser?.access!); //await make sure that it completes before navigating to the game page.
+      setGameDetails(response);
+      deductTokenOnGameCreate(response.stone_token_fee, response.id);
      
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {
