@@ -10,8 +10,9 @@ type credentialsType = {
 }
 
 
-type userUpdateOnTokenDeductionType = {
-    players?: number[]
+type userApprovalOnTokenDeductionType = {
+    player_id: number
+    game_id: string
 }
 
 
@@ -47,19 +48,19 @@ const stoneUpdate = async (credentials: credentialsType, id: number, token:strin
 
 
 
-const userUpdateOnTokenDeduction = async (credentials: userUpdateOnTokenDeductionType, gameId: string, token:string) => {
+const userApprovalOnTokenDeduction = async (credentials: userApprovalOnTokenDeductionType, token:string) => {
     const config = {
         headers: { 
                 Authorization: `Bearer ${token}`,
              },
     };
 
-    const response = await axios.patch(`${baseUrl}/quiz/games/${gameId}/`, credentials, config);
+    const response = await axios.post(`${baseUrl}/quiz/approve/`, credentials, config);
     return response.data;
 }
 
 
 
 
-const userDetailsService = { stoneUpdate, getUser, userUpdateOnTokenDeduction };
+const userDetailsService = { stoneUpdate, getUser, userApprovalOnTokenDeduction };
 export default userDetailsService;

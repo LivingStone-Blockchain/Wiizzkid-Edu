@@ -13,33 +13,31 @@ type LeaderBoardData = {
   setStart: (value: React.SetStateAction<boolean>) => void,
   setTriviaFetch: (value: React.SetStateAction<boolean>) => void,
   setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void,
+  setSubmitted: (value: React.SetStateAction<boolean>) => void,
+  setAllSubmitted: (value: React.SetStateAction<boolean>) => void,
 }
 
 
 const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers} = useContext(QuizContext) as QuizContextType;
+  const { gameDetails, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted, setAllSubmitted} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
 
 
-  useEffect(() => {
-    if (gameDetails?.total_players !== scoreBoard?.length && showLeaderBoard) {
-       
-
-    const intervalId = setInterval(async () => {
-      try {
-        await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res));
-      } catch (error) {
-
+    useEffect(() => {
+      if (allSubmitted) {
+        const fetchLeaderBoard = async () => {
+          try {
+            const res = await service.leaderBoard(gameDetails?.id!);
+            setScoreBoard(res.winners);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchLeaderBoard();
       }
-    }, 2000);
+    }, [allSubmitted])
 
-    return () => clearInterval(intervalId);
-  }
-  else {
-    return;
-  }
-    }, [showLeaderBoard, gameDetails, scoreBoard]);
 
 
   return (
@@ -102,14 +100,12 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
               ))}
             </tbody>
           </table>
-          {scoreBoard?.length === 0 && ( <div className='font-medium text-navy text-xs my-1 text-center animate-pulse'>Loading...</div> )}
-          {scoreBoard?.length !== 0 && gameDetails?.total_players !== scoreBoard?.length && (<div className='font-medium text-navy text-xs my-1 text-center animate-pulse'>Waiting for other players...</div>)}
         </div>
         
 
         <Button
-          className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${gameDetails?.total_players !== scoreBoard?.length ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer pointer-events-auto'}`}
-          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0) }}
+          className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8`}
+          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0), setAllSubmitted(false) }}
         >
           Back home
         </Button>

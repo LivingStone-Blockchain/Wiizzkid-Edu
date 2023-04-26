@@ -32,8 +32,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
 import {userDetailsService } from "../services";
-//import useTokenRefresh from './../hooks/useTokenRefresh';
-
 
 
 export interface TokenContextType {
@@ -113,6 +111,8 @@ const TokenProvider: FC<any> = ({ children }) => {
     const { data: signer } = useSigner({ chainId: goerli.id });
     const provider = useProvider();
   
+
+    //exchange
     const zero = BigNumber.from(0);
     /** Variables to keep track of amount */
     // `ethBalance` keeps track of the amount of Eth held by the user's account
@@ -155,7 +155,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-
+  //ICO
   // loading is set to true when we are waiting for a transaction to get mined
   const [loading, setLoading] = useState<boolean>(false);
   // balanceOfStoneTokens keeps track of number of Stone tokens owned by an address
@@ -169,7 +169,8 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
-  const { user, setRefreshTokenError, setUserDetail, refreshedUser } = useContext(UserContext) as UserContextType;
+  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
+  const { user, refreshedUser } = useContext(UserContext) as UserContextType;
 
 
 
@@ -180,16 +181,7 @@ const TokenProvider: FC<any> = ({ children }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-      
+//exchange      
   const getAmounts = async () => {
     try {
 
@@ -227,8 +219,7 @@ const TokenProvider: FC<any> = ({ children }) => {
     if (isConnected) {
       getAmounts();
     }
-}, [isConnected]);
-
+}, [isConnected, stBalance]);
 
 
 
@@ -575,12 +566,15 @@ const getTotalEth = async () => {
 
         setLoading(false);
 
-        //send user count to backend once second metamask approval is completed
-         /*if (!loading) {
-          //send player id to backend after successful deduction
-         const payload = {players: [user?.id!]};
-         await userDetailsService.userUpdateOnTokenDeduction(payload, gameId, refreshedUser!.tokens!.access);
-         }*/
+        //send approval success signal to backend once second metamask approval is completed
+         if (!loading) {
+          //send player id and game id to backend after successful deduction
+         const payload = {
+                    player_id: user?.id!,
+                    game_id: gameId  
+                  };
+         await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+         }
       } catch (error) {
         console.error(error);
       }
@@ -605,6 +599,7 @@ const withdrawWinnings = async (winning: number) => {
 
       toast.success('Withdrawal success', { duration: 5000 });  
       setLoading(false);
+      setIsWidthdrawal(true);
     } catch (error) {}
 
 
@@ -620,6 +615,33 @@ const withdrawWinnings = async (winning: number) => {
 }
 
 
+//update winning on backend
+useEffect(() => {
+    //reset winnings on backend
+    const payload = {
+      stone_token: Number(utils.formatEther(stBalance)),
+      wallet_address: address!,
+      stone_token_winnings: 0,
+    }
+
+  const updateStoneBalance = async () => {
+    if (isWidthdrawal) {
+      try {
+        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+        setIsWidthdrawal(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  updateStoneBalance();
+}, [isWidthdrawal, stBalance, refreshedUser?.access]);
+
+
+
+
+
   //update user wallet details on connect or balance change
   useEffect(() => {
     if(isConnected) {
@@ -629,8 +651,7 @@ const withdrawWinnings = async (winning: number) => {
       getOwner();
     }
 
-//balanceOfStoneTokens should be part of dependencies when code is structured correctly
-}, [isConnected]);
+}, [isConnected, stBalance]);
 
 
 

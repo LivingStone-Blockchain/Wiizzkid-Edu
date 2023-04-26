@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { WiizzkidContext, WiizzkidContextType } from '../../../context/wiizzkid.context';
+import { QuizContext, QuizContextType } from '../../../context/quiz.context';
 import { UserContext, UserContextType } from '../../../context/user.context';
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { CTA, TimestableDb, QuizDb } from '../../../components/dashboard/components/index';
@@ -10,7 +11,8 @@ import Button from '../../../components/Button';
 const DashboardHome = () => {
   const { dashBoardMode, setDashBoardMode } = useContext(WiizzkidContext) as WiizzkidContextType;
   const { loading, withdrawWinnings } = useContext(TokenContext) as TokenContextType;
-  const { user, userDetail } = useContext(UserContext) as UserContextType;
+  const { user } = useContext(QuizContext) as QuizContextType;
+  const {userDetail} = useContext(UserContext) as UserContextType;
 
 //data-aos="fade-up" data-aos-delay="200"
   return (

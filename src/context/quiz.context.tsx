@@ -94,7 +94,8 @@ type ScoreBoardType = {
   score: number,
   submit_time: number,
   full_name: string,
-  winnings: number
+  winnings: number,
+  wallet_address: string
 }[]
 
 
@@ -149,10 +150,16 @@ export interface QuizContextType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
   tryLondon: boolean
   setTryLondon: React.Dispatch<React.SetStateAction<boolean>>
+  submitTime: number
+  setSubmitTime: React.Dispatch<React.SetStateAction<number>>
   showLeaderBoard: boolean
   setShowLeaderBoard: React.Dispatch<React.SetStateAction<boolean>>
   scoreBoard: ScoreBoardType | undefined
   setScoreBoard: React.Dispatch<React.SetStateAction<ScoreBoardType | undefined>>
+  submitted: boolean
+  setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
+  allSubmitted: boolean
+  setAllSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
@@ -184,8 +191,11 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [gameCreated, setGameCreated] = useState<boolean>(false)
   const [questionsLoader, setQuestionsLoader] = useState<boolean>(false)
   const [triviaFetch, setTriviaFetch] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false) ///single player
+  const [allSubmitted, setAllSubmitted] = useState<boolean>(false) //multiplayer
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true)
   const [tryLondon, setTryLondon] = useState<boolean>(false)
+  const [submitTime, setSubmitTime] = useState<number>(0)
   const [start, setStart] = useState<boolean>(false)
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.2 })
   const [category, setCategory] = useState<string>("")
@@ -196,9 +206,10 @@ const QuizProvider: FC<any> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
-  const { user, refreshedUser } = useContext(UserContext) as UserContextType;
+  const { user, setRefreshTokenError, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const {address, stBalance, deductTokenOnGameCreate} = useContext(TokenContext) as TokenContextType;
+  const { deductTokenOnGameCreate, address, stBalance } = useContext(TokenContext) as TokenContextType;
+
   //reset initial category value based game mode changes
   useEffect(() => {
     let categoryInitialVal = gameMode === "london" ? "9" : "1"
@@ -279,6 +290,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   }, [showSplashScreen, start, pathname])
 
 
+  
 
   //show leader board with results
   useEffect(() => {
@@ -289,6 +301,8 @@ const QuizProvider: FC<any> = ({ children }) => {
         <LeaderBoard
           setStart={setStart}
           setTriviaFetch={setTriviaFetch}
+          setSubmitted={setSubmitted}
+          setAllSubmitted={setAllSubmitted}
           setShowLeaderBoard={setShowLeaderBoard}
         />,
         { duration: Infinity, className: "w-full" }
@@ -298,7 +312,6 @@ const QuizProvider: FC<any> = ({ children }) => {
     }
   
   }, [showLeaderBoard])
-
 
 
 
@@ -439,7 +452,7 @@ const handleTryLondonMode = () => {
           .then((res) => {
             setGameDetails(res)
             //deduct game stone token fee from smart contract for creator if its not london
-           gameMode !== 'london' && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
+           gameMode !== 'london' && totalAllowedPlayers > 1 && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
            
           })
         : setGameDetails(nonUserPayload)
@@ -451,8 +464,10 @@ const handleTryLondonMode = () => {
         toast.success("Quiz game created successfully!");
       }, 3000);
 
-    } catch (error) {
-      console.log(error)
+    } catch (error:any) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        setRefreshTokenError(true)
+      }
     }
 
     setTokenFee("");
@@ -461,6 +476,7 @@ const handleTryLondonMode = () => {
 
   // function to start a game:
   const startGame = (date: any) => {
+    setScore(0) //set score to 0 before initializing
     setTimeOfStart(date)
     return
   }
@@ -475,33 +491,55 @@ const handleTryLondonMode = () => {
     )
 
     if (answer?.correctAnswer === payload.option) {
+      
       return setScore(score + 1)
+    
     }
   }
 
 
 
-
-  let balance = Number(utils.formatEther(stBalance))
-  //update token balance, wallet address and winnings on backend
+  //check if all players submitted
   useEffect(() => {
-   
+    if (submitted && !allSubmitted) {
 
-    const payload = {
-      stone_token: balance,
-      wallet_address: address,
+      const intervalId = setInterval(async () => {
+        //if game is started check for submitting players
+      try {
+        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.message)});
+      } catch (error) {
+        setAllSubmitted(false)
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
     }
-    const updateStoneBalance = async () => {
-      if (user || refreshedUser?.access || balance) {
-        try {
-          await userDetailsService.stoneUpdate(payload, user!.id, refreshedUser?.access!);
-        } catch (error) {
-        }
+  }, [submitted, allSubmitted]);
+
+
+
+
+  //update token balance, wallet address on backend
+let balance = Number(utils.formatEther(stBalance))
+
+useEffect(() => {
+  const payload = {
+    stone_token: balance,
+    wallet_address: address,
+  };
+
+  const updateStoneBalance = async () => {
+    if (user) {
+      try {
+        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser?.access!);
+      } catch (error) {
+        console.log(error);
       }
     }
+  };
 
-    updateStoneBalance();
-  }, [user, refreshedUser?.access, balance]);
+  updateStoneBalance();
+}, [user, stBalance, refreshedUser?.access, submitted]);
 
 
 
@@ -516,6 +554,12 @@ const handleTryLondonMode = () => {
         questionsLoader,
         setQuestionsLoader,
         setQuizData,
+        submitted,
+        setSubmitted,
+        allSubmitted,
+        setAllSubmitted,
+        submitTime, 
+        setSubmitTime,
         start,
         setStart,
         score,

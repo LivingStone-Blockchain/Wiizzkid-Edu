@@ -28,7 +28,6 @@ export const checkTokenExpiration = async (setRefreshError: (value: React.SetSta
              // Save the updated object back to localStorage
             window.localStorage.setItem('loggedWiizzikidUser', JSON.stringify(refreshedUser));
       } else {
-        console.log("error")
         setRefreshError(true);
       }
     }

@@ -12,7 +12,6 @@ import service from "../gameContainers/timestable/services/services"
 import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios"
 import useSound from "use-sound"
 import { UserContext, UserContextType } from "./user.context"
-//import useTokenRefresh from "./../hooks/useTokenRefresh"
 import LeaderBoard from '../gameContainers/timestable/components/Leaderboard'
 
 
@@ -142,6 +141,8 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const { user, refreshedUser } = useContext(UserContext) as UserContextType
   const navigate = useNavigate()
   const { pathname } = useLocation()
+
+
 
 
   //fade into oblivion on game start
@@ -341,7 +342,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
         timestableRecentGames, 
         setTimestableRecentGames,
         showLeaderBoard, 
-        setShowLeaderBoard,
+        setShowLeaderBoard
       }}
     >
       {children}

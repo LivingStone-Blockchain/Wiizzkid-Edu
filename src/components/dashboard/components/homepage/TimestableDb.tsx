@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import {TimestableContext,TimestableContextType } from '../../../../context/timestable.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
+import {UserContext, UserContextType} from '../../../../context/user.context'
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
 import { referral, score, balance, average } from '../../../../assets/dashboard';

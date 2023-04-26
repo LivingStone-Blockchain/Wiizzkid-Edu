@@ -9,19 +9,18 @@ import { FaAngleRight } from "react-icons/fa";
 import Button from "../components/button/Button";
 import CreateTimestable from "../components/CreateTimestable";
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
-import { UserContext, UserContextType } from "../../../context/user.context";
+import {UserContext, UserContextType} from '../../../context/user.context'
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
-//import useTokenRefresh from "../../../hooks/useTokenRefresh";
 import QuickPlay from "../components/Quickplay";
 import History from "../components/History";
 
 
 
 export default function TimestableIndex() {
+  const { refreshedUser } = useContext(UserContext) as UserContextType
   const {setScore, showCreateGameModal, setShowCreateGameModal, gameCreated, user, setGameDetails} = useContext(TimestableContext) as TimestableContextType;
-  const {refreshedUser} = useContext(UserContext) as UserContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
   

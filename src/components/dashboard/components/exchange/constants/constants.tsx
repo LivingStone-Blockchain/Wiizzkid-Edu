@@ -949,6 +949,3 @@ export const GAME_ABI= [
       "type": "receive"
     }
   ]
-
-
-

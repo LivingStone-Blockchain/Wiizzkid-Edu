@@ -141,10 +141,10 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         ) : (gameMode !== 'london' && totalAllowedPlayers > 1) ? (
         <>
         <p className="mt-8 relative">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy hover:bg-gray-300">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy hover:bg-gray-300"  ref={textRef}>
               {gameDetails?.invite_code}
             </span>
-            <span className="text-xs font-bold animate-pulse text-teal absolute top-2 right-10 cursor-grab"  ref={textRef} onClick={handleCopyClick}>copy</span>
+            <span className="text-xs font-bold animate-pulse text-teal absolute top-2 right-10 cursor-grab" onClick={handleCopyClick}>copy</span>
           </p>
           <p className="mt-8 font-semibold cursor-grab relative hidden">
             <span >{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
@@ -272,7 +272,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                     <option value="4">Music</option>
                     <option value="6">Religion</option>
                     <option value="7">Science</option>
-                    <option value="8">General Knowledge</option>
+                    <option value="8" className="hidden">General Knowledge</option>
                     <option value="10">Geography</option>
                     <option value="12">Mathematics</option>
                   </>

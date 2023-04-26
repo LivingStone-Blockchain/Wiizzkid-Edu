@@ -12,9 +12,9 @@ type BoardDataType = {
 }
 
 const ScoreBalance = () => {
-    const { quizRecentGames, user, score } = useContext(QuizContext) as QuizContextType;
-    const { stBalance } = useContext(TokenContext) as TokenContextType;
-    const { userDetail } = useContext(UserContext) as UserContextType;
+    const { quizRecentGames, scoreBoard, user, score } = useContext(QuizContext) as QuizContextType;
+    const {stBalance } = useContext(TokenContext) as TokenContextType;
+    const {  userDetail } = useContext(UserContext) as UserContextType;
     
   //returns data for a year
   const dataPerYear =   apiChartData(quizRecentGames!)?.filter((item) => new Date(item.created_at).getFullYear() === new Date().getFullYear()); 
@@ -25,18 +25,18 @@ const ScoreBalance = () => {
 
 
     const userBoardData: BoardDataType[] = [
-        {
-          title: "Balance",
-          value: userDetail?.stone_token === undefined ? 0 : userDetail.stone_token.toFixed(1),
-        },
-        {
-          title: "Winnings",
-          value: userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings?.toFixed(1),
-        },
-        {
-          title: "Score",
-          value: latestScore,
-        }
+      {
+        title: "Balance",
+        value: Number(utils.formatEther(stBalance)).toFixed(1),
+      },
+      {
+        title: "Winnings",
+        value: userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings?.toFixed(1),
+      },
+      {
+        title: "Score",
+        value: latestScore,
+      }
       ] 
 
 

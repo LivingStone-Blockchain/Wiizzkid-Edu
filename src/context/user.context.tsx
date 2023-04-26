@@ -4,8 +4,8 @@ import { useFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import toast from "react-hot-toast";
 import { useNavigate, useLocation } from 'react-router-dom';
-import SessionExpireWarning from "../components/SessionExpireWarning";
 import { checkTokenExpiration } from "../services/checkTokenExpiration";
+import SessionExpireWarning from "../components/SessionExpireWarning";
 
 
 type registerFormikType = {
@@ -31,6 +31,9 @@ type userType = {
     stone_token_winnings?: number,
     wallet_address?: string
 }
+
+
+
 
 type RefreshedUserTypes = {
     refresh: string;
@@ -80,11 +83,23 @@ const UserProvider: FC<any> = ({ children }) => {
     const [referralToggle, setReferralToggle] = useState<boolean>(false); //toggle referral on register page 
     const [loginLoader, setLoginLoader] = useState<boolean>(false); //preloader before login on logout
     const [user, setUser] = useState<userType | null>(null); //for login details
-    const [userDetail, setUserDetail] = useState<userType | null>(null); //for user details retriever from backend
-    const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
+    const [userDetail, setUserDetail] = useState<userType | null>(null);
     const [refreshedUser, setRefreshedUser] = useState<RefreshedUserTypes | undefined>();
+    const [refreshTokenError, setRefreshTokenError] = useState<boolean>(false);
     const navigate = useNavigate();
     const {pathname} = useLocation();
+
+
+
+//get user access tokens from local Storage for endpoints authorization 
+useEffect(() => {
+    const intervalId = setInterval(() => {
+      const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
+      setRefreshedUser(refreshedUsertokens?.tokens);
+    }, 6000); // run every minute (60,000 milliseconds)
+  
+    return () => clearInterval(intervalId);
+  }, []);
 
 
 
@@ -111,8 +126,7 @@ const UserProvider: FC<any> = ({ children }) => {
     }, []);
 
 
-
-    
+       
     //check for access token expiration
     useEffect(() => {
         const refreshToken = async () => {
@@ -123,7 +137,6 @@ const UserProvider: FC<any> = ({ children }) => {
       
         return () => clearInterval(intervalId);
       }, []);
-
 
 
 
@@ -145,8 +158,7 @@ const UserProvider: FC<any> = ({ children }) => {
     }, [refreshTokenError])
 
 
-
-      //Retrieve user details
+        //Retrieve user details
   const quizHome = pathname === "/quiz-home";
   useEffect(() => {
     const getUserDetails = async () => {
@@ -165,7 +177,8 @@ const UserProvider: FC<any> = ({ children }) => {
     getUserDetails();
   }, [quizHome, user, refreshedUser]);
 
- 
+
+  
 
     //Handle signup
     const registerFormik: FormikProps<registerFormikType> = useFormik<registerFormikType>({
@@ -307,7 +320,7 @@ const UserProvider: FC<any> = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError, userDetail, setUserDetail,   refreshedUser,  setRefreshedUser }}>
+            value={{ isLoading, setIsLoading, registerFormik, emailNotify, setEmailNotify, emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, user, setUser, handleLogin, handleLogout, forgotPasswordEmail, setForgotPasswordEmail, handleForgotPassword, referralToggle, setReferralToggle, loginLoader, setLoginLoader, refreshTokenError, setRefreshTokenError,  userDetail, setUserDetail,   refreshedUser,  setRefreshedUser }}>
             {children}
         </UserContext.Provider>
     )

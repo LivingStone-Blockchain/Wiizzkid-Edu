@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { QuizContext, QuizContextType } from '../../../../context/quiz.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
-import { UserContext, UserContextType } from '../../../../context/user.context';
+import {UserContext, UserContextType} from '../../../../context/user.context'
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
 import { referral, score, balance, average, trophy } from '../../../../assets/dashboard';
@@ -14,8 +14,7 @@ import { Preloader } from './../../../index';
 const QuizDb = () => {
     const { user, quizRecentGames } = useContext(QuizContext) as QuizContextType;
     const { stBalance } = useContext(TokenContext) as TokenContextType;
-    const { userDetail } = useContext(UserContext) as UserContextType;
-    
+    const { userDetail } = useContext(UserContext) as UserContextType    
 
       //returns data for a year
   const currentYear = new Date().getFullYear();
@@ -59,7 +58,7 @@ const QuizDb = () => {
             />
              <InfoCard
               title="Winnings"
-              value={userDetail?.stone_token_winnings!.toFixed(2)}
+              value={userDetail?.stone_token_winnings === undefined ? 0 : userDetail?.stone_token_winnings!.toFixed(2)}
               img={trophy}
             />
             <InfoCard

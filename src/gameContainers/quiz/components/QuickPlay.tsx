@@ -1,6 +1,7 @@
 import React, { useContext, FC } from 'react'
 import { eduImg, rocket, geography, general, custom, basket, soccer } from '../assets/images'
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
+import {UserContext, UserContextType} from '../../../context/user.context'
 import toast from "react-hot-toast";
 import CreateQuizGameModal from './../components/CreateQuizGameModal'
 import service from '../services/services';
@@ -58,8 +59,8 @@ const quickPlayData: quickPlayType[] = [
 
 
 const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
-  const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee, refreshedUser } = useContext(QuizContext) as QuizContextType;
-
+  const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
+  const { refreshedUser } = useContext(UserContext) as UserContextType
 
   const handleQuickPlay = async (id: number) => {
     const data = quickPlayData.find((game) => game.id === id);
@@ -108,7 +109,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
     //persist only logged user data to backend
     try {
       user?.tokens
-      ? await service.createGame(payload, refreshedUser!.tokens.access).then((res) => {
+      ? await service.createGame(payload, refreshedUser?.access!).then((res) => {
         setGameDetails(res); 
       })
       : setGameDetails(payload);

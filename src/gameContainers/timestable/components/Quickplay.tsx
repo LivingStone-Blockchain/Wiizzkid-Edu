@@ -1,6 +1,7 @@
 import React, { useContext, FC } from 'react'
 import { cube, cubes, area, custom } from '../assets/images'
 import {TimestableContext,TimestableContextType } from "../../../context/timestable.context";
+import {UserContext, UserContextType} from '../../../context/user.context'
 import toast from "react-hot-toast";
 import CreateTimestable from './../components/CreateTimestable';
 import service from '../services/services';
@@ -42,7 +43,8 @@ const quickPlayData: quickPlayType[] = [
 
 
 const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
-  const { setDifficulty, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee, refreshedUser } = useContext(TimestableContext) as TimestableContextType;
+  const { setDifficulty, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee} = useContext(TimestableContext) as TimestableContextType;
+  const { refreshedUser } = useContext(UserContext) as UserContextType
 
 
   const handleQuickPlay = async (id: number) => {
@@ -87,7 +89,7 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
     //persist only logged user data to backend
     try {
       user?.tokens
-      ? await service.createGame(payload, refreshedUser!.tokens.access).then((res) => {
+      ? await service.createGame(payload, refreshedUser?.access!).then((res) => {
         setGameDetails(res); 
       })
       : setGameDetails(payload);
