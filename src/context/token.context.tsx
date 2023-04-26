@@ -600,7 +600,7 @@ const withdrawWinnings = async (winning: number) => {
     } catch (error) {}
 
 
-    /*if(!loading) {
+    if(!loading) {
         //reset winnings on backend
         const payload = {
           stone_token: Number(utils.formatEther(stBalance)),
@@ -608,7 +608,7 @@ const withdrawWinnings = async (winning: number) => {
           stone_token_winnings: 0,
         }
         await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
-    }*/
+    }
 }
 
 
