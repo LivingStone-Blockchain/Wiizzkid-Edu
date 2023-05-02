@@ -31,7 +31,10 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
+import { QuizContext, QuizContextType } from "./quiz.context";
 import {userDetailsService } from "../services";
+
+
 
 
 export interface TokenContextType {
@@ -169,7 +172,9 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
-  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
+  const [secondApproval, setSecondApproval] = useState<boolean>(false)
+;  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
+  const {gameDetails} = useContext(QuizContext) as QuizContextType
   const { user, refreshedUser } = useContext(UserContext) as UserContextType;
 
 
@@ -563,22 +568,38 @@ const getTotalEth = async () => {
 
         const txx = await gameContract.createGame(amount)
         await txx.wait();
-
         setLoading(false);
-
-        //send approval success signal to backend once second metamask approval is completed
-         /*if (!loading) {
-          //send player id and game id to backend after successful deduction
-         const payload = {
-                    player_id: user?.id!,
-                    game_id: gameId  
-                  };
-         await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
-         }*/
+        setSecondApproval(true);
+       
+         
       } catch (error) {
         console.error(error);
       }
 }
+
+
+ //send approval success signal to backend once second metamask approval is completed
+useEffect(() => {
+      //send player id and game id to backend after successful deduction
+      const payload = {
+        player_id: user?.id!,
+        game_id: gameDetails?.id!
+      };
+       
+    
+        const sendApproval = async() => {
+          if(secondApproval && gameDetails?.total_players! > 1) {
+            try { 
+              await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+            } catch (error) {
+              console.log(error);
+            }
+       }
+      }
+
+        sendApproval();
+}, [secondApproval])
+
 
 
 //withdraw winnings
