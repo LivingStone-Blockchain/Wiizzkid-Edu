@@ -1,4 +1,4 @@
-import { Brand, Features, Modes, Metaverse, Blog, GameModes, BuyInstruction, Help }  from '../components/index'
+import { Brand, Features, Modes, Metaverse, Blog, GameModes, BuyInstruction, Help, FAQ }  from '../components/index'
 
 
 const Home = () => {
@@ -19,6 +19,7 @@ const Home = () => {
       <Metaverse />
       <div className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 ">
         <Blog />
+        <FAQ />
       </div>
     </>
   )

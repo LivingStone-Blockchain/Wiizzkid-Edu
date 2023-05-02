@@ -23,3 +23,4 @@ export { default as BlogBuilder } from './blog/BlogBuilder';
 export { default as BuyInstruction } from './BuyInstruction';
 export { default as Players } from './Players';
 export { default as Help } from './Help';
+export {default as FAQ} from './FAQ'
