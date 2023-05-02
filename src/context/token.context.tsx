@@ -567,14 +567,14 @@ const getTotalEth = async () => {
         setLoading(false);
 
         //send approval success signal to backend once second metamask approval is completed
-         if (!loading) {
+         /*if (!loading) {
           //send player id and game id to backend after successful deduction
          const payload = {
                     player_id: user?.id!,
                     game_id: gameId  
                   };
          await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
-         }
+         }*/
       } catch (error) {
         console.error(error);
       }
