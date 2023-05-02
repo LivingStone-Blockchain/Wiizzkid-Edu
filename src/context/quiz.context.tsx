@@ -208,7 +208,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   //get user details from userContext
   const { user, setRefreshTokenError, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const { deductTokenOnGameCreate, address, stBalance } = useContext(TokenContext) as TokenContextType;
+  const { deductTokenOnGameCreate, address, stBalance, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
 
   //reset initial category value based game mode changes
   useEffect(() => {
@@ -473,6 +473,42 @@ const handleTryLondonMode = () => {
     setTokenFee("");
     setTryLondon(false);
   }
+
+
+
+
+ //send approval success signal to backend once second metamask approval is completed
+ useEffect(() => {
+  //send player id and game id to backend after successful deduction
+  const payload = {
+    player_id: user?.id!,
+    game_id: gameDetails?.id!
+  };
+
+  console.log(payload, secondApproval)
+   
+
+    const sendApproval = async() => {
+      if(secondApproval && gameDetails?.total_players! > 1) {
+        try { 
+          await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+          setSecondApproval(false);
+        } catch (error) {
+          console.log(error);
+        }
+   }
+  }
+
+    sendApproval();
+}, [secondApproval])
+
+
+
+
+
+
+
+
 
   // function to start a game:
   const startGame = (date: any) => {

@@ -31,7 +31,6 @@ import {TOKEN_ABI, TOKEN_ADDRESS, GAME_ABI, GAME_ADDRESS} from "./../components/
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { UserContext, UserContextType } from './user.context';
-import { QuizContext, QuizContextType } from "./quiz.context";
 import {userDetailsService } from "../services";
 
 
@@ -99,6 +98,8 @@ export interface TokenContextType {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   firstApproval: boolean,
   setFirstApproval: React.Dispatch<React.SetStateAction<boolean>>,
+  secondApproval: boolean,
+  setSecondApproval: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 
@@ -174,7 +175,6 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const [secondApproval, setSecondApproval] = useState<boolean>(false)
 ;  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
-  const {gameDetails} = useContext(QuizContext) as QuizContextType
   const { user, refreshedUser } = useContext(UserContext) as UserContextType;
 
 
@@ -578,30 +578,7 @@ const getTotalEth = async () => {
 }
 
 
- //send approval success signal to backend once second metamask approval is completed
-useEffect(() => {
-      //send player id and game id to backend after successful deduction
-      const payload = {
-        player_id: user?.id!,
-        game_id: gameDetails?.id!
-      };
 
-      console.log(payload, secondApproval)
-       
-    
-        const sendApproval = async() => {
-          if(secondApproval && gameDetails?.total_players! > 1) {
-            try { 
-              await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
-              setSecondApproval(false);
-            } catch (error) {
-              console.log(error);
-            }
-       }
-      }
-
-        sendApproval();
-}, [secondApproval])
 
 
 
@@ -772,6 +749,8 @@ useEffect(() => {
   deductTokenOnGameCreate, 
   firstApproval,
   setFirstApproval,
+  secondApproval,
+  setSecondApproval,
   withdrawWinnings,
 
 
@@ -831,6 +810,8 @@ useEffect(() => {
   deductTokenOnGameCreate, 
   firstApproval,
   setFirstApproval,
+  secondApproval,
+  setSecondApproval,
   withdrawWinnings,
     ]
   )
