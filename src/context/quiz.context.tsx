@@ -479,7 +479,7 @@ const handleTryLondonMode = () => {
 
  //send approval success signal to backend once second metamask approval is completed
  useEffect(() => {
-  //send player id and game id to backend after successful deduction
+  //send player id and game id to backend after successful deduction. This required to add player to game session
   const payload = {
     player_id: user?.id!,
     game_id: gameDetails?.id!
