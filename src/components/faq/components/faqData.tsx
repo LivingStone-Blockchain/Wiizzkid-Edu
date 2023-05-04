@@ -23,5 +23,10 @@ export const faqData = [
         id: 5,
         title: 'What can I do with Stone Tokens?',
         content: 'You can use Stone Tokens to play educational games on the Wiizzkid platform, earn more tokens, and participate in various activities on the platform. You can also exchange Stone Tokens for other cryptocurrencies or fiat currencies on supported cryptocurrency exchanges.',
+    },
+    {
+        id: 6,
+        title: 'Can I play the Wiizzkid games without the Stone Tokens?',
+        content: 'Yes, you can play the Wiizzkid games without using Stone Tokens. The platform offers a "London mode" option which allows users to play games in single-player mode without the need for tokens. This is a great option for users who want to try out the games and get a feel for the platform before committing to using their Stone Tokens.'
     }
 ]
