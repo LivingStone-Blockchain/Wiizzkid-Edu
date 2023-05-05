@@ -22,7 +22,7 @@ export const faqData = [
     {
         id: 5,
         title: 'What can I do with Stone Tokens?',
-        content: 'You can use Stone Tokens to play educational games on the Wiizzkid platform, earn more tokens, and participate in various activities on the platform. You can also exchange Stone Tokens for other cryptocurrencies or fiat currencies on supported cryptocurrency exchanges.',
+        content: 'You can use Stone Tokens to play educational games on the Wiizzkid platform, earn more tokens, and participate in various activities on the platform. You can also exchange Stone Tokens for other cryptocurrencies or fiat currencies on our cryptocurrency exchange.',
     },
     {
         id: 6,
