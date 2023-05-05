@@ -28,7 +28,7 @@ const FAQ = () => {
         className="py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between bg-navy rounded-xl lg:px-6 px-4"
         onClick={() => toggleAccordion(id)}
       >
-        <p className="inline-block font-semibold text-white text-left">{title}</p>
+        <p className="inline-block lg:font-semibold font-medium text-white text-left">{title}</p>
         <p className='flex items-center justify-center p-2 bg-navyLight rounded-lg'><FiChevronUp className={`${active !== id ? 'transform duration-700 ease' : 'transform duration-700 ease rotate-180'} inline-block text-white font-bold`} /></p>
       </button>
       <div
