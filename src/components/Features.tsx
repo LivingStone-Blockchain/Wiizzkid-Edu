@@ -90,22 +90,22 @@ const Features = () => {
   
             {active === id ? (
              <div className="space-y-2">
-             <h5
+             <h2
                className="font-medium transition group-hover:text-primary md:text-xl text-lg text-navy"
              >
                {title}
-             </h5>
+             </h2>
              <p className={`text-gray-500 md:text-base text-sm leading-relaxed transition-all duration-700 ease-in-out ${active === id ? 'lg:opacity-100' : 'lg:opacity-0'}`}>
                {subtitleLong}
              </p>
            </div>
             ) : (
               <div className="space-y-2">
-                <h5
+                <h2
                   className="font-medium transition group-hover:text-primary md:text-xl text-lg text-navy"
                 >
                   {title}
-                </h5>
+                </h2>
                 <p className="text-gray-500 md:text-base text-sm leading-relaxed">
                   {subtitleShort}
                 </p>

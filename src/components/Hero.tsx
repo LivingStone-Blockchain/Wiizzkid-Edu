@@ -46,9 +46,10 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
 
                             <div className="flex items-center z-[100] justify-center space-x-3 px-9 mt-7 sm:mt-0 rounded-full border-2 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"  onMouseEnter={() => (setHover(true))} onMouseLeave={() => setHover(false)} style={hover ?  { borderColor: `${colorDeep}`} : { borderColor: `transparent` }} >
                                 <span className="cursor-pointer">Quiz</span>
-                                <button onClick={handleTryLondonMode} className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
+                                <button onClick={handleTryLondonMode} className="bg-white w-14 h-14 rounded-full flex items-center justify-center" aria-label="Try London mode">
                                     <FaQuestion className="w-5 h-5 floating" style={{ fill: `${colorDeep}`, transform: "translate(-2px, -2px) rotate(-10deg)" }}/>
                                 </button>
+
                                 <span className="cursor-pointer">Try me</span>
                             </div>
                       
