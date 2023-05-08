@@ -15,7 +15,7 @@ const Blog = () => {
         <div data-aos="zoom-in-up" className="my-14 flex flex-col lg:flex-row lg:space-x-20">
         {blogData.filter((item) => item.id === blogData[0].id).map((data) => 
             <div className="lg:w-6/12 rounded-lg" key={data.id}>
-                <img className="w-full rounded-xl mb-6" src={data.details.blogImg} />
+                <img className="w-full rounded-xl mb-6" src={data.details.blogImg} width="500" height="300" />
                 <span className="bg-golden text-navy font-semibold px-4 py-px text-sm rounded-full">Latest</span>
                 <h1 className="text-navy font-semibold my-3 sm:text-xl text-lg">{data.content.one.datum}</h1>
                 <p className="text-gray-500 mb-3 sm:text-base text-sm leading-relaxed">{data.content.two.datum?.slice(0, 124)}...</p>
@@ -28,7 +28,7 @@ const Blog = () => {
                 <div className="flex space-x-5 rounded-lg"key={data.id}>
                 <div className="w-4/12">
                     <div className="relative">
-                        <img className="rounded-xl w-full" src={data.details.blogImg} />
+                        <img className="rounded-xl w-full " src={data.details.blogImg} width="500" height="300" />
                         <span className="absolute bottom-2 right-2 bg-golden text-navy font-semibold px-4 py-px text-xs rounded-full hidden sm:block">{data.content.last.datum[0]}</span>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ const Header = () => {
                             <div className="flex flex-col max-w-screen-xl px-8 mx-auto lg:items-center lg:justify-between lg:flex-row">
                                 <div className="flex flex-row items-center justify-between md:pt-8 pt-6">
                                     <div className={`flex justify-center items-center border-2  h-14 w-14 rounded-lg p-1`} style={{ borderColor: `${colorDeep}` }}>
-                                        <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" />
+                                        <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" width="50" height="auto"/>
                                     </div>
                                     <button className={`rounded-lg lg:hidden focus:outline-none focus:shadow-outline ${mobileDropdownOpen && 'pointer-events-none'}`} onClick={() => setOpen(!open)}>
                                         <svg fill="currentColor" viewBox="0 0 20 20" className="w-7 h-7">
