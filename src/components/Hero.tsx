@@ -68,7 +68,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                 </div>
 
                 <div className="w-full lg:w-6/12 lg:-mt-10 relative" id="girl">
-                    <img data-aos="fade-up" data-aos-once="true" className="w-10/12 mx-auto 2xl:-mb-20" loading='lazy' src={img} />
+                    <img data-aos="fade-up" data-aos-once="true" className="w-10/12 mx-auto 2xl:-mb-20" loading="eager" src={img} alt='wiizzkids people learning'  width="500" height="300" />
 
 
 
