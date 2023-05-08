@@ -22,7 +22,7 @@ const modeData: modeDataType[] = [
 		color: '#5b72ee',
 		shadow: 'rgba(37, 99, 235, 0.2)',
 		aosDelay: '',
-		icon: <img src={london} alt="london" className='w-[60px] mb-[2px]' width="60" height="auto" />
+		icon: <img src={london} alt="london" className='w-[60px] mb-[2px]' width="60" height="60" />
 	},
 	{
 		id: 2,
@@ -31,7 +31,7 @@ const modeData: modeDataType[] = [
 		color: '#FF3939',
 		shadow: ' rgba(220, 38, 38, 0.2)',
 		aosDelay: '150',
-		icon: <img src={shanghai} alt="shanghai" className='w-[60px]' width="60" height="auto" />
+		icon: <img src={shanghai} alt="shanghai" className='w-[60px]' width="60" height="60" />
 	},
 	{
 		id: 3,
@@ -40,7 +40,7 @@ const modeData: modeDataType[] = [
 		color: '#37b9b2',
 		shadow: 'rgba(8, 145, 178, 0.2)',
 		aosDelay: '300',
-		icon: <img src={beijing} alt="beijing" className='w-[60px]' width="60" height="auto" />
+		icon: <img src={beijing} alt="beijing" className='w-[60px]' width="60" height="60" />
 	}
 ]
 
