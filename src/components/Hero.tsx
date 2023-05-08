@@ -108,7 +108,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
 
                     <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="sm:flex hidden flex-col gap-3 justify-center items-center bg-white rounded-lg h-24 sm:h-28 py-3 px-4 absolute bottom-14 -left-4 sm:left-2 sm:bottom-20 lg:bottom-24 lg:-left-4 floating">
                         <div className='flex gap-4 justify-center items-center'>
-                            <img className='bg-[#f25471] bg-opacity-80 rounded-lg h-auto w-full max-w-[30px] p-1' src={vr} alt="vr" style={{ transform: "scaleX(-1)" }} width="30" height="auto" />
+                            <img className='bg-[#f25471] bg-opacity-80 rounded-lg h-auto w-full max-w-[30px] p-1' src={vr} alt="vr" style={{ transform: "scaleX(-1)" }} width="30" height="30" />
                             <p className='flex flex-col'>
                                 <span className='font-semibold text-gray-500 text-[13px] tracking-wide'>Wiizzkid Metaverse</span>
                                 <span className='text-[11px] text-gray-500 tracking-wide font-medium'>Into the future</span>

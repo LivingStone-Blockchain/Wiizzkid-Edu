@@ -51,7 +51,7 @@ const featuresData: FeatureData[] = [
     subtitleLong: "Wiizzkid is developing an AR-powered education world on the metaverse, which will allow students to explore and interact with educational content in a fun and engaging way.",
     colorDeep: '#252641',
     colorLight: '#F9FAFB',
-    icon: <img className='bg-navy bg-opacity-80 rounded-lg h-auto w-full max-w-[27px] p-1' src={vr} alt="vr" style={{ transform: "scaleX(-1)" }} width="30" height="auto" /> 
+    icon: <img className='bg-navy bg-opacity-80 rounded-lg h-auto w-full max-w-[27px] p-1' src={vr} alt="vr" style={{ transform: "scaleX(-1)" }} width="30" height="30" /> 
   },
 ]
 
