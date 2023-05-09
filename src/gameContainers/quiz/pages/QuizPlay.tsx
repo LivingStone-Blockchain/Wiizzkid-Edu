@@ -23,10 +23,6 @@ export default function QuizPlay() {
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
 
-  useEffect(() => {
-    toast.dismiss();
-    gameProcessionAlert();
-  }, [])
   
 
   useEffect(() => {
