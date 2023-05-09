@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { girlNavy } from './../../../assets/modes/index';
 import QuickPlay from "../components/QuickPlay";
 import History from "../components/History";
