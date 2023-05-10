@@ -492,7 +492,7 @@ const handleTryLondonMode = () => {
       if(secondApproval && gameDetails?.total_players! > 1) {
         try { 
           await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
-          setSecondApproval(false);
+          //setSecondApproval(false);
         } catch (error) {
           console.log(error);
         }

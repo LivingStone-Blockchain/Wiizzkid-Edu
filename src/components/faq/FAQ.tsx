@@ -23,7 +23,7 @@ const FAQ = () => {
       <p className="text-gray-500 md:text-base text-sm leading-relaxed">We answer some questions that are commonly asked in the Wiizzkid community.</p>
     </div>
     {faqData.map(({id, title, content}) => (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4" key={id}>
       <button
         className="py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between bg-navy rounded-xl lg:px-6 px-4"
         onClick={() => toggleAccordion(id)}

@@ -9,6 +9,8 @@ import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import service from "../services/services";
+import gameProcessionAlert from "../components/toasts/GameProcessionAlert";
+
 
 
 type PlayerTrackerType = {
@@ -18,9 +20,33 @@ type PlayerTrackerType = {
 
 export default function QuizPlay() {
   const { startGame, setScore, start, setStart, gameDetails, user } = useContext(QuizContext) as QuizContextType;
-  const { loading, firstApproval } = useContext(TokenContext) as TokenContextType;
+  const { loading, firstApproval, secondApproval } = useContext(TokenContext) as TokenContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
+
+
+  
+//we need to set approval to false before the game starts
+//this useEffect will be based on response from the backend after a certain period of time
+// no players will keep waiting..just dismiss pop up . if yes they proceed to game play. set second approval to true
+
+
+useEffect(() => {
+  let timeoutId:any = null;
+  if (secondApproval && gameDetails?.creator === user?.id) {
+    timeoutId = setTimeout(() => {
+      toast.dismiss();
+      gameProcessionAlert();
+    }, 3 * 60 * 1000);
+  }
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, [secondApproval]);
+
+
 
 
   useEffect(() => {
@@ -140,7 +166,7 @@ if (gameDetails?.game_mode === "london") {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {(playerTracker?.current_players === playerTracker?.total_players) 
+          {(!secondApproval) 
           ? (
             <>
               <article className="text-gray-700">
