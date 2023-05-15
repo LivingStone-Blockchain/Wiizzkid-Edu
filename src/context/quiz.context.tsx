@@ -216,7 +216,7 @@ const QuizProvider: FC<any> = ({ children }) => {
     setCategory(categoryInitialVal)
   }, [gameMode])
 
-  //fetch data from endpoint
+  //fetch data from external endpoint (trivia-quiz)
   let triviaUrl = `https://the-trivia-api.com/api/questions?categories=${categoryStrings(Number(category))}&limit=${totalAllowedQuestions}&difficulty=${difficulty}`
 
   useEffect(() => {

@@ -12,6 +12,7 @@ const About = () => {
 			behavior: 'smooth'
 		  });
 	}, [])
+
 	
   return (
     <>

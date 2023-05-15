@@ -20,9 +20,10 @@ type PlayerTrackerType = {
 
 export default function QuizPlay() {
   const { startGame, setScore, start, setStart, gameDetails, user } = useContext(QuizContext) as QuizContextType;
-  const { loading, firstApproval, secondApproval } = useContext(TokenContext) as TokenContextType;
+  const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
+
 
 
   
@@ -31,7 +32,7 @@ export default function QuizPlay() {
 // no players will keep waiting..just dismiss pop up . if yes they proceed to game play. set second approval to true
 
 
-useEffect(() => {
+/*useEffect(() => {
   let timeoutId:any = null;
   if (secondApproval && gameDetails?.creator === user?.id) {
     timeoutId = setTimeout(() => {
@@ -45,7 +46,25 @@ useEffect(() => {
     }
   };
 }, [secondApproval]);
+*/
 
+
+//setSecond Approval to false on yes option so gameProcession alert can close && game instruction screen can return 
+useEffect(() => {
+  let timeoutId:any = null;
+  
+    timeoutId = setTimeout(() => {
+      toast.dismiss();
+      setLoader(true)
+      gameProcessionAlert(setLoader, setSecondApproval); 
+    }, 3000);
+  
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, []);
 
 
 

@@ -3,7 +3,7 @@ import {
   FaArrowRight,
   FaClock,
   FaQuestionCircle,
-  FaTimes,
+  FaTimesCircle,
 } from "react-icons/fa";
 import service from "../../services/services";
 import categoryStrings from "../functions/categoryStringConveter";
@@ -18,6 +18,7 @@ import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 import CountDownTimer from "../CountDownTimer";
 import { useNavigate } from 'react-router-dom';
 import SkeletonLoader from "../SkeletonLoader";
+import {quizBg} from '../../assets/images/index'
 
 
 type QuizGameTypes = {
@@ -158,7 +159,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
   return (
-    <section className="fixed top-0 bottom-0 right-0 left-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition">
+    <section className="scrollbar-hide fixed inset-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition bg-cover bg-no-repeat bg-center" style={{backgroundImage: `url(${quizBg})`}}>
       {loading && (
         <div className="bg-black opacity-50 fixed top-0 bottom-0 z-50 w-full h-full left-0 right-0"></div>
       )}
@@ -193,15 +194,15 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       )}
       <div className="max-w-xl mx-auto opacity-90">
         <nav className="flex justify-between items-center">
-          <FaTimes
-            className="text-2xl cursor-pointer text-navy"
+          <FaTimesCircle
+            className="text-2xl cursor-pointer text-white"
             onClick={quitGame}
           />
 
-          <h1 className="text-xl font-bold text-navy">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
+          <h1 className="text-xl font-bold text-white">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
-            <FaQuestionCircle className="text-2xl cursor-pointer text-navy" />
+            <FaQuestionCircle className="text-2xl cursor-pointer text-white" />
             <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
               <div className="max-w-xs flex-col items-center">
                 <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{ clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)" }}></div>
@@ -211,7 +212,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
           </div>
         </nav>
 
-        <main className="py-10">
+        <main className="md:pt-24 pt-12">
           {questionsLoader ? (
             <SkeletonLoader />
           ) : (
@@ -228,8 +229,8 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
           )}
         </main>
 
-        <footer className="fixed bottom-0 right-0 left-0 w-full bg-gray-100 shadow p-4 flex items-center justify-between">
-          <span className="font-bold animate-pulse flex items-center text-navy opacity-80">
+        <footer className="fixed bottom-0 right-0 left-0 w-full bg-transparent shadow p-4 flex items-center justify-between">
+          <span className="font-bold animate-pulse flex items-center text-white">
             <FaClock className="mr-2" />{" "}
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
@@ -243,7 +244,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
           {selectedOption && current_page + 1 === questions.length ? (
             <form onSubmit={handleFinalSubmit}>
               <ActionButton className="bg-[#ffe1e1]" disabled={loading}>
-                {loading ? <span ref={submitText}>Submitting and waiting for others</span> : "Submit Game"}
+                {loading ? <span ref={submitText}>Submitting</span> : "Submit Game"}
               </ActionButton>
             </form>
           ) : (
@@ -272,7 +273,7 @@ const ActionButton = ({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${className} px-6 py-2 flex items-center border-2 border-tomato rounded-full shadow text-center text-sm font-bold text-tomato transition`}
+      className={`${className} bg-white px-6 py-2 flex items-center border-2 border-tomato rounded-full shadow text-center text-sm font-bold text-tomato transition`}
     >
       {children}
     </button>
