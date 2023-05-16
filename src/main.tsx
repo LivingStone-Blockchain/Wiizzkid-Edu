@@ -15,7 +15,7 @@ import { publicProvider } from 'wagmi/providers/public';
 const alchemyApi = import.meta.env.VITE_ALCHEMY_API;
 
 const { chains, provider } = configureChains(
-  [chain.goerli],
+  [chain.mainnet],
   [
     alchemyProvider({apiKey: alchemyApi}),
     publicProvider()
@@ -38,7 +38,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <React.StrictMode>
         <BrowserRouter>
         <WagmiConfig client={Client}>
-         <RainbowKitProvider chains={chains} initialChain={chain.goerli}>
+         <RainbowKitProvider chains={chains} initialChain={chain.mainnet}>
          <UserProvider>
          <TokenProvider>
           <QuizProvider>
