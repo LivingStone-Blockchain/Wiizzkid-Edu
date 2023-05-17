@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
 import logo from './../assets/header/wiizzkid-logo.png';
 import { MdLocationPin, MdCall, MdEmail } from 'react-icons/md';
-
+import {FaDiscord} from 'react-icons/fa';
 
 
 const Footer = () => {
@@ -29,7 +29,10 @@ const Footer = () => {
        </div>
        <div className="flex gap-6">
          
-         <a href="#" target="blank" aria-label="github" className="hover:text-tealLight text-gray-400">
+       <a href="https://discord.gg/YaCgS5Ms5c" target="blank" rel="noreferrer" className="hover:text-tealLight text-gray-400">
+               <FaDiscord className="w-6 h-6"/>
+        </a>
+         <a href="https://instagram.com/livinstone_consultancy?igshid=YmMyMTA2M2Y=" target='_blank' rel='noreferrer' aria-label="github" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
@@ -43,7 +46,7 @@ const Footer = () => {
              />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="twitter" className="hover:text-tealLight text-gray-400">
+         <a href="https://twitter.com/0xLivingStone/" target='_blank' rel='noreferrer' aria-label="twitter" className="hover:text-tealLight text-gray-400">
            <svg
              xmlns="http://www.w3.org/2000/svg"
              width="20"
@@ -57,7 +60,7 @@ const Footer = () => {
              />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="medium" className="hover:text-tealLight text-gray-400">
+         <a href="https://m.facebook.com/profile.php?id=100082081963635" target='_blank' rel='noreferrer' aria-label="facebook" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
@@ -70,7 +73,7 @@ const Footer = () => {
              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"            />
            </svg>
          </a>
-         <a href="#" target="blank" aria-label="medium" className="hover:text-tealLight text-gray-400">
+         <a href="https://linkedin.com/company/livingstoneit" target="blank" rel="noreferrer" aria-label="linkedIn" className="hover:text-tealLight text-gray-400">
            <svg 
              xmlns="http://www.w3.org/2000/svg" 
              width="20"
