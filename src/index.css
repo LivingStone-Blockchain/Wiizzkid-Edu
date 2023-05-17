@@ -66,7 +66,7 @@
 
 @keyframes balling {
   from { transform: translateX(-50%) scale(0.5); }
-  to { tranform: translateX(-50%) scale(1); }
+  to { transform: translateX(-50%) scale(1); }
 }
 
 
