@@ -9,7 +9,6 @@ import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import service from "../services/services";
-import gameProcessionAlert from "../components/toasts/GameProcessionAlert";
 
 
 type PlayerTrackerType = {
