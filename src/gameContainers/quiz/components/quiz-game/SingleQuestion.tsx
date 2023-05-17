@@ -31,15 +31,15 @@ const SingleQuestion: FC<SingleQuestionProps> = ({
   return (
     <li
       onClick={handleSelect}
-      className={`grid grid-cols-12 gap-2 py-4 ${
+      className={`grid grid-cols-12 gap-2 py-4 items-center ${
         title === selectedOption ? "bg-[#ffa6a6]" : "bg-white"
       } shadow-2xl cursor-pointer transition border rounded px-4 text-navy`}
     >
-      <span className="col-span-2 text-2xl md:text-sm mt-1">
+      <span className="col-span-2 text-xl md:text-sm">
         {title === selectedOption ? <FaRegDotCircle /> : <FaRegCircle />}
       </span>
 
-      <span className="text-lg md:text-sm col-span-10">{title}</span>
+      <span className="text-base md:text-sm md:font-semibold font-medium col-span-10">{title}</span>
     </li>
   );
 };
