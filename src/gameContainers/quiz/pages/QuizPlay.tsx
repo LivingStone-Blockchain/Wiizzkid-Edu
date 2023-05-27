@@ -32,13 +32,16 @@ export default function QuizPlay() {
 // no players will keep waiting..just dismiss pop up . if yes they proceed to game play. set second approval to true
 
 
-/*useEffect(() => {
+//if second Approval is true it means your transaction is successful
+//As the creator wait for 3 minutes for others, if anyone is left, pop up message
+//Exclude londoners from pop.
+useEffect(() => {
   let timeoutId:any = null;
-  if (secondApproval && gameDetails?.creator === user?.id) {
+  if (secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode === "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
-      gameProcessionAlert();
-    }, 3 * 60 * 1000);
+        gameProcessionAlert(setLoader, setSecondApproval); 
+    }, 3000);
   }
   return () => {
     if (timeoutId) {
@@ -46,18 +49,18 @@ export default function QuizPlay() {
     }
   };
 }, [secondApproval]);
-*/
+
 
 
 //setSecond Approval to false on yes option so gameProcession alert can close && game instruction screen can return 
-useEffect(() => {
+/*useEffect(() => {
   let timeoutId:any = null;
   
     timeoutId = setTimeout(() => {
       toast.dismiss();
       setLoader(true)
       gameProcessionAlert(setLoader, setSecondApproval); 
-    }, 3000);
+    }, 3 * 60 * 1000);
   
   return () => {
     if (timeoutId) {
@@ -65,11 +68,12 @@ useEffect(() => {
     }
   };
 }, []);
+*/
 
 
-
+//if joining players are incomplete, keep revisiting the BE, else set second approval to false so it wont pop.
   useEffect(() => {
-    if (gameDetails?.current_players !==  gameDetails?.total_players && user) {
+    if (gameDetails?.current_players !== gameDetails?.total_players && user) {
 
       const intervalId = setInterval(async () => {
       try {
@@ -80,6 +84,9 @@ useEffect(() => {
     }, 2000);
 
     return () => clearInterval(intervalId);
+    }
+    else {
+      setSecondApproval(false);
     }
   }, [gameDetails]);
 
