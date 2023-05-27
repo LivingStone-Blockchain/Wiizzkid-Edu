@@ -159,7 +159,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
   return (
-    <section className="scrollbar-hide fixed inset-0 h-full bg-gray-100 z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition bg-cover bg-no-repeat bg-center" style={{backgroundImage: `url(${quizBg})`}}>
+    <section className="scrollbar-hide fixed inset-0 h-full z-50 text-gray-700 p-6 overflow-y-scroll pb-40 transition bg-cover bg-no-repeat bg-center bg-[#262a4d]" style={{backgroundImage: `url(${quizBg})`}}>
       {loading && (
         <div className="bg-black opacity-50 fixed top-0 bottom-0 z-50 w-full h-full left-0 right-0"></div>
       )}
