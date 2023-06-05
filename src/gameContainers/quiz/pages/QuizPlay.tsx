@@ -41,7 +41,7 @@ useEffect(() => {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setSecondApproval); 
-    }, 3000);
+    }, 10000);
   }
   return () => {
     if (timeoutId) {

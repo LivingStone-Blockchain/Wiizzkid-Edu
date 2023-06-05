@@ -54,22 +54,22 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   })
 
 
-
+console.log(mapped_questions)
 
 
   //sort and filter restructured based on api url's returned data
-  let sortedMapped_questions = triviaFetch
-    ? mapped_questions
-    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase() && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
+  //let mapped_questions = triviaFetch
+    //? mapped_questions
+    //: mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase() && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
 
 
 
   //render first question from array on page load
   useEffect(() => {
 
-    setCurrentQuestion(sortedMapped_questions![0]);
+    setCurrentQuestion(mapped_questions![0]);
     setCurrentPage(0);
-    setQuestions([...sortedMapped_questions!]);
+    setQuestions([...mapped_questions!]);
 
     return;
   }, [dataType]);

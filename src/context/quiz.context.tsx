@@ -48,7 +48,8 @@ type returnedDataType = {
   category: number
   current_players?: number
   stone_token_fee?: number
-  players?: number[]
+  players?: number[],
+  
 }
 
 type RecentGamesData = {
@@ -240,6 +241,7 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 
 
+  //TO BE REMOVED XXXXXXXXXXXXXXXXXXXXXX
   //fetch data from main database
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -422,6 +424,8 @@ const handleTryLondonMode = () => {
 }
 
 
+
+
   //function create game form 2
   const handleInstructionScreen = async () => {
     const userPayload = user && {
@@ -444,13 +448,16 @@ const handleTryLondonMode = () => {
       category: Number(category),
     }
 
+   
+
     //persist only logged user data to backend
     try {
       user?.tokens
         ? await service
           .createGame(userPayload!, refreshedUser?.access!)
           .then((res) => {
-            setGameDetails(res)
+            setGameDetails(res.game);
+            setQuizData(res.questions)
             //deduct game stone token fee from smart contract for creator if its not london
            gameMode !== 'london' && totalAllowedPlayers > 1 && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
            

@@ -20,6 +20,49 @@ import { utils } from "ethers";
 
 
 
+const categoryData = [
+  {
+    id: 2,
+    category: "Arts & Literature"
+  },
+  {
+    id: 3,
+    category: "Film & Tv"
+  },
+  {
+    id: 4,
+    category: "Food & Drink"
+  },
+  {
+    id: 5,
+    category: "General Knowledge"
+  },
+  {
+    id: 6,
+    category: "Geography"
+  },
+  {
+    id: 7,
+    category: "History"
+  },
+  {
+    id: 8,
+    category: "Music"
+  },
+  {
+    id: 9,
+    category: "Science"
+  },
+  {
+    id: 10,
+    category: "Society & Culture"
+  },
+  {
+    id: 11,
+    category: "Sport & Leisure"
+  }
+]
+
 
 interface CreateQuizGameModalType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -266,15 +309,9 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
                   </>
                 ) : (
                   <>
-                    
-                    <option value="1">Football</option>
-                    <option value="2">Current Affairs</option>
-                    <option value="4">Music</option>
-                    <option value="6">Religion</option>
-                    <option value="7">Science</option>
-                    <option value="8" className="hidden">General Knowledge</option>
-                    <option value="10">Geography</option>
-                    <option value="12">Mathematics</option>
+                    {categoryData.map(({id, category}) => (
+                        <option key={id} value={id}>{category}</option>
+                    ))}
                   </>
                 )}
               </Select>
