@@ -32,12 +32,15 @@ export default function QuizPlay() {
 // no players will keep waiting..just dismiss pop up . if yes they proceed to game play. set second approval to true
 
 
+
+console.log(secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london");
+console.log(secondApproval, playerTracker?.current_players !== playerTracker?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london");
 //if second Approval is true it means your transaction is successful
 //As the creator wait for 3 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
 useEffect(() => {
   let timeoutId:any = null;
-  if (secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode === "london") {
+  if (secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setSecondApproval); 
