@@ -1,14 +1,26 @@
 # Wiizzkid
 
 ## Overview
-Wiizzkid is an innovative and versatile educational platform that offers a hybrid learning experience to users. With the aim of making learning flexible, convenient, and accessible to all, Wiizzkid allows individuals to learn anytime, anywhere, and on any device.
+One of the standout features of Wiizzkid is its unique approach to incentivizing learning. Through the "Learn to Earn" program, users are rewarded with tokens for their learning efforts. These tokens can be used to unlock various benefits such as discounts, exclusive content, and even prizes, creating an engaging and motivating learning environment.
+
+In addition, Wiizzkid introduces the concept of NFTs (Non-Fungible Tokens) into the educational realm. Users have the opportunity to own topic-related NFTs, providing them with exclusive insights and resources that enhance their learning experience. These NFTs serve as valuable assets that users can acquire and leverage for comprehensive learning before participating in quizzes and assessments.
+
+Wiizzkid's metaverse world takes learning to the next level by incorporating augmented reality (AR) technology. Users can immerse themselves in interactive and fun learning experiences within the metaverse, enhancing their understanding of various subjects. This AR-powered approach brings a new dimension to education, making it engaging, dynamic, and memorable.
+
+The Wiizzkid platform operates on a decentralized Layer 2 Ethereum network, ensuring enhanced security and efficiency. Users can seamlessly integrate the native token into their transactions and activities within the ecosystem, providing a streamlined and unified experience.
+
+With a range of educational games and quizzes, Wiizzkid offers an entertaining and effective way to learn. Users can challenge themselves in different game modes, including the London mode where they can practice and hone their skills before progressing to more advanced levels. The Shanghai mode introduces multiplayer functionality, allowing users to compete against another player, testing their speed, knowledge, and accuracy.
+
+Furthermore, Wiizzkid caters to organizations through its B2B platform in Beijing. Here, organizations can develop their own quiz templates for competitions and utilize them within the Wiizzkid metaverse. This opens up opportunities for collaborative learning, knowledge sharing, and friendly competition among organizations.
+
+Wiizzkid is revolutionizing the way education is approached by combining technology, gamification, and rewards. By providing a comprehensive and engaging learning experience, Wiizzkid empowers learners of all ages to embrace continuous learning, unlock their full potential, and thrive in their educational journey.
 
 
 This project was generated with Vite version 3.2.0.
 
 
 ## Screenshot
-![Screenshot](https://github.com/Adedeji-Taiwo/Ace-Coin-Pay/blob/main/src/assets/screenshot.png)
+![Screenshot](https://github.com/LivingStone-Blockchain/Wiizzkid-Edu/blob/testtestnet/src/assets/screenshot.png)
 
 
 ## Link
@@ -26,6 +38,21 @@ Below are the third party libraries used in this project:
 | React-Countdown | `react-countdown`  | A React library used for implementing countdown timers in React applications. |
 | TailwindCSS | `tailwindcss`  | A utility-first CSS framework for rapidly building custom designs. |
 | React Hot Toast | ` react-hot-toast`  | A customizable toast notification library for React applications.|
+| @paypal/react-paypal-js | `@paypal/react-paypal-js`  | Integrates PayPal functionality into React applications for secure payment processing.|
+|@rainbow-me/rainbowkit | `@rainbow-me/rainbowkit`  | A comprehensive UI toolkit for React applications with a wide range of pre-built components.|
+| @stripe/react-stripe-js | `@stripe/react-stripe-js`  | Stripe's JavaScript library for handling secure payment transactions.|
+| @stripe/stripe-js | `@stripe/stripe-js`  | Stripe's JavaScript library for handling secure payment transactions.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| axios | ` axios`  | A popular JavaScript library for making HTTP requests to server endpoints.|
+| chart.js | ` chart.js`  | A flexible and customizable JavaScript charting library for visualizing data.|
+| cross-env | ` cross-env`  |A cross-platform package for setting environment variables in different operating systems.|
+| dotenv | ` dotenv`  | Loads environment variables from a .env file into Node.js applications.|
+| emailjs-com | ` emailjs-com`  |Simplifies sending emails from client-side JavaScript using email service providers.|
+| ethers | ` ethers`  | A powerful JavaScript library for interacting with Ethereum blockchain and smart contracts.|
+| formik | `formik`  | A library for building forms in React with advanced validation and state management features.|
+| gsap | ` gsap`  | GreenSock Animation Platform for creating high-performance animations in JavaScript.|
+| html-react-parser | ` html-react-parser`  | Parses and renders HTML strings as React components in a React application.|
+| jwt-decode | ` jwt-decode`  | Decodes JSON Web Tokens (JWT) to access the payload data in JavaScript.|
 
 
 
