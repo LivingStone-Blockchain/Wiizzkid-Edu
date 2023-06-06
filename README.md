@@ -53,7 +53,23 @@ Below are the third party libraries used in this project:
 | gsap | ` gsap`  | GreenSock Animation Platform for creating high-performance animations in JavaScript.|
 | html-react-parser | ` html-react-parser`  | Parses and renders HTML strings as React components in a React application.|
 | jwt-decode | ` jwt-decode`  | Decodes JSON Web Tokens (JWT) to access the payload data in JavaScript.|
-
+| react-chartjs-2 | ` react-chartjs-2`  | React wrapper for Chart.js library, enabling the creation of interactive charts in React.|
+| react-confetti | ` react-confetti`  | Adds confetti effects to React components for celebratory UI elements.|
+| react-fast-marquee | ` react-fast-marquee`  | A performant marquee scrolling component for displaying scrolling text or images in React.|
+|  react-countdown-circle-time | ` react-countdown-circle-timer`  | A circular countdown timer component for React applications.|
+|react-icons | ` react-icons`  | A collection of popular icon packs as React components for easy integration into React applications.|
+| react-lazy-load-image-component | ` react-lazy-load-image-component`  | Lazy loading images in React applications to improve performance and user experience.|
+| react-loading-skeleton | ` react-loading-skeleton`  | Renders skeleton loading placeholders to enhance perceived performance during content loading.|
+| react-modal-video | ` react-modal-video`  | Displays a modal window for playing videos in React applications.|
+| react-router-dom | ` react-router-dom`  | A routing library for React applications, enabling navigation and URL handling.|
+| react-simple-typewriter | ` react-simple-typewriter`  | Creates a typewriter effect for text animation in React components.|
+| react-table | ` react-table`  | A feature-rich table library for React applications, providing advanced data handling and customization options.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| yup | ` yup`  | A JavaScript schema validation library used for validating form inputs and data objects.|
 
 
 ## Features
