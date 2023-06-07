@@ -3,17 +3,17 @@
 ## Overview
 One of the standout features of Wiizzkid is its unique approach to incentivizing learning. Through the "Learn to Earn" program, users are rewarded with tokens for their learning efforts. These tokens can be used to unlock various benefits such as discounts, exclusive content, and even prizes, creating an engaging and motivating learning environment.
 
-In addition, Wiizzkid introduces the concept of NFTs (Non-Fungible Tokens) into the educational realm. Users have the opportunity to own topic-related NFTs, providing them with exclusive insights and resources that enhance their learning experience. These NFTs serve as valuable assets that users can acquire and leverage for comprehensive learning before participating in quizzes and assessments.
+NFTs enhance learning by providing exclusive insights and resources. Users can own topic-related NFTs for comprehensive learning before quizzes.
 
-Wiizzkid's metaverse world takes learning to the next level by incorporating augmented reality (AR) technology. Users can immerse themselves in interactive and fun learning experiences within the metaverse, enhancing their understanding of various subjects. This AR-powered approach brings a new dimension to education, making it engaging, dynamic, and memorable.
+AR-powered metaverse immerses users in interactive learning experiences, making education engaging and dynamic.
 
-The Wiizzkid platform operates on a decentralized Layer 2 Ethereum network, ensuring enhanced security and efficiency. Users can seamlessly integrate the native token into their transactions and activities within the ecosystem, providing a streamlined and unified experience.
+Operates on a decentralized Ethereum network, ensuring enhanced security and efficiency.
 
-With a range of educational games and quizzes, Wiizzkid offers an entertaining and effective way to learn. Users can challenge themselves in different game modes, including the London mode where they can practice and hone their skills before progressing to more advanced levels. The Shanghai mode introduces multiplayer functionality, allowing users to compete against another player, testing their speed, knowledge, and accuracy.
+Range of educational games and quizzes, including London mode for practice and Shanghai mode for multiplayer competition.
 
-Furthermore, Wiizzkid caters to organizations through its B2B platform in Beijing. Here, organizations can develop their own quiz templates for competitions and utilize them within the Wiizzkid metaverse. This opens up opportunities for collaborative learning, knowledge sharing, and friendly competition among organizations.
+B2B platform in Beijing allows organizations to create and utilize quiz templates for collaborative learning and friendly competition.
 
-Wiizzkid is revolutionizing the way education is approached by combining technology, gamification, and rewards. By providing a comprehensive and engaging learning experience, Wiizzkid empowers learners of all ages to embrace continuous learning, unlock their full potential, and thrive in their educational journey.
+Wiizzkid revolutionizes education by combining technology, gamification, and rewards, empowering learners to thrive.
 
 
 This project was generated with Vite version 3.2.0.
@@ -64,11 +64,11 @@ Below are the third party libraries used in this project:
 | react-router-dom | ` react-router-dom`  | A routing library for React applications, enabling navigation and URL handling.|
 | react-simple-typewriter | ` react-simple-typewriter`  | Creates a typewriter effect for text animation in React components.|
 | react-table | ` react-table`  | A feature-rich table library for React applications, providing advanced data handling and customization options.|
-| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
-| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
-| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
-| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
-| aos | ` aos`  | Animate On Scroll library that provides easy-to-use animations for scroll-based interactions.|
+| react-vertical-timeline-component | ` react-vertical-timeline-component`  | Creates vertical timelines in React applications for visualizing chronological events.|
+| react-web-share | ` react-web-share`  | Simplifies sharing content from a React application using the Web Share API.|
+| swiper | ` swiper`  | A mobile touch slider library for creating interactive and responsive carousels and sliders in React applications.|
+| use-sound | ` use-sound`  | A React hook for playing sound effects and audio in response to user interactions.|
+| wagmi | `wagmi`  | A library that provides tools and utilities for interacting with cryptocurrencies and blockchain technologies.|
 | yup | ` yup`  | A JavaScript schema validation library used for validating form inputs and data objects.|
 
 
@@ -99,12 +99,55 @@ Below are the third party libraries used in this project:
   
 
 
+## API Keys
+
+The project requires the following API keys, which should be included in the `.env` file:
+
+- `paypal_clientid`: The PayPal Client ID for integrating PayPal functionality into the application.
+
+- `alchemy-api`: The API key for accessing the Alchemy API, used for specific functionality within the application.
+
+- `emailjs-service-id`: The service ID for the EmailJS integration, allowing sending emails from the application.
+
+- `emailjs-template-id`: The template ID for the EmailJS integration, used for specific email templates.
+
+- `emailjs-public-key`: The public key for the EmailJS integration, enabling secure communication with the email service provider.
+
+Please make sure to set up the `.env` file with the correct values for these API keys before running the application.
+
+
+
+
+## .env Example
+Create a .env file in the root directory of the project and add the following variables:
+
+VITE_PAYPAL_CLIENTID= *************
+VITE_HOST_BASE_URL=https://test-wiizzkid-api.onrender.com
+VITE_ALCHEMY_API= ***********
+VITE_SERVICE_ID= *************
+VITE_TEMPLATE_ID= ************
+VITE_PUBLIC_KEY= ***********
+VITE_LOCAL_BASE_URL=https://wiizzkid.com/
+
+**NOTE**: Make sure to replace the values with the corresponding API keys and URLs specific to your project.
+
+
 
 ## Setup
+To set up the project locally, please follow the steps below:
+
 - Clone the project: `git clone https://github.com/LivingStone-Blockchain/Wiizzkid-Edu.git`
 - Install dependencies: `npm install`
-- Create .env file to store config variables such as API Keys for EmailJS, Alchemy, PAypal and any other necessary variables. Add .env file to gitignore before committing to keep keys and other information private.
+- Create the .env file:
+  
+        - Duplicate the .env.example file provided in the project's root directory.
+        - Rename the duplicated file to .env.
+        - Open the .env file and fill in the required config variables, such as API keys for EmailJS, Alchemy, PayPal, and any other necessary variables. Make sure to keep this file private and never commit it to version control by adding it to the .gitignore file.
 - Start the development server: `npm run dev`
+
+These instructions will ensure that you have a working local setup with the necessary dependencies installed, configuration variables set, and the development server running.
+
+**Note**: If you encounter any issues during the setup process, please refer to the project's documentation or reach out to the project maintainers for assistance.
 
 
 ## Contributions
