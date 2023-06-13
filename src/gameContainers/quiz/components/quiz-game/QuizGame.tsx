@@ -45,7 +45,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   const mapped_questions = dataType?.map((question) => {
     return {
       category: typeof (question.category) === "number" ? categoryStrings(question.category) : question.category,
-      question: question.question,
+      question: question.question.text,
       options: [question.correctAnswer, ...question.incorrectAnswers].sort(() => Math.random() - 0.5), //sorted for randomization
       difficulty: question.difficulty,
       id: question.id,
@@ -54,7 +54,8 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   })
 
 
-console.log(mapped_questions)
+console.log(mapped_questions);
+console.log(current_question);
 
 
   //sort and filter restructured based on api url's returned data

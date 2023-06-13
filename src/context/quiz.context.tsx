@@ -29,7 +29,9 @@ type questionsData = {
   difficulty: string
   id: number | string
   incorrectAnswers: string[]
-  question: string
+  question: {
+    text: string
+  }
   region?: string
   tags: string[]
 }

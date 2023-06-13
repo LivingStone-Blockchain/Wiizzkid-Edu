@@ -55,23 +55,6 @@ useEffect(() => {
 
 
 
-//setSecond Approval to false on yes option so gameProcession alert can close && game instruction screen can return 
-/*useEffect(() => {
-  let timeoutId:any = null;
-  
-    timeoutId = setTimeout(() => {
-      toast.dismiss();
-      setLoader(true)
-      gameProcessionAlert(setLoader, setSecondApproval); 
-    }, 3 * 60 * 1000);
-  
-  return () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  };
-}, []);
-*/
 
 
 //if joining players are incomplete, keep revisiting the BE, else set second approval to false so it wont pop.

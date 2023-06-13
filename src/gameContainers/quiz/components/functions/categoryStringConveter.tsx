@@ -4,33 +4,25 @@ const categoryStrings = (category: number) => {
         case 1:
             return "football";
         case 2:
-            return "current-affairs";
+            return "Arts & Literature";
         case 3:
-            return "nollywood";
+            return "Film & TV";
         case 4:
-            return "music";
+            return "Food & Drink";
         case 5:
-            return "gossip/gist";
+            return "General Knowledge";
         case 6:
-            return "religion";
+            return "Geography";
         case 7:
-            return  "science";
+            return  "History";
         case 8:
-            return  "general_knowledge";
+            return  "Music";
         case 9:
-            return "sport_and_leisure";
+            return "Science";
         case 10:
-            return "geography";
+            return "Society & Culture";
         case 11:
-            return "society_and_culture";
-        case 12:
-            return 'mathematics';
-        case 13:
-            return 'science';
-        case 14:
-            return 'general_knowledge';
-        case 15:
-            return 'geography';
+            return "Sports & Leisure";
         default:
             return "";
     }
