@@ -74,6 +74,7 @@ console.log(secondApproval);
     return () => clearInterval(intervalId);
     }
     else {
+      console.log("we are equal")
       setSecondApproval(false);
     }
   }, [gameDetails]);
