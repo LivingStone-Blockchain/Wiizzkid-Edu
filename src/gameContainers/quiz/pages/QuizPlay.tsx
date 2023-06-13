@@ -73,10 +73,7 @@ console.log(secondApproval);
 
     return () => clearInterval(intervalId);
     }
-    else {
-      console.log("we are equal")
-      setSecondApproval(false);
-    }
+  
   }, [gameDetails]);
 
 
@@ -181,7 +178,7 @@ if (gameDetails?.game_mode === "london") {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {(!secondApproval) 
+          {(gameDetails?.current_players === gameDetails?.total_players && secondApproval) 
           ? (
             <>
               <article className="text-gray-700">
