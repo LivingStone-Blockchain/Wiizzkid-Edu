@@ -54,8 +54,6 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   })
 
 
-console.log(mapped_questions);
-console.log(current_question);
 
 
   //sort and filter restructured based on api url's returned data

@@ -20,23 +20,16 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails, user, allowGameProcession } = useContext(QuizContext) as QuizContextType;
-  const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
+  const { startGame, setScore, start, setStart, gameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
+  const { loading, firstApproval, secondApproval } = useContext(TokenContext) as TokenContextType;
   const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
 
 
 
-  
-//we need to set approval to false before the game starts
-//this useEffect will be based on response from the backend after a certain period of time
-// no players will keep waiting..just dismiss pop up . if yes they proceed to game play. set second approval to true
 
 
-
-//console.log(secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london");
-//console.log(secondApproval, playerTracker?.current_players !== playerTracker?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london");
 //if second Approval is true it means your transaction is successful
 //As the creator wait for 3 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
@@ -45,7 +38,7 @@ useEffect(() => {
   if (secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
-        gameProcessionAlert(setLoader, setSecondApproval); 
+        gameProcessionAlert(setLoader, setAllowGameProcession); 
     }, 10000);
   }
   return () => {
@@ -79,24 +72,23 @@ useEffect(() => {
 
 
 
-
-
 //if joining players are incomplete, keep revisiting the BE, else set second approval to false so it wont pop.
-  useEffect(() => {
-    if (gameDetails?.current_players !== gameDetails?.total_players && user) {
-
-      const intervalId = setInterval(async () => {
+useEffect(() => {
+  if (gameDetails?.current_players !== gameDetails?.total_players) {
+    const intervalId = setInterval(async () => {
       try {
-        await service.playersTracker(gameDetails?.id!).then(res => setPlayerTracker(res));
+        const updatedPlayerTracker = await service.playersTracker(gameDetails?.id!);
+        setPlayerTracker(updatedPlayerTracker);
       } catch (error) {
-        
+        // Handle the error if needed
       }
     }, 2000);
 
     return () => clearInterval(intervalId);
-    }
-  
-  }, [gameDetails]);
+  }
+}, [gameDetails]);
+
+
 
 
 
@@ -200,7 +192,7 @@ if (gameDetails?.game_mode === "london") {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {(gameDetails?.current_players === gameDetails?.total_players && secondApproval) 
+          {(gameDetails?.current_players === gameDetails?.total_players) 
           ? (
             <>
               <article className="text-gray-700">
@@ -252,9 +244,13 @@ if (gameDetails?.game_mode === "london") {
 
             <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
               <p>Waiting for</p> 
-              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players === -1 ? 1 : playerTracker!.total_players - playerTracker!.current_players}</p>
-              <p> more  {(playerTracker!.total_players - playerTracker!.current_players === 1) ? "player" : "players"}...</p>
-            </div>
+              {playerTracker && (
+                <>
+                  <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker.total_players - playerTracker.current_players === -1 ? 1 : playerTracker.total_players - playerTracker.current_players}</p>
+                  <p> more  {(playerTracker.total_players - playerTracker.current_players === 1) ? "player" : "players"}...</p>
+                </>
+              )}
+          </div>
             </article>
           )}
         </div>
