@@ -165,6 +165,8 @@ export interface QuizContextType {
   setAllSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
+  allowGameProcession: boolean
+  setAllowGameProcession: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
 }
 
@@ -206,6 +208,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
+  const [allowGameProcession, setAllowGameProcession] = useState<boolean>(false)
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
@@ -485,6 +488,10 @@ const handleTryLondonMode = () => {
 
 
 
+  
+
+
+
 
  //send approval success signal to backend once second metamask approval is completed
  useEffect(() => {
@@ -653,7 +660,9 @@ useEffect(() => {
         quizRecentGames,
         setQuizRecentGames,
         tokenFee,
-        setTokenFee
+        setTokenFee,
+        allowGameProcession, 
+        setAllowGameProcession
       }}
     >
       {children}

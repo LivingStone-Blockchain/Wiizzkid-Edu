@@ -8,6 +8,7 @@ import Overlay from "../components/Overlay";
 import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
+import { UserContext, UserContextType } from "../../../context/user.context";
 import service from "../services/services";
 import gameProcessionAlert from "../components/toasts/GameProcessionAlert";
 
@@ -19,8 +20,9 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails, user } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, gameDetails, user, allowGameProcession } = useContext(QuizContext) as QuizContextType;
   const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
+  const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
 
@@ -33,8 +35,8 @@ export default function QuizPlay() {
 
 
 
-console.log(secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london");
-console.log(secondApproval, playerTracker?.current_players !== playerTracker?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london");
+//console.log(secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london");
+//console.log(secondApproval, playerTracker?.current_players !== playerTracker?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london");
 //if second Approval is true it means your transaction is successful
 //As the creator wait for 3 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
@@ -53,7 +55,27 @@ useEffect(() => {
   };
 }, [secondApproval]);
 
-console.log(secondApproval);
+
+
+
+//equate total players to current players on clicking yes for game progression
+useEffect(() => {
+  const updatePatch = async () => {
+    if (allowGameProcession && playerTracker?.current_players) {
+      const payload = {
+        total_players: playerTracker.current_players,
+      };
+
+      try {
+        await service.currentPayerUpdate(gameDetails?.id!, payload, refreshedUser?.access!);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  updatePatch();
+}, [allowGameProcession]);
 
 
 
