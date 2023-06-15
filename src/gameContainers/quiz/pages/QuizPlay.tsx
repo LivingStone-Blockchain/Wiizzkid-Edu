@@ -27,8 +27,8 @@ export default function QuizPlay() {
   const [loader, setLoader] = useState<boolean>(false);
 
 
-
-
+console.log("gameDetails current and total", gameDetails?.current_players, gameDetails?.total_players)
+console.log("players current and total", playerTracker?.current_players, playerTracker?.total_players)
 
 //if second Approval is true it means your transaction is successful
 //As the creator wait for 3 minutes for others, if anyone is left, pop up message
