@@ -27,8 +27,6 @@ export default function QuizPlay() {
   const [loader, setLoader] = useState<boolean>(false);
 
 
-console.log("gameDetails current and total", gameDetails?.current_players, gameDetails?.total_players)
-console.log("players current and total", playerTracker?.current_players, playerTracker?.total_players)
 
 //if second Approval is true it means your transaction is successful
 //As the creator wait for 3 minutes for others, if anyone is left, pop up message
@@ -74,7 +72,7 @@ useEffect(() => {
 
 //if joining players are incomplete, keep revisiting the BE, else set second approval to false so it wont pop.
 useEffect(() => {
-  if (gameDetails?.current_players !== gameDetails?.total_players) {
+  if (playerTracker?.current_players !== gameDetails?.total_players) {
     const intervalId = setInterval(async () => {
       try {
         const updatedPlayerTracker = await service.playersTracker(gameDetails?.id!);
@@ -86,7 +84,7 @@ useEffect(() => {
 
     return () => clearInterval(intervalId);
   }
-}, [gameDetails]);
+}, [playerTracker]);
 
 
 
@@ -192,7 +190,7 @@ if (gameDetails?.game_mode === "london") {
         <div className="bg-gradient-to-r from-navyLight via-navyLight to-[#a5a6c8] blur-3xl fixed w-full h-full top-0 right-0 left-0 bottom-0"></div>
 
         <div className="mx-auto max-w-lg text-sm shadow border border-navy p-6 rounded bg-white rounded-tl-xl rounded-br-xl relative w-full">
-          {(gameDetails?.current_players === gameDetails?.total_players) 
+          {(playerTracker?.current_players === playerTracker?.total_players) 
           ? (
             <>
               <article className="text-gray-700">
