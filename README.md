@@ -1,6 +1,6 @@
-# Wiizzkid
+# Wiizzkid 
 
-## Overview
+## Overview 🎉
 One of the standout features of Wiizzkid is its unique approach to incentivizing learning. Through the "Learn to Earn" program, users are rewarded with tokens for their learning efforts. These tokens can be used to unlock various benefits such as discounts, exclusive content, and even prizes, creating an engaging and motivating learning environment.
 
 NFTs enhance learning by providing exclusive insights and resources. Users can own topic-related NFTs for comprehensive learning before quizzes.

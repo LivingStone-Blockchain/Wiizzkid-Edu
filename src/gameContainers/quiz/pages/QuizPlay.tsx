@@ -21,7 +21,7 @@ type PlayerTrackerType = {
 
 export default function QuizPlay() {
   const { startGame, setScore, start, setStart, gameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
-  const { loading, firstApproval, secondApproval } = useContext(TokenContext) as TokenContextType;
+  const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
   const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
@@ -33,12 +33,13 @@ export default function QuizPlay() {
 //Exclude londoners from pop.
 useEffect(() => {
   let timeoutId:any = null;
-  if (secondApproval && playerTracker?.current_players !== playerTracker?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+  if (secondApproval && playerTracker?.current_players !== gameDetails?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setAllowGameProcession); 
-    }, 10000);
+    }, 300000); //5mins
   }
+ 
   return () => {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -53,6 +54,8 @@ useEffect(() => {
 useEffect(() => {
   const updatePatch = async () => {
     if (allowGameProcession && playerTracker?.current_players) {
+      setSecondApproval(false);
+
       const payload = {
         total_players: playerTracker.current_players,
       };
@@ -170,7 +173,7 @@ if (gameDetails?.game_mode === "london") {
 
  
  
-
+console.log(gameDetails)
 
 
   return (

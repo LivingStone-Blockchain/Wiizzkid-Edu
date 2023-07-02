@@ -570,7 +570,6 @@ const getTotalEth = async () => {
         await txx.wait();
         setLoading(false);
         setSecondApproval(true);
-       
          
       } catch (error) {
         console.error(error);

@@ -117,70 +117,17 @@ useEffect(() => {
         )}
         <div className="-mx-4 flex flex-wrap">
         <div className="w-full px-4 lg:w-8/12">
-          {blogData.filter((item) => item.id === id).map((data) =>  
+          {blogData?.filter((item) => item.id === id).map((data) =>  
                       <div  key={data.id}>
-                        <BlogBuilder 
-                          type={data.content.one.type}
-                          data={data.content.one.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.two.type}
-                          data={data.content.two.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.three.type}
-                          data={data.content.three.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.four.type}
-                          data={data.content.four.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.five.type}
-                          data={data.content.five.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.six.type}
-                          data={data.content.six.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.seven.type}
-                          data={data.content.seven.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.eight.type}
-                          data={data.content.eight.datum}
-                        />
-
-                        <BlogBuilder 
-                          type={data.content.nine.type}
-                          data={data.content.nine.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.ten.type}
-                          data={data.content.ten.datum}
-                        />
-                         <BlogBuilder 
-                          type={data.content.eleven.type}
-                          data={data.content.eleven.datum}
-                        />
-                         <BlogBuilder 
-                          type={data.content.twelve.type}
-                          data={data.content.twelve.datum}
-                        />
-                         <BlogBuilder 
-                          type={data.content.thirteen.type}
-                          data={data.content.thirteen.datum}
-                        />
-                         <BlogBuilder 
-                          type={data.content.fourteen.type}
-                          data={data.content.fourteen.datum}
-                        />
-                        <BlogBuilder 
-                          type={data.content.last.type}
-                          data={data.content.last.datum}
-                          title={data.content.last.title}
-                        />
+                        {
+                          data.content.map((item, index) => (
+                            <BlogBuilder 
+                              key={item.datum}
+                              type={item.type!}
+                              data={item.datum}
+                          /> 
+                          ))
+                        }
                       </div>
                   )}
                     </div>
@@ -253,7 +200,7 @@ useEffect(() => {
                                     to={`/blogs/${data.id}`}
                                     className="mb-1 inline-block text-lg font-medium cursor-pointer leading-snug text-[#252641] hover:text-[#37b9b2] lg:text-base xl:text-lg"
                                   >
-                                    {data.content.one.datum}…
+                                    {data.content[0].datum}…
                                   </Link>
                                 </h4>
                                 <p className="text-sm text-body-color">{data.details.author}</p>
@@ -288,15 +235,15 @@ useEffect(() => {
           </h2>
           <span className="mb-10 inline-block h-[2px] w-20 bg-[#37b9b2]"></span>
         </div>
-        {blogData.filter((item) => item.id !== id).map((data) => 
-            <div key={data.content.one.datum} className="w-full px-4 md:w-1/2 lg:w-1/3">
+        {blogData.filter((item) => item.id !== id).map((data, index) => 
+            <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3">
             <div className="wow fadeInUp group mb-10" data-wow-delay=".1s">
               <div className="mb-8 overflow-hidden rounded" onClick={() => setIsLoading(true)}>
                 <Link to={`/blogs/${data.id}`} className="block">
                   <img
                     src={data.details.blogImg}
                     alt="image"
-                    className="w-full transition group-hover:rotate-6 group-hover:scale-125"
+                    className="w-full lg:h-52 md:h-48 transition group-hover:rotate-6 group-hover:scale-125"
                   />
                 </Link>
               </div>
@@ -311,11 +258,11 @@ useEffect(() => {
                     to={`/blogs/${data.id}`}
                     className="mb-4 inline-block text-xl font-semibold text-[#252641] hover:text-[#37b9b2] sm:text-2xl lg:text-xl xl:text-2xl"
                   >
-                    {data.content.one.datum}
+                    {data.content[0].datum}
                   </Link>
                 </h3>
                 <p className="md:text-base text-sm text-body-color">
-                  {data.content.two.datum?.slice(0, 70)}...
+                  {data.content[1].datum?.slice(0, 70)}...
                 </p>
               </div>
             </div>

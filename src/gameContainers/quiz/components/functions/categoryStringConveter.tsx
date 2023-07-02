@@ -1,8 +1,8 @@
 
 const categoryStrings = (category: number) => {
     switch (category) {
-        case 1:
-            return "football";
+        /*case 1:
+            return "football";*/
         case 2:
             return "Arts & Literature";
         case 3:

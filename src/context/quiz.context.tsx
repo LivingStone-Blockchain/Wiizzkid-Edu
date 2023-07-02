@@ -218,7 +218,8 @@ const QuizProvider: FC<any> = ({ children }) => {
 
   //reset initial category value based game mode changes
   useEffect(() => {
-    let categoryInitialVal = gameMode === "london" ? "9" : "1"
+    //let categoryInitialVal = gameMode === "london" ? "9" : "1"
+    let categoryInitialVal = "2";
     setCategory(categoryInitialVal)
   }, [gameMode])
 
@@ -502,7 +503,6 @@ const handleTryLondonMode = () => {
   };
 
  
-
     const sendApproval = async() => {
       if(secondApproval && gameDetails?.total_players! > 1) {
         try { 
@@ -527,6 +527,7 @@ const handleTryLondonMode = () => {
   // function to start a game:
   const startGame = (date: any) => {
     setScore(0) //set score to 0 before initializing
+    setAllowGameProcession(false); // avoid game procession pop up
     setTimeOfStart(date)
     return
   }
