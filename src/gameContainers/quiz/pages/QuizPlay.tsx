@@ -37,7 +37,7 @@ useEffect(() => {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setAllowGameProcession); 
-    }, 180000); //3mins
+    }, 60000); //1mins
   }
  
   return () => {
@@ -46,6 +46,8 @@ useEffect(() => {
     }
   };
 }, [secondApproval]);
+
+console.log(secondApproval, playerTracker?.current_players !== gameDetails?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london")
 
 
 
