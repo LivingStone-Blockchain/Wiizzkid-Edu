@@ -37,7 +37,7 @@ useEffect(() => {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setAllowGameProcession); 
-    }, 300000); //5mins
+    }, 180000); //3mins
   }
  
   return () => {
@@ -99,13 +99,14 @@ useEffect(() => {
     toast.loading("Preparing to start quiz...", { duration: 3000, id: "prepping" });
 
     setScore(0);
-    setSecondApproval(false);
+   
     setTimeout(() => {
       toast.dismiss("prepping");
       toast.dismiss("username");
       setLoader(false);
       setStart(true);
       startGame(Date.now());
+      setSecondApproval(false);
       toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
     }, 3000)
 
