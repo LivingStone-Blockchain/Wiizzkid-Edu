@@ -98,11 +98,8 @@ useEffect(() => {
     setLoader(true);
     toast.loading("Preparing to start quiz...", { duration: 3000, id: "prepping" });
 
-
     setScore(0);
-
-
-
+    setSecondApproval(false);
     setTimeout(() => {
       toast.dismiss("prepping");
       toast.dismiss("username");
