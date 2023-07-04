@@ -82,7 +82,7 @@ const currentPayerUpdate = async (gameId: string, totalPlayers: totalPlayers, to
                 Authorization: `Bearer ${token}`,
              },
     };
-    const response = await axios.patch(`${baseUrl}/quiz/game/${gameId}/`, totalPlayers, config);
+    const response = await axios.patch(`${baseUrl}/quiz/games/${gameId}/`, totalPlayers, config);
     return response.data;
 }
 

@@ -37,7 +37,7 @@ useEffect(() => {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setAllowGameProcession); 
-    }, 60000); //1mins
+    }, 30000); //1mins
   }
  
   return () => {
@@ -52,12 +52,12 @@ console.log(secondApproval, playerTracker?.current_players !== gameDetails?.tota
 
 
 
+console.log(allowGameProcession, playerTracker?.current_players);
 //equate total players to current players on clicking yes for game progression
 useEffect(() => {
   const updatePatch = async () => {
     if (allowGameProcession && playerTracker?.current_players) {
-      setSecondApproval(false);
-
+      
       const payload = {
         total_players: playerTracker.current_players,
       };
@@ -109,6 +109,7 @@ useEffect(() => {
       setStart(true);
       startGame(Date.now());
       setSecondApproval(false);
+      setAllowGameProcession(false); // avoid game procession pop up
       toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
     }, 3000)
 

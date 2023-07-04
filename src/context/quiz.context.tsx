@@ -527,7 +527,7 @@ const handleTryLondonMode = () => {
   // function to start a game:
   const startGame = (date: any) => {
     setScore(0) //set score to 0 before initializing
-    setAllowGameProcession(false); // avoid game procession pop up
+    
     setTimeOfStart(date)
     return
   }
