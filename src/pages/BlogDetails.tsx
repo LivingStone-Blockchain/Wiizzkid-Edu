@@ -47,10 +47,10 @@ useEffect(() => {
             <img
               src={data.details.blogImg}
               alt="blog photo"
-              className="h-full w-full object-fill object-center"
+              className="mx-auto h-full lg:w-4/5 w-full object-fill object-center"
             />
             <div
-              className="absolute top-0 left-0 z-10 flex h-full w-full items-end bg-gradient-to-t from-[#090e34b3] to-transparent"
+              className="absolute top-0 left-0 z-10 flex h-full w-full items-end bg-gradient-to-t from-[#1a1f45c4] to-transparent"
             >
               <div className="flex flex-wrap items-center p-4 pb-4 sm:p-8">
                 <div className="mb-4 mr-5 flex items-center md:mr-10">
