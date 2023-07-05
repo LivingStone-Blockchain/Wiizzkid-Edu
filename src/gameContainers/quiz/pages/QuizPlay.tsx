@@ -37,7 +37,7 @@ useEffect(() => {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameProcessionAlert(setLoader, setAllowGameProcession); 
-    }, 30000); //1mins
+    }, 180000); //3mins
   }
  
   return () => {
