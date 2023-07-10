@@ -175,7 +175,7 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
   const [secondApproval, setSecondApproval] = useState<boolean>(false)
 ;  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
-  const { user, refreshedUser, setUserDetail } = useContext(UserContext) as UserContextType;
+  const { user, refreshedUser, setUserDetail, userDetail } = useContext(UserContext) as UserContextType;
 
 
 
@@ -602,8 +602,9 @@ const withdrawWinnings = async (winning: number) => {
       setIsWidthdrawal(true);
     } catch (error) {}
 
+ 
 
-    if(!loading && isWidthdrawal) {
+    if(!loading) {
         //reset winnings on backend
         const payload = {
           stone_token: Number(utils.formatEther(stBalance)),
@@ -612,32 +613,14 @@ const withdrawWinnings = async (winning: number) => {
         }
 
         try {
-          await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+          await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!).then((res) =>  setUserDetail(res));
           setIsWidthdrawal(false);
+
         } catch (error) {
           console.log(error);
         }
     }
 }
-
-
-
-
-    //Retrieve user details if stone balance changes
-    useEffect(() => {
-      const getUserDetails = async () => {
-        if (utils.formatEther(stBalance) && user && refreshedUser?.access) {
-          try {
-            const res = await userDetailsService.getUser(user?.id!, refreshedUser?.access);
-            setUserDetail(res);
-          } catch (error: any) {
-            console.log(error);
-          }
-        }
-      };
-        
-      getUserDetails();
-    }, [utils.formatEther(stBalance), user, refreshedUser]);
 
 
 
