@@ -20,16 +20,15 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, gameDetails, setGameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
   const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
   const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
-
-
+ 
 
 //if second Approval is true it means your transaction is successful
-//As the creator wait for 3 minutes for others, if anyone is left, pop up message
+//As the creator wait for 2 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
 useEffect(() => {
   let timeoutId:any = null;
@@ -47,12 +46,8 @@ useEffect(() => {
   };
 }, [secondApproval]);
 
-console.log(secondApproval, playerTracker?.current_players !== gameDetails?.total_players, gameDetails?.creator === user?.id, gameDetails?.game_mode !== "london")
 
 
-
-
-console.log(allowGameProcession, playerTracker?.current_players);
 //equate total players to current players on clicking yes for game progression
 useEffect(() => {
   const updatePatch = async () => {
@@ -63,7 +58,7 @@ useEffect(() => {
       };
 
       try {
-        await service.currentPayerUpdate(gameDetails?.id!, payload, refreshedUser?.access!);
+        await service.currentPayerUpdate(gameDetails?.id!, payload, refreshedUser?.access!).then((res) => setGameDetails(res));
       } catch (error) {
         console.log(error);
       }
@@ -114,8 +109,6 @@ useEffect(() => {
     }, 3000)
 
   };
-
-
 
 
 
@@ -174,7 +167,7 @@ if (gameDetails?.game_mode === "london") {
 
  
  
-console.log(gameDetails)
+
 
 
   return (

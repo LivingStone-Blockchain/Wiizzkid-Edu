@@ -18,10 +18,12 @@ type LeaderBoardData = {
 }
 
 
-const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, scoreBoard, setScoreBoard, start, setTotalAllowedPlayers, allSubmitted, setAllSubmitted} = useContext(QuizContext) as QuizContextType;
+const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard, setSubmitted }: LeaderBoardData) => {
+  const { gameDetails, scoreBoard, setScoreBoard, start, setScore, setTotalAllowedPlayers, allSubmitted, setAllSubmitted} = useContext(QuizContext) as QuizContextType;
   const navigate = useNavigate();
 
+  //console.log(gameDetails)
+  //console.log(scoreBoard)
 
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
           </div>
           <div className='flex items-center justify-between m-2 w-full'>
             <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
-              Total players: {gameDetails?.total_players}
+              Total players: {gameDetails?.current_players}
             </p>
             <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
               Duration: {gameDetails?.game_duration}
@@ -105,7 +107,7 @@ const LeaderBoard = ({ setStart, setTriviaFetch, setShowLeaderBoard }: LeaderBoa
 
         <Button
           className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8`}
-          onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0), setAllSubmitted(false) }}
+          onClick={() => { toast.dismiss(); setScore(0); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'), setTotalAllowedPlayers(0), setAllSubmitted(false), setSubmitted(false) }}
         >
           Back home
         </Button>

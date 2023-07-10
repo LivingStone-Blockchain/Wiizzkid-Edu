@@ -90,7 +90,7 @@ const TableLayout = () => {
       {data === undefined ? (
         <Preloader dashboardLoader={true}/>
       ):(
-        <Table columns={columns} data={data} />
+        <Table columns={columns} data={data.reverse()} />
       )}
     </div>
     </div>

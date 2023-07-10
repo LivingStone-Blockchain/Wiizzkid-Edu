@@ -10,7 +10,7 @@ const categoryStrings = (category: number) => {
         case 4:
             return "Food & Drink";
         case 5:
-            return "General Knowledge";
+            return "general_knowledge";
         case 6:
             return "Geography";
         case 7:
@@ -20,9 +20,9 @@ const categoryStrings = (category: number) => {
         case 9:
             return "Science";
         case 10:
-            return "Society & Culture";
+            return "society_and_culture";
         case 11:
-            return "Sports & Leisure";
+            return "sport_and_leisure";
         default:
             return "";
     }
