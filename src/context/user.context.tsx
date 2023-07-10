@@ -108,7 +108,7 @@ useEffect(() => {
         const intervalId = setInterval(() => {
           const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
           setRefreshedUser(refreshedUsertokens?.tokens);
-        }, 6000); // run every minute (60,000 milliseconds)
+        }, 60000); // run every minute (60,000 milliseconds)
       
         return () => clearInterval(intervalId);
       }, []);
@@ -159,7 +159,7 @@ useEffect(() => {
 
 
         //Retrieve user details
-  const quizHome = pathname === "/quiz-home";
+  const quizHome = pathname === "/quiz-home" || "/dashboard-home";
   useEffect(() => {
     const getUserDetails = async () => {
       if (quizHome && user && refreshedUser?.access) {
