@@ -603,40 +603,22 @@ const withdrawWinnings = async (winning: number) => {
     } catch (error) {}
 
 
-    if(!loading) {
+    if(!loading && isWidthdrawal) {
         //reset winnings on backend
         const payload = {
           stone_token: Number(utils.formatEther(stBalance)),
           wallet_address: address!,
           stone_token_winnings: 0,
         }
-        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+        console.log(payload)
+        try {
+          await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+          setIsWidthdrawal(false);
+        } catch (error) {
+          console.log(error);
+        }
     }
 }
-
-
-//update winning on backend
-useEffect(() => {
-    //reset winnings on backend
-    const payload = {
-      stone_token: Number(utils.formatEther(stBalance)),
-      wallet_address: address!,
-      stone_token_winnings: 0,
-    }
-
-  const updateStoneBalance = async () => {
-    if (isWidthdrawal) {
-      try {
-        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
-        setIsWidthdrawal(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  updateStoneBalance();
-}, [isWidthdrawal, stBalance, refreshedUser?.access]);
 
 
 
@@ -651,7 +633,7 @@ useEffect(() => {
       getOwner();
     }
 
-}, [isConnected, stBalance]);
+}, [isConnected, utils.formatEther(stBalance), user?.stone_token_winnings]);
 
 
 
