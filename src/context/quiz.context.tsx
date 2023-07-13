@@ -125,14 +125,14 @@ export interface QuizContextType {
   setCategory: React.Dispatch<React.SetStateAction<string>>
   difficulty: string
   setDifficulty: React.Dispatch<React.SetStateAction<string>>
-  totalAllowedQuestions: number
-  setTotalAllowedQuestions: React.Dispatch<React.SetStateAction<number>>
+  totalAllowedQuestions: string
+  setTotalAllowedQuestions: React.Dispatch<React.SetStateAction<string>>
   totalAllowedPlayers: number
   setTotalAllowedPlayers: React.Dispatch<React.SetStateAction<number>>
   gameMode: string
   setGameMode: React.Dispatch<React.SetStateAction<string>>
-  gameDuration: number
-  setGameDuration: React.Dispatch<React.SetStateAction<number>>
+  gameDuration: string
+  setGameDuration: React.Dispatch<React.SetStateAction<string>>
   gameDetails: returnedDataType | undefined
   setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>
   triviaFetch: boolean
@@ -184,11 +184,11 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [timeOfStart, setTimeOfStart] = useState<any>()
   const [screen, setScreen] = useState(1)
   const [difficulty, setDifficulty] = useState<string>("easy")
-  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<number>(10)
+  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<string>("")
   const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1)
   const [tokenFee, setTokenFee] = useState<string>("")
   const [gameMode, setGameMode] = useState<string>(GameModes.london)
-  const [gameDuration, setGameDuration] = useState<number>(5)
+  const [gameDuration, setGameDuration] = useState<string>("")
   const [score, setScore] = useState<number>(0)
   const [quizRecentGames, setQuizRecentGames] = useState<RecentGamesData | undefined>()
   const [quizData, setQuizData] = useState<questionsData[] | undefined>()
@@ -424,10 +424,10 @@ const handleTryLondonMode = () => {
   const handleInstructionScreen = async () => {
     const userPayload = user && {
       difficulty,
-      total_questions: totalAllowedQuestions,
+      total_questions: Number(totalAllowedQuestions),
       total_players: Number(totalAllowedPlayers),
       game_mode: gameMode,
-      game_duration: gameDuration,
+      game_duration: Number(gameDuration),
       category: Number(category),
       creator: user.id,
       stone_token_fee: Number(tokenFee),
@@ -438,7 +438,7 @@ const handleTryLondonMode = () => {
       total_questions: totalAllowedQuestions,
       total_players: Number(totalAllowedPlayers),
       game_mode: gameMode,
-      game_duration: gameDuration,
+      game_duration: Number(gameDuration),
       category: Number(category),
     }
 

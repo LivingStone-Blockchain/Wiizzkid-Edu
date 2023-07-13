@@ -108,7 +108,7 @@ useEffect(() => {
         const intervalId = setInterval(() => {
           const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
           setRefreshedUser(refreshedUsertokens?.tokens);
-        }, 60000); // run every minute (60,000 milliseconds)
+        }, 6000); // run every minute (60,000 milliseconds)
       
         return () => clearInterval(intervalId);
       }, []);

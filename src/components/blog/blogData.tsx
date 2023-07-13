@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { author111, author112, blog111, blog113a,blog115a, blog114a, blog116, blog117, blog118, metaverse, crypto, quizNews } from "../../assets/blog";
+import { author111, author112, blog111, admin, blog113a,blog115a, blog114a, blog116, blog117, blog118, metaverse, crypto, quizNews } from "../../assets/blog";
 
 
 type QuestionnaireDataType = {
@@ -82,8 +82,8 @@ const blogData: BlogDataType[] = [
         ],
          details: {
             blogImg: blog116,
-            authorImg: author112,
-            author: "Damilola Oderinde",
+            authorImg: admin,
+            author: "Livingstone Admin",//"Damilola Oderinde",
             date: "28 June 2023",
         },
     },
@@ -139,8 +139,8 @@ const blogData: BlogDataType[] = [
         ],
          details: {
             blogImg: blog117,
-            authorImg: author112,
-            author: "Damilola Oderinde",
+            authorImg: admin,
+            author: "Livingstone Admin",//"Damilola Oderinde",
             date: "28 June 2023",
         },
     },
@@ -204,8 +204,8 @@ const blogData: BlogDataType[] = [
         ],
         details: {
             blogImg: quizNews,
-            authorImg: author112,
-            author: "Damilola Oderinde",
+            authorImg: admin,
+            author: "Livingstone Admin",//"Damilola Oderinde",
             date: "26 June 2023",
         },
     },
@@ -369,8 +369,8 @@ const blogData: BlogDataType[] = [
         ],
         details: {
             blogImg: crypto,
-            authorImg: author111,
-            author: "Christiana Ottobong",
+            authorImg: admin,
+            author: "Livingstone Admin", //"Christiana Ottobong",
             date: "11 Nov 2022",
         },
     },
