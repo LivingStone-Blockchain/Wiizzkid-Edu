@@ -127,7 +127,7 @@ const Footer = () => {
          <ul className="mt-4 list-inside space-y-4 text-gray-400 text-sm">
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdLocationPin /></span>
-               <span>Ealing, London</span>
+               <span>London, United Kingdom</span>
            </li>
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdCall /></span>
