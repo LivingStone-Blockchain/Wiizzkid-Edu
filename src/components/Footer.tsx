@@ -135,7 +135,7 @@ const Footer = () => {
            </li>
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdEmail /></span>
-               <span>engagewithme007@gmail.com</span>
+               <span>wiizzkids@gmail.com</span>
            </li>
          </ul>
        </div>
