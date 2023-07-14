@@ -100,7 +100,7 @@ useEffect(() => {
                             Blogging the Wiizzkid Way!
                           </h3>
                           <p className="mb-8 md:text-base text-sm  text-[#252641]">
-                            We are rolling out more more!
+                            We are rolling out some more!
                           </p>
                           <div className="flex items-center justify-center h-[50px] w-full cursor-pointer rounded-full bg-[#37b9b2] text-center text-sm font-medium text-white">
                             Anticipate
