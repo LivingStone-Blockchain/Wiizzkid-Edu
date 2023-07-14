@@ -158,7 +158,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       {showRegisterPrompt && (
          <RegisterPromptToast 
          score={score}
-         timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
+         timeDiffCalculator={timeDiffCalculator(Number(gameDuration), submitTime)}
          setStart={setStart}
          setTriviaFetch={setTriviaFetch}
          setShowCreateGameModal={setShowCreateGameModal}
@@ -173,7 +173,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
         setScore={setScore}
         totalAllowedQuestions={gameDetails?.total_questions!}
         totalAllowedPlayers={gameDetails?.total_players!}
-        timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
+        timeDiffCalculator={timeDiffCalculator(Number(gameDuration), submitTime)}
         setStart={setStart}
         setTriviaFetch={setTriviaFetch}
         setShowCreateGameModal={setShowCreateGameModal}
@@ -228,7 +228,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
               <CountDownTimer
-                date={timeOfStart + 60000 * gameDuration}
+                date={timeOfStart + 60000 * parseInt(gameDuration)}
                 handleSubmit={submitQuiz}
               />
             )}

@@ -71,9 +71,9 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
     setGameMode("london");
     setCategory(data!.category);
     setDifficulty('easy');
-    setTotalAllowedQuestions(10);
+    setTotalAllowedQuestions('10');
     setTotalAllowedPlayers(1);
-    setGameDuration(5);
+    setGameDuration('5');
     setTokenFee("0");
 
 
