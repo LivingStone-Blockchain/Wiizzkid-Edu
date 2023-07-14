@@ -105,7 +105,7 @@ useEffect(() => {
       startGame(Date.now());
       setSecondApproval(false);
       setAllowGameProcession(false); // avoid game procession pop up
-      toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
+      toast.success(<span id="startSuccess-notification" className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
     }, 3000)
 
   };
@@ -217,6 +217,7 @@ if (gameDetails?.game_mode === "london") {
 
             <div className="flex md:flex-row flex-col justify-start md:items-center items-start gap-5 mt-8">
               <Button 
+              id="start-quizBtn"
               type='button'
               onClick={handleStartGame}
               disabled={loading}

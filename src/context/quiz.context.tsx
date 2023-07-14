@@ -468,7 +468,7 @@ const handleTryLondonMode = () => {
       setTimeout(() => {
         toast.dismiss("loading");
         setGameCreated(true);
-        toast.success("Quiz game created successfully!");
+        toast.success(<span id="success-notification" className="lg:text-base text-sm">Quiz game created successfully!</span>);
       }, 3000);
 
     } catch (error:any) {
