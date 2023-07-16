@@ -10,7 +10,7 @@ import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { UserContext, UserContextType } from "../../../context/user.context";
 import service from "../services/services";
-import GameProcessionAlert from "../components/toasts/gameProcessionAlert";
+import gameProcessionAlert from "../components/toasts/gameProcessionAlert";
 
 
 
@@ -35,7 +35,7 @@ useEffect(() => {
   if (secondApproval && playerTracker?.current_players !== gameDetails?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
-        GameProcessionAlert(setLoader, setAllowGameProcession); 
+        gameProcessionAlert(setLoader, setAllowGameProcession); 
     }, 120000); //2mins
   }
  

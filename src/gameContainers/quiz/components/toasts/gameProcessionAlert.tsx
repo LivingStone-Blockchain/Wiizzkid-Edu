@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { FaExclamationCircle } from "react-icons/fa";
 
 
-const GameProcessionAlert = (setLoader: (value: React.SetStateAction<boolean>) => void, setAllowGameProcession: (value: React.SetStateAction<boolean>) => void) => {
+const gameProcessionAlert = (setLoader: (value: React.SetStateAction<boolean>) => void, setAllowGameProcession: (value: React.SetStateAction<boolean>) => void) => {
 
     toast(
         () => (
@@ -41,4 +41,4 @@ const GameProcessionAlert = (setLoader: (value: React.SetStateAction<boolean>) =
       )
         }
 
-export default GameProcessionAlert;
+export default gameProcessionAlert;
