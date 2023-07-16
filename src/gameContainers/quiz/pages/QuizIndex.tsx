@@ -12,7 +12,7 @@ import { TokenContext, TokenContextType } from "../../../context/token.context"
 import {UserContext, UserContextType} from '../../../context/user.context'
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
-import service from "../services/services";
+import service from "../services/services"
 
 
 
