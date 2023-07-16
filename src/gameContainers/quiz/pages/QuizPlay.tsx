@@ -10,7 +10,7 @@ import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { UserContext, UserContextType } from "../../../context/user.context";
 import service from "../services/services";
-import gameProcessionAlert from "../components/toasts/GameProcessionAlert";
+import gameProcessionAlert from "../components/toasts/gameProcessionAlert";
 
 
 
