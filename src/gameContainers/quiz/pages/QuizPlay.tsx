@@ -10,7 +10,7 @@ import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
 import { UserContext, UserContextType } from "../../../context/user.context";
 import service from "../services/services";
-//import gameProcessionAlert from "../components/toasts/gameProcessionAlert";
+import gameProcessionAlert from "../components/toasts/gameProcessionAlert";
 
 
 
@@ -30,7 +30,7 @@ export default function QuizPlay() {
 //if second Approval is true it means your transaction is successful.
 //As the creator wait for 2 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
-/*useEffect(() => {
+useEffect(() => {
   let timeoutId:any = null;
   if (secondApproval && playerTracker?.current_players !== gameDetails?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
@@ -45,7 +45,7 @@ export default function QuizPlay() {
     }
   };
 }, [secondApproval]);
-*/
+
   
 
 
