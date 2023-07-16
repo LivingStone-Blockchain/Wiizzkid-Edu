@@ -2,7 +2,6 @@ import { Brand, Features, Modes, Metaverse, Blog, GameModes, BuyInstruction, Hel
 
 
 const Home = () => {
-  
 
   return (
     <>

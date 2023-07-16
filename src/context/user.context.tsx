@@ -41,7 +41,6 @@ type RefreshedUserTypes = {
 }
 
 
-
 export interface UserContextType {
     isLoading: boolean,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -104,6 +103,17 @@ useEffect(() => {
 
 
 
+    //get user access tokens from local Storage for endpoints authorization 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const refreshedUsertokens = JSON.parse(window.localStorage.getItem('loggedWiizzikidUser')!);
+          setRefreshedUser(refreshedUsertokens?.tokens);
+        }, 6000); // run every minute (60,000 milliseconds)
+      
+        return () => clearInterval(intervalId);
+      }, []);
+
+
 
     //login users automatically
     useEffect(() => {
@@ -149,7 +159,7 @@ useEffect(() => {
 
 
         //Retrieve user details
-  const quizHome = pathname === "/quiz-home";
+  const quizHome = pathname === "/quiz-home" || "/dashboard-home";
   useEffect(() => {
     const getUserDetails = async () => {
       if (quizHome && user && refreshedUser?.access) {
@@ -250,7 +260,6 @@ useEffect(() => {
             setUser(user);
             setEmailLogin('');
             setPasswordLogin('');
-            //navigate('/', { replace: true });
             navigate(-1);
             setIsLoading(false);
             setRefreshTokenError(false)

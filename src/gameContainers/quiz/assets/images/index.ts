@@ -16,8 +16,9 @@ import news from './news.png';
 import culture from './unity.png'
 import successImg from './success.png';
 import beijing from './beijing.png';
-import trophy from './trophy.png'
-import quizBg from './quiz-bg.png'
+import trophy from './trophy.png';
+import quizBg from './quiz-bg.png';
+
 
 
 export { quizBg, beijing, successImg, win ,low, custom, culture, church, news, mosque, basket, soccer, music, movies, eduImg, rocket, geography, general, gameOver, trophy };

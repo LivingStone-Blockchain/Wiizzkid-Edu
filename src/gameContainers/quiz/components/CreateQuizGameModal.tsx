@@ -20,6 +20,49 @@ import { utils } from "ethers";
 
 
 
+const categoryData = [
+  {
+    id: 2,
+    category: "Arts & Literature"
+  },
+  {
+    id: 3,
+    category: "Film & Tv"
+  },
+  {
+    id: 4,
+    category: "Food & Drink"
+  },
+  {
+    id: 5,
+    category: "General Knowledge"
+  },
+  {
+    id: 6,
+    category: "Geography"
+  },
+  {
+    id: 7,
+    category: "History"
+  },
+  {
+    id: 8,
+    category: "Music"
+  },
+  {
+    id: 9,
+    category: "Science"
+  },
+  {
+    id: 10,
+    category: "Society & Culture"
+  },
+  {
+    id: 11,
+    category: "Sport & Leisure"
+  }
+]
+
 
 interface CreateQuizGameModalType {
   setShowCreateGameModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -85,7 +128,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
     ? await navigator.clipboard.writeText(textRef.current!.innerText)
     : document.execCommand("copy", true, textRef.current?.innerText);
    
-    toast.success("Code copied successfully!");
+    toast.success("Details copied successfully!");
   }
 
 
@@ -169,6 +212,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
           <Button
             onClick={handleStartGame}
+            id="play-quizBtn"
             className="mt-14 flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
           >
             Play Quiz
@@ -241,6 +285,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             <FormGroup>
               <Label>Select Game Mode</Label>
               <Select
+                  id="gameMode-select"
                   value={gameMode}
                   onChange={(e: any) => setGameMode(e.target.value)}
               >
@@ -253,28 +298,23 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             <FormGroup>
               <Label>Select a category</Label>
               <Select
+                id="category-select"
                 value={category}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
               >
                 {gameMode === "london" ? (
                   <>
-                    <option value="9">Sport & Leisure</option>
-                    <option value="11">Society & Culture</option>
-                    <option value="13">Science</option>
-                    <option value="14">General Knowledge</option>
-                    <option value="15">Geography</option>
+                  <option value="5">General Knowledge</option>
+                  <option value="6">Geography</option>
+                    <option value="9">Science</option>
+                    <option value="10">Society & Culture</option>
+                    <option value="11">Sport & Leisure</option>
                   </>
                 ) : (
                   <>
-                    
-                    <option value="1">Football</option>
-                    <option value="2">Current Affairs</option>
-                    <option value="4">Music</option>
-                    <option value="6">Religion</option>
-                    <option value="7">Science</option>
-                    <option value="8" className="hidden">General Knowledge</option>
-                    <option value="10">Geography</option>
-                    <option value="12">Mathematics</option>
+                    {categoryData.map(({id, category}) => (
+                        <option key={id} value={id}>{category}</option>
+                    ))}
                   </>
                 )}
               </Select>
@@ -282,6 +322,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             <FormGroup>
               <Label>Difficulty Level</Label>
               <Select
+                id="difficulty-select"
                 value={difficulty}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDifficulty(e.target.value)}
               >
@@ -294,7 +335,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               {gameMode === "shanghai" && (
                   <FormGroup>
                   <Label>Token Amount</Label>
-                  <Input type="text"  value={tokenFee} onChange={(event) => setTokenFee(event.target.value)} placeholder={difficulty === "easy" ? "10 -50 STN" : difficulty === "medium" ? "100 -500 STN" : "> 500 STN" } min={10} max={9999999999} />
+                  <Input id="amount-select" type="text"  value={tokenFee} onChange={(event) => setTokenFee(event.target.value)} placeholder={difficulty === "easy" ? "10 -50 STN" : difficulty === "medium" ? "100 -500 STN" : "> 500 STN" } min={10} max={9999999999} />
                 </FormGroup>
               )}
           </div>
@@ -305,23 +346,24 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
             <FormGroup>
               <Label>Total Allowed Questions</Label>
-              <Input type="Number" value={totalAllowedQuestions} onChange={(event) => setTotalAllowedQuestions(Number(event.target.value))} placeholder="Maximum of 20 questions" min={5} max={20} />
+              <Input id="totalQuestions-select" type="Number" value={totalAllowedQuestions} onChange={(event) => setTotalAllowedQuestions(event.target.value)} placeholder="5 - 20 questions" min={5} max={20} />
             </FormGroup>
 
             <FormGroup>
               <Label>Total Allowed Players</Label>
               <Select
+                id="totalPlayers-select"
                 value={totalAllowedPlayers}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTotalAllowedPlayers(Number(e.target.value))}
               >
                <option value="1">1</option>
                 {gameMode === "shanghai" && (
                   <>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                    {Array.from({ length: 7 }, (_, index) => (
+                      <option key={index} value={index + 2}>
+                        {index + 2}
+                      </option>
+                    ))}
                   </>
                 )}
               </Select>
@@ -331,7 +373,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
 
             <FormGroup>
               <Label>Game Duration (In Minutes)</Label>
-              <Input type="Number"  value={gameDuration} onChange={(event) => setGameDuration(Number(event.target.value))} placeholder="5" min={5} max={10} />
+              <Input id="duration-select" type="Number"  value={gameDuration} onChange={(event) => setGameDuration(event.target.value)} placeholder="5 - 10 minutes" min={5} max={10} />
             </FormGroup>
           </div>
         )}
@@ -346,6 +388,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
         <div className="mt-8">
           {screen === 1 && (
             <Button onClick={handleScreenTwo}
+            id="nextBtn"
             className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
             >
               Next <FaArrowRight className="ml-3" />
@@ -353,7 +396,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
           )}
 
           {screen === 2 && (
-            <Button type="submit"   className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center" onClick={handleInstructionScreen}>
+            <Button type="submit" id="create-quizBtn"  className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center" onClick={handleInstructionScreen}>
               Create Quiz
             </Button>
           )}

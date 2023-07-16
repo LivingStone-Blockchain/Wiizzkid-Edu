@@ -12,7 +12,7 @@ type BoardDataType = {
 
 const ScoreBalance = () => {
     const { timestableRecentGames } = useContext(TimestableContext) as TimestableContextType;
-    const { balanceOfStoneTokens } = useContext(TokenContext) as TokenContextType;
+    const { stBalance } = useContext(TokenContext) as TokenContextType;
 
   
 
@@ -26,7 +26,7 @@ const ScoreBalance = () => {
     const boardData: BoardDataType[] = [
         {
           title: "Balance",
-          value: Number(utils.formatEther(balanceOfStoneTokens)).toFixed(1),
+          value: Number(utils.formatEther(stBalance)).toFixed(1),
         },
         {
           title: "Score",

@@ -34,6 +34,8 @@ import { UserContext, UserContextType } from './user.context';
 import {userDetailsService } from "../services";
 
 
+
+
 export interface TokenContextType {
      isConnected: any,
      getAmounts: () => Promise<void>,
@@ -96,6 +98,8 @@ export interface TokenContextType {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   firstApproval: boolean,
   setFirstApproval: React.Dispatch<React.SetStateAction<boolean>>,
+  secondApproval: boolean,
+  setSecondApproval: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 
@@ -169,8 +173,9 @@ const TokenProvider: FC<any> = ({ children }) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   //confirm transactions for fee deduction
   const [firstApproval, setFirstApproval] = useState<boolean>(false);
-  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
-  const { user, refreshedUser } = useContext(UserContext) as UserContextType;
+  const [secondApproval, setSecondApproval] = useState<boolean>(false)
+;  const [isWidthdrawal, setIsWidthdrawal] =  useState<boolean>(false);
+  const { user, refreshedUser, setUserDetail, userDetail } = useContext(UserContext) as UserContextType;
 
 
 
@@ -563,19 +568,17 @@ const getTotalEth = async () => {
 
         const txx = await gameContract.createGame(amount)
         await txx.wait();
-
         setLoading(false);
-
-        //send user count to backend once second metamask approval is completed
-         /*if (!loading) {
-          //send player id to backend after successful deduction
-         const payload = {players: [user?.id!]};
-         await userDetailsService.userUpdateOnTokenDeduction(payload, gameId, refreshedUser!.tokens!.access);
-         }*/
+        setSecondApproval(true);
+         
       } catch (error) {
         console.error(error);
       }
 }
+
+
+
+
 
 
 //withdraw winnings
@@ -599,6 +602,7 @@ const withdrawWinnings = async (winning: number) => {
       setIsWidthdrawal(true);
     } catch (error) {}
 
+ 
 
     if(!loading) {
         //reset winnings on backend
@@ -607,33 +611,16 @@ const withdrawWinnings = async (winning: number) => {
           wallet_address: address!,
           stone_token_winnings: 0,
         }
-        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+
+        try {
+          await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!).then((res) =>  setUserDetail(res));
+          setIsWidthdrawal(false);
+
+        } catch (error) {
+          console.log(error);
+        }
     }
 }
-
-
-//update winning on backend
-useEffect(() => {
-    //reset winnings on backend
-    const payload = {
-      stone_token: Number(utils.formatEther(stBalance)),
-      wallet_address: address!,
-      stone_token_winnings: 0,
-    }
-
-  const updateStoneBalance = async () => {
-    if (isWidthdrawal) {
-      try {
-        await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
-        setIsWidthdrawal(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  updateStoneBalance();
-}, [isWidthdrawal, stBalance, refreshedUser?.access]);
 
 
 
@@ -648,8 +635,7 @@ useEffect(() => {
       getOwner();
     }
 
-//balanceOfStoneTokens should be part of dependencies when code is structured correctly
-}, [isConnected, stBalance]);
+}, [isConnected, utils.formatEther(stBalance), user?.stone_token_winnings]);
 
 
 
@@ -746,6 +732,8 @@ useEffect(() => {
   deductTokenOnGameCreate, 
   firstApproval,
   setFirstApproval,
+  secondApproval,
+  setSecondApproval,
   withdrawWinnings,
 
 
@@ -805,6 +793,8 @@ useEffect(() => {
   deductTokenOnGameCreate, 
   firstApproval,
   setFirstApproval,
+  secondApproval,
+  setSecondApproval,
   withdrawWinnings,
     ]
   )

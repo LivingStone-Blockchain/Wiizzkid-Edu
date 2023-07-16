@@ -29,7 +29,9 @@ type questionsData = {
   difficulty: string
   id: number | string
   incorrectAnswers: string[]
-  question: string
+  question: {
+    text: string
+  }
   region?: string
   tags: string[]
 }
@@ -48,7 +50,8 @@ type returnedDataType = {
   category: number
   current_players?: number
   stone_token_fee?: number
-  players?: number[]
+  players?: number[],
+  
 }
 
 type RecentGamesData = {
@@ -103,12 +106,12 @@ type ScoreBoardType = {
 export interface QuizContextType {
   submitTimeRef: any
   timeOfStart: any
+  triviaUrl: string
   startGame: (date: any) => void
   quizData: questionsData[] | undefined
   setQuizData: React.Dispatch<React.SetStateAction<questionsData[] | undefined>>
   triviaData: questionsData[] | undefined
   setTriviaData: React.Dispatch<React.SetStateAction<questionsData[] | undefined>>
-  dataType: questionsData[] | undefined
   quizRecentGames: RecentGamesData | undefined
   setQuizRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
   selectedOption: number | string
@@ -122,14 +125,14 @@ export interface QuizContextType {
   setCategory: React.Dispatch<React.SetStateAction<string>>
   difficulty: string
   setDifficulty: React.Dispatch<React.SetStateAction<string>>
-  totalAllowedQuestions: number
-  setTotalAllowedQuestions: React.Dispatch<React.SetStateAction<number>>
+  totalAllowedQuestions: string
+  setTotalAllowedQuestions: React.Dispatch<React.SetStateAction<string>>
   totalAllowedPlayers: number
   setTotalAllowedPlayers: React.Dispatch<React.SetStateAction<number>>
   gameMode: string
   setGameMode: React.Dispatch<React.SetStateAction<string>>
-  gameDuration: number
-  setGameDuration: React.Dispatch<React.SetStateAction<number>>
+  gameDuration: string
+  setGameDuration: React.Dispatch<React.SetStateAction<string>>
   gameDetails: returnedDataType | undefined
   setGameDetails: React.Dispatch<React.SetStateAction<returnedDataType | undefined>>
   triviaFetch: boolean
@@ -162,6 +165,8 @@ export interface QuizContextType {
   setAllSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
+  allowGameProcession: boolean
+  setAllowGameProcession: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
 }
 
@@ -179,11 +184,11 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [timeOfStart, setTimeOfStart] = useState<any>()
   const [screen, setScreen] = useState(1)
   const [difficulty, setDifficulty] = useState<string>("easy")
-  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<number>(10)
+  const [totalAllowedQuestions, setTotalAllowedQuestions] = useState<string>("")
   const [totalAllowedPlayers, setTotalAllowedPlayers] = useState<number>(1)
   const [tokenFee, setTokenFee] = useState<string>("")
   const [gameMode, setGameMode] = useState<string>(GameModes.london)
-  const [gameDuration, setGameDuration] = useState<number>(5)
+  const [gameDuration, setGameDuration] = useState<string>("")
   const [score, setScore] = useState<number>(0)
   const [quizRecentGames, setQuizRecentGames] = useState<RecentGamesData | undefined>()
   const [quizData, setQuizData] = useState<questionsData[] | undefined>()
@@ -199,49 +204,39 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [start, setStart] = useState<boolean>(false)
   const [play, { stop, sound }] = useSound(needForSpeedMusic, { volume: 0.2 })
   const [category, setCategory] = useState<string>("")
-  const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
+  const [gameDetails, setGameDetails] = useState<returnedDataType | any>()
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
+  const [allowGameProcession, setAllowGameProcession] = useState<boolean>(false)
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
   const { user, setRefreshTokenError, refreshedUser } = useContext(UserContext) as UserContextType;
   //get createGame to deduct token on game creation
-  const { deductTokenOnGameCreate, address, stBalance } = useContext(TokenContext) as TokenContextType;
+  const { deductTokenOnGameCreate, address, stBalance, secondApproval } = useContext(TokenContext) as TokenContextType;
 
-  //reset initial category value based game mode changes
-  useEffect(() => {
-    let categoryInitialVal = gameMode === "london" ? "9" : "1"
-    setCategory(categoryInitialVal)
-  }, [gameMode])
 
-  //fetch data from endpoint
+  
+
+//reset initial category value based game mode changes. this is needed for when users didn't choose category and are fine with the first on the list
+useEffect(() => {
+  let categoryInitialVal = gameMode === "london" ? "5" : "2"
+  setCategory(categoryInitialVal)
+}, [gameMode])
+
+
+
+
+  //fetch data from external endpoint (trivia-quiz) for non-users
   let triviaUrl = `https://the-trivia-api.com/api/questions?categories=${categoryStrings(Number(category))}&limit=${totalAllowedQuestions}&difficulty=${difficulty}`
 
-  useEffect(() => {
-    const fetchQuestion = async () => {
-      setQuestionsLoader(true)
-
-      try {
-        await axios.get(triviaUrl).then((res) => {
-          setTriviaData(res.data)
-          setQuestionsLoader(false)
-        })
-      } catch (error) {
-        console.log(error)
-        setQuestionsLoader(false)
-      }
-    }
-
-    fetchQuestion()
-  }, [triviaFetch])
 
 
 
-
+  //TO BE REMOVED XXXXXXXXXXXXXXXXXXXXXX
   //fetch data from main database
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchQuestion = async () => {
       setQuestionsLoader(true)
       
@@ -270,13 +265,13 @@ const QuizProvider: FC<any> = ({ children }) => {
     }
 
     fetchQuestion()
-  }, [triviaFetch])
+  }, [triviaFetch])*/
 
 
 
 
   //return data based on request
-  const dataType = triviaFetch ? triviaData : quizData
+  //const dataType = triviaFetch ? triviaData : quizData
 
   //fade into oblivion on game start
   useEffect(() => {
@@ -422,14 +417,17 @@ const handleTryLondonMode = () => {
 }
 
 
+
+
+
   //function create game form 2
   const handleInstructionScreen = async () => {
     const userPayload = user && {
       difficulty,
-      total_questions: totalAllowedQuestions,
+      total_questions: Number(totalAllowedQuestions),
       total_players: Number(totalAllowedPlayers),
       game_mode: gameMode,
-      game_duration: gameDuration,
+      game_duration: Number(gameDuration),
       category: Number(category),
       creator: user.id,
       stone_token_fee: Number(tokenFee),
@@ -440,28 +438,37 @@ const handleTryLondonMode = () => {
       total_questions: totalAllowedQuestions,
       total_players: Number(totalAllowedPlayers),
       game_mode: gameMode,
-      game_duration: gameDuration,
+      game_duration: Number(gameDuration),
       category: Number(category),
     }
 
+   
+
     //persist only logged user data to backend
     try {
-      user?.tokens
-        ? await service
+      if (user?.tokens) {
+         await service
           .createGame(userPayload!, refreshedUser?.access!)
           .then((res) => {
-            setGameDetails(res)
+            setGameDetails(res.game);
+            setQuizData(res.questions)
             //deduct game stone token fee from smart contract for creator if its not london
-           gameMode !== 'london' && totalAllowedPlayers > 1 && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
+            gameMode !== 'london' && totalAllowedPlayers > 1 && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
            
-          })
-        : setGameDetails(nonUserPayload)
+          })}
+          else{
+              await axios.get(triviaUrl).then((res) => {
+                setGameDetails(nonUserPayload);
+                setQuizData(res.data)
+                setQuestionsLoader(false)
+              })
+          }
 
 
       setTimeout(() => {
         toast.dismiss("loading");
         setGameCreated(true);
-        toast.success("Quiz game created successfully!");
+        toast.success(<span id="success-notification" className="lg:text-base text-sm">Quiz game created successfully!</span>);
       }, 3000);
 
     } catch (error:any) {
@@ -474,9 +481,47 @@ const handleTryLondonMode = () => {
     setTryLondon(false);
   }
 
+
+
+  
+
+
+
+
+ //send approval success signal to backend once second metamask approval is completed
+ useEffect(() => {
+  //send player id and game id to backend after successful deduction. This required to add player to game session
+  const payload = {
+    player_id: user?.id!,
+    game_id: gameDetails?.id!
+  };
+
+ 
+    const sendApproval = async() => {
+      if(secondApproval && gameDetails?.total_players! > 1) {
+        try { 
+          await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+        } catch (error) {
+          console.log(error);
+        }
+   }
+  }
+
+    sendApproval();
+}, [secondApproval])
+
+
+
+
+
+
+
+
+
   // function to start a game:
   const startGame = (date: any) => {
     setScore(0) //set score to 0 before initializing
+    
     setTimeOfStart(date)
     return
   }
@@ -486,7 +531,7 @@ const handleTryLondonMode = () => {
     questionId: string
     option: string
   }) => {
-    const answer = dataType?.find(
+    const answer = quizData?.find(
       (item) => item.id === payload.questionId
     )
 
@@ -544,10 +589,10 @@ useEffect(() => {
 
 
 
+
   return (
     <QuizContext.Provider
       value={{
-        dataType,
         quizData,
         triviaData,
         setTriviaData,
@@ -608,7 +653,10 @@ useEffect(() => {
         quizRecentGames,
         setQuizRecentGames,
         tokenFee,
-        setTokenFee
+        setTokenFee,
+        allowGameProcession, 
+        setAllowGameProcession,
+        triviaUrl
       }}
     >
       {children}

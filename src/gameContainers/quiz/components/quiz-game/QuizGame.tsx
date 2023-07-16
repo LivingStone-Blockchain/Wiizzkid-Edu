@@ -29,7 +29,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { dataType, questionsLoader, score, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, triviaFetch, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime } = useContext(QuizContext) as QuizContextType;
+  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -42,10 +42,10 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
   // restructure fetched data
-  const mapped_questions = dataType?.map((question) => {
+  const mapped_questions = quizData?.map((question) => {
     return {
       category: typeof (question.category) === "number" ? categoryStrings(question.category) : question.category,
-      question: question.question,
+      question: (gameDetails?.game_mode === "london" && !user?.tokens) ? question.question : question.question.text,
       options: [question.correctAnswer, ...question.incorrectAnswers].sort(() => Math.random() - 0.5), //sorted for randomization
       difficulty: question.difficulty,
       id: question.id,
@@ -55,24 +55,15 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
-
-
-  //sort and filter restructured based on api url's returned data
-  let sortedMapped_questions = triviaFetch
-    ? mapped_questions
-    : mapped_questions?.filter((data) => data.category.toLowerCase() === categoryStrings(Number(gameDetails?.category)).toLowerCase() && (data.difficulty).toLowerCase() === gameDetails?.difficulty.toLowerCase()).sort(() => Math.random() - 0.5).slice(0, gameDetails?.total_questions);
-
-
-
   //render first question from array on page load
   useEffect(() => {
 
-    setCurrentQuestion(sortedMapped_questions![0]);
+    setCurrentQuestion(mapped_questions![0]);
     setCurrentPage(0);
-    setQuestions([...sortedMapped_questions!]);
+    setQuestions([...mapped_questions!]);
 
     return;
-  }, [dataType]);
+  }, [quizData]);
 
 
 
@@ -91,7 +82,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
   const quitGame = () => {
     setLoading(true);
-    quizEndGameToast(setLoading, setTriviaFetch, navigate, setShowCreateGameModal);
+    quizEndGameToast(setLoading, setTriviaFetch, setScore, setSubmitted, setStart, navigate, setShowCreateGameModal);
     return;
   };
 
@@ -156,6 +147,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   }
 
 
+ 
 
 
   return (
@@ -166,7 +158,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       {showRegisterPrompt && (
          <RegisterPromptToast 
          score={score}
-         timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
+         timeDiffCalculator={timeDiffCalculator(Number(gameDuration), submitTime)}
          setStart={setStart}
          setTriviaFetch={setTriviaFetch}
          setShowCreateGameModal={setShowCreateGameModal}
@@ -178,9 +170,10 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       {submitted && (
         <QuizCompletedToast 
         score={score}
+        setScore={setScore}
         totalAllowedQuestions={gameDetails?.total_questions!}
         totalAllowedPlayers={gameDetails?.total_players!}
-        timeDiffCalculator={timeDiffCalculator(gameDuration, submitTime)}
+        timeDiffCalculator={timeDiffCalculator(Number(gameDuration), submitTime)}
         setStart={setStart}
         setTriviaFetch={setTriviaFetch}
         setShowCreateGameModal={setShowCreateGameModal}
@@ -217,7 +210,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             <SkeletonLoader />
           ) : (
             <QuizQuestionCard
-              question={current_question?.question}
+              question={current_question?.question}  
               category={current_question?.category}
               options={current_question?.options}
               difficulty={current_question?.difficulty}
@@ -235,7 +228,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
               <CountDownTimer
-                date={timeOfStart + 60000 * gameDuration}
+                date={timeOfStart + 60000 * parseInt(gameDuration)}
                 handleSubmit={submitQuiz}
               />
             )}

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { Paypal, Stripe, PayWithEth } from '../components/index';
+import { Paypal, Stripe, PayWithEth} from '../components/index';
 import { paypal, card, crypto } from '../../../assets/dashboard/index';
 import { CardBody, Card } from '../components/Cards';
 import { TokenContext, TokenContextType } from './../../../context/token.context';

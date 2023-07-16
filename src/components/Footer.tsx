@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
 import logo from './../assets/header/wiizzkid-logo.png';
 import { MdLocationPin, MdCall, MdEmail } from 'react-icons/md';
-import {FaDiscord} from 'react-icons/fa';
+import {FaDiscord} from 'react-icons/fa'
 
 
 const Footer = () => {
@@ -28,7 +28,6 @@ const Footer = () => {
          <img className='w-full h-auto max-w-[50px]' src={logo} alt="wiizzkid logo" width="50" height="50"/>
        </div>
        <div className="flex gap-6">
-         
        <a href="https://discord.gg/YaCgS5Ms5c" target="blank" rel="noreferrer" className="hover:text-tealLight text-gray-400">
                <FaDiscord className="w-6 h-6"/>
         </a>
@@ -128,7 +127,7 @@ const Footer = () => {
          <ul className="mt-4 list-inside space-y-4 text-gray-400 text-sm">
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdLocationPin /></span>
-               <span>Ealing, London</span>
+               <span>London, United Kingdom</span>
            </li>
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdCall /></span>
@@ -136,7 +135,7 @@ const Footer = () => {
            </li>
            <li className="flex gap-5 transition">
                <span className="justify-self-center self-center"><MdEmail /></span>
-               <span>engagewithme007@gmail.com</span>
+               <span>wiizzkids@gmail.com</span>
            </li>
          </ul>
        </div>

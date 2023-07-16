@@ -23,6 +23,10 @@ type ScoreDetailsType = {
     submit_time: number
 }
 
+type totalPlayers = {
+    total_players: number
+}
+
 
 
 
@@ -71,6 +75,18 @@ const playersTracker = async (gameId: string) => {
     return response.data;
 }
 
+//update games's current player in real time
+const currentPayerUpdate = async (gameId: string, totalPlayers: totalPlayers, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+    const response = await axios.patch(`${baseUrl}/quiz/games/${gameId}/`, totalPlayers, config);
+    return response.data;
+}
+
+
 //checks all players submit
 const checkPlayersSubmit = async (gameId:string ) => {
     const response = await axios.get(`${baseUrl}/quiz/check_submit/${gameId}/`);
@@ -85,5 +101,5 @@ const leaderBoard = async (gameId: string) => {
 
 
 
-const service = { getAll, createGame, scoreResult, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard };
+const service = { getAll, createGame, scoreResult, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard };
 export default service;

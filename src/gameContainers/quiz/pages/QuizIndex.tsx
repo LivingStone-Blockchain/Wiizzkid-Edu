@@ -16,10 +16,9 @@ import service from "../services/services";
 
 
 
-
 const QuizIndex = () => {
   const { refreshedUser } = useContext(UserContext) as UserContextType
-  const { showCreateGameModal, user, setGameDetails, handleDisplayCreateGameModal } = useContext(QuizContext) as QuizContextType;
+  const { showCreateGameModal, user, setGameDetails, handleDisplayCreateGameModal, setQuizData } = useContext(QuizContext) as QuizContextType;
   //get createGame to deduct token on game creation
   const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
@@ -27,8 +26,8 @@ const QuizIndex = () => {
 
 
 
-
-
+  
+  
   
    
   //join a game with code
@@ -46,8 +45,9 @@ const QuizIndex = () => {
 
     try {
       const response = await service.joinGame(joinGameCode, refreshedUser?.access!); //await make sure that it completes before navigating to the game page.
-      setGameDetails(response);
-      deductTokenOnGameCreate(response.stone_token_fee, response.id);
+      setGameDetails(response.game);
+      setQuizData(response.questions);
+      deductTokenOnGameCreate(response.game.stone_token_fee, response.game.id);
      
       navigate(`/quiz?code=${joinGameCode}`);
     } catch (error: any) {

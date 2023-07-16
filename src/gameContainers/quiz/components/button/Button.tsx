@@ -3,6 +3,7 @@ import { FC } from "react";
 interface ButtonProps {
   children: React.ReactNode | string;
   onClick?: () => void;
+  id?: string;
   btnDefault?: boolean;
   className?: string;
   type?: "button" | "submit";
@@ -14,6 +15,7 @@ const Button: FC<ButtonProps> = ({
   className,
   onClick,
   btnDefault = false,
+  id,
   type,
   children,
   style,
@@ -24,6 +26,7 @@ const Button: FC<ButtonProps> = ({
     return (
       <button
         type={type}
+        id={id}
         onClick={onClick}
         className={`${className} flex items-center justify-center transition py-3 font-bold`}
         style={style}

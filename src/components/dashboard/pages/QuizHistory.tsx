@@ -1,4 +1,3 @@
-import React from 'react';
 import { TableLayout } from '../components/index';
 
 const QuizHistory = () => {
@@ -7,4 +6,4 @@ const QuizHistory = () => {
   )
 }
 
-export default QuizHistory
+export default QuizHistory;

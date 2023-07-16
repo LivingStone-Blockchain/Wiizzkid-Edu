@@ -9,6 +9,7 @@ import { FC } from "react";
 
 type CompletedPropsType = {
   score: number, 
+  setScore: (value: React.SetStateAction<number>) => void, 
   totalAllowedQuestions: number,
   totalAllowedPlayers: number,
   timeDiffCalculator: string, 
@@ -25,7 +26,7 @@ type CompletedPropsType = {
 
 
 
-const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setAllSubmitted, setSubmitted, navigate}) => {
+const QuizCompletedToast:FC<CompletedPropsType> = ({score, setScore, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setAllSubmitted, setSubmitted, navigate}) => {
 
 
 
@@ -50,7 +51,7 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions
             </span>
           </p>
           <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
-            {`Completion Time: ${timeDiffCalculator} mins.`}
+            {`Completion Time: ${timeDiffCalculator} secs.`}
           </p>
         
             <p className="mt-8 font-semibold" >{(score / totalAllowedQuestions) >= 0.5 ? 'Well done!' : 'You can do better!'}</p>
@@ -59,7 +60,7 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, totalAllowedQuestions
           {totalAllowedPlayers === 1 ? (
             <Button
               className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-              onClick={() => { toast.dismiss(); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home') }}
+              onClick={() => { toast.dismiss(); setScore(0); setSubmitted(false); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home') }}
             >
               Back home
             </Button>

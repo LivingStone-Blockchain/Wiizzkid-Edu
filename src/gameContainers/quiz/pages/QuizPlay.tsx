@@ -8,7 +8,10 @@ import Overlay from "../components/Overlay";
 import QuizGame from "../components/quiz-game/QuizGame";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";
+import { UserContext, UserContextType } from "../../../context/user.context";
 import service from "../services/services";
+import gameProcessionAlert from "../components/toasts/GameProcessionAlert";
+
 
 
 type PlayerTrackerType = {
@@ -17,27 +20,74 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails, user } = useContext(QuizContext) as QuizContextType;
-  const { loading, firstApproval } = useContext(TokenContext) as TokenContextType;
+  const { startGame, setScore, start, setStart, gameDetails, setGameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
+  const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
+  const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
   const [loader, setLoader] = useState<boolean>(false);
+ 
+
+//if second Approval is true it means your transaction is successful
+//As the creator wait for 2 minutes for others, if anyone is left, pop up message
+//Exclude londoners from pop.
+useEffect(() => {
+  let timeoutId:any = null;
+  if (secondApproval && playerTracker?.current_players !== gameDetails?.total_players && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+    timeoutId = setTimeout(() => {
+      toast.dismiss();
+        gameProcessionAlert(setLoader, setAllowGameProcession); 
+    }, 120000); //2mins
+  }
+ 
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, [secondApproval]);
 
   
 
-  useEffect(() => {
-    if (gameDetails?.current_players !==  gameDetails?.total_players && user) {
 
-      const intervalId = setInterval(async () => {
+//equate total players to current players on clicking yes for game progression
+useEffect(() => {
+  const updatePatch = async () => {
+    if (allowGameProcession && playerTracker?.current_players) {
+      
+      const payload = {
+        total_players: playerTracker.current_players,
+      };
+
       try {
-        await service.playersTracker(gameDetails?.id!).then(res => setPlayerTracker(res));
+        await service.currentPayerUpdate(gameDetails?.id!, payload, refreshedUser?.access!).then((res) => setGameDetails(res));
       } catch (error) {
-        
+        console.log(error);
+      }
+    }
+  };
+
+  updatePatch();
+}, [allowGameProcession]);
+
+
+
+//if joining players are incomplete, keep revisiting the BE, else set second approval to false so it wont pop.
+useEffect(() => {
+  if (playerTracker?.current_players !== gameDetails?.total_players) {
+    const intervalId = setInterval(async () => {
+      try {
+        const updatedPlayerTracker = await service.playersTracker(gameDetails?.id!);
+        setPlayerTracker(updatedPlayerTracker);
+      } catch (error) {
+        // Handle the error if needed
       }
     }, 2000);
 
     return () => clearInterval(intervalId);
-    }
-  }, [gameDetails]);
+  }
+}, [playerTracker]);
+
+
 
 
 
@@ -46,23 +96,20 @@ export default function QuizPlay() {
     setLoader(true);
     toast.loading("Preparing to start quiz...", { duration: 3000, id: "prepping" });
 
-
     setScore(0);
-
-
-
+   
     setTimeout(() => {
       toast.dismiss("prepping");
       toast.dismiss("username");
       setLoader(false);
       setStart(true);
       startGame(Date.now());
-      toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
+      setSecondApproval(false);
+      setAllowGameProcession(false); // avoid game procession pop up
+      toast.success(<span id="startSuccess-notification" className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
     }, 3000)
 
   };
-
-
 
 
 
@@ -171,10 +218,11 @@ if (gameDetails?.game_mode === "london") {
 
             <div className="flex md:flex-row flex-col justify-start md:items-center items-start gap-5 mt-8">
               <Button 
+              id="start-quizBtn"
               type='button'
               onClick={handleStartGame}
               disabled={loading}
-              className={`flex items-center justify-center ${loading ? 'sm:w-64 w-48' : 'sm:w-56 w-44'} text-white text-sm font-semibold px-5 py-3 ${loading ? "cursor-not-allowed bg-[#37385e]" : "cursor-pointer bg-navy"} ${playerTracker?.current_players === playerTracker?.total_players ? 'pointer-events-auto' : 'pointer-events-none'}`}
+              className={`flex items-center justify-center ${loading ? 'sm:w-64 w-48' : 'sm:w-56 w-44'} text-white text-sm font-semibold px-5 py-3 ${loading ? "cursor-not-allowed bg-[#37385e]" : "cursor-pointer bg-navy"}`}
               >
                 {loading && (<svg role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
@@ -193,9 +241,13 @@ if (gameDetails?.game_mode === "london") {
 
             <div className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed flex items-center justify-center flex-col gap-16">
               <p>Waiting for</p> 
-              <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker!.total_players - playerTracker!.current_players === -1 ? 1 : playerTracker!.total_players - playerTracker!.current_players}</p>
-              <p> more  {(playerTracker!.total_players - playerTracker!.current_players === 1) ? "player" : "players"}...</p>
-            </div>
+              {playerTracker && (
+                <>
+                  <p className= "h-16 w-16 bg-navy rounded-full flex justify-center items-center animation-pulse text-white font-bold md:text-lg text-base">{playerTracker.total_players - playerTracker.current_players === -1 ? 1 : playerTracker.total_players - playerTracker.current_players}</p>
+                  <p> more  {(playerTracker.total_players - playerTracker.current_players === 1) ? "player" : "players"}...</p>
+                </>
+              )}
+          </div>
             </article>
           )}
         </div>

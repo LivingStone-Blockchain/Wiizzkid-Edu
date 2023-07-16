@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Button from './Button'
 

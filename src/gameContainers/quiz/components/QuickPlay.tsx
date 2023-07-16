@@ -5,6 +5,7 @@ import {UserContext, UserContextType} from '../../../context/user.context'
 import toast from "react-hot-toast";
 import CreateQuizGameModal from './../components/CreateQuizGameModal'
 import service from '../services/services';
+import axios from 'axios';
 
 
 type QuickPlayProp = {
@@ -25,7 +26,7 @@ const quickPlayData: quickPlayType[] = [
   {
     id: 1,
     title: "Science",
-    category: "7",
+    category: "9",
     difficulty: "Easy",
     img: rocket,
     description: "Lets go rock the Sciences with your grit and knowledge."
@@ -33,7 +34,7 @@ const quickPlayData: quickPlayType[] = [
   {
     id: 2,
     title: "General",
-    category: "8",
+    category: "5",
     difficulty: "Easy",
     img: general,
     description: "Play some General Knowledge quiz. Show What you've got!"
@@ -41,7 +42,7 @@ const quickPlayData: quickPlayType[] = [
   {
     id: 3,
     title: "Sports",
-    category: "9",
+    category: "11",
     difficulty: "Easy",
     img: soccer,
     description: "Think you know about the sporting and leisure terrain? Shoot!"
@@ -49,7 +50,7 @@ const quickPlayData: quickPlayType[] = [
   {
     id: 4,
     title: "Geography",
-    category: "10",
+    category: "6",
     difficulty: "Easy",
     img: geography,
     description: "The universe is waiting to test your knowledge about its landscape."
@@ -59,25 +60,25 @@ const quickPlayData: quickPlayType[] = [
 
 
 const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
-  const { setCategory, setDifficulty, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
+  const { setCategory, setDifficulty, setQuizData, setQuestionsLoader, triviaUrl, setTriviaFetch, setTotalAllowedQuestions, setTotalAllowedPlayers, setGameMode, setGameDuration, user, setGameDetails, setGameCreated, setShowCreateGameModal, tokenFee, setTokenFee } = useContext(QuizContext) as QuizContextType;
   const { refreshedUser } = useContext(UserContext) as UserContextType
 
   const handleQuickPlay = async (id: number) => {
+    
     const data = quickPlayData.find((game) => game.id === id);
 
 
     setGameMode("london");
     setCategory(data!.category);
     setDifficulty('easy');
-    setTotalAllowedQuestions(10);
+    setTotalAllowedQuestions('10');
     setTotalAllowedPlayers(1);
-    setGameDuration(5);
+    setGameDuration('5');
     setTokenFee("0");
 
 
     setShowCreateGameModal(true);
     setGameCreated(true);
-
 
 
     toast.loading("Creating quiz game...", { duration: 4000, id: "loading" });
@@ -101,18 +102,27 @@ const QuickPlay: FC<QuickPlayProp> = ({ handleDisplayCreateGameModal }) => {
       game_mode: "london",
       game_duration: 5,
       category: Number(data?.category),
-      creator: user!.id,
+      creator: user ? user.id : 0,
       stone_token_fee: Number(tokenFee)
     }
+
+
 
     
     //persist only logged user data to backend
     try {
-      user?.tokens
-      ? await service.createGame(payload, refreshedUser?.access!).then((res) => {
-        setGameDetails(res); 
-      })
-      : setGameDetails(payload);
+     if (user?.tokens) {
+       await service.createGame(payload, refreshedUser?.access!).then((res) => {
+        setGameDetails(res.game);
+        setQuizData(res.questions)
+      }) }
+      else {
+        await axios.get(triviaUrl).then((res) => {
+          setGameDetails(payload);
+          setQuizData(res.data)
+          setQuestionsLoader(false)
+        })
+      }
     } catch (error) {
       console.log(error);
     }

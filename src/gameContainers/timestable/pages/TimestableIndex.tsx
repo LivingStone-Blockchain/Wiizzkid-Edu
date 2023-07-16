@@ -26,7 +26,6 @@ export default function TimestableIndex() {
   
 
 
-
    //join a game with code
    const handlePlayQuizGame = async (e: React.FormEvent) => {
     e.preventDefault();
