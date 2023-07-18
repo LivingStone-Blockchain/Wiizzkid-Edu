@@ -1,4 +1,3 @@
-
 const categoryStrings = (category: number) => {
     switch (category) {
         /*case 1:

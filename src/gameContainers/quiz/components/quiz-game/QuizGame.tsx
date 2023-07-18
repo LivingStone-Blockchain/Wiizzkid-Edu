@@ -55,6 +55,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
+
   //render first question from array on page load
   useEffect(() => {
 
@@ -228,7 +229,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
               <CountDownTimer
-                date={timeOfStart + 60000 * parseInt(gameDuration)}
+                date={timeOfStart + 60000 * Number(gameDuration)}
                 handleSubmit={submitQuiz}
               />
             )}

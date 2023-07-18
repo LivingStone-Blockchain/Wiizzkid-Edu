@@ -22,43 +22,43 @@ import { utils } from "ethers";
 
 const categoryData = [
   {
-    id: 2,
+    id: 13,
     category: "Arts & Literature"
   },
   {
-    id: 3,
+    id: 14,
     category: "Film & Tv"
   },
   {
-    id: 4,
+    id: 15,
     category: "Food & Drink"
   },
   {
-    id: 5,
+    id: 8,
     category: "General Knowledge"
   },
   {
-    id: 6,
+    id: 10,
     category: "Geography"
   },
   {
-    id: 7,
+    id: 16,
     category: "History"
   },
   {
-    id: 8,
+    id: 4,
     category: "Music"
   },
   {
-    id: 9,
+    id: 7,
     category: "Science"
   },
   {
-    id: 10,
+    id: 11,
     category: "Society & Culture"
   },
   {
-    id: 11,
+    id: 9,
     category: "Sport & Leisure"
   }
 ]
