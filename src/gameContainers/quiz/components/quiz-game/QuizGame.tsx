@@ -56,6 +56,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
 
 
+
   //render first question from array on page load
   useEffect(() => {
 
@@ -174,7 +175,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
         setScore={setScore}
         totalAllowedQuestions={gameDetails?.total_questions!}
         totalAllowedPlayers={gameDetails?.total_players!}
-        timeDiffCalculator={timeDiffCalculator(Number(gameDuration), submitTime)}
+        timeDiffCalculator={timeDiffCalculator(gameDetails?.game_duration!, submitTime)}
         setStart={setStart}
         setTriviaFetch={setTriviaFetch}
         setShowCreateGameModal={setShowCreateGameModal}
@@ -229,7 +230,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
               <CountDownTimer
-                date={timeOfStart + 60000 * Number(gameDuration)}
+                date={timeOfStart + 60000 * gameDetails?.game_duration!}
                 handleSubmit={submitQuiz}
               />
             )}

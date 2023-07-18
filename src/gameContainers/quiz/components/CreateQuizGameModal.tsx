@@ -304,11 +304,11 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
               >
                 {gameMode === "london" ? (
                   <>
-                  <option value="5">General Knowledge</option>
-                  <option value="6">Geography</option>
-                    <option value="9">Science</option>
-                    <option value="10">Society & Culture</option>
-                    <option value="11">Sport & Leisure</option>
+                  <option value="8">General Knowledge</option>
+                  <option value="10">Geography</option>
+                    <option value="7">Science</option>
+                    <option value="11">Society & Culture</option>
+                    <option value="9">Sport & Leisure</option>
                   </>
                 ) : (
                   <>
