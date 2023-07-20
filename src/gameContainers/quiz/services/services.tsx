@@ -28,6 +28,9 @@ type totalPlayers = {
 }
 
 
+type SubmitOption = {
+    option: string
+}
 
 
 
@@ -93,6 +96,12 @@ const checkPlayersSubmit = async (gameId:string ) => {
     return response.data;
 }
 
+//checks all players submit
+const enforcePlayersSubmit = async (gameId:string, option: SubmitOption ) => {
+    const response = await axios.post(`${baseUrl}/quiz/check_submit/${gameId}/`, option);
+    return response.data;
+}
+
 const leaderBoard = async (gameId: string) => {
     const response = await axios.get(`${baseUrl}/quiz/result/${gameId}`);
     return response.data;
@@ -101,5 +110,5 @@ const leaderBoard = async (gameId: string) => {
 
 
 
-const service = { getAll, createGame, scoreResult, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard };
+const service = { getAll, createGame, scoreResult, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard, enforcePlayersSubmit };
 export default service;

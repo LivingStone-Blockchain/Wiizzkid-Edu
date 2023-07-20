@@ -20,7 +20,7 @@ import { utils } from "ethers";
 import { toast } from "react-hot-toast"
 import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
 import CreateQuizGameModal from "../gameContainers/quiz/components/CreateQuizGameModal";
-
+import gameSubmissionAlert from "../gameContainers/quiz/components/toasts/gameSubmissionAlert"
 
 
 type questionsData = {
@@ -209,6 +209,7 @@ const QuizProvider: FC<any> = ({ children }) => {
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   const [allowGameProcession, setAllowGameProcession] = useState<boolean>(false)
+  const [allowGameSubmission, setAllowGameSubmission] = useState<boolean>(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   //get user details from userContext
@@ -307,6 +308,28 @@ useEffect(() => {
     }
   
   }, [showLeaderBoard])
+
+
+
+  
+
+//As the creator wait for 2 minutes for others, if anyone is yet to submit, pop up message
+//Exclude londoners from pop.
+useEffect(() => {
+  let timeoutId:any = null;
+  if (!allSubmitted && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+    timeoutId = setTimeout(() => {
+      toast.dismiss();
+        gameSubmissionAlert(setAllowGameSubmission); 
+    }, 30000); //2mins
+  }
+ 
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, [allSubmitted]);
 
 
 
@@ -544,23 +567,37 @@ const handleTryLondonMode = () => {
 
 
 
-  //check if all players submitted
+  //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
-    if (submitted && !allSubmitted) {
-
-      const intervalId = setInterval(async () => {
-        //if game is started check for submitting players
-      try {
-        await service.checkPlayersSubmit(gameDetails?.id!).then(res => {setAllSubmitted(res.message)});
-      } catch (error) {
-        setAllSubmitted(false)
+    (async () => {
+      if (allowGameSubmission) {
+        const payload = {
+          option: "yes"
+        }
+        try {
+          const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
+          setAllSubmitted(res.message);
+        } catch (error) {
+          setAllSubmitted(false);
+        }
+      } else {
+        if (submitted && !allSubmitted) {
+          const intervalId = setInterval(async () => {
+            // Check for submitting players if the game is started
+            try {
+              const res = await service.checkPlayersSubmit(gameDetails?.id!);
+              setAllSubmitted(res.message);
+            } catch (error) {
+              setAllSubmitted(false);
+            }
+          }, 2000);
+    
+          return () => clearInterval(intervalId);
+        }
       }
-    }, 2000);
-
-    return () => clearInterval(intervalId);
-    }
-  }, [submitted, allSubmitted]);
-
+    })();
+  }, [submitted, allSubmitted, allowGameSubmission]);
+  
 
 
 
