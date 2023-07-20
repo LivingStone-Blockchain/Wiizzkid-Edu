@@ -577,6 +577,7 @@ const handleTryLondonMode = () => {
         try {
           const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
           setAllSubmitted(res.message);
+          console.log(res.message)
         } catch (error) {
           setAllSubmitted(false);
         }

@@ -39,7 +39,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showRegisterPrompt, setShowRegisterPrompt] = useState<boolean>(false);
 
-
+console.log(gameDetails);
 
   // restructure fetched data
   const mapped_questions = quizData?.map((question) => {
