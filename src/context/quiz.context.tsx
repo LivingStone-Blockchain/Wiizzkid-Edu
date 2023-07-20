@@ -317,7 +317,7 @@ useEffect(() => {
 //Exclude londoners from pop.
 useEffect(() => {
   let timeoutId:any = null;
-  if (!allSubmitted && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+  if (submitted && !allSubmitted && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
     timeoutId = setTimeout(() => {
       toast.dismiss();
         gameSubmissionAlert(setAllowGameSubmission); 
