@@ -222,7 +222,7 @@ const QuizProvider: FC<any> = ({ children }) => {
 
 //reset initial category value based game mode changes. this is needed for when users didn't choose category and are fine with the first on the list
 useEffect(() => {
-  let categoryInitialVal = gameMode === "london" ? "5" : "2"
+  let categoryInitialVal = gameMode === "london" ? "8" : "13"
   setCategory(categoryInitialVal)
 }, [gameMode])
 
@@ -582,7 +582,12 @@ const handleTryLondonMode = () => {
           setAllSubmitted(false);
         }
       } else {
-        if (submitted && !allSubmitted) {
+        if (submitted && !allSubmitted && !allowGameSubmission) {
+          // Show pop-up for submission if waiting time is elapsed
+          const submissionTimeout = setTimeout(() => {
+            setAllowGameSubmission(true);
+          }, 30000);
+  
           const intervalId = setInterval(async () => {
             // Check for submitting players if the game is started
             try {
@@ -592,12 +597,16 @@ const handleTryLondonMode = () => {
               setAllSubmitted(false);
             }
           }, 2000);
-    
-          return () => clearInterval(intervalId);
+  
+          return () => {
+            clearTimeout(submissionTimeout);
+            clearInterval(intervalId);
+          };
         }
       }
     })();
   }, [submitted, allSubmitted, allowGameSubmission]);
+  
   
 
 
