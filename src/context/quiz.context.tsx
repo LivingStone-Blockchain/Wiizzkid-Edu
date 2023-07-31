@@ -505,6 +505,8 @@ const handleTryLondonMode = () => {
   }
 
 
+  console.log(allSubmitted, allowGameSubmission )
+
   //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
     (async () => {
@@ -515,20 +517,27 @@ const handleTryLondonMode = () => {
           option: "yes"
         }
         try {
-          await service.enforcePlayersSubmit(gameDetails?.id!, payload)
-          await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => setGameDetails(res));
+          await service.enforcePlayersSubmit(gameDetails?.id!, payload).then(res => setAllSubmitted(res.message));
+          //await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => setGameDetails(res));
           setAllSubmitted(true)
         } catch (error) {
           //setAllSubmitted(false);
         }
       } else {
-        if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+        if (submitted && !allSubmitted) {
           // Show pop-up for submission if waiting time is elapsed
-          const submissionTimeout = setTimeout(() => {
-            toast.dismiss();
-            gameSubmissionAlert(setAllowGameSubmission); 
-          }, 30000);
-  
+          if (!allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+            const submissionTimeout = setTimeout(() => {
+              toast.dismiss();
+              gameSubmissionAlert(setAllowGameSubmission); 
+            }, 30000);
+
+            return () => {
+              clearTimeout(submissionTimeout);
+            };
+    
+          }
+         
           const intervalId = setInterval(async () => {
             // Check for submitting players if the game is started
             try {
@@ -539,7 +548,6 @@ const handleTryLondonMode = () => {
           }, 2000);
   
           return () => {
-            clearTimeout(submissionTimeout);
             clearInterval(intervalId);
           };
         }

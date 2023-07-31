@@ -29,7 +29,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime, setAllowGameSubmission, allowGameSubmission } = useContext(QuizContext) as QuizContextType;
+  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime, setAllowGameSubmission } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
