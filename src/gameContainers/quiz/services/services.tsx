@@ -90,6 +90,18 @@ const currentPayerUpdate = async (gameId: string, totalPlayers: totalPlayers, to
 }
 
 
+//get games's current state
+const currentGame = async (gameId: string, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+    const response = await axios.get(`${baseUrl}/quiz/games/${gameId}/`, config);
+    return response.data;
+}
+
+
 //checks all players submit
 const checkPlayersSubmit = async (gameId:string ) => {
     const response = await axios.get(`${baseUrl}/quiz/check_submit/${gameId}/`);
@@ -110,5 +122,5 @@ const leaderBoard = async (gameId: string) => {
 
 
 
-const service = { getAll, createGame, scoreResult, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard, enforcePlayersSubmit };
+const service = { getAll, createGame, scoreResult, currentGame, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard, enforcePlayersSubmit };
 export default service;

@@ -29,7 +29,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime } = useContext(QuizContext) as QuizContextType;
+  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime, setAllowGameSubmission, allowGameSubmission } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showRegisterPrompt, setShowRegisterPrompt] = useState<boolean>(false);
 
-console.log(gameDetails);
+
 
   // restructure fetched data
   const mapped_questions = quizData?.map((question) => {
@@ -185,6 +185,8 @@ console.log(gameDetails);
         setAllSubmitted={setAllSubmitted}
         setSubmitted={setSubmitted}
         navigate={navigate}
+        setAllowGameSubmission={setAllowGameSubmission}
+        totalSubmitted={gameDetails?.submitted}
         />
       )}
       <div className="max-w-xl mx-auto opacity-90">

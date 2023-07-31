@@ -51,6 +51,7 @@ type returnedDataType = {
   current_players?: number
   stone_token_fee?: number
   players?: number[],
+  submitted?: number
   
 }
 
@@ -167,6 +168,8 @@ export interface QuizContextType {
   setStart: React.Dispatch<React.SetStateAction<boolean>>
   allowGameProcession: boolean
   setAllowGameProcession: React.Dispatch<React.SetStateAction<boolean>>
+  allowGameSubmission: boolean
+  setAllowGameSubmission: React.Dispatch<React.SetStateAction<boolean>>
   user: userType | null
 }
 
@@ -234,43 +237,6 @@ useEffect(() => {
 
 
 
-
-  //TO BE REMOVED XXXXXXXXXXXXXXXXXXXXXX
-  //fetch data from main database
-  /*useEffect(() => {
-    const fetchQuestion = async () => {
-      setQuestionsLoader(true)
-      
-
-      try {
-        let currentPage = 1;
-        let hasNextPage = true;
-        let returnedData:any = [];
-        
-        while(hasNextPage) {
-          //fetch all data across all pages and push all into quizData array
-          const {results, next, count} =  await service.getAll(currentPage);
-          returnedData.push(...results);
-          
-         
-          hasNextPage = (next !== null);
-          currentPage += 1;
-
-          returnedData.length === count && setQuizData(returnedData);
-          setQuestionsLoader(false);
-        }
-      } catch (error) {
-        console.log(error)
-        setQuestionsLoader(false)
-      }
-    }
-
-    fetchQuestion()
-  }, [triviaFetch])*/
-
-
-
-
   //return data based on request
   //const dataType = triviaFetch ? triviaData : quizData
 
@@ -294,13 +260,7 @@ useEffect(() => {
       toast.dismiss();
   
       toast(
-        <LeaderBoard
-          setStart={setStart}
-          setTriviaFetch={setTriviaFetch}
-          setSubmitted={setSubmitted}
-          setAllSubmitted={setAllSubmitted}
-          setShowLeaderBoard={setShowLeaderBoard}
-        />,
+        <LeaderBoard />,
         { duration: Infinity, className: "w-full" }
       );
     } else {
@@ -310,26 +270,6 @@ useEffect(() => {
   }, [showLeaderBoard])
 
 
-
-  
-
-//As the creator wait for 2 minutes for others, if anyone is yet to submit, pop up message
-//Exclude londoners from pop.
-useEffect(() => {
-  let timeoutId:any = null;
-  if (submitted && !allSubmitted && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
-    timeoutId = setTimeout(() => {
-      toast.dismiss();
-        gameSubmissionAlert(setAllowGameSubmission); 
-    }, 30000); //2mins
-  }
- 
-  return () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  };
-}, [allSubmitted]);
 
 
 
@@ -510,7 +450,6 @@ const handleTryLondonMode = () => {
 
 
 
-
  //send approval success signal to backend once second metamask approval is completed
  useEffect(() => {
   //send player id and game id to backend after successful deduction. This required to add player to game session
@@ -565,27 +504,32 @@ const handleTryLondonMode = () => {
     }
   }
 
-
-
+ 
+  console.log(allSubmitted)
+  console.log(allowGameSubmission)
+  console.log(gameDetails)
   //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
     (async () => {
-      if (allowGameSubmission) {
+     
+
+      if (allowGameSubmission && !allSubmitted) {
         const payload = {
           option: "yes"
         }
         try {
-          const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
-          setAllSubmitted(res.message);
-          console.log(res.message)
+          await service.enforcePlayersSubmit(gameDetails?.id!, payload)
+          await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => setGameDetails(res));
+          setAllSubmitted(true)
         } catch (error) {
-          setAllSubmitted(false);
+          //setAllSubmitted(false);
         }
       } else {
-        if (submitted && !allSubmitted && !allowGameSubmission) {
+        if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
           // Show pop-up for submission if waiting time is elapsed
           const submissionTimeout = setTimeout(() => {
-            setAllowGameSubmission(true);
+            toast.dismiss();
+            gameSubmissionAlert(setAllowGameSubmission); 
           }, 30000);
   
           const intervalId = setInterval(async () => {
@@ -594,7 +538,6 @@ const handleTryLondonMode = () => {
               const res = await service.checkPlayersSubmit(gameDetails?.id!);
               setAllSubmitted(res.message);
             } catch (error) {
-              setAllSubmitted(false);
             }
           }, 2000);
   
@@ -611,28 +554,24 @@ const handleTryLondonMode = () => {
 
 
 
-  //update token balance, wallet address on backend
-let balance = Number(utils.formatEther(stBalance))
 
-useEffect(() => {
-  const payload = {
-    stone_token: balance,
-    wallet_address: address,
-  };
 
-  const updateStoneBalance = async () => {
-    if (user) {
-      try {
-        await userDetailsService.stoneUpdate(payload, user.id, refreshedUser?.access!);
-      } catch (error) {
-        console.log(error);
+
+//retrieve data from BE if all
+  useEffect(() => {
+    const currentGame = async () => {
+      if (allSubmitted) {
+        try {
+          await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => {console.log(res.game)});
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-  };
-
-  updateStoneBalance();
-}, [user, stBalance, refreshedUser?.access, submitted]);
-
+    };
+  
+    currentGame();
+  }, [allSubmitted]);
+  
 
 
 
@@ -703,6 +642,8 @@ useEffect(() => {
         setTokenFee,
         allowGameProcession, 
         setAllowGameProcession,
+        allowGameSubmission, 
+        setAllowGameSubmission,
         triviaUrl
       }}
     >

@@ -26,7 +26,6 @@ useEffect(() => {
       )
     }
 
-
   return (
     <>
         {loginLoader && (<Preloader homeLoader={true} />)}

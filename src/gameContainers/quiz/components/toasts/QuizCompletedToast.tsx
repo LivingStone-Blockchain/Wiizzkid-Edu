@@ -21,12 +21,14 @@ type CompletedPropsType = {
   submitted: boolean,
   setSubmitted: (value: React.SetStateAction<boolean>) => void,
   setAllSubmitted: (value: React.SetStateAction<boolean>) => void,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  totalSubmitted: number | undefined,
+  setAllowGameSubmission: (value: React.SetStateAction<boolean>) => void,
 }
 
 
 
-const QuizCompletedToast:FC<CompletedPropsType> = ({score, setScore, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setAllSubmitted, setSubmitted, navigate}) => {
+const QuizCompletedToast:FC<CompletedPropsType> = ({score, setScore, totalAllowedQuestions, totalAllowedPlayers, timeDiffCalculator, setStart, setTriviaFetch, setShowCreateGameModal, setShowLeaderBoard, submitted, allSubmitted, setAllSubmitted, setSubmitted, navigate, setAllowGameSubmission, totalSubmitted}) => {
 
 
 
@@ -57,17 +59,17 @@ const QuizCompletedToast:FC<CompletedPropsType> = ({score, setScore, totalAllowe
             <p className="mt-8 font-semibold" >{(score / totalAllowedQuestions) >= 0.5 ? 'Well done!' : 'You can do better!'}</p>
 
 
-          {totalAllowedPlayers === 1 ? (
+          {totalAllowedPlayers === 1 || (allSubmitted && totalSubmitted === 1) ? (
             <Button
               className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-              onClick={() => { toast.dismiss(); setScore(0); setSubmitted(false); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home') }}
+              onClick={() => { toast.dismiss(); setScore(0); setSubmitted(false); setStart(false); setTriviaFetch(false); setShowCreateGameModal(false); navigate('/quiz-home'); setAllowGameSubmission(false)}}
             >
               Back home
             </Button>
           ) : (
             <Button
               className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8 ${allSubmitted ? 'cursor-pointer pointer-events-auto' : 'pointer-events-none cursor-not-allowed'}`}
-              onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true)}}
+              onClick={() => { toast.dismiss(); setShowCreateGameModal(false);  setSubmitted(false); setShowLeaderBoard(true); setAllowGameSubmission(false)}}
             >
             {allSubmitted ? "See Board" : "Loading results..."}
             </Button>
