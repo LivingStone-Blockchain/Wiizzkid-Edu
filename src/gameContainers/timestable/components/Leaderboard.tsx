@@ -17,15 +17,10 @@ type ScoreBoardType = {
 }[]
 
 
-type LeaderBoardData = {
-  setStart: (value: React.SetStateAction<boolean>) => void,
-  setGameCompleted: (value: React.SetStateAction<boolean>) => void,
-  setShowLeaderBoard: (value: React.SetStateAction<boolean>) => void,
-}
 
 
-const LeaderBoard = ({ setStart, setGameCompleted, setShowLeaderBoard }: LeaderBoardData) => {
-  const { gameDetails, showLeaderBoard } = useContext(TimestableContext) as TimestableContextType;
+const LeaderBoard = () => {
+  const { gameDetails, showLeaderBoard, setStart, setGameCompleted, setShowLeaderBoard } = useContext(TimestableContext) as TimestableContextType;
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const navigate = useNavigate();
 

@@ -8,10 +8,12 @@ interface ButtonProps {
   type?: "button" | "submit";
   style?: React.CSSProperties;
   disabled?: boolean;
+  id?: string;
 }
 
 const Button: FC<ButtonProps> = ({
   className,
+  id,
   onClick,
   btnDefault = false,
   type,
@@ -25,6 +27,7 @@ const Button: FC<ButtonProps> = ({
     return (
       <button
         type={type}
+        id={id}
         onClick={onClick}
         className={`${className} flex items-center justify-center transition py-3 font-bold`}
         style={style}
@@ -37,6 +40,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       type={type}
+      id={id}
       onClick={onClick}
       className={`${className} rounded-full transform transition hover:scale-110 duration-300 ease-in-out z-60`}
       style={style}

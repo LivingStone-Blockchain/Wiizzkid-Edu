@@ -10,13 +10,6 @@ type credentialsType = {
 }
 
 
-type userApprovalOnTokenDeductionType = {
-    player_id: number
-    game_id: string
-}
-
-
-
 const baseUrl = import.meta.env.VITE_HOST_BASE_URL;
 
 const getUser = async (id: number, token:string) => {
@@ -47,20 +40,5 @@ const stoneUpdate = async (credentials: credentialsType, id: number, token:strin
 
 
 
-
-const userApprovalOnTokenDeduction = async (credentials: userApprovalOnTokenDeductionType, token:string) => {
-    const config = {
-        headers: { 
-                Authorization: `Bearer ${token}`,
-             },
-    };
-
-    const response = await axios.post(`${baseUrl}/quiz/approve/`, credentials, config);
-    return response.data;
-}
-
-
-
-
-const userDetailsService = { stoneUpdate, getUser, userApprovalOnTokenDeduction };
+const userDetailsService = { stoneUpdate, getUser };
 export default userDetailsService;

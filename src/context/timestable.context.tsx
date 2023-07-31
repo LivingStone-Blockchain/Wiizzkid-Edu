@@ -13,6 +13,7 @@ import { needForSpeedMusic } from "../gameContainers/quiz/assets/audios"
 import useSound from "use-sound"
 import { UserContext, UserContextType } from "./user.context"
 import LeaderBoard from '../gameContainers/timestable/components/Leaderboard'
+import { TokenContext, TokenContextType } from "./token.context"
 
 
 
@@ -106,6 +107,8 @@ export interface TimestableContextType {
   handleDigit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   scoreTracker: (correctAnswer: number) => void
+  allowGameProcession: boolean
+  setAllowGameProcession: React.Dispatch<React.SetStateAction<boolean>>
   handleSubmission: () => void
   user: userType | null
 }
@@ -136,11 +139,15 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const [play, { stop, sound }] = useSound(needForSpeedMusic, {volume: 0.3,})
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
   const [timestableRecentGames, setTimestableRecentGames] = useState<RecentGamesData | undefined>()
-  const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
-  //get user details from userContext
-  const { user, refreshedUser } = useContext(UserContext) as UserContextType
+  const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false);
+  const [allowGameProcession, setAllowGameProcession] = useState<boolean>(false)
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  //get user details from userContext
+  const { user, refreshedUser, setRefreshTokenError } = useContext(UserContext) as UserContextType
+  //get createGame to deduct token on game creation
+  const { deductTokenOnGameCreate, address, stBalance, secondApproval } = useContext(TokenContext) as TokenContextType;
+
 
 
 
@@ -227,11 +234,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
       toast.dismiss();
   
       toast(
-        <LeaderBoard
-          setStart={setStart}
-          setGameCompleted={setGameCompleted}
-          setShowLeaderBoard={setShowLeaderBoard}
-        />,
+        <LeaderBoard />,
         { duration: Infinity, className: "w-full" }
       );
     }
@@ -286,7 +289,9 @@ const TimestableProvider: FC<any> = ({ children }) => {
         ? await service
           .createGame(payload, refreshedUser?.access!)
           .then((res) => {
-            setGameDetails(res)
+            setGameDetails(res);
+            //deduct game stone token fee from smart contract for creator if its not london
+            gameMode !== 'london' && totalAllowedPlayers > 1 && deductTokenOnGameCreate(Number(tokenFee), res?.id!);
           })
         : setGameDetails(payload)
 
@@ -296,10 +301,39 @@ const TimestableProvider: FC<any> = ({ children }) => {
           setGameCreated(true);
         }, 4000);
       
-    } catch (error) {
-      console.log(error)
+    }  catch (error:any) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        setRefreshTokenError(true)
+      }
     }
+
+    setTokenFee("");
   }
+
+
+
+
+   //send approval success signal to backend once second metamask approval is completed
+ useEffect(() => {
+  //send player id and game id to backend after successful deduction. This required to add player to game session
+  const payload = {
+    player_id: user?.id!,
+    game_id: gameDetails?.id!
+  };
+
+ 
+    const sendApproval = async() => {
+      if(secondApproval && gameDetails?.total_players! > 1) {
+        try { 
+          await service.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+        } catch (error) {
+          console.log(error);
+        }
+   }
+  }
+
+    sendApproval();
+}, [secondApproval])
 
 
  
@@ -342,7 +376,9 @@ const TimestableProvider: FC<any> = ({ children }) => {
         timestableRecentGames, 
         setTimestableRecentGames,
         showLeaderBoard, 
-        setShowLeaderBoard
+        setShowLeaderBoard,
+        allowGameProcession, 
+        setAllowGameProcession
       }}
     >
       {children}

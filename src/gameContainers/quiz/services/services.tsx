@@ -33,6 +33,12 @@ type SubmitOption = {
 }
 
 
+type userApprovalOnTokenDeductionType = {
+    player_id: number
+    game_id: string
+}
+
+
 
 const getAll = async (page: number) => {
     const response = await axios.get(`${baseUrl}/quiz/questions/?format=json&page=${page}`);
@@ -120,7 +126,19 @@ const leaderBoard = async (gameId: string) => {
 }
 
 
+const userApprovalOnTokenDeduction = async (credentials: userApprovalOnTokenDeductionType, token:string) => {
+    const config = {
+        headers: { 
+                Authorization: `Bearer ${token}`,
+             },
+    };
+
+    const response = await axios.post(`${baseUrl}/quiz/approve/`, credentials, config);
+    return response.data;
+}
 
 
-const service = { getAll, createGame, scoreResult, currentGame, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard, enforcePlayersSubmit };
+
+
+const service = { getAll, createGame, scoreResult, currentGame, currentPayerUpdate, checkPlayersSubmit, recentResults, joinGame, playersTracker, leaderBoard, enforcePlayersSubmit, userApprovalOnTokenDeduction };
 export default service;

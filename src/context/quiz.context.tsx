@@ -462,7 +462,7 @@ const handleTryLondonMode = () => {
     const sendApproval = async() => {
       if(secondApproval && gameDetails?.total_players! > 1) {
         try { 
-          await userDetailsService.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
+          await service.userApprovalOnTokenDeduction(payload, refreshedUser?.access!);
         } catch (error) {
           console.log(error);
         }
@@ -504,10 +504,7 @@ const handleTryLondonMode = () => {
     }
   }
 
- 
-  console.log(allSubmitted)
-  console.log(allowGameSubmission)
-  console.log(gameDetails)
+
   //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
     (async () => {
