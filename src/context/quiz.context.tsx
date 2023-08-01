@@ -539,9 +539,9 @@ const handleTryLondonMode = () => {
           };
         }
       }
-      
+
           // Show pop-up for submission if waiting time is elapsed
-          if (!allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+          if (submitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
             const submissionTimeout = setTimeout(() => {
               toast.dismiss();
               gameSubmissionAlert(setAllowGameSubmission); 
