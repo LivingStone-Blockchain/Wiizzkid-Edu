@@ -509,76 +509,57 @@ const handleTryLondonMode = () => {
 
   //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
-    (async () => {
-     
-
-      if (allowGameSubmission && !allSubmitted) {
-        const payload = {
-          option: "yes"
-        }
+    const handleEnforcePlayersSubmit = async () => {
+      if (allowGameSubmission && !allSubmitted && submitted) {
         try {
-          await service.enforcePlayersSubmit(gameDetails?.id!, payload).then(res => setAllSubmitted(res.message));
-          await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => setGameDetails(res));
-          setAllSubmitted(true);
-        } catch (error) {
-          //setAllSubmitted(false)
-        }
-      } else {
-        if (submitted && !allSubmitted) {
-          const intervalId = setInterval(async () => {
-            // Check for submitting players if the game is started
-            try {
-              const res = await service.checkPlayersSubmit(gameDetails?.id!);
-              setAllSubmitted(res.message);
-            } catch (error) {
-            }
-          }, 2000);
-  
-          return () => {
-            clearInterval(intervalId);
+          const payload = {
+            option: "yes"
           };
-        }
-      }
-
-          // Show pop-up for submission if waiting time is elapsed
-          if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
-            const submissionTimeout = setTimeout(() => {
-              toast.dismiss();
-              gameSubmissionAlert(setAllowGameSubmission); 
-            }, 30000);
-
-            return () => {
-              clearTimeout(submissionTimeout);
-            };
-    
-          }
-         
-         
-    })();
-  }, [submitted, allSubmitted, allowGameSubmission]);
-  
-  
-
-
-
-
-
-
-//retrieve data from BE if all
-  useEffect(() => {
-    const currentGame = async () => {
-      if (allSubmitted) {
-        try {
-          await service.currentGame(gameDetails.id, refreshedUser?.access!).then(res => {console.log(res.game)});
+          const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
+          setAllSubmitted(res.message);
+          const gameRes = await service.currentGame(gameDetails.id, refreshedUser?.access!);
+          setGameDetails(gameRes);
         } catch (error) {
-          console.log(error);
+          // Handle error if needed
         }
       }
     };
   
-    currentGame();
-  }, [allSubmitted]);
+    const handleCheckPlayersSubmit = async () => {
+      if (submitted && !allSubmitted) {
+        const intervalId = setInterval(async () => {
+          try {
+            const res = await service.checkPlayersSubmit(gameDetails?.id!);
+            setAllSubmitted(res.message);
+          } catch (error) {
+            // Handle error if needed
+          }
+        }, 2000);
   
+        return () => clearInterval(intervalId);
+      }
+    };
+  
+    const handleShowPopup = () => {
+      if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+        const submissionTimeout = setTimeout(() => {
+          toast.dismiss();
+          gameSubmissionAlert(setAllowGameSubmission);
+        }, 30000);
+  
+        return () => clearTimeout(submissionTimeout);
+      }
+    };
+  
+    handleEnforcePlayersSubmit();
+    handleCheckPlayersSubmit();
+    handleShowPopup();
+  }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
+  
+  
+  
+
+
 
 
 
