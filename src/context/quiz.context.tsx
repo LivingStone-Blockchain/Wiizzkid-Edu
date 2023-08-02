@@ -505,7 +505,7 @@ const handleTryLondonMode = () => {
   }
 
 
-  console.log(allSubmitted, allowGameSubmission )
+  console.log(submitted, allSubmitted, allowGameSubmission )
 
   //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
   useEffect(() => {
@@ -541,7 +541,7 @@ const handleTryLondonMode = () => {
       }
 
           // Show pop-up for submission if waiting time is elapsed
-          if (submitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+          if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
             const submissionTimeout = setTimeout(() => {
               toast.dismiss();
               gameSubmissionAlert(setAllowGameSubmission); 
