@@ -505,10 +505,26 @@ const handleTryLondonMode = () => {
   }
 
 
-  console.log(submitted, allSubmitted, allowGameSubmission )
+  console.log(submitted)//, allSubmitted, allowGameSubmission )
+console.log(submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london")
+  
 
-  //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
+
+
+const handleShowPopup = () => {
+  if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+    const submissionTimeout = setTimeout(() => {
+      toast.dismiss();
+      gameSubmissionAlert(setAllowGameSubmission);
+    }, 30000);
+
+    return () => clearTimeout(submissionTimeout);
+  }
+};
+
+
   useEffect(() => {
+    //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
     const handleEnforcePlayersSubmit = async () => {
       if (allowGameSubmission && !allSubmitted && submitted) {
         try {
@@ -540,20 +556,12 @@ const handleTryLondonMode = () => {
       }
     };
   
-    const handleShowPopup = () => {
-      if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
-        const submissionTimeout = setTimeout(() => {
-          toast.dismiss();
-          gameSubmissionAlert(setAllowGameSubmission);
-        }, 30000);
-  
-        return () => clearTimeout(submissionTimeout);
-      }
-    };
+    if (submitted) {
+      handleShowPopup();
+    }
   
     handleEnforcePlayersSubmit();
     handleCheckPlayersSubmit();
-    handleShowPopup();
   }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
   
   
