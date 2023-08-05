@@ -19,6 +19,7 @@ import CountDownTimer from "../CountDownTimer";
 import { useNavigate } from 'react-router-dom';
 import SkeletonLoader from "../SkeletonLoader";
 import {quizBg} from '../../assets/images/index'
+import gameSubmissionAlert from "../../../../gameContainers/quiz/components/toasts/gameSubmissionAlert"
 
 
 type QuizGameTypes = {
@@ -29,7 +30,7 @@ type QuizGameTypes = {
 
 
 const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
-  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime, setAllowGameSubmission } = useContext(QuizContext) as QuizContextType;
+  const { quizData, questionsLoader, score, setScore, setStart, timeOfStart, gameDuration, submitTimeRef, selectedOption, setSelectedOption, user, setTriviaFetch, gameDetails, setShowCreateGameModal, setShowLeaderBoard, allSubmitted, setAllSubmitted, submitted, setSubmitted, submitTime, setSubmitTime, allowGameSubmission, setAllowGameSubmission } = useContext(QuizContext) as QuizContextType;
 
   const submitText = useRef<HTMLSpanElement>(null!);
   const navigate = useNavigate();
@@ -79,6 +80,32 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     setCurrentPage((prev) => prev + 1);
     return;
   };
+
+
+
+//show submission popup if certain players have not submitted after specified time
+  useEffect(() => {
+    const handleShowPopup = () => {
+      let submissionTimeout:any = null;
+      if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
+        submissionTimeout = setTimeout(() => {
+          toast.dismiss();
+          gameSubmissionAlert(setAllowGameSubmission);
+        }, 30000);
+  
+        return () => {
+          if (submissionTimeout) {
+            clearTimeout(submissionTimeout);
+          }
+        }
+      }
+    };
+
+    handleShowPopup();
+  }, [allSubmitted])
+
+  
+
 
 
 

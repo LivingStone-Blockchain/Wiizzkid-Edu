@@ -15,12 +15,9 @@ import categoryStrings from "../gameContainers/quiz/components/functions/categor
 import { useLocation, useNavigate } from "react-router-dom"
 import { UserContext, UserContextType } from "./user.context"
 import { TokenContext, TokenContextType } from "./token.context"
-import {userDetailsService } from "../services";
-import { utils } from "ethers";
 import { toast } from "react-hot-toast"
 import LeaderBoard from '../gameContainers/quiz/components/LeaderBoard';
 import CreateQuizGameModal from "../gameContainers/quiz/components/CreateQuizGameModal";
-import gameSubmissionAlert from "../gameContainers/quiz/components/toasts/gameSubmissionAlert"
 
 
 type questionsData = {
@@ -505,24 +502,9 @@ const handleTryLondonMode = () => {
   }
 
 
-  console.log(submitted)//, allSubmitted, allowGameSubmission )
-console.log(submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london")
+  console.log(submitted, allSubmitted, allowGameSubmission);
+
   
-
-
-
-const handleShowPopup = () => {
-  if (submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london") {
-    const submissionTimeout = setTimeout(() => {
-      toast.dismiss();
-      gameSubmissionAlert(setAllowGameSubmission);
-    }, 30000);
-
-    return () => clearTimeout(submissionTimeout);
-  }
-};
-
-
   useEffect(() => {
     //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
     const handleEnforcePlayersSubmit = async () => {
@@ -532,9 +514,10 @@ const handleShowPopup = () => {
             option: "yes"
           };
           const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
-          setAllSubmitted(res.message);
+          //setAllSubmitted(res.message);
           const gameRes = await service.currentGame(gameDetails.id, refreshedUser?.access!);
           setGameDetails(gameRes);
+          setAllSubmitted(true);
         } catch (error) {
           // Handle error if needed
         }
@@ -546,7 +529,8 @@ const handleShowPopup = () => {
         const intervalId = setInterval(async () => {
           try {
             const res = await service.checkPlayersSubmit(gameDetails?.id!);
-            setAllSubmitted(res.message);
+            //setAllSubmitted(res.message);
+            setAllSubmitted(true);
           } catch (error) {
             // Handle error if needed
           }
@@ -556,12 +540,11 @@ const handleShowPopup = () => {
       }
     };
   
-    if (submitted) {
-      handleShowPopup();
-    }
+    
   
     handleEnforcePlayersSubmit();
     handleCheckPlayersSubmit();
+   
   }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
   
   
