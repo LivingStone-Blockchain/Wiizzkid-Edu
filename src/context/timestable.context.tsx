@@ -32,6 +32,8 @@ type returnedDataType = {
   creator: number
   current_players?: number
   stone_token_fee?: number
+  players?: number[]
+  submitted?: number
 }
 
 
@@ -242,7 +244,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
   }, [showLeaderBoard])
 
 
-
+console.log(gameDetails)
 
 
   const handleSubmission = async () => {

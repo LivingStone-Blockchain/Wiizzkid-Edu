@@ -15,12 +15,14 @@ import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services";
 import QuickPlay from "../components/Quickplay";
 import History from "../components/History";
+import { TokenContext, TokenContextType } from "../../../context/token.context";
 
 
 
 export default function TimestableIndex() {
   const { refreshedUser } = useContext(UserContext) as UserContextType
   const {setScore, showCreateGameModal, setShowCreateGameModal, gameCreated, user, setGameDetails} = useContext(TimestableContext) as TimestableContextType;
+  const { deductTokenOnGameCreate } = useContext(TokenContext) as TokenContextType;
   const [joinGameCode, setJoinGameCode] = useState<string>("");
   const navigate = useNavigate();
   
@@ -40,7 +42,9 @@ export default function TimestableIndex() {
 
 
     try {
-      await service.joinGame(joinGameCode, refreshedUser?.access!).then(res => {setGameDetails(res)});
+     const response = await service.joinGame(joinGameCode, refreshedUser?.access!)
+     setGameDetails(response)
+      deductTokenOnGameCreate(response.stone_token_fee, response.id);
       navigate(`/timestable?code=${joinGameCode}`);
     } catch (error: any) {
       toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});
