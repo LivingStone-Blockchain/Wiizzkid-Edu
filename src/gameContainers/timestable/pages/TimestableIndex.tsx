@@ -43,8 +43,8 @@ export default function TimestableIndex() {
 
     try {
      const response = await service.joinGame(joinGameCode, refreshedUser?.access!)
-     setGameDetails(response)
-      deductTokenOnGameCreate(response.stone_token_fee, response.id);
+     setGameDetails(response.game)
+      deductTokenOnGameCreate(response.game.stone_token_fee, response.game.id);
       navigate(`/timestable?code=${joinGameCode}`);
     } catch (error: any) {
       toast.error(<span className="text-sm">{error.response.data.error}</span>, {duration: 4000});

@@ -26,7 +26,7 @@ export default function QuizPlay() {
 
 
 
-
+console.log(playerTracker);
 
   //if second Approval is true it means your transaction is successful.
 //As the creator wait for 2 minutes for others, if anyone is left, pop up message
@@ -103,6 +103,8 @@ useEffect(() => {
       toast.dismiss("prepping");
       setLoader(false);
       setStart(true);
+      setSecondApproval(false);
+      setAllowGameProcession(false); // avoid game procession pop up
       toast.success(<span className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin", duration: 3000 });
     }, 3000)
 
