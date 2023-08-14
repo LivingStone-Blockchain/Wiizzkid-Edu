@@ -13,7 +13,8 @@ type ScoreBoardType = {
   game_id: string,
   score: number,
   total_attempted: number,
-  full_name: string
+  full_name: string,
+  winnings: number
 }[]
 
 
@@ -74,12 +75,12 @@ const LeaderBoard = () => {
                   Score
                 </th>
                 <th scope="col" className="py-3 px-1 font-medium">
-                  Attempts
+                  Winnings
                 </th>
               </tr>
             </thead>
             <tbody>
-              {scoreBoard?.map(({ full_name, total_attempted, score }, index) => (
+              {scoreBoard?.map(({ full_name, total_attempted, score, winnings }, index) => (
                 <tr className="bg-white border-b border-gray-200" key={full_name}>
                   <td className="py-2 px-1">
                     <span className={`${index === 0 ? 'text-[#fe9d1b]' : 'text-gray-400'}`}><FaCrown /></span>
@@ -91,7 +92,7 @@ const LeaderBoard = () => {
                     <span className="font-medium text-navy text-xs">{score}</span>
                   </td>
                   <td className="py-2 px-1">
-                    <span className="font-medium text-navy text-xs">{total_attempted}</span>
+                    <span className="font-medium text-navy text-xs">{winnings}</span>
                   </td>
                 </tr>
               ))}
