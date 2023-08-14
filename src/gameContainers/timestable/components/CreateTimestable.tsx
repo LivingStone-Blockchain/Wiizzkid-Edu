@@ -76,14 +76,16 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 
 
 
-  const handleCopyClick = async () => {
+   //copy paste function
+   const handleCopyClick = async () => {
     //exec command for older browsers
     ("clipboard" in navigator)
     ? await navigator.clipboard.writeText(textRef.current!.innerText)
     : document.execCommand("copy", true, textRef.current?.innerText);
    
-    toast.success("Code copied successfully!");
+    toast.success("Details copied successfully!");
   }
+
 
 
 
@@ -133,6 +135,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
 
 
 
+
   if (gameCreated && gameDetails) {
     return (
       <section className="w-full py-4">
@@ -143,19 +146,31 @@ const CreateTimestable: FC<CreateTimestableType> = ({
             Timestable Created!
           </h1>
       
-          {gameMode !== "london" ? (
+      {(gameMode !== 'london' && totalAllowedPlayers === 1) ? (
+          <>
+             <p className="mt-8">
+              <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
+                Single Player
+              </span>
+            </p>
+             <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+              Game codes/links can be generated and shared in multiplayer mode!
+            </p>
+          </>
+        ) : (gameMode !== 'london' && totalAllowedPlayers > 1) ? (
         <>
-        <p className="mt-8">
-            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy">
+        <p className="mt-8 relative">
+            <span className="text-xl bg-gray-200 px-4 py-2 rounded font-bold text-navy hover:bg-gray-300"  ref={textRef}>
               {gameDetails?.invite_code}
             </span>
+            <span className="text-xs font-bold animate-pulse text-teal absolute top-2 right-10 cursor-grab" onClick={handleCopyClick}>copy</span>
           </p>
-          <p className="mt-8 font-semibold cursor-grab relative">
-            <span ref={textRef} onClick={handleCopyClick}>{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
-            <span className="text-xs font-bold animate-pulse text-teal absolute top-5 right-10">copy</span>
+          <p className="mt-8 font-semibold cursor-grab relative hidden">
+            <span >{`https://wiizzkid.com/quiz?code=${gameDetails?.invite_code}`}</span>
+            <span className="text-xs font-bold animate-pulse text-teal absolute top-3 right-15">copy</span>
           </p>
-          <p className="mt-4 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
-            Copy and share your quiz code or link to your friends!
+          <p className="mt-8 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
+            Copy and share your quiz code with friends!
           </p>
         </>
       ) : (
@@ -169,13 +184,15 @@ const CreateTimestable: FC<CreateTimestableType> = ({
             Game codes/links can be generated and shared in premium modes!
           </p>
         </>
-    )}
+      )}
 
           <Button
-            children="Play Timestable"
             onClick={handleStartGame}
+            id="play-quizBtn"
             className="mt-14 flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
-          />
+          >
+            Play Timestable
+          </Button>
         </article>
       </section>
     );

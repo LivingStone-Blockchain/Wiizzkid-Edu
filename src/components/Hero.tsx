@@ -40,7 +40,7 @@ const Hero: FC<HeroProps> = ({ colorDeep, mobileDropdownOpen, text, shadow, mobi
                         <Button
                             children="Buy Stone Token"
                             className='lg:mx-0 text-white text-xl font-bold py-4 px-9 focus:outline-none '
-                            onClick={() => navigate('/pricing')}
+                            onClick={() => navigate('/dashboard/buy-token')}
                             style={window.innerWidth > 767 ? { backgroundColor: `${colorDeep}`, boxShadow: `${shadow}` } : { backgroundColor: `${colorDeep}`, boxShadow: `${mobileShadow}` }}
                         />
 

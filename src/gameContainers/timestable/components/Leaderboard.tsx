@@ -24,6 +24,8 @@ const LeaderBoard = () => {
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const navigate = useNavigate();
 
+  console.log(scoreBoard);
+
 
 
   useEffect(() => {
@@ -31,7 +33,7 @@ const LeaderBoard = () => {
 
     const intervalId = setInterval(async () => {
       try {
-        await service.leaderBoard(gameDetails?.id!).then(res => setScoreBoard(res));
+        await service.leaderBoard(gameDetails?.id!).then(res => {setScoreBoard(res.winners), console.log(res)});
       } catch (error) {
 
       }
