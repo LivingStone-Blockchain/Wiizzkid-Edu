@@ -646,7 +646,7 @@ useEffect(() => {
     };
 
     updateUserDetails();
-}, [balance, address]);
+}, [balance, address, isWidthdrawal, loading]);
 
 
 

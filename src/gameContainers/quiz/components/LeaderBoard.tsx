@@ -43,7 +43,7 @@ const LeaderBoard = () => {
           </div>
           <div className='flex items-center justify-between m-2 w-full'>
             <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
-              Total players: {gameDetails?.current_players}
+              Total players: {scoreBoard?.length}
             </p>
             <p className="text-white space-x-5 md:text-sm text-xs leading-relaxed">
               Duration: {gameDetails?.game_duration}
