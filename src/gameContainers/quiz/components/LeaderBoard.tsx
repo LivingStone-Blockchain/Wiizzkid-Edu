@@ -15,7 +15,7 @@ const LeaderBoard = () => {
   const navigate = useNavigate();
 
   //console.log(gameDetails)
-  //console.log(scoreBoard)
+  console.log(scoreBoard)
 
 
     useEffect(() => {

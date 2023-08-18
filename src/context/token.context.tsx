@@ -624,6 +624,30 @@ const withdrawWinnings = async (winning: number) => {
 
 
 
+const balance =  Number(utils.formatEther(stBalance));
+//automatically update balance on backend
+useEffect(() => {
+
+    //reset winnings on backend
+    const payload = {
+      stone_token: balance,
+      wallet_address: address!,
+      stone_token_winnings: 0,
+    };
+
+    const updateUserDetails = async () => {
+      try {
+        const res = await userDetailsService.stoneUpdate(payload, user?.id!, refreshedUser?.access!);
+        setUserDetail(res);
+        setIsWidthdrawal(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    updateUserDetails();
+}, [balance, address]);
+
 
 
   //update user wallet details on connect or balance change
