@@ -502,7 +502,7 @@ const handleTryLondonMode = () => {
   }
 
 
-  console.log(submitted, allSubmitted, allowGameSubmission);
+ 
 
   
   useEffect(() => {

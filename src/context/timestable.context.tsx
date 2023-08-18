@@ -244,7 +244,6 @@ const TimestableProvider: FC<any> = ({ children }) => {
   }, [showLeaderBoard])
 
 
-console.log(gameDetails)
 
 
   const handleSubmission = async () => {
