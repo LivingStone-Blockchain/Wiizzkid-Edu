@@ -21,7 +21,7 @@ type ScoreBoardType = {
 
 
 const LeaderBoard = () => {
-  const { gameDetails, showLeaderBoard, setStart, setGameCompleted, setShowLeaderBoard } = useContext(TimestableContext) as TimestableContextType;
+  const { gameDetails, showLeaderBoard, setStart, setGameCompleted, setShowLeaderBoard, setScore, setTotalAllowedPlayers, setSubmitted } = useContext(TimestableContext) as TimestableContextType;
   const [scoreBoard, setScoreBoard] = useState<ScoreBoardType | undefined>([]);
   const navigate = useNavigate();
 
@@ -105,7 +105,7 @@ const LeaderBoard = () => {
 
         <Button
           className="flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8"
-          onClick={() => { toast.dismiss(); ; setStart(false); setGameCompleted(false); setShowLeaderBoard(false); navigate('/timestable-home') }}
+          onClick={() => { toast.dismiss(); ; setStart(false); setScore(0); setTotalAllowedPlayers(1); setGameCompleted(false); setSubmitted(false); setShowLeaderBoard(false); navigate('/timestable-home') }}
         >
           Back home
         </Button>

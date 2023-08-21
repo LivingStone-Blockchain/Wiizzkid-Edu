@@ -82,6 +82,8 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
   };
 
 
+ console.log(submitted && !allSubmitted && !allowGameSubmission && gameDetails?.creator === user?.id && gameDetails?.game_mode !== "london")
+console.log(submitted, !allSubmitted, !allowGameSubmission)
 
 //show submission popup if certain players have not submitted after specified time
   useEffect(() => {
@@ -102,7 +104,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
     };
 
     handleShowPopup();
-  }, [allSubmitted])
+  }, [submitted])
 
   
 

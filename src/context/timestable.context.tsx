@@ -98,6 +98,8 @@ export interface TimestableContextType {
   setTimestableRecentGames: React.Dispatch<React.SetStateAction<RecentGamesData | undefined>>
   start: boolean
   setStart: React.Dispatch<React.SetStateAction<boolean>>
+  submitted: boolean
+  setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   gameCompleted: boolean
   setGameCompleted: React.Dispatch<React.SetStateAction<boolean>>
   totalAllowedPlayers: number
@@ -138,6 +140,7 @@ const TimestableProvider: FC<any> = ({ children }) => {
   const [showCreateGameModal, setShowCreateGameModal] = useState<boolean>(false)
   const [start, setStart] = useState<boolean>(false)
   const [gameCompleted, setGameCompleted] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false) ///single player
   const [play, { stop, sound }] = useSound(needForSpeedMusic, {volume: 0.3,})
   const [gameDetails, setGameDetails] = useState<returnedDataType | undefined>()
   const [timestableRecentGames, setTimestableRecentGames] = useState<RecentGamesData | undefined>()
@@ -366,6 +369,8 @@ const TimestableProvider: FC<any> = ({ children }) => {
         setGameCompleted,
         start,
         setStart,
+        submitted,
+        setSubmitted,
         handleSubmission,
         totalAllowedPlayers,
         setTotalAllowedPlayers,

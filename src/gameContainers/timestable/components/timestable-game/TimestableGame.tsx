@@ -19,11 +19,11 @@ type TimestableGameType = {
 
 const TimestableGame: FC<TimestableGameType> = ({ showModal }) => {
   const navigate = useNavigate();
-  const {gameCompleted, setLoading, loading, setShowCreateGameModal,setGameCompleted } = useContext(TimestableContext) as TimestableContextType;
+  const {gameCompleted, setLoading, loading, setShowCreateGameModal,setGameCompleted, setStart, setScore, setSubmitted } = useContext(TimestableContext) as TimestableContextType;
 
   const quitGame = () => {
     setLoading(true);
-    quizEndGameToast(setLoading, setGameCompleted, navigate, setShowCreateGameModal);
+    quizEndGameToast(setStart,  setSubmitted, setScore, setLoading, setGameCompleted, navigate, setShowCreateGameModal);
     return;
   };
 

@@ -83,10 +83,10 @@ const RegisterPromptToast: FC<PromptPropsType> = ({score, timeDiffCalculator, se
                             <div className='flex flex-col justify-center items-center gap-6 w-full text-center'>
                                 <h3 className="sm:text-2xl text-xl w-full">Great news! You've successfully completed Wiizzkid free mode.</h3>
                                 <p className="mt-6 border-2 rounded-lg text-xl bg-gray-200 px-4 py-2 font-bold text-navy"  style={{borderColor: `${color}`}}>   
-                                    Score: <span className="blur-[2.5px]">{score}</span>
+                                    Score: <span className="blur-[2.8px]">{score}</span>
                                 </p>
                                 <p className="mt-2 text-gray-500 space-x-5 my-3 md:text-base text-sm leading-relaxed">
-                                    Completion Time: <span className='blur-[2.5px]'>{timeDiffCalculator} mins</span>
+                                    Completion Time: <span className='blur-[2.8px]'>{timeDiffCalculator} mins</span>
                                 </p>
                                 <p className='sm:text-base text-sm'>To see your score, completion time, and access even more great features and content, sign up for Wiizzkid Premium!</p>
                                 <div className="flex flex-row space-x-3 justify-center mt-3 w-full mx-auto">

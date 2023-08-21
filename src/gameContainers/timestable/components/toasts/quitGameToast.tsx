@@ -4,7 +4,7 @@ import { NavigateFunction } from "react-router-dom";
 import { FaExclamationCircle } from "react-icons/fa";
 
 
-const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => void, setGameCompleted: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void) => {
+const quizEndGameToast = (setStart: (value: React.SetStateAction<boolean>) => void, setSubmitted: (value: React.SetStateAction<boolean>) => void, setScore: (value: React.SetStateAction<number>) => void, setLoading: (value: React.SetStateAction<boolean>) => void, setGameCompleted: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void) => {
 
     toast(
         () => (
@@ -28,7 +28,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
               <Button 
                 children="End game"
                 onClick={() =>
-                  {toast.loading("Quitting game...", { duration: 4000 }); setTimeout(() => {toast.dismiss(); navigate('/timestable-home'); setGameCompleted(false); setLoading(false); setShowCreateGameModal(false)}, 4000); }
+                  {toast.loading("Quitting game...", { duration: 4000 }); setTimeout(() => {toast.dismiss(); navigate('/timestable-home'); setGameCompleted(false); setLoading(false); setScore(0); setSubmitted(false); setStart(false);setShowCreateGameModal(false)}, 4000); }
                 }
                 className="flex justify-center items-center gap-2 md:text-base text-sm text-navy border-2 border-navy font-semibold px-5 py-[9px]  bg-white transition text-center"
               />

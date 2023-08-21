@@ -20,7 +20,7 @@ type PlayerTrackerType = {
 }
 
 export default function QuizPlay() {
-  const { startGame, setScore, start, setStart, gameDetails, setGameDetails, user, allowGameProcession, setAllowGameProcession } = useContext(QuizContext) as QuizContextType;
+  const { startGame, setScore, start, setStart, gameDetails, setGameDetails, user, allowGameProcession, setAllowGameProcession, setAllSubmitted } = useContext(QuizContext) as QuizContextType;
   const { loading, firstApproval, secondApproval, setSecondApproval } = useContext(TokenContext) as TokenContextType;
   const { refreshedUser } = useContext(UserContext) as UserContextType;
   const [playerTracker, setPlayerTracker] = useState<PlayerTrackerType | undefined>();
@@ -104,6 +104,7 @@ useEffect(() => {
       setStart(true);
       startGame(Date.now());
       setSecondApproval(false);
+      setAllSubmitted(false);
       setAllowGameProcession(false); // avoid game procession pop up
       toast.success(<span id="startSuccess-notification" className="text-sm">Your Wiizzkid quiz game has begun!</span>, { id: "begin" });
     }, 3000)

@@ -99,7 +99,7 @@ const LeaderBoard = () => {
 
         <Button
           className={`flex justify-center mx-auto items-center gap-2 md:w-48 w-36 md:text-base text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center mt-8`}
-          onClick={() => { toast.dismiss(); setScore(0); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'); setTotalAllowedPlayers(1); setAllSubmitted(false); setSubmitted(false); setAllowGameSubmission(false) }}
+          onClick={() => { toast.dismiss(); setScore(0); setStart(false); setTriviaFetch(false); setShowLeaderBoard(false); navigate('/quiz-home'); setTotalAllowedPlayers(1); setAllSubmitted(true); setSubmitted(false); setAllowGameSubmission(false) }}
         >
           Back home
         </Button>
