@@ -515,8 +515,8 @@ const handleTryLondonMode = () => {
           };
           const res = await service.enforcePlayersSubmit(gameDetails?.id!, payload);
           //setAllSubmitted(res.message);
-          const gameRes = await service.currentGame(gameDetails.id, refreshedUser?.access!);
-          setGameDetails(gameRes);
+          //const gameRes = await service.currentGame(gameDetails.id, refreshedUser?.access!);
+          //setGameDetails(gameRes);
           setAllSubmitted(true);
         } catch (error) {
           // Handle error if needed
@@ -529,8 +529,12 @@ const handleTryLondonMode = () => {
         const intervalId = setInterval(async () => {
           try {
             const res = await service.checkPlayersSubmit(gameDetails?.id!);
-            //setAllSubmitted(res.message);
+            const gameRes = await service.currentGame(gameDetails.id, refreshedUser?.access!);
+            setGameDetails(gameRes);
             setAllSubmitted(true);
+            //lets look at this res
+            console.log(gameRes)
+            //setAllSubmitted(res.message);
           } catch (error) {
             // Handle error if needed
           }
@@ -550,6 +554,12 @@ const handleTryLondonMode = () => {
   
   
 
+  //for other participants to see board
+  useEffect(() => {
+    if (gameDetails?.submitted === gameDetails?.total_players) {
+      setAllSubmitted(true)
+    }
+  }, [gameDetails])
 
 
 

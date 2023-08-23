@@ -25,9 +25,6 @@ export default function QuizPlay() {
   const [loader, setLoader] = useState<boolean>(false);
 
 
-
-console.log(playerTracker);
-
   //if second Approval is true it means your transaction is successful.
 //As the creator wait for 2 minutes for others, if anyone is left, pop up message
 //Exclude londoners from pop.
