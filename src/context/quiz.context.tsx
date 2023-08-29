@@ -552,6 +552,8 @@ const handleTryLondonMode = () => {
   }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
   
   
+
+  console.log(gameDetails)
   
 
   //for other participants to see board
