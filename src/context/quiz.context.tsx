@@ -506,7 +506,7 @@ const handleTryLondonMode = () => {
 
   
   useEffect(() => {
-    //if allowGameSubmission visit endpoint , else keep revisiting the other endpoint
+    //if allowGameSubmission visit endpoint
     const handleEnforcePlayersSubmit = async () => {
       if (allowGameSubmission && !allSubmitted && submitted) {
         try {
@@ -524,6 +524,15 @@ const handleTryLondonMode = () => {
       }
     };
   
+    handleEnforcePlayersSubmit();
+   
+  }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
+
+
+
+
+
+  useEffect(() => {
     const handleCheckPlayersSubmit = async () => {
       if (submitted && !allSubmitted) {
         const intervalId = setInterval(async () => {
@@ -533,7 +542,6 @@ const handleTryLondonMode = () => {
             setGameDetails(gameRes);
             setAllSubmitted(true);
             //lets look at this res
-            console.log(gameRes)
             //setAllSubmitted(res.message);
           } catch (error) {
             // Handle error if needed
@@ -543,14 +551,12 @@ const handleTryLondonMode = () => {
         return () => clearInterval(intervalId);
       }
     };
-  
+
     
-  
-    handleEnforcePlayersSubmit();
-    handleCheckPlayersSubmit();
-   
-  }, [submitted, allSubmitted, allowGameSubmission, gameDetails, refreshedUser, user]);
-  
+    handleCheckPlayersSubmit()
+  }, [submitted, allSubmitted]);
+
+
   
 
   console.log(gameDetails)
@@ -561,7 +567,7 @@ const handleTryLondonMode = () => {
     if (gameDetails?.submitted === gameDetails?.total_players) {
       setAllSubmitted(true)
     }
-  }, [gameDetails])
+  }, [submitted])
 
 
 
