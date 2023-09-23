@@ -9,6 +9,8 @@ export interface WiizzkidContextType {
     setOpenVideo: React.Dispatch<React.SetStateAction<boolean>>,
     dashBoardMode: boolean,
     setDashBoardMode: React.Dispatch<React.SetStateAction<boolean>>
+    openPresale: boolean,
+    setOpenPresale: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const WiizzkidContext = createContext<WiizzkidContextType | null>(null);
@@ -18,7 +20,8 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
     const [value, setValue] = useState<number>(0);
     const [openVideo, setOpenVideo] = useState<boolean>(false);
     const [dashBoardMode, setDashBoardMode] = useState<boolean>(false)
-
+    const [ openPresale, setOpenPresale] = useState<boolean>(true);
+   
 
     //create color carousel;
     useEffect(() => {
@@ -39,7 +42,9 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
             openVideo,
             setOpenVideo,
             dashBoardMode, 
-            setDashBoardMode
+            setDashBoardMode,
+            openPresale,
+            setOpenPresale
         }),
         [
             value, 
@@ -47,7 +52,9 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
             openVideo,
             setOpenVideo,
             dashBoardMode, 
-            setDashBoardMode
+            setDashBoardMode,
+            openPresale,
+            setOpenPresale
         ])
 
     return (
