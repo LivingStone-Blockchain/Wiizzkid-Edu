@@ -7,7 +7,8 @@ import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.contex
 type CountdownPropTypes = {
     day: number,
     month: number,
-    year: number
+    year: number,
+    colors: string[]
 }
 
 
@@ -20,9 +21,8 @@ type timeLeftType = {
 
 
 
-const CountDown: FC<CountdownPropTypes> = ({day, month, year}) =>  {
+const CountDown: FC<CountdownPropTypes> = ({day, month, year, colors}) =>  {
   const { value } = useContext(WiizzkidContext) as WiizzkidContextType;
-  const colors = ['#ff5d5d', '#e0b00d', '#37b9b2'];
 
 
   const calculateTimeLeft = () => {

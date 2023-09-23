@@ -52,6 +52,7 @@ const Metaverse = () => {
             day={8}
             month={6}
             year={2025}
+            colors={['#ff5d5d', '#e0b00d', '#37b9b2']}
         />
          <div className="pt-8 w-full">
             <p className="space-x-5 my-5 text-white md:text-base text-sm z-1">Want to be the first to know when we launch ?</p>
