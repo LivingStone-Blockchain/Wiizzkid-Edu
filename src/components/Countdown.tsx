@@ -7,7 +7,7 @@ import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.contex
 type CountdownPropTypes = {
     day: number,
     month: number,
-    year: number,
+    year: number
     colors: string[]
 }
 

@@ -20,8 +20,8 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
     const [value, setValue] = useState<number>(0);
     const [openVideo, setOpenVideo] = useState<boolean>(false);
     const [dashBoardMode, setDashBoardMode] = useState<boolean>(false)
-    const [openPresale, setOpenPresale] = useState<boolean>(true);
-
+    const [ openPresale, setOpenPresale] = useState<boolean>(true);
+   
 
     //create color carousel;
     useEffect(() => {
@@ -43,7 +43,7 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
             setOpenVideo,
             dashBoardMode, 
             setDashBoardMode,
-            openPresale, 
+            openPresale,
             setOpenPresale
         }),
         [
@@ -54,7 +54,7 @@ const WiizzkidProvider: FC<any> = ({ children }) => {
             dashBoardMode, 
             setDashBoardMode,
             openPresale,
-             setOpenPresale
+            setOpenPresale
         ])
 
     return (
