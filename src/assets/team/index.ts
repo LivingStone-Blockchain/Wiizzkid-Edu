@@ -1,0 +1,6 @@
+export {default as deji} from './deji.png'
+export {default as richard1} from './richard1.jpeg'
+export {default as richard2} from './richard2.jpeg'
+export {default as Suresh} from './suresh.jpeg'
+export {default as dami} from './dami.jpeg'
+export {default as dawood} from './dawood.jpeg'

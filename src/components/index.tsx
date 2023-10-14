@@ -25,3 +25,4 @@ export { default as Players } from './Players';
 export { default as Help } from './Help';
 export {default as FAQ} from './faq/FAQ'
 export {default as ComingSoon} from './ComingSoon'
+export {default as Team} from './Team'

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Brand, Features, Modes, Metaverse, Blog, GameModes, BuyInstruction, Help, FAQ, ComingSoon }  from '../components/index'
+import { Brand, Features, Modes, Metaverse, Blog, GameModes, BuyInstruction, Help, FAQ, ComingSoon, Team }  from '../components/index'
 import { WiizzkidContext, WiizzkidContextType } from '../context/wiizzkid.context';
 
 const Home = () => {
@@ -21,6 +21,7 @@ const Home = () => {
       <div className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 ">
         <Blog />
         <FAQ />
+        <Team />
       </div>
     </>
   )
