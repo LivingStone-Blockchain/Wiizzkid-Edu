@@ -55,7 +55,7 @@ const ComingSoon = ({openPresale ,setOpenPresale}:{openPresale:boolean, setOpenP
                         <h2 className="lg:text-4xl text-2xl font-medium text-center text-[#252641] animate-slide-in">Wiizzkid Presale!</h2>
                         <CountDown 
                             day={16}
-                            month={10}
+                            month={12}
                             year={2023}
                             colors={[color]}
                         />
