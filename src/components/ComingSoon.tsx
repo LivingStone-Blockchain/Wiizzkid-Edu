@@ -9,7 +9,7 @@
 // import { Autoplay, EffectFade } from "swiper";
 
 
-// const ComingSoon = ({openPresale ,setOpenPresale}:{openPresale:boolean, setOpenPresale:React.Dispatch<React.SetStateAction<boolean>>}) => {
+ const ComingSoon = ({openPresale ,setOpenPresale}:{openPresale:boolean, setOpenPresale:React.Dispatch<React.SetStateAction<boolean>>}) => {
 //     const data  =[
 //         {
 //             id: 1,
@@ -78,6 +78,6 @@
 //      )}
 //     </>
 //   );
-// };
+ };
 
-// export default ComingSoon;
+ export default ComingSoon;
