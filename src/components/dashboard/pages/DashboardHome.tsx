@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
   WiizzkidContext,
   WiizzkidContextType,
-} from "../../../context/wiizzkid.context.tsx";
+} from "../../../context/wiizzkid.context";
 import { QuizContext, QuizContextType } from "../../../context/quiz.context";
 import { UserContext, UserContextType } from "../../../context/user.context";
 import { TokenContext, TokenContextType } from "../../../context/token.context";

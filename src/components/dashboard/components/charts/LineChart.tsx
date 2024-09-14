@@ -3,7 +3,7 @@ import { QuizContext, QuizContextType } from "../../../../context/quiz.context";
 import {
   WiizzkidContext,
   WiizzkidContextType,
-} from "../../../../context/wiizzkid.context.tsx";
+} from "../../../../context/wiizzkid.context";
 import {
   TimestableContext,
   TimestableContextType,
