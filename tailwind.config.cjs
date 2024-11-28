@@ -27,10 +27,18 @@ module.exports = {
           "50%": { transform: "translate(0, 8px)" },
           "100%": { transform: "translate(0, -0px)" },
         },
+        zoomPan: {
+          "0%": { transform: "scale(1) translate(0, 0)" },
+          "25%": { transform: "scale(1.1) translate(10px, -10px)" },
+          "50%": { transform: "scale(1.2) translate(-10px, 10px)" },
+          "75%": { transform: "scale(1.1) translate(10px, 10px)" },
+          "100%": { transform: "scale(1) translate(0, 0)" },
+        },
       },
       animation: {
         floating: "floating 3s ease-in-out infinite",
         "floating-4": "floating 4s ease-in-out infinite",
+        zoomPan: "zoomPan 10s infinite ease-in-out",
       },
     },
   },
