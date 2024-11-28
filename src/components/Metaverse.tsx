@@ -11,6 +11,7 @@ import {
 import Button from "./Button";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 const Metaverse = () => {
   return (
@@ -104,6 +105,11 @@ const Metaverse = () => {
           year={2025}
           colors={["#ff5d5d", "#e0b00d", "#37b9b2"]}
         />
+        <Link to='/ar-feature' className='bg-purple-950 hover:bg-purple-800 p-8 font-bold rounded-2xl'>
+          <button className="text-md text-white">
+            Check out some PreLaunch Applications with the AR Cube
+          </button>
+        </Link>
         <div className="pt-8 w-full">
           <p className="space-x-5 my-5 text-white md:text-base text-sm z-1">
             Want to be the first to know when we launch ?
@@ -117,7 +123,7 @@ const Metaverse = () => {
             <Button
               children="Subscribe"
               type="submit"
-              className="flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken "
+              className="flex-initial md:w-36 w-28 text-white mx-auto sm:mx-0 font-semibold px-5 py-3  bg-[#252641] shadow-btn-darken"
               style={{
                 background:
                   "linear-gradient(105.5deg, #545AE7 19.57%, #393FCF 78.85%)",

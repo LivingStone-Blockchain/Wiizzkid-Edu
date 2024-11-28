@@ -48,6 +48,7 @@ import { UserContext, UserContextType } from "./context/user.context";
 import TimestableApp from "./gameContainers/timestable/TimestableApp";
 import ModalVideo from "react-modal-video";
 import { wiizzkidVideo } from "./assets/header/index";
+import ARFeaturePage from "./pages/ARFeaturePage"
 
 function App() {
   const { openVideo, setOpenVideo } = useContext(
@@ -94,6 +95,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/ar-feature" element={<ARFeaturePage />} />
+
         <Route
           path="/dashboard/buy-token/completion"
           element={<StripeCompletion />}
