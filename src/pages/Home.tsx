@@ -10,6 +10,7 @@ import {
   Help,
   FAQ,
 } from "../components/index";
+import ARFeaturePage from './ARFeaturePage'
 // import {
 //   WiizzkidContext,
 //   WiizzkidContextType,
