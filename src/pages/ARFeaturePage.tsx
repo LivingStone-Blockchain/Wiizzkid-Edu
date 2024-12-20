@@ -31,7 +31,7 @@ const apkFiles = [
 ];
 
 const ARFeaturePage = () => {
-  const [showVideo, setShowVideo] = useState(false); // State to toggle video overlay
+  const [showVideo, setShowVideo] = useState(true); // State to toggle video overlay
   const videoRef = useRef<HTMLVideoElement>(null); // Ref for video control
 
   // Handle Play/Pause
@@ -46,7 +46,7 @@ const ARFeaturePage = () => {
   };
 
   return (
-    <div className="relative h-screen flex flex-col justify-center items-center text-white overflow-hidden bg-black mt-4">
+    <div className="relative h-screen w-screen flex flex-col justify-center items-center text-white overflow-hidden bg-black">
       {/* Dynamic Background */}
       <div
         className="absolute inset-0 bg-cover bg-center transform animate-zoomPan"
