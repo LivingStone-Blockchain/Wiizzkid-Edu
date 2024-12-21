@@ -103,12 +103,12 @@ const ARFeaturePage = () => {
           <div className="relative">
             <video
               ref={videoRef}
-              className="w-full rounded-lg"
+              className="w-full rounded-lg md:scale-[2]"
               // src="https://drive.google.com/file/d/1uVOURXTZXMegYzDkUTOrGZeLtpDVUq4T/view?usp=sharing" // Replace with your video URL
               src="https://www.w3schools.com/html/mov_bbb.mp4" // Replace with your video URL
               controls={false} // Disable built-in controls
             />
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 md:-top-20 right-4 md:-right-36">
               <button
                 onClick={() => setShowVideo(false)}
                 className="text-white bg-red-500 px-4 py-2 rounded-full hover:bg-red-700 transition"
@@ -116,7 +116,7 @@ const ARFeaturePage = () => {
                 Close
               </button>
             </div>
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-4 md:-bottom-20 right-4 md:-right-36">
               <button
                 onClick={togglePlayPause}
                 className="text-white bg-blue-500 px-4 py-2 rounded-full hover:bg-blue-700 transition"
