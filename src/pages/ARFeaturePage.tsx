@@ -47,6 +47,7 @@ const ARFeaturePage = () => {
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center text-white overflow-hidden bg-black">
+
       {/* Dynamic Background */}
       <div
         className="absolute inset-0 bg-cover bg-center transform animate-zoomPan"
