@@ -104,8 +104,8 @@ const ARFeaturePage = () => {
             <video
               ref={videoRef}
               className="w-full rounded-lg md:scale-[2]"
-              // src="https://drive.google.com/file/d/1uVOURXTZXMegYzDkUTOrGZeLtpDVUq4T/view?usp=sharing" // Replace with your video URL
-              src="https://www.w3schools.com/html/mov_bbb.mp4" // Replace with your video URL
+              
+              src="https://drive.google.com/uc?id=1W8sHzG_065NSc15xjpcS4qppV2NwsEFZ" // Replace with your video URL
               controls={false} // Disable built-in controls
             />
             <div className="absolute top-4 md:-top-20 right-4 md:-right-36">
