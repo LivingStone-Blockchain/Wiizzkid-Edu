@@ -96,8 +96,8 @@ const ChatBot: React.FC<ChatBotProps> = ({
       {/* Chat toggle button */}
       <button 
         onClick={toggleChat}
-        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50 ${
-          chatOpen ? 'bg-indigo-700 rotate-45' : 'bg-indigo-600 hover:bg-indigo-700'
+        className={`fixed bottom-6 right-16 h-14 w-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50 ${
+          chatOpen ? 'bg-indigo-700 rotate-45' : 'bg-indigo-600 hover:bg-red-600'
         }`}
       >
         {chatOpen ? (
@@ -233,6 +233,9 @@ const ChatBot: React.FC<ChatBotProps> = ({
   );
 };
 
+export default ChatBot
+
+
 // For use in a parent component
 const WebsiteWithChat: React.FC = () => {
   const [chatOpen, setChatOpen] = useState(false);
@@ -252,7 +255,7 @@ const WebsiteWithChat: React.FC = () => {
       </div>
       
       {/* Chat component */}
-      <ChatBot 
+      <ChatBot
         onSendMessage={handleSendMessage}
         botName="Wiizzkid Droid"
         isOpen={chatOpen}
@@ -261,5 +264,3 @@ const WebsiteWithChat: React.FC = () => {
     </div>
   );
 };
-
-export default WebsiteWithChat;
