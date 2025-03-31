@@ -1,4 +1,3 @@
-// import { useContext } from "react";
 import {
   Brand,
   Features,
@@ -11,6 +10,7 @@ import {
   FAQ,
 } from "../components/index";
 import ARFeaturePage from './ARFeaturePage'
+import ChatBot from './ChatBot';
 // import {
 //   WiizzkidContext,
 //   WiizzkidContextType,
@@ -31,6 +31,7 @@ const Home = () => {
         <BuyInstruction />
       </div>
       <Help />
+      <ChatBot />
       <div className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700">
         <Modes />
       </div>

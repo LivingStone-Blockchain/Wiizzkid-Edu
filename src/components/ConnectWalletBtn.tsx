@@ -43,7 +43,7 @@ const ConnectWalletBtn: FC<ConnectWalletBtnProps> = ({colorDeep, mobileDropdownO
                       onClick={openConnectModal}
                       type="button"
                       className={`${mobileDropdownOpen && 'blur-2xl'} w-full px-10 py-3 mt-3 md:text-base text-sm text-center text-white lg:mt-8 lg:ml-4`}
-                      children="Connect Wallet"
+                      children="Chat with WiizzDroid"
                       style={{ backgroundColor: `${colorDeep}` }}
                  />
               );
