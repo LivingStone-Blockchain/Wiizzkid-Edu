@@ -49,7 +49,7 @@ import TimestableApp from "./gameContainers/timestable/TimestableApp";
 import ModalVideo from "react-modal-video";
 import { wiizzkidVideo } from "./assets/header/index";
 import ARFeaturePage from "./pages/ARFeaturePage"
-import ChatBot from "./pages/ChatBot";
+import ChatBotPage from "./pages/ChatBotPage";
 
 function App() {
   const { openVideo, setOpenVideo } = useContext(
@@ -97,7 +97,7 @@ function App() {
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/ar-feature" element={<ARFeaturePage />} />
-        <Route path="/bot" element={<ChatBot />} />
+        <Route path="/bot" element={<ChatBotPage />} />
 
         <Route
           path="/dashboard/buy-token/completion"

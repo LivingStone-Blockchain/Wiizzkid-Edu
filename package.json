@@ -11,6 +11,7 @@
   "dependencies": {
     "@cloudinary/react": "^1.14.1",
     "@cloudinary/url-gen": "^1.21.0",
+    "@google/genai": "^0.8.0",
     "@paypal/react-paypal-js": "^7.8.2",
     "@rainbow-me/rainbowkit": "^0.8.0",
     "@stripe/react-stripe-js": "^1.16.4",

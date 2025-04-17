@@ -9,7 +9,6 @@ import {
   Help,
   FAQ,
 } from "../components/index";
-import ARFeaturePage from './ARFeaturePage'
 import ChatBot from './ChatBot';
 // import {
 //   WiizzkidContext,
@@ -31,7 +30,9 @@ const Home = () => {
         <BuyInstruction />
       </div>
       <Help />
-      <ChatBot />
+      <ChatBot onSendMessage={function (message: string): string {
+        throw new Error("Function not implemented.");
+      } } />
       <div className="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700">
         <Modes />
       </div>

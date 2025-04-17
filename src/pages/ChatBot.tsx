@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { GoogleGenAI } from "@google/genai";
+
+// Initialize Google Generative AI with the provided API key
+const ai = new GoogleGenAI({ apiKey: "AIzaSyCtb9tAxhS-U-ZWs9k8SbC68mIOFvJyXfg" });
 
 interface ChatBotProps {
-  onSendMessage: (message: string) => string;
   botName?: string;
   isOpen?: boolean;
   onClose?: () => void;
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({ 
-  onSendMessage, 
-  botName = "Wiizzkid Droid", 
+  botName = "Wiizzkid ChatBot", 
   isOpen = false, 
   onClose = () => {} 
 }) => {
@@ -58,13 +60,37 @@ const ChatBot: React.FC<ChatBotProps> = ({
     // Show typing indicator
     setIsTyping(true);
     
-    // Simulate a brief delay before response
-    setTimeout(() => {
-      // Get bot's response
-      const botResponse = onSendMessage(userMessage.text);
-      setMessages((prev) => [...prev, { sender: 'bot', text: botResponse, timestamp: getCurrentTime() }]);
-      setIsTyping(false);
-    }, 800);
+    try {
+      // Get AI response from Google Gemini using the correct API pattern
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: userMessage.text
+      });
+      
+      const botResponse = response.text || "I'm sorry, I couldn't generate a response.";
+      
+      // Add bot's response to chat after a short delay to simulate typing
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { 
+          sender: 'bot', 
+          text: botResponse, 
+          timestamp: getCurrentTime() 
+        }]);
+        setIsTyping(false);
+      }, 800);
+    } catch (error) {
+      console.error("Error generating AI response:", error);
+      
+      // Add error message if AI fails
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { 
+          sender: 'bot', 
+          text: "I'm sorry, I encountered an error processing your request. Please try again later.", 
+          timestamp: getCurrentTime() 
+        }]);
+        setIsTyping(false);
+      }, 800);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -85,7 +111,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
     if (messages.length === 0) {
       setMessages([{
         sender: 'bot',
-        text: `Hi there! I'm ${botName}. How can I help you today?`,
+        text: `Hi there! I'm ${botName}, powered by Google Gemini AI. How can I help you today?`,
         timestamp: getCurrentTime()
       }]);
     }
@@ -233,34 +259,4 @@ const ChatBot: React.FC<ChatBotProps> = ({
   );
 };
 
-export default ChatBot
-
-
-// For use in a parent component
-const WebsiteWithChat: React.FC = () => {
-  const [chatOpen, setChatOpen] = useState(false);
-  
-  const handleSendMessage = (message: string) => {
-    // In a real app, you would handle the message here
-    // and return a response
-    return `Thank you for your message: "${message}". How can I help you further?`;
-  };
-  
-  return (
-    <div className="relative min-h-screen">
-      {/* Your website content would go here */}
-      <div className="p-8">
-        <h1 className="text-2xl font-bold mb-4"></h1>
-        <p></p>
-      </div>
-      
-      {/* Chat component */}
-      <ChatBot
-        onSendMessage={handleSendMessage}
-        botName="Wiizzkid Droid"
-        isOpen={chatOpen}
-        onClose={() => setChatOpen(false)}
-      />
-    </div>
-  );
-};
+export default ChatBot;
