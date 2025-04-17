@@ -96,6 +96,7 @@ const ARFeaturePage: React.FC = () => {
             ))}
           </div>
 
+          
           {/* Watch Video button */}
           <button
             onClick={() => setShowVideo(true)}
