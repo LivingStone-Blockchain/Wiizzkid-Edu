@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
-import { FaGraduationCap, FaImage,  } from 'react-icons/fa';
-import {  MdGeneratingTokens } from 'react-icons/md';
+import { GraduationCap, Image, Ticket } from 'lucide-react';
 import { vr } from "../assets/header/index";
 
 
@@ -24,7 +23,7 @@ const featuresData: FeatureData[] = [
     subtitleLong: "Learn from anywhere, at any time, and on any device. Whether you're a student looking to enhance your knowledge and skills, or an educator seeking to reach more students and provide a personalized learning experience, Wiizzkid has something to offer.",
     colorDeep: '#FF3939',
     colorLight: '#ffedef',
-    icon: <FaGraduationCap className="w-6 h-6 m-auto text-tomato"/>
+    icon: <GraduationCap className="w-6 h-6 m-auto text-tomato"/>
   },
   {
     id: 2,
@@ -33,7 +32,7 @@ const featuresData: FeatureData[] = [
     subtitleLong: "Learn from anywhere, at any time, and on any device. Whether you're a student looking to enhance your knowledge and skills, or an educator seeking to reach more students and provide a personalized learning experience, Wiizzkid has something to offer",
     colorDeep: '#e0b00d',
     colorLight: '#fff2e1',
-    icon: <MdGeneratingTokens className="w-6 h-6 m-auto text-golden"/>
+    icon: <Ticket className="w-6 h-6 m-auto text-golden"/>
   },
   {
     id: 3,
@@ -42,7 +41,7 @@ const featuresData: FeatureData[] = [
     subtitleLong: "By owning an NFT related to a specific topic, students can gain access to exclusive content and insights that can help them learn more about the topic before taking the quiz, ensuring a more comprehensive and effective learning experience.",
     colorDeep: '#26a8a1',
     colorLight: '#e5fbfa',
-    icon: <FaImage className="w-6 h-6 m-auto text-teal"/>
+    icon: <Image className="w-6 h-6 m-auto text-teal"/>
   },
   {
     id: 4,

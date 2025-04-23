@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { FiCheck } from 'react-icons/fi';
+import { Check } from 'lucide-react';
 import Button from '../components/Button';
 import { Banner } from './../components/index';
 import { useNavigate } from 'react-router-dom';
@@ -55,19 +55,19 @@ const Pricing = () => {
         </div>
         <ul role="list" className="m-auto w-max space-y-4 pb-6 text-gray-600 dark:text-gray-300">
           <li className="space-x-2">
-            <FiCheck className="font-light text-[#37b9b2] inline"/>
+            <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Two players</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Medium level</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Play with friends</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Earn stones</span>
           </li>
         </ul>
@@ -100,24 +100,23 @@ const Pricing = () => {
         
           <span
             className="m-auto mt-4 block w-max rounded-full bg-gradient-to-r from-yellow-300 to-pink-300 px-4 py-1 text-sm font-medium text-yellow-900"
-            >1 Discount applied</span
-          >
+            >1 Discount applied</span>
         </div>
         <ul role="list" className="m-auto w-max space-y-4 pb-6 text-gray-600 dark:text-gray-300">
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Multiplayer</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Advanced level</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Play with the best</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Earn as a group</span>
           </li>
         </ul>
@@ -144,19 +143,19 @@ const Pricing = () => {
         </div>
         <ul role="list" className="m-auto w-max space-y-4 pb-6 text-gray-600 dark:text-gray-300">
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Single player</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Basic level</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>Practice mode</span>
           </li>
           <li className="space-x-2">
-             <FiCheck className="font-light text-[#37b9b2] inline"/>
+             <Check className="font-light text-[#37b9b2] inline"/>
             <span className='text-gray-500 lg:text-base text-sm'>unlimited access</span>
           </li>
         </ul>

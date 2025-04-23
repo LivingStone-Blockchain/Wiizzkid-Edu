@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import { register } from '../assets/auth';
 import { Link } from 'react-router-dom';
 import { UserContext, UserContextType } from '../context/user.context'
-import { BsCheck, BsQuestionCircle } from 'react-icons/bs';
-import {MdCancel } from 'react-icons/md'
+import { Check, HelpCircle } from 'lucide-react';
+import {XCircle } from 'lucide-react'
 import { Form, LoadingToRedirect } from '../components/index';
 
 
@@ -39,7 +39,7 @@ const Register = () => {
             />
             {registerFormik.touched.full_name && registerFormik.errors.full_name ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.full_name}</span>
-            ) : registerFormik.touched.full_name && !registerFormik.errors.full_name && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
+            ) : registerFormik.touched.full_name && !registerFormik.errors.full_name && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><Check className='text-[#252641]' /></span>}
 
           </div>
 
@@ -58,7 +58,7 @@ const Register = () => {
             />
             {registerFormik.touched.email && registerFormik.errors.email ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.email}</span>
-            ) : registerFormik.touched.email && !registerFormik.errors.email && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
+            ) : registerFormik.touched.email && !registerFormik.errors.email && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><Check className='text-[#252641]' /></span>}
           </div>
           <div className={`space-y-2 ${registerFormik.touched.password && registerFormik.errors.password ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
@@ -74,7 +74,7 @@ const Register = () => {
             />
             {registerFormik.touched.password && registerFormik.errors.password ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.password}</span>
-            ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
+            ) : registerFormik.touched.password && !registerFormik.errors.password && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><Check className='text-[#252641]' /></span>}
           </div>
           <div className={`space-y-2 ${registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? '' : 'flex justify-center items-center gap-1'}`}>
             <input
@@ -90,7 +90,7 @@ const Register = () => {
             />
            {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? (
               <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.confirmPassword}</span>
-            ) : registerFormik.touched.confirmPassword && !registerFormik.errors.confirmPassword && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><BsCheck className='text-[#252641]' /></span>}
+            ) : registerFormik.touched.confirmPassword && !registerFormik.errors.confirmPassword && <span className='flex justify-center items-center w-5 h-5 text-sm bg-green-50 border rounded-full duration-300 border-green-500 hover:shadow-lg hover:shadow-lime-600/20'><Check className='text-[#252641]' /></span>}
           </div>
           <div className="relative pl-1 cursor-pointer md:w-1/2 w-[90%]">
             {referralToggle ? (
@@ -106,13 +106,13 @@ const Register = () => {
                    value={registerFormik.values.referral}
                    className="text-sm placeholder:text-sm focus:outline-none block w-full rounded-full bg-gray-50 border-2 border-[#252641] bg-transparent px-4 py-2 text-gray-600 transition duration-300  focus:ring-2 focus:ring-[#96fde3]"
                  />     
-                {referralToggle &&  <MdCancel className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'bottom-9' : 'bottom-3'}`}  onClick={() => setReferralToggle(false)} />}
+                {referralToggle &&  <XCircle className={`absolute -right-8 text-[#252641 ${registerFormik.errors.referral ? 'bottom-9' : 'bottom-3'}`}  onClick={() => setReferralToggle(false)} />}
                 {registerFormik.touched.referral && registerFormik.errors.referral ? (
-                <span className='text-xs text-red-600 pl-5'>{registerFormik.errors.referral}</span>
+                <span className='text-xs ArrowRighttext-red-600 pl-5'>{registerFormik.errors.referral}</span>
             ) : null}
                </div>
             ) : (
-              <div className='flex justify-start items-center gap-1  text-text-[#252641] text-sm'  onClick={() => setReferralToggle(!referralToggle)}><span>Referral Code</span><BsQuestionCircle /></div>
+              <div className='flex justify-start items-center gap-1  text-text-[#252641] text-sm'  onClick={() => setReferralToggle(!referralToggle)}><span>Referral Code</span><HelpCircle /></div>
             )}
           </div>
 

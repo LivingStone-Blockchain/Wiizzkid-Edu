@@ -5,8 +5,7 @@ import {
   WiizzkidContextType,
 } from "../context/wiizzkid.context";
 import logo from "./../assets/header/wiizzkid-logo.png";
-import { MdLocationPin, MdCall, MdEmail } from "react-icons/md";
-import { FaDiscord } from "react-icons/fa";
+import { Landmark, Phone, Mail, MessageSquare } from "lucide-react";
 
 const Footer = () => {
   const { value } = useContext(WiizzkidContext) as WiizzkidContextType;
@@ -50,7 +49,7 @@ const Footer = () => {
               rel="noreferrer"
               className="hover:text-tealLight text-gray-400"
             >
-              <FaDiscord className="w-6 h-6" />
+              <MessageSquare className="w-6 h-6 text-[#5865F2] strokeWidth={1.5}" />
             </a>
             <a
               href="https://instagram.com/livinstone_consultancy?igshid=YmMyMTA2M2Y="
@@ -193,19 +192,19 @@ const Footer = () => {
             <ul className="mt-4 list-inside space-y-4 text-gray-400 text-sm">
               <li className="flex gap-5 transition">
                 <span className="justify-self-center self-center">
-                  <MdLocationPin />
+                  <Landmark />
                 </span>
                 <span>London, United Kingdom</span>
               </li>
               <li className="flex gap-5 transition">
                 <span className="justify-self-center self-center">
-                  <MdCall />
+                  <Phone />
                 </span>
                 <span>+447904805276</span>
               </li>
               <li className="flex gap-5 transition">
                 <span className="justify-self-center self-center">
-                  <MdEmail />
+                  <Mail />
                 </span>
                 <span>wiizzkids@gmail.com</span>
               </li>

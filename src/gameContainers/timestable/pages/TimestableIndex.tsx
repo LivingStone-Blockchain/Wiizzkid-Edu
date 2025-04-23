@@ -5,7 +5,7 @@ import {
 import Overlay from "../components/Overlay";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { FaAngleRight } from "react-icons/fa";
+import { ChevronRight } from "lucide-react";
 import Button from "../components/button/Button";
 import CreateTimestable from "../components/CreateTimestable";
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
@@ -116,7 +116,7 @@ export default function TimestableIndex() {
               onClick={handleDisplayCreateGameModal}
               className="text-xs cursor-pointer capitalize font-semibold text-white flex items-center"
             >
-              Or start Timestable <FaAngleRight className="ml-1" />
+              Or start Timestable <ChevronRight className="ml-1" />
             </p>
           </div>
         </div>

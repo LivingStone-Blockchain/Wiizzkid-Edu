@@ -1,6 +1,6 @@
 import React, {FC } from "react";
 import { RWebShare } from "react-web-share";
-import { BsShareFill } from 'react-icons/bs';
+import { Share2 } from 'lucide-react';
 
 
 type ShareProps = {
@@ -21,7 +21,7 @@ const Share: FC<ShareProps> = ({text, url, title, className}) => {
             }}
             onClick={() => console.log("shared successfully!")}
           >
-           <BsShareFill className="font-bold text-lg cursor-pointer"/>
+           <Share2 className="font-bold text-lg cursor-pointer"/>
           </RWebShare>
         </div>
       );

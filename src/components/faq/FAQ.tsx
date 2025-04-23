@@ -1,5 +1,5 @@
 import React, { useRef, useState, FC } from 'react'
-import {FiChevronUp} from 'react-icons/fi'
+import {ChevronUp} from 'lucide-react'
 import { faqData } from './components/faqData'
 
 
@@ -29,7 +29,7 @@ const FAQ = () => {
         onClick={() => toggleAccordion(id)}
       >
         <p className="inline-block lg:font-semibold font-medium text-white text-left">{title}</p>
-        <p className='flex items-center justify-center p-2 bg-navyLight rounded-lg'><FiChevronUp className={`${active !== id ? 'transform duration-700 ease' : 'transform duration-700 ease rotate-180'} inline-block text-white font-bold`} /></p>
+        <p className='flex items-center justify-center p-2 bg-navyLight rounded-lg'><ChevronUp className={`${active !== id ? 'transform duration-700 ease' : 'transform duration-700 ease rotate-180'} inline-block text-white font-bold`} /></p>
       </button>
       <div
         ref={contentSpace}

@@ -1,12 +1,6 @@
 import { FC, useState, useRef, useEffect, useContext } from "react";
 import toast from "react-hot-toast";
-
-import {
-  FaAngleLeft,
-  FaArrowRight,
-  FaCheckCircle,
-  FaTimes,
-} from "react-icons/fa";
+import { X } from "lucide-react";
 import { success, beijing } from "../assets/images";
 import { Button } from './button/index';
 import FormGroup from "./forms/FormGroup";
@@ -188,7 +182,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
   if (showBeijingModal) {
     return (
       <section className={`relative w-full py-4`}>
-              <FaTimes
+              <X
                 onClick={() => {setShowBeijingModal(false); setGameMode('london')}}
                 className="absolute top-2 right-2 text-tomato cursor-pointer md:text-xl text-lg"
                 />
@@ -218,7 +212,7 @@ const CreateTimestable: FC<CreateTimestableType> = ({
   return (
     <section className={`pb-4 w-full ${showBeijingModal ? 'hidden' : 'block'}`}>
          <div className="mb-7 flex items-center justify-end">
-        <FaTimes
+        <X
           onClick={handleCloseModal}
           className="float-right text-tomato cursor-pointer md:text-xl text-lg"
         />

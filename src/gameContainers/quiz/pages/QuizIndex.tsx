@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { girlNavy } from './../../../assets/modes/index';
 import QuickPlay from "../components/QuickPlay";
 import History from "../components/History";
-import { FaAngleRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Overlay from "../components/Overlay";
 import Button from "../components/button/Button";
@@ -13,6 +12,7 @@ import {UserContext, UserContextType} from '../../../context/user.context'
 import { Banner } from "../../../components";
 import ScoreBalance from "../components/Score&Balance";
 import service from "../services/services"
+import { ChevronRight } from "lucide-react";
 
 
 
@@ -113,7 +113,7 @@ const QuizIndex = () => {
               onClick={handleDisplayCreateGameModal}
               className="text-xs cursor-pointer capitalize font-semibold text-white flex items-center"
             >
-              Or start a quiz game <FaAngleRight className="ml-1" />
+              Or start a quiz game <ChevronRight className="ml-1" />
             </p>
           </div>
         </div>

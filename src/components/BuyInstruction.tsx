@@ -1,6 +1,6 @@
 import React, {useState, useContext} from "react";
 import { card, usdt, coin } from './../assets/buyInstruction/index';
-import { FaLink } from 'react-icons/fa';
+import { Link } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { UserContext, UserContextType } from '../context/user.context';
 
@@ -99,7 +99,7 @@ const BuyInstruction = () => {
         
                         <div  className={`flex flex-col items-start justify-center gap-5 bg-white h-full m-6 ${activeCardDesktop === index && 'lg:grow-[4] max-w-full'}`}>
                             <h1 className="font-bold uppercase -mt-2 text-lg" style={{color: `${colorDeep}`}}>{title}</h1>
-                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle} <FaLink onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
+                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle} <Link onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
                             <img className="rounded-xl" src={img} alt={title} loading="eager" width="320" height="180" />
                         </div>
                      </div>
@@ -144,7 +144,7 @@ const BuyInstruction = () => {
         
                         <div  className={`flex flex-col items-start justify-center gap-5 bg-white h-full m-6 ${activeCardMobile === id && 'lg:grow-[4] max-w-full'}`}>
                             <h1 className="font-bold uppercase -mt-2 text-lg" style={{color: `${colorDeep}`}}>{title}</h1>
-                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle}  <FaLink onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
+                            <p className="lg:w-[38rem] md:w-[28rem] text-gray-500 md:text-base text-sm leading-relaxed ">{subtitle}  <Link onClick={() => navigate('/dashboard/buy-token')} onMouseEnter={() => setColor(true)} onMouseLeave={() => setColor(false)} className={`inline-block ml-1 cursor-pointer ${!user && 'hidden'}`}  style={{color: color ? `${colorDeep}` : ''}}/></p>
                             <img className="w-72 hidden" src={img} alt={title} />
                         </div>
                      </div>

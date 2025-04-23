@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import  { CardBody, Card }  from '../../components/Cards';
 import Button from '../../../Button';
-import { FaTimes } from 'react-icons/fa';
+import { X } from 'lucide-react';
 import PaypalSDK from "./PaypalSDK";
 import { useNavigate } from "react-router-dom";
 
@@ -47,7 +47,7 @@ const Paypal = ({setOpen}: {setOpen: (value: React.SetStateAction<number | null>
   return (
     <Card>
     <CardBody className='flex flex-col items-center justify-center gap-12 bg-tealLighter relative'>
-    <p className='p-2 rounded-full absolute top-2 right-2 bg-[#e9d9de] cursor-pointer' onClick={() => setOpen(null)}><FaTimes  className='w-3 h-3 font-light'/></p>
+    <p className='p-2 rounded-full absolute top-2 right-2 bg-[#e9d9de] cursor-pointer' onClick={() => setOpen(null)}><X  className='w-3 h-3 font-light'/></p>
     <div className="flex flex-col md:gap-6 gap-4 items-center justify-center mt-3 w-full mx-auto">
           <h1 className="mb-4 text-xl font-semibold text-[#252641]">Pay with Paypal</h1>
           <div className="space-y-1 flex flex-col gap-4">

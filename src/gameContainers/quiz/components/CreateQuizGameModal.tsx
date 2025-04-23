@@ -2,11 +2,10 @@ import { FC, useState, useRef, useEffect, useContext } from "react";
 import toast from "react-hot-toast";
 
 import {
-  FaAngleLeft,
-  FaArrowRight,
-  FaCheckCircle,
-  FaTimes,
-} from "react-icons/fa";
+  ChevronLeft,
+  ArrowRight,
+  X,
+} from "lucide-react";
 import { successImg, beijing } from "../assets/images";
 import Button from "./button/Button";
 import FormGroup from "./forms/FormGroup";
@@ -226,7 +225,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
   if (showBeijingModal) {
     return (
       <section className={`relative w-full py-4`}>
-              <FaTimes
+              <X
                 onClick={() => {setShowBeijingModal(false); setGameMode('london')}}
                 className="absolute top-2 right-2 text-tomato cursor-pointer md:text-xl text-lg"
                 />
@@ -260,13 +259,13 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
       <div className="mb-7 flex items-center justify-between">
         {screen === 2 ? (
           <Button type="button" className="text-navy" onClick={() => setScreen(1)} btnDefault>
-            <FaAngleLeft className="mr-1" /> Back
+            <ChevronLeft className="mr-1" /> Back
           </Button>
         ) : (
           <span></span>
         )}
 
-        <FaTimes
+        <X
           onClick={handleCloseModal}
           className="float-right text-tomato cursor-pointer md:text-xl text-lg"
         />
@@ -391,7 +390,7 @@ const CreateQuizGameModal: FC<CreateQuizGameModalType> = ({
             id="nextBtn"
             className="flex justify-center items-center gap-2 w-full md:text-base text-sm bg-navy mx-auto font-semibold px-5 py-3  text-white transition text-center"
             >
-              Next <FaArrowRight className="ml-3" />
+              Next <ArrowRight className="ml-3" />
             </Button>
           )}
 

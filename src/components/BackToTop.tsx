@@ -1,5 +1,5 @@
 import { useEffect,useState } from 'react'
-import { FiChevronUp } from 'react-icons/fi';
+import { ChevronUp } from 'lucide-react';
 
 
 
@@ -31,7 +31,7 @@ const BackToTop = () => {
     <>
         {showButton && (
         <div data-aos="fade-up" data-aos-delay="300" className="fixed bottom-7 right-6 z-[200] h-11 w-11 cursor-pointer rounded-md bg-teal flex justify-center items-center text-xl font-semibold text-white transition-all duration-300 ease-out delay-75 hover:shadow-lg hover:bg-tomato" onClick={scrollToTop}>
-            <FiChevronUp />
+            <ChevronUp />
         </div>
         )}
     </>

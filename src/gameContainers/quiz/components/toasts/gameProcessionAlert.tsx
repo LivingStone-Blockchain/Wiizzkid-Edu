@@ -1,6 +1,6 @@
 import Button from "../button/Button";
 import toast from "react-hot-toast";
-import { FaExclamationCircle } from "react-icons/fa";
+import { AlertCircle } from "lucide-react";
 
 
 const gameProcessionAlert = (setLoader: (value: React.SetStateAction<boolean>) => void, setAllowGameProcession: (value: React.SetStateAction<boolean>) => void) => {
@@ -9,7 +9,7 @@ const gameProcessionAlert = (setLoader: (value: React.SetStateAction<boolean>) =
         () => (
           <article className="text-sm z-50">
             <p className="mb-4">
-              <FaExclamationCircle className="text-3xl text-tealLight" />
+              <AlertCircle className="text-3xl text-tealLight" />
             </p>
   
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">Begin the game with current players ?</p>

@@ -1,9 +1,8 @@
 import React, { FC, useContext, useState } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-import { AiFillCalculator } from "react-icons/ai";
-import { FaGamepad, FaQuestion } from "react-icons/fa";
-import { GiMonkey } from "react-icons/gi";
+import {  } from "lucide-react";
+import { Gamepad2, HelpCircle, Calculator, Cat } from "lucide-react";
 import { vr } from "../assets/header/index";
 import {
   WiizzkidContext,
@@ -93,7 +92,7 @@ const Hero: FC<HeroProps> = ({
             >
               <span className="cursor-pointer">Quiz</span>
               <span className="bg-white w-14 h-14 rounded-full flex items-center justify-center">
-                <FaQuestion
+                <HelpCircle
                   className="w-5 h-5 floating"
                   style={{
                     fill: `${colorDeep}`,
@@ -149,7 +148,7 @@ const Hero: FC<HeroProps> = ({
               className="bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer"
             >
               <p className="bg-navy text-white rounded-md p-1 text-2xl">
-                <AiFillCalculator />
+                <Calculator />
               </p>
               <p className="flex flex-col">
                 <span className="font-semibold text-gray-500 text-sm tracking-wide">
@@ -170,7 +169,7 @@ const Hero: FC<HeroProps> = ({
           >
             <div className="bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer">
               <p className="bg-[#f25471] bg-opacity-80 text-white rounded-md p-1 text-2xl">
-                <GiMonkey />
+                <Cat />
               </p>
               <p className="flex flex-col">
                 <span className="font-semibold text-gray-600 text-[13px] tracking-wide">
@@ -194,7 +193,7 @@ const Hero: FC<HeroProps> = ({
               className="bg-white rounded-lg h-12 sm:h-16 py-3 px-4 flex gap-4 justify-center items-center cursor-pointer"
             >
               <p className="bg-[#f88c3d] text-white rounded-md p-1 text-xl">
-                <FaGamepad />
+                <Gamepad2 />
               </p>
               <p className="flex flex-col">
                 <span className="font-semibold text-gray-600 text-[13px] tracking-wide">

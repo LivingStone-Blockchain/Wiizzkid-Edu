@@ -52,6 +52,9 @@ import ARFeaturePage from "./pages/ARFeaturePage"
 import ChatBotPage from "./pages/ChatBotPage";
 
 function App() {
+
+  const VideoModal = ModalVideo as unknown as React.ComponentType<any>;
+
   const { openVideo, setOpenVideo } = useContext(
     WiizzkidContext
   ) as WiizzkidContextType;
@@ -66,7 +69,7 @@ function App() {
       <Preloader homeLoader={true} />
       <Overlay loading={refreshTokenError} />
       <Header />
-      <ModalVideo
+      <VideoModal
         channel="custom"
         isOpen={openVideo}
         url={wiizzkidVideo}

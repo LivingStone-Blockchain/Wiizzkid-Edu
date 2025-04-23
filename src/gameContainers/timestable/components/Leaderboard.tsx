@@ -3,7 +3,7 @@ import { trophy2 } from "../assets/images/index";
 import Button from "./button/Button";
 import service from '../services/services';
 import { TimestableContext, TimestableContextType } from "../../../context/timestable.context";
-import { FaCrown } from 'react-icons/fa';
+import { Crown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
@@ -85,7 +85,7 @@ const LeaderBoard = ({ setStart, setGameCompleted, setShowLeaderBoard }: LeaderB
               {scoreBoard?.map(({ full_name, total_attempted, score }, index) => (
                 <tr className="bg-white border-b border-gray-200" key={full_name}>
                   <td className="py-2 px-1">
-                    <span className={`${index === 0 ? 'text-[#fe9d1b]' : 'text-gray-400'}`}><FaCrown /></span>
+                    <span className={`${index === 0 ? 'text-[#fe9d1b]' : 'text-gray-400'}`}><Crown /></span>
                   </td>
                   <td className="py-2 px-1">
                     <span className="font-medium text-navy text-xs">{full_name.split(' ')[0]}</span>

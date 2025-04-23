@@ -1,10 +1,10 @@
 import { FC, useContext, useEffect, useState, useRef } from "react";
 import {
-  FaArrowRight,
-  FaClock,
-  FaQuestionCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
+  ArrowRight,
+  Clock,
+  HelpCircle,
+  XCircle,
+} from "lucide-react";
 import service from "../../services/services";
 import categoryStrings from "../functions/categoryStringConveter";
 import timeDiffCalculator from "../functions/timeDifference";
@@ -189,7 +189,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
       )}
       <div className="max-w-xl mx-auto opacity-90">
         <nav className="flex justify-between items-center">
-          <FaTimesCircle
+          <XCircle
             className="text-2xl cursor-pointer text-white"
             onClick={quitGame}
           />
@@ -197,7 +197,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
           <h1 className="text-xl font-bold text-white">{`${categoryStrings(Number(gameDetails?.category))[0].toUpperCase()}${categoryStrings(Number(gameDetails?.category)).slice(1)}`} <span className="text-tomato">Quiz</span></h1>
 
           <div className="group max-w-max relative mx-1 flex flex-col items-center justify-center">
-            <FaQuestionCircle className="text-2xl cursor-pointer text-white" />
+            <HelpCircle className="text-2xl cursor-pointer text-white" />
             <div className="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 absolute top-7 right-0 md:inset-x-auto">
               <div className="max-w-xs flex-col items-center">
                 <div className="clip-bottom h-2 w-4 bg-navy hidden md:flex mx-auto" style={{ clipPath: "polygon(0% 50%, 100% 100%, 0% 100%, 50% 0%, 100% 100%)" }}></div>
@@ -226,7 +226,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
 
         <footer className="fixed bottom-0 right-0 left-0 w-full bg-transparent shadow p-4 flex items-center justify-between">
           <span className="font-bold animate-pulse flex items-center text-white">
-            <FaClock className="mr-2" />{" "}
+            <Clock className="mr-2" />{" "}
             {/* add game.durationInMinutes to 'timeOfStart' */}
             {timeOfStart && (
               <CountDownTimer
@@ -244,7 +244,7 @@ const QuizGame: FC<QuizGameTypes> = ({ showModal }) => {
             </form>
           ) : (
             <ActionButton className={selectedOption ? "cursor-pointer border-tomato" : "cursor-not-allowed border-navy"} onClick={handleGoToNextQuestion} disabled={selectedOption ? false : true}>
-              Next <FaArrowRight className="ml-3" />
+              Next <ArrowRight className="ml-3" />
             </ActionButton>
           )}
         </footer>

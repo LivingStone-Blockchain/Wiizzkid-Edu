@@ -1,7 +1,7 @@
 import Button from "../button/Button";
 import toast from "react-hot-toast";
 import { NavigateFunction } from "react-router-dom";
-import { FaExclamationCircle } from "react-icons/fa";
+import { AlertCircle } from "lucide-react";
 
 
 const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => void, setGameCompleted: (value: React.SetStateAction<boolean>) => void, navigate: NavigateFunction, setShowCreateGameModal: (value: React.SetStateAction<boolean>) => void) => {
@@ -10,7 +10,7 @@ const quizEndGameToast = (setLoading: (value: React.SetStateAction<boolean>) => 
         () => (
           <article className="text-sm">
             <p className="mb-4">
-              <FaExclamationCircle className="text-3xl text-tomato" />
+              <AlertCircle className="text-3xl text-tomato" />
             </p>
   
             <p className="mb-2 text-gray-600 my-3 md:text-base text-sm leading-relaxed">Leaving the game will cancel your current game progress...</p>

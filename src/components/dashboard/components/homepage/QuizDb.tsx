@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from 'react'
 import { QuizContext, QuizContextType } from '../../../../context/quiz.context';
 import { TokenContext, TokenContextType } from '../../../../context/token.context';
 import {UserContext, UserContextType} from '../../../../context/user.context'
-import { MdOutlineContentCopy } from 'react-icons/md';
 import { InfoCard, Charts } from '../../components/index';
 import { referral, score, balance, average, trophy } from '../../../../assets/dashboard';
 import { toast } from 'react-hot-toast';
 import { apiChartData } from '../../data/quizChartData';
 import { utils } from "ethers";
 import { Preloader } from './../../../index';
+import { Copy } from 'lucide-react';
 
 
 const QuizDb = () => {
@@ -49,7 +49,7 @@ const QuizDb = () => {
               title="Referral Code"
               value={user!.player_code}
               img={referral}
-              children={<p className='p-2 rounded-full absolute top-2 right-2 bg-[#b9b9c5] cursor-pointer' onClick={handleCopyClick}><MdOutlineContentCopy className='w-3 h-3' /></p>}
+              children={<p className='p-2 rounded-full absolute top-2 right-2 bg-[#b9b9c5] cursor-pointer' onClick={handleCopyClick}><Copy className='w-3 h-3' /></p>}
             />
             <InfoCard
               title="STN Balance"

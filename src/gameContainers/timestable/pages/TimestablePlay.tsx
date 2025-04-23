@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { FaArrowRight } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
 import { learner } from "../assets/images";
 import { Button } from "../../../components";
 
@@ -102,7 +102,7 @@ if (gameDetails?.game_mode === "london") {
             onClick={handleStartGame}
             className="flex justify-center items-center gap-2 md:w-48 w-40 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center"
           >
-            Start Quiz <FaArrowRight className="ml-3" />
+            Start Quiz <ArrowRight className="ml-3" />
           </Button>
           </div>
       </section>
@@ -163,7 +163,7 @@ if (gameDetails?.game_mode === "london") {
             onClick={handleStartGame}
             className={`flex justify-center items-center gap-2 md:w-48 w-40 md:text-base mt-8 text-sm bg-navy font-semibold px-5 py-3  text-white transition text-center ${playerTracker?.current_players === playerTracker?.total_players ? 'pointer-events-auto' : 'pointer-events-none'}`}
           >
-            Start Quiz <FaArrowRight className="ml-3" />
+            Start Quiz <ArrowRight className="ml-3" />
           </Button>
             </>
           ) : (

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FaAngleRight } from "react-icons/fa";
+import { ChevronRight } from "lucide-react";
 import { vrGameVideo } from "../assets/videos";
 import { Button } from "./button/index";
 import Video from "./Video";
@@ -26,7 +26,7 @@ const SplashScreen: FC<SplashScreenProps> = ({
           onClick={() => setShowSplashScreen(false)}
           className="mt-12 flex justify-center items-center gap-2 md:w-36 w-28 md:text-base text-sm bg-[#37b9b2] text-navy mx-auto font-semibold px-5 py-3  bg-text-darken shadow-btn-darken transition text-center"
         >
-          Skip <FaAngleRight />
+          Skip <ChevronRight />
         </Button>
       </div>
 

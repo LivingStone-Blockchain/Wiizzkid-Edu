@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { london, shanghai, beijing } from "./../assets/about/index";
 import { Link, useNavigate } from "react-router-dom";
-import { FiChevronsRight } from "react-icons/fi";
+import { ChevronsRight } from "lucide-react";
 import {
   WiizzkidContext,
   WiizzkidContextType,
@@ -153,7 +153,7 @@ const GameModes = () => {
                 >
                   More
                 </span>{" "}
-                <FiChevronsRight
+                <ChevronsRight
                   className="text-xl text-navy md:rotate-0 rotate-90 animate-pulse"
                   style={
                     !open ? { color: `${colors[value]}` } : { color: `#252641` }
