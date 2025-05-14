@@ -21,12 +21,12 @@ const ChatBot: React.FC<ChatBotProps> = ({
   const [chatOpen, setChatOpen] = useState(isOpen);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  
+
   // Sync with external isOpen prop
   useEffect(() => {
     setChatOpen(isOpen);
   }, [isOpen]);
-  
+
   // Focus input when chat opens
   useEffect(() => {
     if (chatOpen && inputRef.current) {
@@ -35,7 +35,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
       }, 300);
     }
   }, [chatOpen]);
-  
+
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -47,29 +47,24 @@ const ChatBot: React.FC<ChatBotProps> = ({
     return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  // Handle sending a message
   const handleSendMessage = async () => {
     if (input.trim() === '') return;
-    
-    // Add user message to the chat
+
     const userMessage = { sender: 'user', text: input, timestamp: getCurrentTime() };
     setMessages((prev) => [...prev, userMessage]);
-    
-    // Clear input field
     setInput('');
-    
-    // Show typing indicator
+
     setIsTyping(true);
-    
+
     try {
-      // Get AI response from Google Gemini using the correct API pattern
       const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
         contents: userMessage.text
       });
-      
+
       const botResponse = response.text || "I'm sorry, I couldn't generate a response.";
-      
-      // Add bot's response to chat after a short delay to simulate typing
+
       setTimeout(() => {
         setMessages((prev) => [...prev, { 
           sender: 'bot', 
@@ -80,8 +75,6 @@ const ChatBot: React.FC<ChatBotProps> = ({
       }, 800);
     } catch (error) {
       console.error("Error generating AI response:", error);
-      
-      // Add error message if AI fails
       setTimeout(() => {
         setMessages((prev) => [...prev, { 
           sender: 'bot', 
@@ -93,6 +86,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
     }
   };
 
+  // Handle Enter key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -117,6 +111,40 @@ const ChatBot: React.FC<ChatBotProps> = ({
     }
   }, [botName, messages.length]);
 
+  // 🧠 Simple Markdown-like Renderer (Vanilla JS)
+  const renderSimpleMarkdown = (text: string) => {
+    let html = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+    const lines = html.split('\n');
+    let result = '';
+    let inList = false;
+
+    for (let line of lines) {
+      line = line.trim();
+
+      if (line.startsWith('* ')) {
+        if (!inList) {
+          result += '<ul class="list-disc ml-5 my-1">';
+          inList = true;
+        }
+        result += `<li>${line.substring(2)}</li>`;
+      } else {
+        if (inList) {
+          result += '</ul>';
+          inList = false;
+        }
+
+        if (line) {
+          result += `<p class="my-1">${line}</p>`;
+        }
+      }
+    }
+
+    if (inList) result += '</ul>';
+    return result;
+  };
+
   return (
     <>
       {/* Chat toggle button */}
@@ -136,7 +164,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
           </svg>
         )}
       </button>
-      
+
       {/* Chat modal */}
       <div className={`fixed bottom-6 right-6 mb-16 w-96 h-128 max-h-[80vh] bg-white rounded-lg shadow-xl flex flex-col overflow-hidden transition-all duration-300 z-40 ${
         chatOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
@@ -168,7 +196,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
             </button>
           </div>
         </div>
-        
+
         {/* Chat area */}
         <div className="flex-grow overflow-y-auto p-4 bg-gray-50">
           <div className="space-y-4">
@@ -184,20 +212,20 @@ const ChatBot: React.FC<ChatBotProps> = ({
                     </svg>
                   </div>
                 )}
-                
                 <div className={`relative max-w-xs px-4 py-2 rounded-lg shadow-sm 
                   ${msg.sender === 'user' 
                     ? 'bg-indigo-600 text-white' 
                     : 'bg-white text-gray-800 border border-gray-100'}`}
                 >
-                  <div className="text-sm">
-                    {msg.text}
-                  </div>
+                  <div 
+                    className="text-sm"
+                    dangerouslySetInnerHTML={{ __html: renderSimpleMarkdown(msg.text) }}
+                  />
+
                   <div className={`text-xs ${msg.sender === 'user' ? 'text-indigo-200' : 'text-gray-400'} text-right mt-1`}>
                     {msg.timestamp}
                   </div>
                 </div>
-                
                 {msg.sender === 'user' && (
                   <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white ml-2 flex-shrink-0 self-end mb-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -207,7 +235,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
                 )}
               </div>
             ))}
-            
+
             {isTyping && (
               <div className="flex justify-start">
                 <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-2 flex-shrink-0 self-end mb-1">
@@ -222,11 +250,11 @@ const ChatBot: React.FC<ChatBotProps> = ({
                 </div>
               </div>
             )}
-            
+
             <div ref={messagesEndRef} />
           </div>
         </div>
-        
+
         {/* Input area */}
         <div className="border-t border-gray-200 bg-white p-3">
           <div className="flex rounded-md border border-gray-300 overflow-hidden focus-within:ring-2 focus-within:ring-indigo-200 focus-within:border-indigo-500">

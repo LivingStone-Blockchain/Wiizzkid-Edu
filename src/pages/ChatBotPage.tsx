@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from '@google/genai';
 
 // Initialize Google GenAI client
 const ai = new GoogleGenAI({ apiKey: "AIzaSyCtb9tAxhS-U-ZWs9k8SbC68mIOFvJyXfg" });
@@ -36,47 +36,39 @@ const ChatBotPage = () => {
   const handleSendMessage = async () => {
     if (input.trim() === '') return;
 
-    // Add user message to the chat
     const userMessage = { sender: 'user', text: input, timestamp: getCurrentTime() };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
 
-    // Show typing indicator
     setIsTyping(true);
 
     try {
-      // Create a prompt that provides context about WiizzDroid's role
       const prompt = `You are WiizzDroid, a friendly learning assistant chatbot that helps users with educational content.
       You specialize in explaining topics like 3D shapes, vertebrates, and information about educational products.
       Please respond to the following user message in a helpful, concise way: "${userMessage.text}"`;
-      
-      // Call the Google GenAI API with the correct pattern
+
       const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
         contents: prompt
       });
-      
-      // Get text from response
-      const botResponse = response.text || "Sorry, I couldn't generate a response. Please try again.";
-      
-      // Add bot's response to chat after a short delay to simulate typing
+
+      const botResponse = response.text || "Sorry, I couldn't generate a response.";
+
       setTimeout(() => {
-        setMessages((prev) => [...prev, { 
-          sender: 'bot', 
-          text: botResponse, 
-          timestamp: getCurrentTime() 
+        setMessages((prev) => [...prev, {
+          sender: 'bot',
+          text: botResponse,
+          timestamp: getCurrentTime()
         }]);
         setIsTyping(false);
       }, 800);
     } catch (error) {
       console.error("Error generating AI response:", error);
-      
-      // Add error message if AI fails
       setTimeout(() => {
-        setMessages((prev) => [...prev, { 
-          sender: 'bot', 
-          text: "I'm sorry, I encountered an error processing your request. Please try again later.", 
-          timestamp: getCurrentTime() 
+        setMessages((prev) => [...prev, {
+          sender: 'bot',
+          text: "I'm sorry, I encountered an error processing your request.",
+          timestamp: getCurrentTime()
         }]);
         setIsTyping(false);
       }, 800);
@@ -89,6 +81,40 @@ const ChatBotPage = () => {
       e.preventDefault();
       handleSendMessage();
     }
+  };
+
+  // Basic Markdown-like renderer using plain JS
+  const renderSimpleMarkdown = (text: string) => {
+    let html = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+    const lines = html.split('\n');
+    let result = '';
+    let inList = false;
+
+    for (let line of lines) {
+      line = line.trim();
+
+      if (line.startsWith('* ')) {
+        if (!inList) {
+          result += '<ul class="list-disc ml-5 my-1">';
+          inList = true;
+        }
+        result += `<li>${line.substring(2)}</li>`;
+      } else {
+        if (inList) {
+          result += '</ul>';
+          inList = false;
+        }
+
+        if (line) {
+          result += `<p class="my-1">${line}</p>`;
+        }
+      }
+    }
+
+    if (inList) result += '</ul>';
+    return result;
   };
 
   return (
@@ -113,13 +139,23 @@ const ChatBotPage = () => {
 
           {messages.map((msg, index) => (
             <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`relative max-w-md px-4 py-3 rounded-lg shadow-sm ${
-                msg.sender === 'user'
-                  ? 'bg-indigo-500 text-white dark:bg-indigo-500'
-                  : 'bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600'
-              }`}>
-                <div className="text-sm mb-1">{msg.text}</div>
-                <div className={`text-xs ${msg.sender === 'user' ? 'text-indigo-200' : 'text-gray-400 dark:text-gray-500'} text-right mt-1`}>
+              <div
+                className={`relative max-w-md px-4 py-3 rounded-lg shadow-sm ${
+                  msg.sender === 'user'
+                    ? 'bg-indigo-500 text-white dark:bg-indigo-500'
+                    : 'bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600'
+                }`}
+              >
+                <div 
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ __html: renderSimpleMarkdown(msg.text) }}
+                />
+
+                <div className={`text-xs mt-1 ${
+                  msg.sender === 'user' 
+                    ? 'text-indigo-200' 
+                    : 'text-gray-400 dark:text-gray-500'
+                } text-right`}>
                   {msg.timestamp}
                 </div>
               </div>

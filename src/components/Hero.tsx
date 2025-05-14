@@ -1,7 +1,6 @@
 import React, { FC, useContext, useState } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-import {  } from "lucide-react";
 import { Gamepad2, HelpCircle, Calculator, Cat } from "lucide-react";
 import { vr } from "../assets/header/index";
 import {
