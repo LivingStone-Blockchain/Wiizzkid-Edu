@@ -11,7 +11,7 @@ interface ApkFile {
   icon: string;
 }
 
-// Mock APK links
+// Mock AR .APK links
 const apkFiles: ApkFile[] = [
   {
     name: 'MathShapes.apk',
