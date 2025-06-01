@@ -49,7 +49,7 @@ import TimestableApp from "./gameContainers/timestable/TimestableApp";
 import ModalVideo from "react-modal-video";
 import { wiizzkidVideo } from "./assets/header/index";
 import ARFeaturePage from "./pages/ARFeaturePage"
-import ChatBotPage from "./pages/ChatBotPage";
+// import ChatBotPage from "./pages/ChatBotPage";
 
 function App() {
 
@@ -100,7 +100,7 @@ function App() {
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/ar-feature" element={<ARFeaturePage />} />
-        <Route path="/bot" element={<ChatBotPage />} />
+        {/* <Route path="/bot" element={<ChatBotPage />} /> */}
 
         <Route
           path="/dashboard/buy-token/completion"

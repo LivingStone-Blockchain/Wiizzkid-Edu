@@ -150,7 +150,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
       {/* Chat toggle button */}
       <button 
         onClick={toggleChat}
-        className={`fixed bottom-6 right-16 h-14 w-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50 ${
+        className={`fixed bottom-20 right-6 h-12 w-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50 ${
           chatOpen ? 'bg-indigo-700 rotate-45' : 'bg-indigo-600 hover:bg-red-600'
         }`}
       >

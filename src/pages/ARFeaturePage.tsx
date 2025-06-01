@@ -36,7 +36,7 @@ const ARFeaturePage: React.FC = () => {
   
   // Cloudinary parameters
   const cloudName = 'dvlktxrnx';
-  const publicId = 'IMG_2837_ivgwyf';
+  const publicId = 'WhatsApp_Video_2025-05-17_at_5.29.04_PM_r6l7vm';
 
   // Set up auto-play when component mounts
   useEffect(() => {
