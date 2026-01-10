@@ -76,7 +76,7 @@ function App() {
         onClose={() => setOpenVideo(false)}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/Wiizzkid-Edu" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
