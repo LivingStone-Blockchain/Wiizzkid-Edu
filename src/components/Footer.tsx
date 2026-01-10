@@ -147,7 +147,7 @@ const Footer = () => {
                   to="/roadmap"
                   className={`transition hover:text-tealLight`}
                 >
-                  Roadmap
+                  Roadmapping
                 </Link>
               </li>
               <li>
