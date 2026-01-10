@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter,HashRouter } from "react-router-dom";
 import './index.css'
 import { WiizzkidProvider, UserProvider, QuizProvider, TimestableProvider, TokenProvider } from './context';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -36,7 +36,7 @@ const Client = createClient({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <React.StrictMode>
-        <BrowserRouter>
+        <HashRouter>
         <WagmiConfig client={Client}>
          <RainbowKitProvider chains={chains} initialChain={chain.goerli}>
          <UserProvider>
@@ -52,6 +52,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </UserProvider>
           </RainbowKitProvider>
           </WagmiConfig>
-        </BrowserRouter>
+        </HashRouter>
       </React.StrictMode>
 )

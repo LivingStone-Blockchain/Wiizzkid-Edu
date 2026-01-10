@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://livingstone-blockchain.github.io/",
+  "homepage": "https://livingstone-blockchain.github.io/Wiizzkid-Edu",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "tsc && cross-env NODE_ENV=production vite build",
