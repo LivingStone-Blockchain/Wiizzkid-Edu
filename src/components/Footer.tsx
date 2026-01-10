@@ -15,7 +15,7 @@ const Footer = () => {
 
   //render based on location
   if (
-    location.pathname !== "/Wiizzkid-Edu/" &&
+    location.pathname !== "/" &&
     location.pathname !== "/pricing" &&
     location.pathname !== "/roadmap" &&
     location.pathname !== "/about" &&

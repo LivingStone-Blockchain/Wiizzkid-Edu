@@ -77,7 +77,7 @@ const Header = () => {
   }, [mobileDropdownOpen]);
 
   //render only on homepage
-  if (location.pathname !== "/Wiizzkid-Edu") {
+  if (location.pathname !== "/") {
     return null;
   }
 
